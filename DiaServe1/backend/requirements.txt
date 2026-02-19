@@ -1,0 +1,44 @@
+# EstateFlow Backend Dependencies
+# Note: Using >= constraints for Python 3.14 compatibility
+
+# Core Framework
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+
+# Database
+motor>=3.6.0
+
+# Authentication (Local JWT)
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# File handling
+python-multipart>=0.0.20
+aiofiles>=24.1.0
+
+# HTTP client
+httpx>=0.28.0
+
+# Environment
+python-dotenv>=1.0.1
+
+# Background tasks
+apscheduler>=3.10.4
+
+# Testing dependencies
+pytest>=8.0.0
+pytest-asyncio>=0.21.1
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+faker>=22.6.0
+
+# AI Integration
+google-generativeai>=0.8.0
+
+# Template rendering
+Jinja2>=3.1.0
+
+# Image processing (GridFS thumbnails)
+Pillow>=10.0.0

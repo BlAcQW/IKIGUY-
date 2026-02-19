@@ -1,0 +1,750 @@
+/**
+ * Add Property Dialog Component
+ *
+ * Comprehensive form for creating new property listings with all fields
+ * including location, features, financial info, and neighborhood data.
+ */
+
+import { useState } from "react";
+import { X, Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useCreateProperty } from "@/hooks/use-properties";
+import { PropertyType, PropertyStatus } from "@/lib/types/property";
+import type { PropertyCreate } from "@/lib/types/property";
+
+interface AddPropertyDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function AddPropertyDialog({ open, onOpenChange }: AddPropertyDialogProps) {
+  const createMutation = useCreateProperty({
+    onSuccess: () => {
+      onOpenChange(false);
+      resetForm();
+    },
+  });
+
+  // Basic info
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [propertyType, setPropertyType] = useState<PropertyType>(PropertyType.HOUSE);
+  const [status, setStatus] = useState<PropertyStatus>(PropertyStatus.ACTIVE);
+
+  // Location
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [country, setCountry] = useState("Ghana");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+
+  // Features
+  const [bedrooms, setBedrooms] = useState("");
+  const [bathrooms, setBathrooms] = useState("");
+  const [sqft, setSqft] = useState("");
+  const [lotSize, setLotSize] = useState("");
+  const [yearBuilt, setYearBuilt] = useState("");
+  const [parkingSpaces, setParkingSpaces] = useState("");
+  const [pool, setPool] = useState(false);
+  const [garden, setGarden] = useState(false);
+  const [balcony, setBalcony] = useState(false);
+  const [petPolicy, setPetPolicy] = useState("not_allowed");
+  const [petDeposit, setPetDeposit] = useState("");
+  const [furnished, setFurnished] = useState(false);
+  const [elevator, setElevator] = useState(false);
+  const [airConditioning, setAirConditioning] = useState(false);
+  const [securitySystem, setSecuritySystem] = useState(false);
+  const [gym, setGym] = useState(false);
+  const [storage, setStorage] = useState(false);
+
+  // Financial
+  const [priceUSD, setPriceUSD] = useState("");
+  const [baseCurrency, setBaseCurrency] = useState("USD");
+  const [hoaFees, setHoaFees] = useState("");
+  const [propertyTax, setPropertyTax] = useState("");
+  const [insurance, setInsurance] = useState("");
+
+  // Media
+  const [images, setImages] = useState<string[]>([]);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [virtualTourUrl, setVirtualTourUrl] = useState("");
+
+  // Agent
+  const [agentName, setAgentName] = useState("");
+
+  // Neighborhood data
+  const [safetyRating, setSafetyRating] = useState("");
+  const [walkabilityScore, setWalkabilityScore] = useState("");
+  const [transitScore, setTransitScore] = useState("");
+
+  const resetForm = () => {
+    setName("");
+    setDescription("");
+    setPropertyType(PropertyType.HOUSE);
+    setStatus(PropertyStatus.ACTIVE);
+    setAddress("");
+    setCity("");
+    setState("");
+    setZipCode("");
+    setCountry("Ghana");
+    setNeighborhood("");
+    setLatitude("");
+    setLongitude("");
+    setBedrooms("");
+    setBathrooms("");
+    setSqft("");
+    setLotSize("");
+    setYearBuilt("");
+    setParkingSpaces("");
+    setPool(false);
+    setGarden(false);
+    setBalcony(false);
+    setPetPolicy("not_allowed");
+    setPetDeposit("");
+    setFurnished(false);
+    setElevator(false);
+    setAirConditioning(false);
+    setSecuritySystem(false);
+    setGym(false);
+    setStorage(false);
+    setPriceUSD("");
+    setBaseCurrency("USD");
+    setHoaFees("");
+    setPropertyTax("");
+    setInsurance("");
+    setImages([]);
+    setVideoUrl("");
+    setVirtualTourUrl("");
+    setAgentName("");
+    setSafetyRating("");
+    setWalkabilityScore("");
+    setTransitScore("");
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const propertyData: PropertyCreate = {
+      name,
+      description,
+      property_type: propertyType,
+      status,
+      location: {
+        address,
+        city,
+        state,
+        zip_code: zipCode,
+        country,
+        latitude: latitude ? parseFloat(latitude) : undefined,
+        longitude: longitude ? parseFloat(longitude) : undefined,
+        neighborhood,
+      },
+      neighborhood_data: {
+        schools: [],
+        amenities: [],
+        safety_rating: safetyRating ? parseFloat(safetyRating) : undefined,
+        walkability_score: walkabilityScore ? parseInt(walkabilityScore) : undefined,
+        transit_score: transitScore ? parseInt(transitScore) : undefined,
+      },
+      features: {
+        bedrooms: parseInt(bedrooms),
+        bathrooms: parseFloat(bathrooms),
+        sqft: parseFloat(sqft),
+        lot_size: lotSize ? parseFloat(lotSize) : undefined,
+        year_built: yearBuilt ? parseInt(yearBuilt) : undefined,
+        parking_spaces: parkingSpaces ? parseInt(parkingSpaces) : undefined,
+        pool,
+        garden,
+        balcony,
+        pet_policy: petPolicy,
+        pet_deposit: petDeposit ? parseFloat(petDeposit) : undefined,
+        furnished,
+        elevator,
+        air_conditioning: airConditioning,
+        heating: false,
+        fireplace: false,
+        security_system: securitySystem,
+        gym,
+        storage,
+      },
+      financial: {
+        price_usd: parseFloat(priceUSD),
+        base_currency: baseCurrency,
+        hoa_fees_monthly: hoaFees ? parseFloat(hoaFees) : undefined,
+        property_tax_annual: propertyTax ? parseFloat(propertyTax) : undefined,
+        insurance_estimate: insurance ? parseFloat(insurance) : undefined,
+      },
+      images,
+      video_url: videoUrl || undefined,
+      virtual_tour_url: virtualTourUrl || undefined,
+      agent_name: agentName || undefined,
+    };
+
+    createMutation.mutate(propertyData);
+  };
+
+  const addImage = () => {
+    const url = prompt("Enter image URL:");
+    if (url) {
+      setImages([...images, url]);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    setImages(images.filter((_, i) => i !== index));
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="w-full max-w-full md:max-w-2xl lg:max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Add New Property</DialogTitle>
+          <DialogDescription>
+            Create a new property listing with comprehensive details
+          </DialogDescription>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Basic Information */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Basic Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="col-span-1 md:col-span-2">
+                <Label htmlFor="name">Property Name *</Label>
+                <Input
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  placeholder="e.g., Luxury Villa in East Legon"
+                />
+              </div>
+              <div className="col-span-1 md:col-span-2">
+                <Label htmlFor="description">Description *</Label>
+                <Textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                  rows={4}
+                  placeholder="Describe the property..."
+                />
+              </div>
+              <div>
+                <Label htmlFor="propertyType">Property Type *</Label>
+                <Select value={propertyType} onValueChange={(v) => setPropertyType(v as PropertyType)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={PropertyType.APARTMENT}>Apartment</SelectItem>
+                    <SelectItem value={PropertyType.HOUSE}>House</SelectItem>
+                    <SelectItem value={PropertyType.VILLA}>Villa</SelectItem>
+                    <SelectItem value={PropertyType.PENTHOUSE}>Penthouse</SelectItem>
+                    <SelectItem value={PropertyType.LOFT}>Loft</SelectItem>
+                    <SelectItem value={PropertyType.TOWNHOUSE}>Townhouse</SelectItem>
+                    <SelectItem value={PropertyType.LAND}>Land</SelectItem>
+                    <SelectItem value={PropertyType.COMMERCIAL}>Commercial</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="status">Status *</Label>
+                <Select value={status} onValueChange={(v) => setStatus(v as PropertyStatus)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={PropertyStatus.ACTIVE}>Active</SelectItem>
+                    <SelectItem value={PropertyStatus.PENDING}>Pending</SelectItem>
+                    <SelectItem value={PropertyStatus.SOLD}>Sold</SelectItem>
+                    <SelectItem value={PropertyStatus.RENTED}>Rented</SelectItem>
+                    <SelectItem value={PropertyStatus.INACTIVE}>Inactive</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Location */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Location</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="col-span-1 md:col-span-2">
+                <Label htmlFor="address">Address *</Label>
+                <Input
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  required
+                  placeholder="Street address"
+                />
+              </div>
+              <div>
+                <Label htmlFor="city">City *</Label>
+                <Input
+                  id="city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  required
+                  placeholder="e.g., Accra"
+                />
+              </div>
+              <div>
+                <Label htmlFor="state">State/Region *</Label>
+                <Input
+                  id="state"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  required
+                  placeholder="e.g., Greater Accra"
+                />
+              </div>
+              <div>
+                <Label htmlFor="zipCode">Zip Code</Label>
+                <Input
+                  id="zipCode"
+                  value={zipCode}
+                  onChange={(e) => setZipCode(e.target.value)}
+                  placeholder="00233"
+                />
+              </div>
+              <div>
+                <Label htmlFor="country">Country *</Label>
+                <Input
+                  id="country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="neighborhood">Neighborhood</Label>
+                <Input
+                  id="neighborhood"
+                  value={neighborhood}
+                  onChange={(e) => setNeighborhood(e.target.value)}
+                  placeholder="e.g., East Legon"
+                />
+              </div>
+              <div>
+                <Label htmlFor="latitude">Latitude</Label>
+                <Input
+                  id="latitude"
+                  type="number"
+                  step="any"
+                  value={latitude}
+                  onChange={(e) => setLatitude(e.target.value)}
+                  placeholder="5.6037"
+                />
+              </div>
+              <div>
+                <Label htmlFor="longitude">Longitude</Label>
+                <Input
+                  id="longitude"
+                  type="number"
+                  step="any"
+                  value={longitude}
+                  onChange={(e) => setLongitude(e.target.value)}
+                  placeholder="-0.1870"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Features */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Property Features</h3>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="bedrooms">Bedrooms *</Label>
+                <Input
+                  id="bedrooms"
+                  type="number"
+                  value={bedrooms}
+                  onChange={(e) => setBedrooms(e.target.value)}
+                  required
+                  min="0"
+                />
+              </div>
+              <div>
+                <Label htmlFor="bathrooms">Bathrooms *</Label>
+                <Input
+                  id="bathrooms"
+                  type="number"
+                  step="0.5"
+                  value={bathrooms}
+                  onChange={(e) => setBathrooms(e.target.value)}
+                  required
+                  min="0"
+                />
+              </div>
+              <div>
+                <Label htmlFor="sqft">Square Feet *</Label>
+                <Input
+                  id="sqft"
+                  type="number"
+                  value={sqft}
+                  onChange={(e) => setSqft(e.target.value)}
+                  required
+                  min="0"
+                />
+              </div>
+              <div>
+                <Label htmlFor="lotSize">Lot Size (sqft)</Label>
+                <Input
+                  id="lotSize"
+                  type="number"
+                  value={lotSize}
+                  onChange={(e) => setLotSize(e.target.value)}
+                  min="0"
+                />
+              </div>
+              <div>
+                <Label htmlFor="yearBuilt">Year Built</Label>
+                <Input
+                  id="yearBuilt"
+                  type="number"
+                  value={yearBuilt}
+                  onChange={(e) => setYearBuilt(e.target.value)}
+                  min="1800"
+                  max={new Date().getFullYear()}
+                />
+              </div>
+              <div>
+                <Label htmlFor="parkingSpaces">Parking Spaces</Label>
+                <Input
+                  id="parkingSpaces"
+                  type="number"
+                  value={parkingSpaces}
+                  onChange={(e) => setParkingSpaces(e.target.value)}
+                  min="0"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-4 gap-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={pool}
+                  onChange={(e) => setPool(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">Pool</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={garden}
+                  onChange={(e) => setGarden(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">Garden</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={balcony}
+                  onChange={(e) => setBalcony(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">Balcony</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={furnished}
+                  onChange={(e) => setFurnished(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">Furnished</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={elevator}
+                  onChange={(e) => setElevator(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">Elevator</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={airConditioning}
+                  onChange={(e) => setAirConditioning(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">A/C</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={securitySystem}
+                  onChange={(e) => setSecuritySystem(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">Security</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={gym}
+                  onChange={(e) => setGym(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">Gym</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={storage}
+                  onChange={(e) => setStorage(e.target.checked)}
+                  className="rounded"
+                />
+                <span className="text-sm">Storage</span>
+              </label>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="petPolicy">Pet Policy</Label>
+                <Select value={petPolicy} onValueChange={setPetPolicy}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="allowed">Allowed</SelectItem>
+                    <SelectItem value="not_allowed">Not Allowed</SelectItem>
+                    <SelectItem value="conditional">Conditional</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {petPolicy !== "not_allowed" && (
+                <div>
+                  <Label htmlFor="petDeposit">Pet Deposit ($)</Label>
+                  <Input
+                    id="petDeposit"
+                    type="number"
+                    value={petDeposit}
+                    onChange={(e) => setPetDeposit(e.target.value)}
+                    min="0"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Financial */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Financial Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="priceUSD">Price (USD) *</Label>
+                <Input
+                  id="priceUSD"
+                  type="number"
+                  value={priceUSD}
+                  onChange={(e) => setPriceUSD(e.target.value)}
+                  required
+                  min="0"
+                  placeholder="750000"
+                />
+              </div>
+              <div>
+                <Label htmlFor="baseCurrency">Base Currency</Label>
+                <Select value={baseCurrency} onValueChange={setBaseCurrency}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="USD">USD</SelectItem>
+                    <SelectItem value="EUR">EUR</SelectItem>
+                    <SelectItem value="GBP">GBP</SelectItem>
+                    <SelectItem value="GHS">GHS</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="hoaFees">HOA Fees (Monthly)</Label>
+                <Input
+                  id="hoaFees"
+                  type="number"
+                  value={hoaFees}
+                  onChange={(e) => setHoaFees(e.target.value)}
+                  min="0"
+                />
+              </div>
+              <div>
+                <Label htmlFor="propertyTax">Property Tax (Annual)</Label>
+                <Input
+                  id="propertyTax"
+                  type="number"
+                  value={propertyTax}
+                  onChange={(e) => setPropertyTax(e.target.value)}
+                  min="0"
+                />
+              </div>
+              <div>
+                <Label htmlFor="insurance">Insurance Estimate (Annual)</Label>
+                <Input
+                  id="insurance"
+                  type="number"
+                  value={insurance}
+                  onChange={(e) => setInsurance(e.target.value)}
+                  min="0"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Neighborhood Scores */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Neighborhood Scores</h3>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="safetyRating">Safety Rating (0-10)</Label>
+                <Input
+                  id="safetyRating"
+                  type="number"
+                  step="0.1"
+                  value={safetyRating}
+                  onChange={(e) => setSafetyRating(e.target.value)}
+                  min="0"
+                  max="10"
+                />
+              </div>
+              <div>
+                <Label htmlFor="walkabilityScore">Walkability (0-100)</Label>
+                <Input
+                  id="walkabilityScore"
+                  type="number"
+                  value={walkabilityScore}
+                  onChange={(e) => setWalkabilityScore(e.target.value)}
+                  min="0"
+                  max="100"
+                />
+              </div>
+              <div>
+                <Label htmlFor="transitScore">Transit Score (0-100)</Label>
+                <Input
+                  id="transitScore"
+                  type="number"
+                  value={transitScore}
+                  onChange={(e) => setTransitScore(e.target.value)}
+                  min="0"
+                  max="100"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Media */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Media</h3>
+            <div className="space-y-4">
+              <div>
+                <Label>Images</Label>
+                <div className="space-y-2">
+                  {images.map((img, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <Input value={img} readOnly className="flex-1" />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={() => removeImage(idx)}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                  <Button type="button" variant="outline" onClick={addImage} className="gap-2">
+                    <Plus className="h-4 w-4" />
+                    Add Image URL
+                  </Button>
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="videoUrl">Video URL</Label>
+                <Input
+                  id="videoUrl"
+                  type="url"
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  placeholder="https://youtube.com/..."
+                />
+              </div>
+              <div>
+                <Label htmlFor="virtualTourUrl">Virtual Tour URL</Label>
+                <Input
+                  id="virtualTourUrl"
+                  type="url"
+                  value={virtualTourUrl}
+                  onChange={(e) => setVirtualTourUrl(e.target.value)}
+                  placeholder="https://matterport.com/..."
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Agent */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Agent Information</h3>
+            <div>
+              <Label htmlFor="agentName">Agent Name</Label>
+              <Input
+                id="agentName"
+                value={agentName}
+                onChange={(e) => setAgentName(e.target.value)}
+                placeholder="e.g., John Doe"
+              />
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              disabled={createMutation.isPending}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" variant="accent" disabled={createMutation.isPending}>
+              {createMutation.isPending ? "Creating..." : "Create Property"}
+            </Button>
+          </div>
+
+          {createMutation.isError && (
+            <p className="text-sm text-destructive">
+              Error: {createMutation.error?.message || "Failed to create property"}
+            </p>
+          )}
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}

@@ -1,0 +1,277 @@
+import { useState } from "react";
+import {
+  Phone,
+  MessageSquare,
+  Mail,
+  Plus,
+  Play,
+  Pause,
+  BarChart3,
+  Users,
+  Calendar,
+  Filter,
+  MoreHorizontal,
+  Send,
+  Sparkles,
+  Loader2,
+  MessageCircle
+} from "lucide-react";
+import { Header } from "@/components/layout/Header";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { CampaignWizard } from "@/components/CampaignWizard";
+import { useCampaigns, useCampaignActions } from "@/hooks/use-campaigns";
+import type { CampaignType, CampaignStatus } from "@/lib/api/campaign-api";
+
+const campaignTypes = [
+  { id: "voice", name: "Voice", icon: Phone, color: "text-blue-500", bg: "bg-blue-500/10" },
+  { id: "sms", name: "SMS", icon: MessageSquare, color: "text-green-500", bg: "bg-green-500/10" },
+  { id: "whatsapp", name: "WhatsApp", icon: MessageCircle, color: "text-emerald-500", bg: "bg-emerald-500/10" },
+  { id: "email", name: "Email", icon: Mail, color: "text-accent", bg: "bg-accent/10" },
+];
+
+export default function Campaigns() {
+  const [selectedType, setSelectedType] = useState<CampaignType | null>(null);
+  const [wizardOpen, setWizardOpen] = useState(false);
+
+  // Fetch campaigns with optional type filter
+  const { data: campaignsData, isLoading, error } = useCampaigns({
+    campaign_type: selectedType || undefined,
+    limit: 100,
+  });
+
+  const getTypeInfo = (type: string) => {
+    return campaignTypes.find(t => t.id === type) || campaignTypes[0];
+  };
+
+  const getStatusColor = (status: CampaignStatus) => {
+    switch (status) {
+      case "running": return "success";
+      case "paused": return "warning";
+      case "scheduled": return "info";
+      case "completed": return "muted";
+      case "draft": return "secondary";
+      default: return "muted";
+    }
+  };
+
+  // Calculate stats from real data
+  const campaigns = campaignsData?.campaigns || [];
+  const totalCampaigns = campaignsData?.total || 0;
+  const totalSent = campaigns.reduce((sum, c) => sum + c.sent_count, 0);
+  const totalDelivered = campaigns.reduce((sum, c) => sum + c.delivered_count, 0);
+  const totalCost = campaigns.reduce((sum, c) => sum + c.total_cost, 0);
+  const deliveryRate = totalSent > 0 ? ((totalDelivered / totalSent) * 100).toFixed(1) : "0";
+
+  const stats = [
+    { name: "Total Campaigns", value: totalCampaigns.toString(), change: `${campaigns.filter(c => c.status === 'running').length} active` },
+    { name: "Messages Sent", value: totalSent.toLocaleString(), change: `${totalDelivered.toLocaleString()} delivered` },
+    { name: "Delivery Rate", value: `${deliveryRate}%`, change: `${campaigns.filter(c => c.status === 'completed').length} completed` },
+    { name: "Total Cost", value: `GHS ${totalCost.toFixed(2)}`, change: "All campaigns" },
+  ];
+
+  return (
+    <div className="min-h-screen">
+      <Header
+        title="Campaigns"
+        subtitle="Manage your outreach campaigns"
+        actions={
+          <Button variant="accent" className="gap-2" onClick={() => setWizardOpen(true)}>
+            <Plus className="h-4 w-4" />
+            New Campaign
+          </Button>
+        }
+      />
+
+      <CampaignWizard open={wizardOpen} onClose={() => setWizardOpen(false)} />
+
+      <div className="p-6 space-y-6">
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {stats.map((stat) => (
+            <Card key={stat.name}>
+              <CardContent className="p-6">
+                <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                <p className="text-sm font-medium text-foreground mt-1">{stat.name}</p>
+                <p className="text-xs text-muted-foreground mt-1">{stat.change}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Campaign Type Filters */}
+        <div className="flex items-center gap-3">
+          <Button
+            variant={selectedType === null ? "secondary" : "ghost"}
+            onClick={() => setSelectedType(null)}
+          >
+            All
+          </Button>
+          {campaignTypes.map((type) => (
+            <Button
+              key={type.id}
+              variant={selectedType === type.id ? "secondary" : "ghost"}
+              className="gap-2"
+              onClick={() => setSelectedType(type.id as CampaignType)}
+            >
+              <type.icon className={`h-4 w-4 ${type.color}`} />
+              {type.name}
+            </Button>
+          ))}
+          <div className="flex-1" />
+        </div>
+
+        {/* Campaigns Table */}
+        <Card>
+          <CardHeader>
+            <CardTitle>All Campaigns</CardTitle>
+            <CardDescription>Track and manage your marketing campaigns</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {isLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+              </div>
+            ) : error ? (
+              <div className="text-center py-12">
+                <p className="text-red-500">Failed to load campaigns</p>
+                <p className="text-sm text-muted-foreground mt-1">{error.message}</p>
+              </div>
+            ) : campaigns.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">No campaigns yet</p>
+                <Button
+                  variant="outline"
+                  className="mt-4"
+                  onClick={() => setWizardOpen(true)}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Your First Campaign
+                </Button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Campaign</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Type</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Status</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Sent</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Delivered</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Cost</th>
+                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {campaigns.map((campaign) => {
+                      const typeInfo = getTypeInfo(campaign.campaign_type);
+                      return (
+                        <CampaignRow
+                          key={campaign.id}
+                          campaign={campaign}
+                          typeInfo={typeInfo}
+                          getStatusColor={getStatusColor}
+                        />
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// ==================== Campaign Row Component ====================
+
+interface CampaignRowProps {
+  campaign: any;
+  typeInfo: any;
+  getStatusColor: (status: CampaignStatus) => string;
+}
+
+function CampaignRow({ campaign, typeInfo, getStatusColor }: CampaignRowProps) {
+  const { launch, pause } = useCampaignActions(campaign.id);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
+
+  return (
+    <tr className="border-b border-border hover:bg-secondary/50 transition-colors">
+      <td className="py-4 px-4">
+        <div className="font-medium text-foreground">{campaign.name}</div>
+        <div className="text-sm text-muted-foreground">
+          Created {formatDate(campaign.created_at)}
+        </div>
+      </td>
+      <td className="py-4 px-4">
+        <div className={`flex items-center gap-2 ${typeInfo.color}`}>
+          <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${typeInfo.bg}`}>
+            <typeInfo.icon className="h-4 w-4" />
+          </div>
+          {typeInfo.name}
+        </div>
+      </td>
+      <td className="py-4 px-4">
+        <Badge variant={getStatusColor(campaign.status) as any}>
+          {campaign.status}
+        </Badge>
+      </td>
+      <td className="py-4 px-4 text-foreground">
+        {campaign.sent_count.toLocaleString()}
+        <span className="text-xs text-muted-foreground ml-1">
+          / {campaign.target_count.toLocaleString()}
+        </span>
+      </td>
+      <td className="py-4 px-4 text-foreground">
+        {campaign.delivered_count.toLocaleString()}
+        {campaign.failed_count > 0 && (
+          <span className="text-xs text-red-500 ml-2">
+            ({campaign.failed_count} failed)
+          </span>
+        )}
+      </td>
+      <td className="py-4 px-4 text-foreground">
+        GHS {campaign.total_cost.toFixed(2)}
+      </td>
+      <td className="py-4 px-4">
+        <div className="flex items-center gap-2">
+          {campaign.status === 'draft' && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={launch}
+              className="gap-1"
+            >
+              <Play className="h-3 w-3" />
+              Launch
+            </Button>
+          )}
+          {campaign.status === 'running' && (
+            <Button variant="ghost" size="icon-sm" onClick={pause}>
+              <Pause className="h-4 w-4" />
+            </Button>
+          )}
+          {campaign.status === 'paused' && (
+            <Button variant="ghost" size="icon-sm" onClick={launch}>
+              <Play className="h-4 w-4" />
+            </Button>
+          )}
+          <Button variant="ghost" size="icon-sm">
+            <BarChart3 className="h-4 w-4" />
+          </Button>
+        </div>
+      </td>
+    </tr>
+  );
+}

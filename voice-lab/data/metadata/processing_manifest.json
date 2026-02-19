@@ -1,0 +1,18 @@
+{
+  "created_date": "2025-09-05T19:25:20.539583",
+  "local_base_dir": "data",
+  "google_drive_connected": true,
+  "datasets": {
+    "financial_inclusion": {
+      "status": "analyzed",
+      "location": "google_drive",
+      "folder_id": "1dQ12lglUuxf7y8LZLChk2gv7HK7afw1-",
+      "total_audio_files": 0,
+      "total_size_mb": 10.050920486450195,
+      "ready_for_processing": true
+    }
+  },
+  "processing_ready": [
+    "financial_inclusion"
+  ]
+}

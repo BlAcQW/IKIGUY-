@@ -1,0 +1,299 @@
+/* Modern, engaging fonts - Inter for excellent readability */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/800.css';
+/* Poppins for engaging headers */
+@import '@fontsource/poppins/400.css';
+@import '@fontsource/poppins/500.css';
+@import '@fontsource/poppins/600.css';
+@import '@fontsource/poppins/700.css';
+@import '@fontsource/poppins/800.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core palette - Orange & White (North Point style) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    /* Primary - Alpha Bible Red-Orange (#e42312) */
+    --primary: 5 85% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Red-orange accent (slightly lighter) */
+    --secondary: 5 80% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted - Light gray tones */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Accent - Deeper red-orange for emphasis */
+    --accent: 5 90% 42%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 5 85% 48%;
+
+    --radius: 0.75rem;
+
+    /* Custom red-orange colors - Alpha Bible palette */
+    --orange: 5 85% 48%;
+    --orange-light: 5 75% 60%;
+    --orange-dark: 5 90% 40%;
+    --orange-subtle: 5 50% 95%;
+
+    /* Brand colors for PWA notifications */
+    --navy: 220 40% 15%;
+    --navy-light: 220 30% 25%;
+    --gold: 45 100% 60%;
+    --gold-light: 45 100% 70%;
+    --gold-dark: 45 100% 50%;
+    --cream: 40 30% 95%;
+    --cream-dark: 40 20% 85%;
+    --teal: 180 50% 50%;
+    --teal-light: 180 50% 65%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(5 85% 48%) 0%, hsl(5 80% 55%) 100%);
+    --gradient-orange: linear-gradient(135deg, hsl(5 85% 48%) 0%, hsl(5 75% 60%) 100%);
+    --gradient-light: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(0 0% 99%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.08);
+    --shadow-elevated: 0 12px 40px -8px hsl(0 0% 0% / 0.12);
+    --shadow-orange: 0 8px 30px -6px hsl(5 85% 48% / 0.25);
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 5 85% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 5 85% 48%;
+  }
+
+  .dark {
+    /* Keep light theme even in dark mode for North Point style */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    --primary: 5 85% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 5 80% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 5 90% 42%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 5 85% 48%;
+
+    /* Brand colors for PWA notifications */
+    --navy: 220 40% 15%;
+    --navy-light: 220 30% 25%;
+    --gold: 45 100% 60%;
+    --gold-light: 45 100% 70%;
+    --gold-dark: 45 100% 50%;
+    --cream: 40 30% 95%;
+    --cream-dark: 40 20% 85%;
+    --teal: 180 50% 50%;
+    --teal-light: 180 50% 65%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 5 85% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 5 85% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  
+  h1 {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+}
+
+@layer components {
+  .text-gradient-orange {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(5 85% 48%) 0%, hsl(5 80% 55%) 100%);
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(5 85% 48%) 0%, hsl(45 100% 60%) 100%);
+  }
+  
+  /* Contrast-safe text on colored backgrounds */
+  .text-on-primary {
+    @apply text-primary-foreground;
+  }
+  
+  .text-on-secondary {
+    @apply text-secondary-foreground;
+  }
+  
+  /* Safe badge styles - orange text on white/light backgrounds only */
+  .badge-primary {
+    @apply bg-primary/10 text-primary border border-primary/20;
+  }
+  
+  .badge-secondary {
+    @apply bg-secondary/10 text-primary border border-secondary/20;
+  }
+
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .bg-gradient-light {
+    background: var(--gradient-light);
+  }
+
+  .bg-gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .shadow-orange {
+    box-shadow: var(--shadow-orange);
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite;
+  }
+
+  /* Hide scrollbar but keep scrollability */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+
+  /* Smooth scroll snap for horizontal scrolling */
+  .scroll-snap-x {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-snap-start {
+    scroll-snap-align: start;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+}

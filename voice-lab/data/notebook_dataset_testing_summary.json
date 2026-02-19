@@ -1,0 +1,50 @@
+{
+  "test_date": "2025-09-05",
+  "notebook_tested": "notebooks/001_phase1_data_acquisition.ipynb",
+  "datasets_tested": {
+    "african_whisper": {
+      "status": "\u2705 Working",
+      "method": "GitHub clone",
+      "size": "Small framework repo",
+      "twi_content": "No Twi-specific files found",
+      "usefulness": "Framework for Whisper fine-tuning",
+      "recommendation": "Useful for model training framework"
+    },
+    "twi_speech_text_parallel": {
+      "status": "\u274c Not working",
+      "datasets_tested": [
+        "Wenitte/tw_ner_dataset - not found",
+        "masakhane/mafand - old script format",
+        "castorini/afriberta-corpus - old script format"
+      ],
+      "issue": "All use old dataset script format or not found",
+      "recommendation": "Skip - compatibility issues"
+    },
+    "jw300_parallel": {
+      "status": "\u274c Not working",
+      "issue": "OPUS servers returning 503 errors",
+      "alternative_tried": "HuggingFace versions not found",
+      "recommendation": "Skip - server/availability issues"
+    },
+    "lingua_libre": {
+      "status": "\u274c Limited success",
+      "datasets_found": 1,
+      "twi_content": "None found",
+      "api_test": "Wikimedia API accessible but no Twi results",
+      "recommendation": "Skip - minimal Twi content"
+    },
+    "michsethowusu": {
+      "status": "\ud83c\udf89 MAJOR SUCCESS!",
+      "total_datasets": 971,
+      "key_findings": [
+        "michsethowusu/twi_multispeaker_audio_transcribed - 28,063 samples \u2705",
+        "michsethowusu/akuapem_multispeaker_audio_transcribed - 25,636 samples \u2705",
+        "michsethowusu/fante_multispeaker_audio_transcribed - Available \u2705",
+        "michsethowusu/ga_multispeaker_audio_transcribed - Available \u2705",
+        "Multiple sentence pair datasets with Twi translations \u2705"
+      ],
+      "note": "Datasets were loading successfully when test timed out",
+      "recommendation": "\ud83d\ude80 DEFINITELY INCLUDE - Treasure trove of Twi data!"
+    }
+  }
+}

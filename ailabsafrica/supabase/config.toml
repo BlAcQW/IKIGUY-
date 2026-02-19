@@ -1,0 +1,52 @@
+project_id = "ljzbzjgvwzivpmlmuxhx"
+
+[functions.process-payment]
+verify_jwt = true
+
+[functions.verify-payment]
+verify_jwt = false
+
+[functions.send-demo-notification]
+verify_jwt = false
+
+[functions.list-custom-demos]
+verify_jwt = true
+
+[functions.list-vapi-voices]
+verify_jwt = false
+
+[functions.create-assistant]
+verify_jwt = true
+
+[functions.manage-assistant]
+verify_jwt = true
+
+[functions.extract-site-info]
+verify_jwt = false
+
+[functions.generate-demo-html]
+verify_jwt = false
+
+[functions.deploy-demo-local]
+verify_jwt = false
+
+[functions.contact-form]
+verify_jwt = false
+
+[functions.fetch-call-analytics]
+verify_jwt = false
+
+[functions.fetch-assistant-details]
+verify_jwt = true
+
+[functions.vapi-webhook]
+verify_jwt = false
+
+[functions.demo-versioning]
+verify_jwt = false
+
+[functions.demo-comments]
+verify_jwt = false
+
+[functions.send-sms]
+verify_jwt = false

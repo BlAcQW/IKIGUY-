@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Meeting Request Confirmed - Asenda AI{% endblock %}
+
+{% block content %}
+<h1>Meeting request received, {{ name }}!</h1>
+
+<p>Thank you for scheduling time with our team. We're looking forward to speaking with you!</p>
+
+<div class="highlight-box">
+    <p><strong>Meeting Type:</strong> {{ meeting_type|replace('_', ' ')|title }}</p>
+    {% if preferred_datetime %}
+    <p style="margin-top: 8px;"><strong>Requested Time:</strong> {{ preferred_datetime }}</p>
+    {% endif %}
+</div>
+
+<div class="divider"></div>
+
+<p><strong>Next steps:</strong></p>
+
+<div class="steps">
+    <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-text">Our team will confirm your meeting time within 24 hours</div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-text">You'll receive a calendar invite with a video conferencing link</div>
+    </div>
+    <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-text">Join the meeting at the scheduled time - no preparation needed!</div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<p><strong>What we'll discuss:</strong></p>
+<ul style="color: #4a4a6a; padding-left: 20px;">
+    <li>Your current challenges and goals</li>
+    <li>How voice AI can benefit your business</li>
+    <li>Customization options for your industry</li>
+    <li>Implementation process and timeline</li>
+</ul>
+
+<p style="text-align: center; margin-top: 24px;">
+    <a href="https://asenda.ai" class="button">Learn More About Asenda AI</a>
+</p>
+
+<div class="divider"></div>
+
+<p style="font-size: 14px; color: #71717a;">
+    Need to reschedule? Simply reply to this email and we'll find a better time.
+</p>
+{% endblock %}

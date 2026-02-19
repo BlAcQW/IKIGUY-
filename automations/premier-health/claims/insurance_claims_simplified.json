@@ -1,0 +1,119 @@
+{
+  "name": "Insurance Claims Processing with Vapi",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "insurance-claim-submit",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook_claim_submit",
+      "name": "Webhook - Claim Submission",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate and process claim data\nconst claim = $input.item.json;\n\n// Generate claim ID\nconst claimId = `CLM-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;\n\n// Return validated claim\nreturn {\n  json: {\n    valid: true,\n    claimId: claimId,\n    ...claim,\n    status: 'pending_review',\n    createdAt: new Date().toISOString()\n  }\n};"
+      },
+      "id": "code_validate_claim",
+      "name": "Code - Validate Claim",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.vapi.ai/call",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_VAPI_API_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "assistantId",
+              "value": "YOUR_ASSISTANT_ID"
+            },
+            {
+              "name": "customer",
+              "value": "={{ $json }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "vapi_call",
+      "name": "HTTP Request - Vapi Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "content": "## Success Response",
+        "responseCode": 200,
+        "responseData": "={{ JSON.stringify({success: true, claimId: $json.claimId, status: $json.status}) }}",
+        "options": {}
+      },
+      "id": "webhook_response",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1000, 300]
+    }
+  ],
+  "connections": {
+    "webhook_claim_submit": {
+      "main": [
+        [
+          {
+            "node": "code_validate_claim",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "code_validate_claim": {
+      "main": [
+        [
+          {
+            "node": "vapi_call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "vapi_call": {
+      "main": [
+        [
+          {
+            "node": "webhook_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "insurance-claims-vapi",
+  "tags": []
+}

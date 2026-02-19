@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* African Language Community Platform Design System
+   Inspired by African landscapes, warm earth tones, and vibrant cultural heritage
+   All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Base colors - warm, welcoming earth tones */
+    --background: hsl(45, 25%, 97%);
+    --foreground: hsl(25, 15%, 15%);
+
+    /* Card and surface colors */
+    --card: hsl(45, 30%, 98%);
+    --card-foreground: hsl(25, 15%, 15%);
+
+    --popover: hsl(45, 30%, 98%);
+    --popover-foreground: hsl(25, 15%, 15%);
+
+    /* Primary - warm golden orange inspired by African sunsets */
+    --primary: hsl(25, 85%, 55%);
+    --primary-foreground: hsl(45, 25%, 97%);
+    --primary-glow: hsl(25, 90%, 65%);
+
+    /* Secondary - rich terracotta */
+    --secondary: 15 60% 88%;
+    --secondary-foreground: 25 15% 15%;
+
+    /* Muted tones */
+    --muted: 35 25% 92%;
+    --muted-foreground: 25 8% 45%;
+
+    /* Accent - vibrant green inspired by African landscapes */
+    --accent: 150 60% 88%;
+    --accent-foreground: 150 60% 15%;
+
+    /* Destructive remains standard */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 45 25% 97%;
+
+    /* Border and input styling */
+    --border: 35 30% 88%;
+    --input: 35 30% 90%;
+    --ring: 25 85% 55%;
+
+    /* Community-specific colors */
+    --community-gold: 45 90% 65%;
+    --community-silver: 210 15% 75%;
+    --community-bronze: 30 60% 65%;
+    
+    /* Quality tier colors */
+    --tier-1: 45 90% 65%;    /* Gold standard */
+    --tier-2: 150 60% 55%;   /* Community reviewed */
+    --tier-3: 210 60% 65%;   /* Submitted */
+
+    /* Cultural accent colors */
+    --cultural-warm: 15 75% 60%;
+    --cultural-earth: 35 55% 45%;
+    --cultural-nature: 150 50% 40%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--cultural-warm)) 50%, hsl(var(--cultural-nature)) 100%);
+    --gradient-community: linear-gradient(90deg, hsl(var(--community-gold) / 0.1), hsl(var(--accent) / 0.1));
+    
+    /* Shadows with cultural warmth */
+    --shadow-warm: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+    --shadow-community: 0 5px 20px -5px hsl(var(--community-gold) / 0.4);
+    --shadow-elevation: 0 20px 40px -10px hsl(var(--cultural-earth) / 0.2);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-bounce: bounce 1s ease-in-out;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark mode - warm night colors inspired by African evening sky */
+    --background: 25 15% 8%;
+    --foreground: 45 25% 92%;
+
+    --card: 25 20% 10%;
+    --card-foreground: 45 25% 92%;
+
+    --popover: 25 20% 10%;
+    --popover-foreground: 45 25% 92%;
+
+    --primary: 25 85% 60%;
+    --primary-foreground: 25 15% 8%;
+    --primary-glow: 25 90% 70%;
+
+    --secondary: 25 20% 15%;
+    --secondary-foreground: 45 25% 92%;
+
+    --muted: 25 15% 12%;
+    --muted-foreground: 35 10% 60%;
+
+    --accent: 150 40% 20%;
+    --accent-foreground: 150 60% 85%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 45 25% 92%;
+
+    --border: 25 20% 18%;
+    --input: 25 20% 15%;
+    --ring: 25 85% 60%;
+
+    /* Dark mode community colors */
+    --community-gold: 45 80% 60%;
+    --community-silver: 210 15% 65%;
+    --community-bronze: 30 50% 55%;
+    
+    /* Dark mode quality tiers */
+    --tier-1: 45 80% 60%;
+    --tier-2: 150 50% 50%;
+    --tier-3: 210 50% 60%;
+
+    /* Dark mode cultural accents */
+    --cultural-warm: 15 65% 55%;
+    --cultural-earth: 35 40% 35%;
+    --cultural-nature: 150 40% 35%;
+
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--cultural-warm)) 50%, hsl(var(--cultural-nature)) 100%);
+    --gradient-community: linear-gradient(90deg, hsl(var(--community-gold) / 0.2), hsl(var(--accent) / 0.2));
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-medium;
+    transition: var(--transition-smooth);
+  }
+
+  /* Custom scrollbar for community feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--primary) / 0.3);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--primary) / 0.5);
+  }
+}
+
+@layer components {
+  /* Community-specific component styles */
+  .community-gradient {
+    background: var(--gradient-community);
+  }
+
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .warm-shadow {
+    box-shadow: var(--shadow-warm);
+  }
+
+  .community-shadow {
+    box-shadow: var(--shadow-community);
+  }
+
+  .elevation-shadow {
+    box-shadow: var(--shadow-elevation);
+  }
+
+  /* Animation helpers */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Quality tier indicators */
+  .tier-1-badge {
+    @apply bg-tier-1/20 text-tier-1 border-tier-1/30;
+  }
+
+  .tier-2-badge {
+    @apply bg-tier-2/20 text-tier-2 border-tier-2/30;
+  }
+
+  .tier-3-badge {
+    @apply bg-tier-3/20 text-tier-3 border-tier-3/30;
+  }
+}

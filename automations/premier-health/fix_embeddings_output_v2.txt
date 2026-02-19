@@ -1,0 +1,314 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1761054587.628407 2444056 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+🔧 FIXING BROKEN CITY EMBEDDINGS
+================================================================================
+Total broken cities to fix: 30
+================================================================================
+
+[1/30] Processing: Healthcare Providers in AKWATIA
+   Document ID: 1033
+   Original content length: 279 chars
+   Improved content length: 703 chars
+   ✅ Updated successfully
+
+[2/30] Processing: Healthcare Providers in Akosombo
+   Document ID: 305
+   Original content length: 414 chars
+   Improved content length: 843 chars
+   ✅ Updated successfully
+
+[2/30] Processing: Healthcare Providers in AKOSOMBO
+   Document ID: 1029
+   Original content length: 454 chars
+   Improved content length: 883 chars
+   ✅ Updated successfully
+
+[3/30] Processing: Healthcare Providers in SUHUM
+   Document ID: 1022
+   Original content length: 484 chars
+   Improved content length: 898 chars
+   ✅ Updated successfully
+
+[4/30] Processing: Healthcare Providers in SEFWI ASAWINSO
+   Document ID: 1013
+   Original content length: 477 chars
+   Improved content length: 936 chars
+   ✅ Updated successfully
+
+[5/30] Processing: Healthcare Providers in SEFWI BEKWAI
+   Document ID: 1010
+   Original content length: 342 chars
+   Improved content length: 791 chars
+   ✅ Updated successfully
+
+[6/30] Processing: Healthcare Providers in SEFWI ANHWIASO
+   Document ID: 1079
+   Original content length: 276 chars
+   Improved content length: 735 chars
+   ✅ Updated successfully
+
+[7/30] Processing: Healthcare Providers in ASANKRAGWA
+   Document ID: 1004
+   Original content length: 337 chars
+   Improved content length: 776 chars
+   ✅ Updated successfully
+
+[8/30] Processing: Healthcare Providers in BOGOSO
+   Document ID: 1072
+   Original content length: 288 chars
+   Improved content length: 707 chars
+   ✅ Updated successfully
+
+[9/30] Processing: Healthcare Providers in AJUMAKO
+   Document ID: 996
+   Original content length: 635 chars
+   Improved content length: 1059 chars
+   ✅ Updated successfully
+
+[10/30] Processing: Healthcare Providers in ASIKUMA
+   Document ID: 1065
+   Original content length: 635 chars
+   Improved content length: 1059 chars
+   ✅ Updated successfully
+
+[11/30] Processing: Healthcare Providers in MANKESSIM
+   Document ID: 994
+   Original content length: 416 chars
+   Improved content length: 850 chars
+   ✅ Updated successfully
+
+[12/30] Processing: Healthcare Providers in ASSIN
+   Document ID: 1061
+   Original content length: 1046 chars
+   Improved content length: 1460 chars
+   ✅ Updated successfully
+
+[13/30] Processing: Healthcare Providers in WENCHI
+   Document ID: 985
+   Original content length: 429 chars
+   Improved content length: 848 chars
+   ✅ Updated successfully
+
+[14/30] Processing: Healthcare Providers in KENYASE
+   Document ID: 1053
+   Original content length: 1051 chars
+   Improved content length: 1475 chars
+   ✅ Updated successfully
+
+[15/30] Processing: Healthcare Providers in TSE ADDO
+   Document ID: 905
+   Original content length: 1859 chars
+   Improved content length: 2288 chars
+   ✅ Updated successfully
+
+[15/30] Processing: Healthcare Providers in LABONE / LA / TSE ADDO / CANTONMENTS
+   Document ID: 459
+   Original content length: 3259 chars
+   Improved content length: 3828 chars
+   ✅ Updated successfully
+
+[16/30] Processing: Healthcare Providers in RIDGE
+   Document ID: 887
+   Original content length: 747 chars
+   Improved content length: 1161 chars
+   ✅ Updated successfully
+
+[17/30] Processing: Healthcare Providers in MAKOLA
+   Document ID: 437
+   Original content length: 2848 chars
+   Improved content length: 3267 chars
+   ✅ Updated successfully
+
+[17/30] Processing: Healthcare Providers in Accra Central  Tudu  Makola
+   Document ID: 299
+   Original content length: 2367 chars
+   Improved content length: 2891 chars
+   ✅ Updated successfully
+
+[18/30] Processing: Healthcare Providers in LATEBIOKOSHIE
+   Document ID: 868
+   Original content length: 693 chars
+   Improved content length: 1147 chars
+   ✅ Updated successfully
+
+[18/30] Processing: Healthcare Providers in LATEBIOKOSHIE / MATAHEKO
+   Document ID: 454
+   Original content length: 1228 chars
+   Improved content length: 1737 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Claims Process and Reimbursement
+   Document ID: 1
+   Original content length: 998 chars
+   Improved content length: 1547 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Premier Health Claims and Customer Service
+   Document ID: 11
+   Original content length: 423 chars
+   Improved content length: 1022 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in LAWRA
+   Document ID: 973
+   Original content length: 758 chars
+   Improved content length: 1172 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in MAKOLA
+   Document ID: 437
+   Original content length: 3267 chars
+   Improved content length: 3686 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in Accra Central  Tudu  Makola
+   Document ID: 299
+   Original content length: 2891 chars
+   Improved content length: 3415 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in LABONE
+   Document ID: 865
+   Original content length: 1857 chars
+   Improved content length: 2276 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in LASHIBI
+   Document ID: 867
+   Original content length: 2344 chars
+   Improved content length: 2768 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in LATEBIOKOSHIE
+   Document ID: 868
+   Original content length: 1147 chars
+   Improved content length: 1601 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in LA
+   Document ID: 864
+   Original content length: 1853 chars
+   Improved content length: 2252 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in LAPAZ
+   Document ID: 866
+   Original content length: 1567 chars
+   Improved content length: 1981 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in LABONE / LA / TSE ADDO / CANTONMENTS
+   Document ID: 459
+   Original content length: 3828 chars
+   Improved content length: 4397 chars
+   ✅ Updated successfully
+
+[19/30] Processing: Healthcare Providers in LATEBIOKOSHIE / MATAHEKO
+   Document ID: 454
+   Original content length: 1737 chars
+   Improved content length: 2246 chars
+   ✅ Updated successfully
+
+[20/30] Processing: Healthcare Providers in KWABENYA
+   Document ID: 863
+   Original content length: 1499 chars
+   Improved content length: 1928 chars
+   ✅ Updated successfully
+
+[21/30] Processing: Healthcare Providers in KOKOMLEMLE
+   Document ID: 450
+   Original content length: 759 chars
+   Improved content length: 1198 chars
+   ✅ Updated successfully
+
+[22/30] Processing: Healthcare Providers in DARKUMAN
+   Document ID: 847
+   Original content length: 1570 chars
+   Improved content length: 1999 chars
+   ✅ Updated successfully
+
+[23/30] Processing: Healthcare Providers in COMMUNITY 38
+   Document ID: 842
+   Original content length: 317 chars
+   Improved content length: 766 chars
+   ✅ Updated successfully
+
+[24/30] Processing: Healthcare Providers in AMANSAMAN
+   Document ID: 800
+   Original content length: 616 chars
+   Improved content length: 1050 chars
+   ✅ Updated successfully
+
+[25/30] Processing: Healthcare Providers in ADJRINGANOR
+   Document ID: 792
+   Original content length: 2705 chars
+   Improved content length: 3149 chars
+   ✅ Updated successfully
+
+[26/30] Processing: Healthcare Providers in ADABRAKA
+   Document ID: 790
+   Original content length: 985 chars
+   Improved content length: 1414 chars
+   ✅ Updated successfully
+
+[26/30] Processing: Healthcare Providers in Adabraka
+   Document ID: 301
+   Original content length: 1183 chars
+   Improved content length: 1612 chars
+   ✅ Updated successfully
+
+[27/30] Processing: Healthcare Providers in Accra Central  Tudu  Makola
+   Document ID: 299
+   Original content length: 3415 chars
+   Improved content length: 3939 chars
+   ✅ Updated successfully
+
+[27/30] Processing: Healthcare Providers in ACCRA CENTRAL
+   Document ID: 435
+   Original content length: 2960 chars
+   Improved content length: 3414 chars
+   ✅ Updated successfully
+
+[28/30] Processing: Healthcare Providers in ABELENKPE
+   Document ID: 785
+   Original content length: 1354 chars
+   Improved content length: 1788 chars
+   ✅ Updated successfully
+
+[28/30] Processing: Healthcare Providers in DZORWULU / ABELENKPE
+   Document ID: 445
+   Original content length: 2268 chars
+   Improved content length: 2757 chars
+   ✅ Updated successfully
+
+[29/30] Processing: Healthcare Providers in Akosombo
+   Document ID: 305
+   Original content length: 843 chars
+   Improved content length: 1272 chars
+   ✅ Updated successfully
+
+[29/30] Processing: Healthcare Providers in AKOSOMBO
+   Document ID: 1029
+   Original content length: 883 chars
+   Improved content length: 1312 chars
+   ✅ Updated successfully
+
+[30/30] Processing: Healthcare Providers in ADABRAKA
+   Document ID: 790
+   Original content length: 1414 chars
+   Improved content length: 1843 chars
+   ✅ Updated successfully
+
+[30/30] Processing: Healthcare Providers in Adabraka
+   Document ID: 301
+   Original content length: 1612 chars
+   Improved content length: 2041 chars
+   ✅ Updated successfully
+
+================================================================================
+📊 SUMMARY
+================================================================================
+Total cities processed: 30
+Successfully fixed: 50
+Failed: 0
+================================================================================

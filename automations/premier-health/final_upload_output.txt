@@ -1,0 +1,74 @@
+2025-10-21 16:08:41,636 - INFO - ================================================================================
+2025-10-21 16:08:41,636 - INFO - 🌍 PREMIER HEALTH - UPLOAD ALL REGIONAL DATA
+2025-10-21 16:08:41,636 - INFO - ================================================================================
+2025-10-21 16:08:41,636 - INFO - CSV Directory: /opt/kasaai/apps/automations/premier-health/regional_cities/enriched
+2025-10-21 16:08:41,636 - INFO - Collection: helpdesk_premier_health_production
+2025-10-21 16:08:41,636 - INFO - ================================================================================
+2025-10-21 16:08:41,636 - INFO - 📁 Processing: greater_accra_region_enriched.csv
+2025-10-21 16:08:41,637 - INFO -    Found 0 cities with 0 providers
+2025-10-21 16:08:41,637 - INFO - 
+2025-10-21 16:08:41,637 - INFO - 📁 Processing: all_northern_regions_enriched.csv
+2025-10-21 16:08:41,637 - INFO -    Found 0 cities with 0 providers
+2025-10-21 16:08:41,637 - INFO - 
+2025-10-21 16:08:41,637 - INFO - 📁 Processing: ashanti_region_kumasi_enriched.csv
+2025-10-21 16:08:41,637 - INFO -    Found 0 cities with 0 providers
+2025-10-21 16:08:41,637 - INFO - 
+2025-10-21 16:08:41,637 - INFO - 📁 Processing: bono_regions_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Found 0 cities with 0 providers
+2025-10-21 16:08:41,638 - INFO - 
+2025-10-21 16:08:41,638 - INFO - 📁 Processing: central_and_western_region_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Found 0 cities with 0 providers
+2025-10-21 16:08:41,638 - INFO - 
+2025-10-21 16:08:41,638 - INFO - 📁 Processing: eastern_and_volta_regions_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Found 0 cities with 0 providers
+2025-10-21 16:08:41,638 - INFO - 
+2025-10-21 16:08:41,638 - INFO - ================================================================================
+2025-10-21 16:08:41,638 - INFO - 📊 UPLOAD SUMMARY
+2025-10-21 16:08:41,638 - INFO - ================================================================================
+2025-10-21 16:08:41,638 - INFO - 
+📁 greater_accra_region_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Cities: 0
+2025-10-21 16:08:41,638 - INFO -    Uploaded: 0
+2025-10-21 16:08:41,638 - INFO -    Skipped: 0
+2025-10-21 16:08:41,638 - INFO -    Errors: 0
+2025-10-21 16:08:41,638 - INFO - 
+📁 all_northern_regions_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Cities: 0
+2025-10-21 16:08:41,638 - INFO -    Uploaded: 0
+2025-10-21 16:08:41,638 - INFO -    Skipped: 0
+2025-10-21 16:08:41,638 - INFO -    Errors: 0
+2025-10-21 16:08:41,638 - INFO - 
+📁 ashanti_region_kumasi_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Cities: 0
+2025-10-21 16:08:41,638 - INFO -    Uploaded: 0
+2025-10-21 16:08:41,638 - INFO -    Skipped: 0
+2025-10-21 16:08:41,638 - INFO -    Errors: 0
+2025-10-21 16:08:41,638 - INFO - 
+📁 bono_regions_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Cities: 0
+2025-10-21 16:08:41,638 - INFO -    Uploaded: 0
+2025-10-21 16:08:41,638 - INFO -    Skipped: 0
+2025-10-21 16:08:41,638 - INFO -    Errors: 0
+2025-10-21 16:08:41,638 - INFO - 
+📁 central_and_western_region_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Cities: 0
+2025-10-21 16:08:41,638 - INFO -    Uploaded: 0
+2025-10-21 16:08:41,638 - INFO -    Skipped: 0
+2025-10-21 16:08:41,638 - INFO -    Errors: 0
+2025-10-21 16:08:41,638 - INFO - 
+📁 eastern_and_volta_regions_enriched.csv
+2025-10-21 16:08:41,638 - INFO -    Cities: 0
+2025-10-21 16:08:41,638 - INFO -    Uploaded: 0
+2025-10-21 16:08:41,638 - INFO -    Skipped: 0
+2025-10-21 16:08:41,638 - INFO -    Errors: 0
+2025-10-21 16:08:41,638 - INFO - 
+================================================================================
+2025-10-21 16:08:41,638 - INFO - 🎯 TOTALS
+2025-10-21 16:08:41,638 - INFO - ================================================================================
+2025-10-21 16:08:41,638 - INFO - Total cities: 0
+2025-10-21 16:08:41,638 - INFO - Newly uploaded: 0
+2025-10-21 16:08:41,638 - INFO - Already existed: 0
+2025-10-21 16:08:41,638 - INFO - Errors: 0
+2025-10-21 16:08:41,638 - INFO - ================================================================================
+2025-10-21 16:08:41,638 - INFO - ✅ ALL REGIONAL DATA UPLOADED SUCCESSFULLY!
+2025-10-21 16:08:41,638 - INFO - ================================================================================

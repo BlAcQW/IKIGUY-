@@ -1,0 +1,980 @@
+{
+  "name": "Enhanced Appointment Booking Campaign with VAPI + Calendar Integration",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointment-booking-trigger",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Appointment Booking Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "webhookId": "appointment-booking-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "prospect_name",
+              "name": "prospect_name",
+              "value": "={{ $json.prospect_name }}",
+              "type": "string"
+            },
+            {
+              "id": "prospect_email",
+              "name": "prospect_email",
+              "value": "={{ $json.prospect_email }}",
+              "type": "string"
+            },
+            {
+              "id": "prospect_phone",
+              "name": "prospect_phone",
+              "value": "={{ $json.prospect_phone }}",
+              "type": "string"
+            },
+            {
+              "id": "appointment_type",
+              "name": "appointment_type",
+              "value": "={{ $json.appointment_type || 'consultation' }}",
+              "type": "string"
+            },
+            {
+              "id": "preferred_dates",
+              "name": "preferred_dates",
+              "value": "={{ $json.preferred_dates || [] }}",
+              "type": "array"
+            },
+            {
+              "id": "campaign_type",
+              "name": "campaign_type",
+              "value": "appointment_booking",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-booking-data",
+      "name": "Set Booking Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/appointment-booking/check-availability",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "appointment_type",
+              "value": "={{ $json.appointment_type }}"
+            },
+            {
+              "name": "preferred_dates",
+              "value": "={{ $json.preferred_dates }}"
+            },
+            {
+              "name": "duration_minutes",
+              "value": 30
+            },
+            {
+              "name": "team_member_preference",
+              "value": "any_available"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "check-availability",
+      "name": "Check Calendar Availability",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "availability_found",
+              "leftValue": "={{ $json.available_slots }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-availability-status",
+      "name": "Check Availability Status",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 42cf1e7c-2ef9-4bd7-ba30-52f2813605a2"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "assistantId",
+              "value": "asst_appointment_booking_enhanced"
+            },
+            {
+              "name": "customer",
+              "value": {
+                "number": "={{ $json.prospect_phone }}",
+                "name": "={{ $json.prospect_name }}"
+              }
+            },
+            {
+              "name": "assistantOverrides",
+              "value": {
+                "variableValues": {
+                  "prospect_name": "={{ $json.prospect_name }}",
+                  "appointment_type": "={{ $json.appointment_type }}",
+                  "available_slots": "={{ $json.available_slots }}",
+                  "company_name": "{{ $env.COMPANY_NAME || 'Our Company' }}"
+                }
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "initiate-booking-call",
+      "name": "Initiate VAPI Booking Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1000, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.sendgrid.v3.mail.send",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.SENDGRID_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "personalizations",
+              "value": [
+                {
+                  "to": [
+                    {
+                      "email": "={{ $json.prospect_email }}",
+                      "name": "={{ $json.prospect_name }}"
+                    }
+                  ],
+                  "dynamic_template_data": {
+                    "prospect_name": "={{ $json.prospect_name }}",
+                    "appointment_type": "={{ $json.appointment_type }}",
+                    "company_name": "{{ $env.COMPANY_NAME }}",
+                    "scheduling_link": "https://calendly.com/company/booking"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "value": {
+                "email": "scheduling@company.com",
+                "name": "Scheduling Team"
+              }
+            },
+            {
+              "name": "template_id",
+              "value": "d-no-availability-alternative"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-alternative-booking",
+      "name": "Send Alternative Booking Options",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1000, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Wait for call completion and extract booking results\nconst callId = $input.first().json.id;\nconst maxWaitTime = 600000; // 10 minutes\nconst checkInterval = 15000; // 15 seconds\nlet totalWaitTime = 0;\n\nwhile (totalWaitTime < maxWaitTime) {\n  await new Promise(resolve => setTimeout(resolve, checkInterval));\n  totalWaitTime += checkInterval;\n  \n  // Check call status\n  const response = await $http.request({\n    method: 'GET',\n    url: `https://api.vapi.ai/call/${callId}`,\n    headers: {\n      'Authorization': 'Bearer 42cf1e7c-2ef9-4bd7-ba30-52f2813605a2'\n    }\n  });\n  \n  if (response.status === 'ended') {\n    return [{\n      json: {\n        call_id: callId,\n        call_duration: response.duration,\n        booking_outcome: response.analysis?.structuredData?.booking_outcome || 'no_booking',\n        appointment_type: response.analysis?.structuredData?.appointment_type || 'unknown',\n        scheduled_datetime: response.analysis?.structuredData?.scheduled_datetime || null,\n        customer_satisfaction: response.analysis?.structuredData?.customer_satisfaction || 'neutral',\n        special_requirements: response.analysis?.structuredData?.special_requirements || [],\n        booking_efficiency: response.analysis?.structuredData?.booking_efficiency || 5,\n        follow_up_needed: response.analysis?.structuredData?.follow_up_needed || false,\n        appointment_value_estimate: response.analysis?.structuredData?.appointment_value_estimate || 0,\n        call_summary: response.analysis?.summary || 'No summary available',\n        transcript: response.transcript || ''\n      }\n    }];\n  }\n}\n\n// Timeout reached\nreturn [{\n  json: {\n    call_id: callId,\n    booking_outcome: 'timeout',\n    error: 'Call monitoring timed out after 10 minutes'\n  }\n}];"
+      },
+      "id": "monitor-booking-call",
+      "name": "Monitor Booking Call Completion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1200, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "appointment_booked",
+              "leftValue": "={{ $json.booking_outcome }}",
+              "rightValue": "appointment_booked",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "rescheduled",
+              "leftValue": "={{ $json.booking_outcome }}",
+              "rightValue": "rescheduled",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "route-booking-outcome",
+      "name": "Route Booking Outcome",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1400, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/appointment-booking/book-appointment",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "appointment_type",
+              "value": "={{ $json.appointment_type }}"
+            },
+            {
+              "name": "scheduled_datetime",
+              "value": "={{ $json.scheduled_datetime }}"
+            },
+            {
+              "name": "duration_minutes",
+              "value": 30
+            },
+            {
+              "name": "customer_name",
+              "value": "={{ $json.prospect_name }}"
+            },
+            {
+              "name": "customer_email",
+              "value": "={{ $json.prospect_email }}"
+            },
+            {
+              "name": "customer_phone",
+              "value": "={{ $json.prospect_phone }}"
+            },
+            {
+              "name": "meeting_location",
+              "value": "video_call"
+            },
+            {
+              "name": "send_calendar_invite",
+              "value": true
+            },
+            {
+              "name": "appointment_notes",
+              "value": "={{ $json.special_requirements.join(', ') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "create-appointment",
+      "name": "Create Calendar Appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1600, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/appointment-booking/schedule-follow-up",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prospect_name",
+              "value": "={{ $json.prospect_name }}"
+            },
+            {
+              "name": "prospect_email",
+              "value": "={{ $json.prospect_email }}"
+            },
+            {
+              "name": "follow_up_reason",
+              "value": "booking_incomplete"
+            },
+            {
+              "name": "follow_up_type",
+              "value": "scheduling_assistance"
+            },
+            {
+              "name": "priority",
+              "value": "medium"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "schedule-follow-up",
+      "name": "Schedule Follow-up",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1600, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "calendarId": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "list"
+        },
+        "start": "={{ $json.scheduled_datetime }}",
+        "end": "={{ new Date(new Date($json.scheduled_datetime).getTime() + 30 * 60000).toISOString() }}",
+        "summary": "={{ $json.appointment_type.charAt(0).toUpperCase() + $json.appointment_type.slice(1) }} - {{ $json.prospect_name }}",
+        "description": "Appointment booked via AI voice assistant.\\n\\nCustomer: {{ $json.prospect_name }}\\nEmail: {{ $json.prospect_email }}\\nPhone: {{ $json.prospect_phone }}\\n\\nSpecial Requirements: {{ $json.special_requirements.join(', ') || 'None' }}\\n\\nCall Summary: {{ $json.call_summary }}",
+        "attendees": "={{ $json.prospect_email }}",
+        "sendUpdates": "all",
+        "useDefaultReminders": true,
+        "conferenceData": {
+          "createRequest": {
+            "requestId": "={{ $json.call_id }}_meet",
+            "conferenceSolutionKey": {
+              "type": "hangoutsMeet"
+            }
+          }
+        }
+      },
+      "id": "create-google-calendar-event",
+      "name": "Create Google Calendar Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 2,
+      "position": [1800, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/appointment-booking/set-reminders",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "appointment_id",
+              "value": "={{ $json.appointment_id }}"
+            },
+            {
+              "name": "reminder_schedule",
+              "value": [
+                {
+                  "time_before": "24_hours",
+                  "reminder_type": "email",
+                  "include_preparation": true
+                },
+                {
+                  "time_before": "2_hours",
+                  "reminder_type": "sms",
+                  "include_preparation": false
+                }
+              ]
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-appointment-reminders",
+      "name": "Set Appointment Reminders",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ailabs-888099064326049059.myfreshworks.com/crm/sales/api/appointments",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Token token={{ $env.FRESHDESK_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "appointment",
+              "value": {
+                "title": "={{ $json.appointment_type }} - {{ $json.prospect_name }}",
+                "description": "={{ $json.call_summary }}",
+                "start_time": "={{ $json.scheduled_datetime }}",
+                "end_time": "={{ new Date(new Date($json.scheduled_datetime).getTime() + 30 * 60000).toISOString() }}",
+                "attendees": [
+                  {
+                    "name": "={{ $json.prospect_name }}",
+                    "email": "={{ $json.prospect_email }}",
+                    "phone": "={{ $json.prospect_phone }}"
+                  }
+                ],
+                "location": "Video Call",
+                "custom_fields": {
+                  "cf_appointment_source": "ai_voice_booking",
+                  "cf_booking_efficiency": "={{ $json.booking_efficiency }}",
+                  "cf_customer_satisfaction": "={{ $json.customer_satisfaction }}",
+                  "cf_special_requirements": "={{ $json.special_requirements.join(', ') }}",
+                  "cf_estimated_value": "={{ $json.appointment_value_estimate }}"
+                }
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "update-crm-appointment",
+      "name": "Update CRM Appointment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/analytics/appointment-booking/track-campaign",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "campaign_type",
+              "value": "appointment_booking"
+            },
+            {
+              "name": "prospect_name",
+              "value": "={{ $json.prospect_name }}"
+            },
+            {
+              "name": "call_id",
+              "value": "={{ $json.call_id }}"
+            },
+            {
+              "name": "booking_outcome",
+              "value": "={{ $json.booking_outcome }}"
+            },
+            {
+              "name": "appointment_type",
+              "value": "={{ $json.appointment_type }}"
+            },
+            {
+              "name": "scheduled_datetime",
+              "value": "={{ $json.scheduled_datetime }}"
+            },
+            {
+              "name": "customer_satisfaction",
+              "value": "={{ $json.customer_satisfaction }}"
+            },
+            {
+              "name": "booking_efficiency",
+              "value": "={{ $json.booking_efficiency }}"
+            },
+            {
+              "name": "call_duration",
+              "value": "={{ $json.call_duration }}"
+            },
+            {
+              "name": "appointment_value_estimate",
+              "value": "={{ $json.appointment_value_estimate }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now.toISOString() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "track-booking-analytics",
+      "name": "Track Booking Analytics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2400, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "successful_booking",
+              "leftValue": "={{ $json.booking_outcome }}",
+              "rightValue": "appointment_booked",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "send_confirmation",
+              "leftValue": "={{ $json.customer_satisfaction }}",
+              "rightValue": "dissatisfied",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-confirmation-trigger",
+      "name": "Check Confirmation Trigger",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2600, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/appointment-booking/send-confirmation",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "appointment_id",
+              "value": "={{ $json.appointment_id }}"
+            },
+            {
+              "name": "confirmation_type",
+              "value": "initial_booking"
+            },
+            {
+              "name": "include_calendar_invite",
+              "value": true
+            },
+            {
+              "name": "include_preparation_guide",
+              "value": true
+            },
+            {
+              "name": "include_location_details",
+              "value": true
+            },
+            {
+              "name": "send_via",
+              "value": ["email", "sms"]
+            },
+            {
+              "name": "custom_message",
+              "value": "Looking forward to our {{ $json.appointment_type }} session! All the details are in your calendar invitation."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-booking-confirmation",
+      "name": "Send Booking Confirmation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2800, 100]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"campaign_type\": \"appointment_booking\",\n  \"prospect_name\": \"{{ $json.prospect_name }}\",\n  \"booking_outcome\": \"{{ $json.booking_outcome }}\",\n  \"appointment_type\": \"{{ $json.appointment_type }}\",\n  \"scheduled_datetime\": \"{{ $json.scheduled_datetime }}\",\n  \"customer_satisfaction\": \"{{ $json.customer_satisfaction }}\",\n  \"booking_efficiency\": {{ $json.booking_efficiency }},\n  \"appointment_value_estimate\": {{ $json.appointment_value_estimate }},\n  \"follow_up_needed\": {{ $json.follow_up_needed }},\n  \"timestamp\": \"{{ $now.toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "webhook-response",
+      "name": "Booking Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [2800, 300]
+    }
+  ],
+  "connections": {
+    "Appointment Booking Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Booking Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Booking Data": {
+      "main": [
+        [
+          {
+            "node": "Check Calendar Availability",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Calendar Availability": {
+      "main": [
+        [
+          {
+            "node": "Check Availability Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Availability Status": {
+      "main": [
+        [
+          {
+            "node": "Initiate VAPI Booking Call",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Alternative Booking Options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initiate VAPI Booking Call": {
+      "main": [
+        [
+          {
+            "node": "Monitor Booking Call Completion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Alternative Booking Options": {
+      "main": [
+        [
+          {
+            "node": "Booking Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monitor Booking Call Completion": {
+      "main": [
+        [
+          {
+            "node": "Route Booking Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Booking Outcome": {
+      "main": [
+        [
+          {
+            "node": "Create Calendar Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Schedule Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Calendar Appointment": {
+      "main": [
+        [
+          {
+            "node": "Create Google Calendar Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Follow-up": {
+      "main": [
+        [
+          {
+            "node": "Booking Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Google Calendar Event": {
+      "main": [
+        [
+          {
+            "node": "Set Appointment Reminders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Appointment Reminders": {
+      "main": [
+        [
+          {
+            "node": "Update CRM Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update CRM Appointment": {
+      "main": [
+        [
+          {
+            "node": "Track Booking Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track Booking Analytics": {
+      "main": [
+        [
+          {
+            "node": "Check Confirmation Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Confirmation Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Booking Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Booking Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Booking Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Booking Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "appointment_booking",
+      "name": "Appointment Booking"
+    },
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "vapi",
+      "name": "VAPI Integration"
+    },
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "calendar",
+      "name": "Calendar Integration"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-16T12:00:00.000Z",
+  "versionId": "1"
+}

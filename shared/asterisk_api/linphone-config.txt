@@ -1,0 +1,60 @@
+Linphone SIP Configuration for +2330247535969
+================================================
+
+COPY & PASTE THESE SETTINGS INTO LINPHONE:
+
+Account Settings:
+-----------------
+Username: kasaai_20251112133610
+Password: t4F8giscgWzhKlsF
+Domain: asterisk.ailabsafrica.com
+Display Name: KasaAI Gateway
+Transport: UDP
+
+Server Settings:
+----------------
+Proxy: asterisk.ailabsafrica.com
+Port: 5060
+Outbound Proxy: (leave blank)
+Route: (leave blank)
+
+Advanced Settings:
+------------------
+Expire: 3600
+Push Notifications: Enabled
+Keep Alive: Enabled
+Media Encryption: None
+STUN Server: stun.linphone.org
+
+Codecs (Priority Order):
+------------------------
+1. PCMU (G.711 μ-law)
+2. PCMA (G.711 A-law)
+3. G.722
+4. Opus
+
+Network Settings:
+-----------------
+WiFi: Recommended (stable connection)
+Mobile Data: Works (uses data for calls)
+Firewall: Allow UDP 5060, 10000-20000
+
+Quick Test:
+-----------
+After registration, call: echo@asterisk.ailabsafrica.com
+You should hear your voice echoed back!
+
+Troubleshooting:
+----------------
+If "Registration Failed":
+1. Check WiFi/Internet connection
+2. Verify username/password (case-sensitive)
+3. Try TCP instead of UDP
+4. Restart Linphone app
+5. Check Asterisk API health: https://asterisk-api.ailabsafrica.com/health
+
+Support:
+--------
+Dashboard: https://kasaai.ailabsafrica.com/telephony
+API Status: https://asterisk-api.ailabsafrica.com/health
+Full Guide: /opt/kasaai/apps/shared/asterisk_api/PHONE_AS_GATEWAY_GUIDE.md

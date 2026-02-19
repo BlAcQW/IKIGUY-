@@ -1,0 +1,406 @@
+
+================================================================================
+🔄 FULL RE-INDEXING: Premier Health Documents
+================================================================================
+
+This will:
+  1. Delete all existing documents and embeddings
+  2. Re-create documents from enriched CSV files
+  3. Generate fresh embeddings for all documents
+
+================================================================================
+
+⚠️  WARNING: This will delete all existing documents!
+   Press Ctrl+C to cancel, or wait 5 seconds to continue...
+
+🗑️  STEP 1: Deleting all existing documents...
+================================================================================
+   Deleted: Healthcare Providers in AMASAMAN (6a0db52c-cc2a-46ac-8d94-3dc2c8762bf8)
+   Deleted: Healthcare Providers in NAVRONGO (f04435c5-c2a9-48c2-9e74-fba9b95c81d2)
+   Deleted: Healthcare Providers in BAWKU (c06499f7-2107-4bab-8d08-9704ca342ac5)
+   Deleted: Healthcare Providers in BOLGATANGA (88c69e4c-ccc1-4745-b44b-ca49c805c2ab)
+   Deleted: Healthcare Providers in LAWRA (9f8fd7dd-63e8-4eaa-96b5-97b4c739187b)
+   Deleted: Healthcare Providers in WA (f2e5a7ad-34a9-4835-a489-9528a1db6859)
+   Deleted: Healthcare Providers in TAMALE (392b89e5-4b19-4c09-aea7-d3768b2f5039)
+   Deleted: Healthcare Providers in DUAYAW NKWANTA (b173e006-abce-4e6a-b119-ef9c1e9d12c8)
+   Deleted: Healthcare Providers in KINTAMPO (44d79204-6184-4803-af7d-27ebdfc4e5d4)
+   Deleted: Healthcare Providers in SAMPA (444fab70-3548-42f4-a624-3dbc8c46a83e)
+   Deleted: Healthcare Providers in BEREKUM (8191d9cb-e501-4404-af77-79406f377d16)
+   Deleted: Healthcare Providers in WENCHI (acd231e3-c6f0-40de-b6c4-cac2d4b039a0)
+   Deleted: Healthcare Providers in TECHIMAN (6027bce4-785d-430f-8499-c8d3dc94742a)
+   Deleted: Healthcare Providers in BECHEM (d34f8a99-21f2-4ad5-a8e0-0c0cf8de9044)
+   Deleted: Healthcare Providers in KENYASE (ad5258e9-0de3-431a-93d8-e2f726573b23)
+   Deleted: Healthcare Providers in HWIDIEM (d3e7c096-406c-43b0-918c-b1ec1e950b02)
+   Deleted: Healthcare Providers in GOASO (a34b269d-3913-4e6c-9a34-e5c95067895c)
+   Deleted: Healthcare Providers in SUNYANI (fc6e1466-198b-45eb-840e-41f37c965438)
+   Deleted: Healthcare Providers in DORMAA (0c1b6ad9-e973-46b1-8188-fd9165596a52)
+   Deleted: Healthcare Providers in DROBO (b3c8db65-1d64-42cf-a47a-1ac65433ee80)
+   Deleted: Healthcare Providers in NKORANZA (1ae6e42e-45ee-4298-8163-5c3077789521)
+   Deleted: Healthcare Providers in AJUMAKO (fe41c0ec-8070-41d7-ac35-9f8b86fd81f4)
+   Deleted: Healthcare Providers in ASIKUMA (2d8d8475-ef6a-437b-9dc4-b74f2874dbe2)
+   Deleted: Healthcare Providers in HOHOE (160d49bc-cbee-433f-b291-9e5ff4c402ae)
+   Deleted: Healthcare Providers in HO (b56c28f8-3a39-4970-81cc-ba23165e2a6a)
+   Deleted: Healthcare Providers in NEW ABIREM (b89c698f-0204-4a2d-8ec1-d3654ab2d6de)
+   Deleted: Healthcare Providers in NKAWKAW (33981b19-6dab-43f2-918e-3afae6578790)
+   Deleted: Healthcare Providers in OSIEM (bac5abd6-66bc-47ed-b34b-d3301c84d661)
+   Deleted: Healthcare Providers in BEGORO (f93b223d-2e9d-4252-89d6-eb464eae5fd8)
+   Deleted: Healthcare Providers in KADE (6dff4a96-0bbf-449d-92ce-ed077ab8004a)
+   Deleted: Healthcare Providers in AKWATIA (81348c14-0079-4d7e-84ad-545148d19613)
+   Deleted: Healthcare Providers in ODA (c037a8cd-2328-4470-83b8-0693d28bc851)
+   Deleted: Healthcare Providers in ODUMASE KROBO (a12166ae-f929-402c-8bd2-bf4ae10dab0d)
+   Deleted: Healthcare Providers in SOMANYA (da739edb-88bf-40ce-a03e-ddf12d51e697)
+   Deleted: Healthcare Providers in AKOSOMBO (6b191ca3-902b-476c-9064-5d51f7d715a7)
+   Deleted: Healthcare Providers in KIBI (6e080c4b-e89a-4ccd-bbb6-0036c94ac85b)
+   Deleted: Healthcare Providers in ENYIRESI (ab9d9365-b42a-4c04-89d5-0b24a6b7e9dd)
+   Deleted: Healthcare Providers in ANYINAM (960b5636-454d-4093-a1f0-d43d3b313103)
+   Deleted: Healthcare Providers in OSINO (bf091101-4245-4059-859a-95ab20e71cf5)
+   Deleted: Healthcare Providers in ASIAKWA (1b017c79-9330-472d-a0cc-5f9dc5a4bcef)
+   Deleted: Healthcare Providers in ASAMANKESE (c0db77c2-b7b1-4d68-8a27-e59f1a0fa5b4)
+   Deleted: Healthcare Providers in SUHUM (fdd037f8-634f-46f9-b219-f7ac24fb0968)
+   Deleted: Healthcare Providers in NSAWAM (2215337d-888d-4fcd-90ba-621dce799180)
+   Deleted: Healthcare Providers in MAMFE AKUAPEM (f108af02-4175-40fd-861e-0b6ab127e61a)
+   Deleted: Healthcare Providers in KOFORIDUA (b9ad9dc1-6f56-4650-b681-92e5ed3c5fd8)
+   Deleted: Healthcare Providers in SEFWI ESSAM (54bec414-07d1-4b56-8115-70cb4e31d1ca)
+   Deleted: Healthcare Providers in SEFWI AKONTOMBRA (55536c28-2a04-4e08-88fd-25bb28df6237)
+   Deleted: Healthcare Providers in SEFWI BODI (7427fe95-45e8-46a4-beee-104e6c28d29a)
+   Deleted: Healthcare Providers in SEFWI ASAWINSO (0535a69b-f076-4230-ba7f-30d99d798563)
+   Deleted: Healthcare Providers in SEFWI ASAFO (611b4ea8-1973-4610-97af-eda6adc86377)
+   Deleted: Healthcare Providers in SEFWI WIAWSO (ae42943a-f133-4fcf-8b3e-c0aacb25f8e1)
+   Deleted: Healthcare Providers in SEFWI BEKWAI (7fd9783d-0f48-4ccc-afca-fa4e096980ff)
+   Deleted: Healthcare Providers in SEFWI ANHWIASO (fa2631cd-0d92-43a4-8eb4-00e1c7c34dbd)
+   Deleted: Healthcare Providers in SEFWI BIBIANI (b6cce045-b846-4eb4-8580-e94143471a85)
+   Deleted: Healthcare Providers in SUAMAN DADIESO (29bd8236-bdc3-4b0e-b169-0e99e3950ba2)
+   Deleted: Healthcare Providers in ENCHI (ac2e3aa0-e7e9-48a1-87c0-e908287f22a6)
+   Deleted: Healthcare Providers in SAMREBOI (f8561ad3-fa90-446a-94ff-4f16a5203399)
+   Deleted: Healthcare Providers in ASANKRAGWA (8fa62aa2-1d26-4997-b7ed-311ad0b2fa43)
+   Deleted: Healthcare Providers in WASSA AKROPONG (f4e6bced-9f30-4b2c-91af-4523829e3858)
+   Deleted: Healthcare Providers in BOGOSO (a213332d-e944-4140-81d3-fd056b33cb1d)
+   Deleted: Healthcare Providers in TARKWA (2cba9e1a-b92b-4356-9c50-6a516007a13f)
+   Deleted: Healthcare Providers in INCHABAN (72c7b233-f92b-4d2f-9a4e-32aeee0371bf)
+   Deleted: Healthcare Providers in SEKONDI (341c9ae8-a5d1-4bcd-be67-40564690229b)
+   Deleted: Healthcare Providers in TAKORADI (249f0d31-dea2-4e96-8347-362ad23eafe8)
+   Deleted: Healthcare Providers in DUNKWA-ON-OFFIN (d35b12b5-ebeb-4e4c-816f-2dd177595063)
+   Deleted: Healthcare Providers in ASIKUMA/AJUMAKO (4cf54e14-c454-45d2-b83f-9abf14576633)
+   Deleted: Healthcare Providers in MANKESSIM (7037fbc7-1264-437d-a140-0a5db5ae449f)
+   Deleted: Healthcare Providers in WINNEBA (92d19014-4413-4c13-bb6d-e21e957f8728)
+   Deleted: Healthcare Providers in SWEDRU (b0c3438c-ec85-4853-b2b2-5c85e9f6630b)
+   Deleted: Healthcare Providers in ASSIN (e1daf59a-c540-4022-b974-25c4a1d886f2)
+   Deleted: Healthcare Providers in ELMINA (69f08b76-c3f5-4f81-b74b-c1684be2f1ea)
+   Deleted: Healthcare Providers in CAPE COAST (bf9978cc-443b-4b69-853e-852a3687902b)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 5 (f8603242-b997-4ec2-a10e-d9d6972f5697)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 (320b3911-0b20-4568-9a39-8020a333f819)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 12 (c7568d1e-8a3c-4a09-8cde-60341bfc8456)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 10 (f0610d4a-d455-48c5-9fa9-a9bcdf933acc)
+   Deleted: Healthcare Providers in ASHAIMAN (221a9633-1e17-40c4-8136-aea63270a55f)
+   Deleted: Healthcare Providers in ACCRA CENTRAL (27292770-5dfc-48c6-b427-d99ccbde8ee7)
+   Deleted: Healthcare Providers in GBAWE (d70b463d-2d88-419e-ba06-69223e170318)
+   Deleted: Healthcare Providers in KASOA (c6e5d900-25f6-4952-817a-5351e1cbc77a)
+   Deleted: Healthcare Providers in WEIJA (47366ae2-f184-4953-9d51-bef5060746ad)
+   Deleted: Healthcare Providers in POKUASE (65cd3a4e-2840-4956-95dd-1baf004d5c13)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 2 / 8 (260d4ca3-d1fa-49c1-a46f-6804cbaf9514)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 2 / 7 (409d87b6-95d2-480a-9349-b09673daf0e1)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 2 / 6 (d257614d-bc2b-41b6-823d-f97761405d14)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 2 / 5 (b24712fd-08ce-4fc2-958e-5d0b7770f314)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 9 (0819d36d-d8f9-4205-88ad-4e835118246b)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 8 (e4f7050f-9a4b-4864-9739-f92cf24b9ec6)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 7 (92666549-15ce-4a64-93bd-83c8b5f26ece)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 6 (e6a5440d-cee5-4f83-9f30-9b7fa2e70991)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 5 (49cd8efd-9862-46a6-81fb-81fc2a8df2b9)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 (b799df98-08b2-4416-9a52-50cdb2627a13)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 3 (7ce25321-2d7e-4aa8-9150-d98de74703e9)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 2 (4b20f1b7-b2ed-483d-ac2f-9336d5d02e20)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 27 (cb901223-3996-4734-a8d3-63b373ab3c45)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 26 (9ca750d7-f6a9-425d-a5b7-563cbb463139)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 25 (00cd8529-321e-4936-92d7-5046d10ac86c)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 24 (a1a53d38-5188-4361-ab38-6629b3b6a043)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 23 (80bb42fd-59c1-4cde-ab44-a6cdc9aa0255)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 22 (65f6b2a1-6a39-4c7d-b39b-b769e0be934d)
+   Deleted: Healthcare Providers in MAMPONTENG (6964387a-a986-4b15-bf51-e598c79f7a63)
+   Deleted: Healthcare Providers in BREMANG (78b8aeb3-3acb-4cab-99ec-724f80b71cef)
+   Deleted: Healthcare Providers in TAFO (5b0aeb20-08a4-42bf-9d68-e0192c1371d2)
+   Deleted: Healthcare Providers in ABREPO (ebfab149-91b0-4aec-a498-0034b9f0c7e2)
+   Deleted: Healthcare Providers in BANTAMA (ffeca147-c1eb-4582-8644-b5308da9412d)
+   Deleted: Healthcare Providers in ASOKWA (1a945a40-14ca-48ee-89f9-33d78a8807bd)
+   Deleted: Healthcare Providers in EJISU (d2626b8b-1df5-414e-b45c-6cfcb3d84936)
+   Deleted: Healthcare Providers in KNUST (1252c7cd-68b4-4195-b1f1-3a1d0234ba17)
+   Deleted: Healthcare Providers in BOMSO (2470c1d8-41f6-4b13-a0ef-1faf41150881)
+   Deleted: Healthcare Providers in Winneba (ddaae123-10ad-4181-945a-7e972428b434)
+   Deleted: Healthcare Providers in Wenchi (98e237c5-6334-42a9-bd5e-1f4ecdc38835)
+   Deleted: Healthcare Providers in Weija  Kasoa  Gbawe (7288ea56-80f3-404c-ba8a-0fa5df541072)
+   Deleted: Healthcare Providers in Wassa Akropong (fbb2607c-3e6b-403a-9ea5-acea81370a01)
+   Deleted: Healthcare Providers in Wa (2af5c382-17b5-44a1-a599-4d3b8b1bb79f)
+   Deleted: Healthcare Providers in Teshie  Nungua (914cfd93-edd8-40a0-9ee0-1749d2593559)
+   Deleted: Healthcare Providers in Tesano (17936c0e-2255-4f63-b402-bc7699c4c06e)
+   Deleted: Healthcare Providers in Tema Community 4  5  6  9  10  12 (1e7f3463-8fb2-43af-8e48-0dc67c102e4d)
+   Deleted: Healthcare Providers in Tema Community 2  4 (34bc07a9-47c1-44b1-9f1c-cab91317e3ab)
+   Deleted: Healthcare Providers in Tema Community 2 (9c8bbe20-fc4e-470a-99a1-2db93e0fd14e)
+   Deleted: Healthcare Providers in Techiman (3742d136-6c49-4bdc-84da-a70111e40059)
+   Deleted: Healthcare Providers in Tarkwa (4236e9c1-9f3e-4721-af68-46c035862671)
+   Deleted: Healthcare Providers in Tantra Hill  Ofankor (b6b1e443-8341-4d57-953f-3620161fb88b)
+   Deleted: Healthcare Providers in Tamale (d7687747-da80-4beb-9346-4443f6ca1e9c)
+   Deleted: Healthcare Providers in Takoradi (f430d794-d04b-4c90-bd5d-c4465e337e71)
+   Deleted: Healthcare Providers in Tafo (ccf34fa6-6ad1-49c4-a2b6-0a01e0f73710)
+   Deleted: Healthcare Providers in Sunyani (557f670e-55ef-4d4c-bba8-64471d03a014)
+   Deleted: Healthcare Providers in Suhum (8da81562-a3bf-4846-9763-145a86e7004d)
+   Deleted: Healthcare Providers in Suame (ddb17d65-65a4-4b04-8bb4-e75ee2dc4b1c)
+   Deleted: Healthcare Providers in Suaman Dadieso (0d7c6cdb-c74b-45ce-809b-a529f5f72fdc)
+   Deleted: Healthcare Providers in Spintex Road  Baatsona (a1fbe527-f482-496e-8fe1-8a2e7f48021c)
+   Deleted: Healthcare Providers in Somanyaodumase Krobo (c7583620-e8aa-42f3-9a62-68da949bb660)
+   Deleted: Healthcare Providers in Sekondi (744430be-5eb6-4153-8cb6-279a43ccc703)
+   Deleted: Healthcare Providers in Sefwi Wiawso (f5198ca0-52eb-497f-b0b8-ed8cbedbf5ba)
+   Deleted: Healthcare Providers in Sefwi Juaboso (1ddbf23b-0209-4334-972e-8da780e4cc86)
+   Deleted: Healthcare Providers in Sefwi Essam (fc99d0d3-437a-48b7-9989-345a06026101)
+   Deleted: Healthcare Providers in Sefwi Bodi (a61e06dd-b1b3-4695-8a79-c7d42828fc9b)
+   Deleted: Healthcare Providers in Sefwi Bibiani (9e998a96-a7b6-42ba-90cc-0b50fd09917c)
+   Deleted: Healthcare Providers in Sefwi Bekwai (e8336c20-05dc-4eec-afda-191dbf7f913c)
+   Deleted: Healthcare Providers in Sefwi Asawinso (be84dff2-db24-4add-8421-f1c5a908892e)
+   Deleted: Healthcare Providers in Sefwi Asafo (dbdc3d32-c580-406e-bddf-8a66195d2c08)
+   Deleted: Healthcare Providers in Sefwi Anhwiaso (f99440a6-f31b-4538-8ff9-62ba164ffa91)
+   Deleted: Healthcare Providers in Samreboi (30715023-b467-4243-953d-8a6e55ac6549)
+   Deleted: Healthcare Providers in Sampa (1a2cebec-bf78-4b66-aa99-44ecdc10acd7)
+   Deleted: Healthcare Providers in Sakumono Estate  Lashibi  Comm 181921 (76097ef2-9721-47a0-b857-a9c697238ec5)
+   Deleted: Healthcare Providers in Ridge (c0d21a09-9aff-458a-b36a-df10d8a598f8)
+   Deleted: Healthcare Providers in Osu (00c00fd7-64d7-4aeb-9327-f8b241b2964c)
+   Deleted: Healthcare Providers in Oda (277c9173-466b-4dbb-b11f-45d33290b83c)
+   Deleted: Healthcare Providers in Obuasi  Dunkwa (a3460ead-f578-42de-a457-fef91f482e37)
+   Deleted: Healthcare Providers in Nsawam (ffbb0491-cb59-4bc9-9235-afe859bd4159)
+   Deleted: Healthcare Providers in Nkoranza (eebc16be-40a1-4a35-bf6d-0f1560df2f26)
+   Deleted: Healthcare Providers in Nkawkaw (0cd63a85-38dc-42f5-970e-7c6772e9da01)
+   Deleted: Healthcare Providers in New Abirem (30b784c5-7ea8-4325-9363-fb3dd438450b)
+   Deleted: Healthcare Providers in Navrongo (a7df649a-0431-414f-835e-3ac442238086)
+   Deleted: Healthcare Providers in Mankessim (f2163ff3-ac14-4347-88ad-f77ad1c41dea)
+   Deleted: Healthcare Providers in Mamponteng (5ceadfdb-45c0-444a-9ce9-4189a2c4cdb5)
+   Deleted: Healthcare Providers in Mampong  Agona  Wiamoase (15ccd695-87c3-4ea9-a4d8-35e08abe5b2b)
+   Deleted: Healthcare Providers in Mampong (f1d7c6b4-3b24-4d65-8420-398ac078d8f4)
+   Deleted: Healthcare Providers in Mamfe- Akuapem (9c236f49-0e3b-4436-81aa-7a662e8dea56)
+   Deleted: Healthcare Providers in Madina  Adenta  Dodowa (1fbea453-845f-4ac4-9047-aaab92d47c5c)
+   Deleted: Healthcare Providers in Legon  North Legon (9a3c6748-8282-4f32-a657-ee0645803295)
+   Deleted: Healthcare Providers in Lawra (52fa42ad-3c7a-4b2a-bd77-34b69bae90d0)
+   Deleted: Healthcare Providers in Latebiokoshie  Mataheko (d3093139-1a8b-4248-b10e-387751dde04f)
+   Deleted: Healthcare Providers in Lapaz  Nyamekye  Darkuman  Odorkor (48823e38-918a-423b-ad7b-2cd7523ede3a)
+   Deleted: Healthcare Providers in Labone  La  Tse Addo  Cantonments (e18ef4b0-604b-4063-9edd-2187feacc661)
+   Deleted: Healthcare Providers in Konongo  Agogo (106e0b04-f2c2-4604-9556-7efebcbd2fd9)
+   Deleted: Healthcare Providers in Kokomlemle  Maamobi  Nima (6aa9592d-b1de-4239-8a6d-02a6f33dbfcc)
+   Deleted: Healthcare Providers in Koforidua (d681bc9d-82e0-4e69-a863-79323b441cee)
+   Deleted: Healthcare Providers in Kintampo Duayaw Nkwanta  Others (67d63333-a8f9-491f-9992-69ca04ec2504)
+   Deleted: Healthcare Providers in Kenyase (8f71655c-4e1b-48eb-8102-5273cdf6506f)
+   Deleted: Healthcare Providers in Kade (c646c3bd-c6ea-4ef8-8a1b-c2490dc2b9c4)
+   Deleted: Healthcare Providers in Inchaban (83ae6e66-6ab3-4909-ad44-988748c550a4)
+   Deleted: Healthcare Providers in Hwidiem (2ecdff14-b715-495d-ae8f-e43d1f8e3008)
+   Deleted: Healthcare Providers in Hohoe (809a3666-2448-48d0-beec-e525c769f8f2)
+   Deleted: Healthcare Providers in Ho (61939b19-1335-4955-8d45-1813faeefc67)
+   Deleted: Healthcare Providers in Goaso (dee37901-7558-4230-9507-2e54bb12cc27)
+   Deleted: Healthcare Providers in Enchi (bb5671cc-2e5e-4ac4-a2c8-3cc256334cef)
+   Deleted: Healthcare Providers in Elmina (70c076d3-42e2-4772-8396-bad5ea168ffa)
+   Deleted: Healthcare Providers in East Legon  Adjringanor (edcb7602-c1c6-4864-b3e0-12eede455df7)
+Error indexing document a9fdb7f9-f64b-4e31-a6f1-cc19654d1ef1: POSTGRES_PASSWORD environment variable is required
+Error indexing document 449f2356-905d-42b7-b7d3-c16bea73bf31: POSTGRES_PASSWORD environment variable is required
+Error indexing document c6153106-53ae-4e74-bedc-6396cbc391d1: POSTGRES_PASSWORD environment variable is required
+Error indexing document c5faca99-5d62-4499-87a4-9d34b8b21b71: POSTGRES_PASSWORD environment variable is required
+Error indexing document aa4478f0-610f-4589-afdd-aee1aca8bf67: POSTGRES_PASSWORD environment variable is required
+Error indexing document 195a41f3-e86d-4caf-8702-893981727f6d: POSTGRES_PASSWORD environment variable is required
+Error indexing document 4e2a3bb6-5ae4-4144-9ce4-612ac3095a79: POSTGRES_PASSWORD environment variable is required
+Error indexing document 65b87a15-44f3-4f43-b126-c82b66cd1865: POSTGRES_PASSWORD environment variable is required
+Error indexing document e37c86d0-c728-4a60-bd04-d91154c6cf0c: POSTGRES_PASSWORD environment variable is required
+Error indexing document 5a909fd0-aafd-49d1-a47b-4208e1166bd3: POSTGRES_PASSWORD environment variable is required
+Error indexing document 67736292-1545-4539-ab17-df18e264c642: POSTGRES_PASSWORD environment variable is required
+Error indexing document 73c9dc5e-fbb5-4c44-88c5-36bbc2f7fedc: POSTGRES_PASSWORD environment variable is required
+Error indexing document 66b9d29d-d198-4164-88b4-de46478c86a3: POSTGRES_PASSWORD environment variable is required
+Error indexing document 606f9023-5717-411e-830a-7c11afe4cc99: POSTGRES_PASSWORD environment variable is required
+Error indexing document 06f085b8-129f-4ac7-b5c0-5e2fa1dd4b83: POSTGRES_PASSWORD environment variable is required
+Error indexing document 3733037f-950b-4bd4-9bf0-cba84098ea51: POSTGRES_PASSWORD environment variable is required
+Error indexing document 837824ae-18e1-44c8-a9af-571a2efaf88c: POSTGRES_PASSWORD environment variable is required
+Error indexing document 1ed95f62-709c-4795-a4b8-b05a6d36e3d7: POSTGRES_PASSWORD environment variable is required
+Error indexing document c9aea14e-542a-4221-b57e-cbb1009b85c6: POSTGRES_PASSWORD environment variable is required
+Error indexing document 776c7d98-d790-474d-a29f-dbc1c13f75d9: POSTGRES_PASSWORD environment variable is required
+Error indexing document b704b8cd-31b6-4640-bcf2-e013aa87bf28: POSTGRES_PASSWORD environment variable is required
+Error indexing document 724f7e4d-811b-4f49-82cc-157200ec2508: POSTGRES_PASSWORD environment variable is required
+Error indexing document ea457017-70f9-4e77-a1cf-4812f17fffc1: POSTGRES_PASSWORD environment variable is required
+Error indexing document 29b11e52-07e0-4c2b-b2cc-0d359b1d9e0c: POSTGRES_PASSWORD environment variable is required
+Error indexing document 20e6501f-660c-49ed-b68f-438ca3d5f22c: POSTGRES_PASSWORD environment variable is required
+Error indexing document 39150a87-7d37-4b4d-9f33-43c7786697f7: POSTGRES_PASSWORD environment variable is required
+Error indexing document 249a50cb-9e33-4b77-97ca-49e7e3ce0ccf: POSTGRES_PASSWORD environment variable is required
+Error indexing document f55e3fdc-864d-49ce-a1a1-46cb4c4365f3: POSTGRES_PASSWORD environment variable is required
+Error indexing document 78fbbd41-6802-4e2c-a236-a81e23ca981e: POSTGRES_PASSWORD environment variable is required
+Error indexing document 118eac72-70c3-47ed-a1c1-c17873981951: POSTGRES_PASSWORD environment variable is required
+Error indexing document 58438586-339a-4b15-bcf4-78783eba7617: POSTGRES_PASSWORD environment variable is required
+Error indexing document 5a5e8f70-8433-4304-89ea-c9363b721fdf: POSTGRES_PASSWORD environment variable is required
+Error indexing document 8baab77e-f0db-4b2d-a45d-23246ad04e15: POSTGRES_PASSWORD environment variable is required
+Error indexing document 17012cfd-01bf-4059-8607-5fa7098330eb: POSTGRES_PASSWORD environment variable is required
+Error indexing document f05dcac5-c81f-4d9a-a6ed-bcace6cec414: POSTGRES_PASSWORD environment variable is required
+Error indexing document 9620869c-9a12-4b94-9e3c-93892dd4d1a0: POSTGRES_PASSWORD environment variable is required
+Error indexing document ce171fad-4a50-473b-9ae9-334e862f4dc5: POSTGRES_PASSWORD environment variable is required
+Error indexing document a243d1fc-5ae2-40ce-8471-ba6e86364a4b: POSTGRES_PASSWORD environment variable is required
+Error indexing document 628ab886-a980-45c5-be8e-17e69cc1439e: POSTGRES_PASSWORD environment variable is required
+Error indexing document 0a07d22a-800c-431e-8194-026ca1306033: POSTGRES_PASSWORD environment variable is required
+Error indexing document 9644df40-93a9-457e-9da8-40aa2d25b02a: POSTGRES_PASSWORD environment variable is required
+Error indexing document ca880917-7b99-4f1c-851b-9a89c154386a: POSTGRES_PASSWORD environment variable is required
+Error indexing document 8a6723b2-6d40-47ff-aa5f-27ebd570d86b: POSTGRES_PASSWORD environment variable is required
+Error indexing document f0b5ff59-f630-4b6e-bcdd-c162f53d84ba: POSTGRES_PASSWORD environment variable is required
+Error indexing document 82f047e4-77f6-40e8-aba6-7625119fa8f2: POSTGRES_PASSWORD environment variable is required
+Error indexing document 8dda6bd6-19e6-4f18-b9ca-35df1dc2f341: POSTGRES_PASSWORD environment variable is required
+Error indexing document cce518ef-bb79-4092-ae02-fa1278461592: POSTGRES_PASSWORD environment variable is required
+Error indexing document ac2ec843-142d-486b-94b1-55772eb7af0d: POSTGRES_PASSWORD environment variable is required
+Error indexing document b3577f2c-fff2-47fc-a130-a1421b17000e: POSTGRES_PASSWORD environment variable is required
+Error indexing document 8c5d700f-9d3d-4d26-bc0f-0aff5cca4a9f: POSTGRES_PASSWORD environment variable is required
+Error indexing document 303d9212-a91f-449c-ac9f-77b0841820ec: POSTGRES_PASSWORD environment variable is required
+Error indexing document a5a49970-0306-4058-9968-f705b82fe6eb: POSTGRES_PASSWORD environment variable is required
+Error indexing document 4c97f5ab-49f3-4c4e-9d8a-08143d67eca0: POSTGRES_PASSWORD environment variable is required
+Error indexing document fa5f093d-8bf4-4e96-888a-a29ce8e50b61: POSTGRES_PASSWORD environment variable is required
+Error indexing document 3d87def9-2726-47c8-aa8f-35af152cf4e2: POSTGRES_PASSWORD environment variable is required
+Error indexing document aa5f30a4-cf19-41fa-bb8a-afa838ff38ac: POSTGRES_PASSWORD environment variable is required
+Error indexing document c75be1d6-0e55-4e7e-a0f2-f3a831b939b9: POSTGRES_PASSWORD environment variable is required
+Error indexing document 1d03d1d0-5cb9-4902-ab4f-cfd09e0677f2: POSTGRES_PASSWORD environment variable is required
+Error indexing document 2f916b39-585b-437b-8601-5aaa16455f86: POSTGRES_PASSWORD environment variable is required
+Error indexing document 1d508246-e58b-4d80-9c35-e7b1532b68c0: POSTGRES_PASSWORD environment variable is required
+Error indexing document d0f26f33-bd91-488c-a612-977400c07266: POSTGRES_PASSWORD environment variable is required
+Error indexing document b9ebb8fb-66fc-4f3a-9b12-61908ca8feb6: POSTGRES_PASSWORD environment variable is required
+Error indexing document 954c0b9e-c765-4cc5-9c96-7de65523217d: POSTGRES_PASSWORD environment variable is required
+Error indexing document b7531e40-7133-4697-8d2c-9b181241c1a4: POSTGRES_PASSWORD environment variable is required
+Error indexing document 4420d4e2-63b0-4f09-ba5c-1698719912de: POSTGRES_PASSWORD environment variable is required
+Error indexing document 9cdb247e-ea81-49c0-9dbe-7fe8e8065494: POSTGRES_PASSWORD environment variable is required
+Error indexing document 08cb1d46-ba38-424b-a231-d275713dedcd: POSTGRES_PASSWORD environment variable is required
+Error indexing document cd2f032c-6a65-4cb1-9a2f-b71f259a76b1: POSTGRES_PASSWORD environment variable is required
+Error indexing document e4341968-c67e-4970-a926-3044e3f2a6dc: POSTGRES_PASSWORD environment variable is required
+Error indexing document 8357fc78-9e1a-45b1-97dd-ca9f3b14f050: POSTGRES_PASSWORD environment variable is required
+   Deleted: Healthcare Providers in Dzorwulu  Abelenkpe (09025204-e9cc-48b9-b6ac-e5bed17c9d86)
+   Deleted: Healthcare Providers in Drobo (bb956e31-a0ce-4df5-9a62-a8af071595df)
+   Deleted: Healthcare Providers in Dormaa (3733664b-d2b4-459c-ab0d-d36c36229a88)
+   Deleted: Healthcare Providers in Dome  Haatso  Ashongman  Kwabenya (a1cf0688-0ed5-46cf-8de3-0dfe9e484699)
+   Deleted: Healthcare Providers in Dansoman  Mamprobi  Korle-Bu (cb85e1c5-3e9d-4b35-884d-62cb8e745a8b)
+   Deleted: Healthcare Providers in Comm 22  Michel Camp  Afienya Road (376be1b0-91c6-4a8c-8290-29ab3618859b)
+   Deleted: Healthcare Providers in Circle  Kaneshie  North Kaneshie  Industrial Area (d2e78852-905b-4fac-a1cf-8bbb361c3039)
+   Deleted: Healthcare Providers in Cape Coast  Environs (1ed147db-b83f-49e0-8fac-b1ba46094c7f)
+   Deleted: Healthcare Providers in Bomso  Knust  Ejisu (7d888c93-3586-4020-a106-9bd6fa0efdb2)
+   Deleted: Healthcare Providers in Bolgatanga (a489d738-4463-40e5-9b73-49afa2dbd3e7)
+   Deleted: Healthcare Providers in Bogoso (be0b5df3-7337-415f-8923-98d4891280a6)
+   Deleted: Healthcare Providers in Berekum (621457c9-8122-491e-bddd-1aa3f0d6c0e2)
+   Deleted: Healthcare Providers in Begoroosiem (45fbe306-224a-40d3-952c-a091b71613ea)
+   Deleted: Healthcare Providers in Bechem (da0cebda-f3a1-4508-8181-537414cf7cc5)
+   Deleted: Healthcare Providers in Bawku (53dc32d9-0645-44eb-a6c9-5f40c7782464)
+   Deleted: Healthcare Providers in Bantama (e66d4fc5-6fe4-4408-a1d3-5f7aac827976)
+   Deleted: Healthcare Providers in Asylum Down (502dd465-067c-4cc9-99cf-e1beea73c955)
+   Deleted: Healthcare Providers in Assinswedru (5ca38e99-f193-4822-b2f5-69bec1d519c5)
+   Deleted: Healthcare Providers in Asokwa (7865e87f-a361-41f9-9f80-93fd3dd43be3)
+   Deleted: Healthcare Providers in Asikuma Ajumako (8923dbdb-0f14-4576-981a-0133291decdb)
+   Deleted: Healthcare Providers in Asiakwa  Osino  Anyinam  Enyiresi  Kibi (85158d09-ec75-4d29-9487-9f6635f5cbdc)
+   Deleted: Healthcare Providers in Ashaiman  Community 26 (3407b6ff-4e6a-471e-a292-114c14cfe915)
+
+   ✅ Total documents deleted: 200
+
+📝 STEP 2: Indexing documents from CSV files...
+================================================================================
+
+   📄 Parsing all_northern_regions_enriched.csv...
+      ✅ Found 6 cities with 84 total provider entries
+
+   📄 Parsing ashanti_region_kumasi_enriched.csv...
+      ✅ Found 0 cities with 0 total provider entries
+
+   📄 Parsing bono_regions_enriched.csv...
+      ✅ Found 12 cities with 84 total provider entries
+
+   📄 Parsing central_and_western_region_enriched.csv...
+      ✅ Found 28 cities with 143 total provider entries
+
+   📄 Parsing eastern_and_volta_regions_enriched.csv...
+      ✅ Found 24 cities with 150 total provider entries
+
+   📄 Parsing greater_accra_region_enriched.csv...
+      ✅ Found 0 cities with 0 total provider entries
+
+   📊 Total cities to index: 70
+   📊 Total providers: 461
+
+   🔄 Creating documents with embeddings...
+   ✅ [1/70] Created: Healthcare Providers in AJUMAKO
+   ✅ [2/70] Created: Healthcare Providers in AKOSOMBO
+   ✅ [3/70] Created: Healthcare Providers in AKWATIA
+   ✅ [4/70] Created: Healthcare Providers in ANYINAM
+   ✅ [5/70] Created: Healthcare Providers in ASAMANKESE
+   ✅ [6/70] Created: Healthcare Providers in ASANKRAGWA
+   ✅ [7/70] Created: Healthcare Providers in ASIAKWA
+   ✅ [8/70] Created: Healthcare Providers in ASIKUMA
+   ✅ [9/70] Created: Healthcare Providers in ASSIN
+   ✅ [10/70] Created: Healthcare Providers in BAWKU
+   ✅ [11/70] Created: Healthcare Providers in BEGORO
+   ✅ [12/70] Created: Healthcare Providers in BEREKUM
+   ✅ [13/70] Created: Healthcare Providers in BOGOSO
+   ✅ [14/70] Created: Healthcare Providers in BOLGATANGA
+   ✅ [15/70] Created: Healthcare Providers in CAPE COAST
+   ✅ [16/70] Created: Healthcare Providers in DORMAA
+   ✅ [17/70] Created: Healthcare Providers in DROBO
+   ✅ [18/70] Created: Healthcare Providers in DUNKWA-ON-OFFIN
+   ✅ [19/70] Created: Healthcare Providers in ELMINA
+   ✅ [20/70] Created: Healthcare Providers in ENCHI
+   ✅ [21/70] Created: Healthcare Providers in ENYIRESI
+   ✅ [22/70] Created: Healthcare Providers in GOASO
+   ✅ [23/70] Created: Healthcare Providers in HO
+   ✅ [24/70] Created: Healthcare Providers in HOHOE
+   ✅ [25/70] Created: Healthcare Providers in HWIDIEM
+   ✅ [26/70] Created: Healthcare Providers in INCHABAN
+   ✅ [27/70] Created: Healthcare Providers in KADE
+   ✅ [28/70] Created: Healthcare Providers in KENYASE
+   ✅ [29/70] Created: Healthcare Providers in KIBI
+   ✅ [30/70] Created: Healthcare Providers in KINTAMPO, DUAYAW NKWANTA & OTHERS
+   ✅ [31/70] Created: Healthcare Providers in KOFORIDUA
+   ✅ [32/70] Created: Healthcare Providers in LAWRA
+   ✅ [33/70] Created: Healthcare Providers in MAMFE AKUAPEM
+   ✅ [34/70] Created: Healthcare Providers in MAMPONG
+   ✅ [35/70] Created: Healthcare Providers in MANKESSIM
+   ✅ [36/70] Created: Healthcare Providers in NAVRONGO
+   ✅ [37/70] Created: Healthcare Providers in NEW ABIREM
+   ✅ [38/70] Created: Healthcare Providers in NKAWKAW
+   ✅ [39/70] Created: Healthcare Providers in NKORANZA
+   ✅ [40/70] Created: Healthcare Providers in NSAWAM
+   ✅ [41/70] Created: Healthcare Providers in ODA
+   ✅ [42/70] Created: Healthcare Providers in ODUMASE KROBO
+   ✅ [43/70] Created: Healthcare Providers in OSIEM
+   ✅ [44/70] Created: Healthcare Providers in OSINO
+   ✅ [45/70] Created: Healthcare Providers in SAMPA
+   ✅ [46/70] Created: Healthcare Providers in SAMREBOI
+   ✅ [47/70] Created: Healthcare Providers in SEFWI AKONTOMBRA
+   ✅ [48/70] Created: Healthcare Providers in SEFWI ANHWIASO
+   ✅ [49/70] Created: Healthcare Providers in SEFWI ASAFO
+   ✅ [50/70] Created: Healthcare Providers in SEFWI ASAWINSO
+   ✅ [51/70] Created: Healthcare Providers in SEFWI BEKWAI
+   ✅ [52/70] Created: Healthcare Providers in SEFWI BIBIANI
+   ✅ [53/70] Created: Healthcare Providers in SEFWI BODI
+   ✅ [54/70] Created: Healthcare Providers in SEFWI ESSAM
+   ✅ [55/70] Created: Healthcare Providers in SEFWI WIAWSO
+   ✅ [56/70] Created: Healthcare Providers in SEKONDI
+   ✅ [57/70] Created: Healthcare Providers in SOMANYA
+   ✅ [58/70] Created: Healthcare Providers in SUAMAN DADIESO
+   ✅ [59/70] Created: Healthcare Providers in SUHUM
+   ✅ [60/70] Created: Healthcare Providers in SUNYANI
+   ✅ [61/70] Created: Healthcare Providers in SWEDRU
+   ✅ [62/70] Created: Healthcare Providers in TAFO
+   ✅ [63/70] Created: Healthcare Providers in TAKORADI
+   ✅ [64/70] Created: Healthcare Providers in TAMALE
+   ✅ [65/70] Created: Healthcare Providers in TARKWA
+   ✅ [66/70] Created: Healthcare Providers in TECHIMAN
+   ✅ [67/70] Created: Healthcare Providers in WA
+   ✅ [68/70] Created: Healthcare Providers in WASSA AKROPONG
+   ✅ [69/70] Created: Healthcare Providers in WENCHI
+   ✅ [70/70] Created: Healthcare Providers in WINNEBA
+
+   📊 Summary:
+      ✅ Successfully indexed: 70
+      ❌ Failed: 0
+
+🔍 STEP 3: Verifying indexing...
+================================================================================
+Traceback (most recent call last):
+  File "/opt/kasaai/apps/automations/premier-health/full_reindex_documents.py", line 307, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/kasaai/apps/automations/premier-health/full_reindex_documents.py", line 284, in main
+    verified = await verify_indexing()
+  File "/opt/kasaai/apps/automations/premier-health/full_reindex_documents.py", line 248, in verify_indexing
+    print(f"   ✅ Found {result.total} documents in database")
+  File "/opt/kasaai/apps/venv/lib/python3.10/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'DocumentListResponse' object has no attribute 'total'

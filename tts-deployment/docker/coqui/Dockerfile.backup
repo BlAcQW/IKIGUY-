@@ -1,0 +1,50 @@
+FROM nvidia/cuda:12.1.0-cudnn8-runtime-ubuntu22.04
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3.10 \
+    python3-pip \
+    git \
+    wget \
+    curl \
+    ffmpeg \
+    libsndfile1 \
+    espeak-ng \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN pip3 install --upgrade pip
+
+# Install Coqui TTS
+RUN pip3 install TTS
+
+# Fix transformers version for XTTS v2 compatibility
+# Reason: BeamSearchScorer was moved in transformers 4.37+
+# XTTS v2 needs it at the old import location
+# Also install compatible numpy and scipy versions
+RUN pip3 install numpy==1.22.0 scipy==1.11.4 transformers==4.36.2 --force-reinstall
+
+# Install FastAPI for API server
+RUN pip3 install fastapi uvicorn pydantic python-multipart
+
+# Install torchcodec for voice cloning with reference audio
+# Reason: Required by XTTS v2 for load_with_torchcodec functionality
+RUN pip3 install torchcodec
+
+# Create directories
+RUN mkdir -p /app/models /app/outputs
+
+# Copy API server
+COPY app.py /app/app.py
+
+# Expose port
+EXPOSE 8005
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8005/health || exit 1
+
+# Run the application
+CMD ["python3", "/app/app.py"]

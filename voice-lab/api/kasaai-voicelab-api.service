@@ -1,0 +1,25 @@
+[Unit]
+Description=Voice Lab Unified API - TTS/ASR Gateway
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+User=dev
+Group=dev
+WorkingDirectory=/opt/kasaai/apps/voice-lab/api
+Environment="PATH=/opt/kasaai/apps/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONPATH=/opt/kasaai:/opt/kasaai/apps"
+Environment="PORT=30038"
+ExecStart=/opt/kasaai/apps/venv/bin/python3 -m uvicorn voicelab_unified_api:app --host 0.0.0.0 --port 30038 --workers 2
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Resource limits
+LimitNOFILE=65535
+MemoryMax=2G
+
+[Install]
+WantedBy=multi-user.target

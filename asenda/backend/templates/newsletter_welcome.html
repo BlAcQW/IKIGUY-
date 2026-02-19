@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Asenda AI Newsletter{% endblock %}
+
+{% block content %}
+<h1>Welcome to Asenda AI{% if name %}, {{ name }}{% endif %}!</h1>
+
+<p>Thanks for subscribing to our newsletter. You're now part of a community of forward-thinking professionals staying ahead of the voice AI revolution.</p>
+
+<div class="highlight-box">
+    <p><strong>You're all set!</strong></p>
+    <p style="margin-top: 8px;">Watch your inbox for the latest insights on voice AI, automation, and customer experience transformation.</p>
+</div>
+
+<div class="divider"></div>
+
+<p><strong>What you'll receive:</strong></p>
+
+<div class="steps">
+    <div class="step">
+        <div class="step-number">📰</div>
+        <div class="step-text"><strong>Industry Insights</strong> - Latest trends and research in voice AI and automation</div>
+    </div>
+    <div class="step">
+        <div class="step-number">🚀</div>
+        <div class="step-text"><strong>Product Updates</strong> - New features and capabilities as they launch</div>
+    </div>
+    <div class="step">
+        <div class="step-number">📊</div>
+        <div class="step-text"><strong>Case Studies</strong> - Real results from businesses like yours</div>
+    </div>
+    <div class="step">
+        <div class="step-number">🎁</div>
+        <div class="step-text"><strong>Exclusive Offers</strong> - Early access and special promotions for subscribers</div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<p><strong>While you're here...</strong></p>
+
+<p>Ready to see voice AI in action? Book a personalized demo and discover how Asenda AI can transform your customer interactions.</p>
+
+<p style="text-align: center; margin-top: 24px;">
+    <a href="https://asenda.ai/#contact" class="button">Request a Demo</a>
+</p>
+
+<div class="divider"></div>
+
+<p style="font-size: 14px; color: #71717a;">
+    We typically send 2-4 emails per month. If you ever want to unsubscribe, you can do so at the bottom of any email.
+</p>
+{% endblock %}

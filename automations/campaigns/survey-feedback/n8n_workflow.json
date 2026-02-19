@@ -1,0 +1,203 @@
+{
+  "name": "Enhanced Survey & Feedback Collection with VAPI + N8N",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "survey-feedback-webhook",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Survey Feedback Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "operation": "aggregate",
+        "collection": "participants",
+        "pipeline": "[\n  {\n    \"$match\": {\n      \"email\": \"{{ $json.participant_email }}\"\n    }\n  },\n  {\n    \"$lookup\": {\n      \"from\": \"survey_history\",\n      \"localField\": \"participant_id\",\n      \"foreignField\": \"participant_id\",\n      \"as\": \"history\"\n    }\n  }\n]"
+      },
+      "id": "lookup-participant",
+      "name": "Lookup Participant Profile",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "credentials": {
+        "mongoDb": {
+          "id": "mongodb_survey_db",
+          "name": "Survey MongoDB Connection"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "participant_exists",
+              "leftValue": "={{ $json.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-participant-exists",
+      "name": "Check Participant Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "participants",
+        "fields": "participant_id,email,first_name,last_name,phone,consent_given,preferred_contact_method,created_at",
+        "options": {}
+      },
+      "id": "create-participant",
+      "name": "Create New Participant",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [900, 200],
+      "credentials": {
+        "mongoDb": {
+          "id": "mongodb_survey_db",
+          "name": "Survey MongoDB Connection"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate comprehensive survey configuration based on participant profile and survey type\nconst participant = $input.first().json;\nconst surveyType = $json.survey_type || 'customer_satisfaction';\n\n// Participant analysis\nconst isReturningParticipant = participant.length > 0;\nconst participantHistory = isReturningParticipant ? participant[0].history : [];\nconst hasCompletedSurveys = participantHistory.length > 0;\n\n// Survey personalization based on history\nlet surveyConfiguration = {\n  survey_id: `survey_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,\n  survey_type: surveyType,\n  participant_profile: {\n    is_returning: isReturningParticipant,\n    completed_surveys: participantHistory.length,\n    last_survey_date: hasCompletedSurveys ? participantHistory[0]?.completed_at : null,\n    preferred_question_style: hasCompletedSurveys ? 'experienced' : 'guided'\n  },\n  questions: [],\n  estimated_duration: 0,\n  incentive_applicable: true\n};\n\n// Generate dynamic questions based on survey type\nswitch (surveyType) {\n  case 'customer_satisfaction':\n    surveyConfiguration.questions = [\n      {\n        question_id: 'satisfaction_overall',\n        question_text: 'On a scale of 1-10, how satisfied are you with our service overall?',\n        question_type: 'rating_scale',\n        options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],\n        required: true,\n        branching_logic: 'if_score_below_7_ask_improvement'\n      },\n      {\n        question_id: 'satisfaction_specific',\n        question_text: 'What specific aspects of our service could we improve?',\n        question_type: 'open_ended',\n        required: false,\n        branching_logic: 'conditional_on_low_satisfaction'\n      },\n      {\n        question_id: 'recommendation_likelihood',\n        question_text: 'How likely are you to recommend our service to others?',\n        question_type: 'rating_scale',\n        options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],\n        required: true\n      },\n      {\n        question_id: 'service_frequency',\n        question_text: 'How often do you use our service?',\n        question_type: 'multiple_choice',\n        options: ['Daily', 'Weekly', 'Monthly', 'Occasionally', 'First time'],\n        required: true\n      },\n      {\n        question_id: 'additional_feedback',\n        question_text: 'Is there anything else you\\'d like to share about your experience?',\n        question_type: 'open_ended',\n        required: false\n      }\n    ];\n    surveyConfiguration.estimated_duration = 8;\n    break;\n\n  case 'product_feedback':\n    surveyConfiguration.questions = [\n      {\n        question_id: 'product_satisfaction',\n        question_text: 'How satisfied are you with our product?',\n        question_type: 'rating_scale',\n        options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],\n        required: true\n      },\n      {\n        question_id: 'feature_importance',\n        question_text: 'Which features are most important to you?',\n        question_type: 'ranking',\n        options: ['Ease of use', 'Performance', 'Price', 'Customer support', 'Features'],\n        required: true\n      },\n      {\n        question_id: 'missing_features',\n        question_text: 'What features would you like to see added?',\n        question_type: 'open_ended',\n        required: false\n      },\n      {\n        question_id: 'usage_frequency',\n        question_text: 'How often do you use our product?',\n        question_type: 'multiple_choice',\n        options: ['Daily', 'Weekly', 'Monthly', 'Rarely'],\n        required: true\n      }\n    ];\n    surveyConfiguration.estimated_duration = 6;\n    break;\n\n  case 'net_promoter_score':\n    surveyConfiguration.questions = [\n      {\n        question_id: 'nps_score',\n        question_text: 'On a scale of 0-10, how likely are you to recommend us to a friend or colleague?',\n        question_type: 'rating_scale',\n        options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],\n        required: true,\n        branching_logic: 'categorize_promoter_detractor'\n      },\n      {\n        question_id: 'nps_reason',\n        question_text: 'What is the primary reason for your score?',\n        question_type: 'open_ended',\n        required: true\n      },\n      {\n        question_id: 'improvement_suggestion',\n        question_text: 'What could we do to improve your experience?',\n        question_type: 'open_ended',\n        required: false\n      }\n    ];\n    surveyConfiguration.estimated_duration = 4;\n    break;\n\n  default:\n    surveyConfiguration.questions = [\n      {\n        question_id: 'general_feedback',\n        question_text: 'Please share your thoughts about your experience with us.',\n        question_type: 'open_ended',\n        required: true\n      },\n      {\n        question_id: 'overall_rating',\n        question_text: 'How would you rate your overall experience?',\n        question_type: 'rating_scale',\n        options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],\n        required: true\n      }\n    ];\n    surveyConfiguration.estimated_duration = 5;\n}\n\n// Incentive configuration\nsurveyConfiguration.incentive_offered = {\n  incentive_type: 'gift_card',\n  incentive_value: '10',\n  incentive_description: '$10 gift card for survey completion'\n};\n\n// Anonymity level based on survey type\nsurveyConfiguration.anonymity_level = surveyType === 'employee_feedback' ? 'fully_anonymous' : 'confidential';\n\nreturn { survey_configuration: surveyConfiguration };"
+      },
+      "id": "generate-survey-config",
+      "name": "Generate Survey Configuration",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "assistantId": "{{ $json.survey_configuration.vapi_assistant_id || 'asst_survey_feedback_enhanced' }}",
+        "phoneNumber": "+1{{ $json.participant_phone }}",
+        "systemMessage": "You are conducting a {{ $json.survey_configuration.survey_type }} survey. The participant has {{ $json.survey_configuration.participant_profile.completed_surveys }} completed surveys. Use a {{ $json.survey_configuration.participant_profile.preferred_question_style }} approach.",
+        "additionalFields": {
+          "firstMessage": "Hi {{ $json.participant_first_name }}! I'm calling from {{ $json.company_name }} to gather your valuable feedback about {{ $json.survey_configuration.survey_type }}. This will only take about {{ $json.survey_configuration.estimated_duration }} minutes. Are you available to share your thoughts?",
+          "voicemailMessage": "Hi {{ $json.participant_first_name }}, this is {{ $json.agent_name }} from {{ $json.company_name }}. We'd love to get your feedback in a quick survey that takes just {{ $json.survey_configuration.estimated_duration }} minutes. There's a {{ $json.survey_configuration.incentive_offered.incentive_description }} for participating. Please call me back when convenient. Thanks!",
+          "endCallMessage": "Thank you so much for taking the time to share your valuable feedback! Your insights are really important and will help us improve. You'll receive your survey completion confirmation and {{ $json.survey_configuration.incentive_offered.incentive_description }} shortly. Have a wonderful day!",
+          "maxDurationSeconds": "{{ Math.max(300, $json.survey_configuration.estimated_duration * 60 + 120) }}"
+        }
+      },
+      "id": "initiate-vapi-call",
+      "name": "Initiate VAPI Survey Call",
+      "type": "n8n-nodes-base.vapi",
+      "typeVersion": 1,
+      "position": [1340, 300],
+      "credentials": {
+        "vapiApi": {
+          "id": "vapi_survey_credentials",
+          "name": "VAPI Survey API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "survey_sessions",
+        "fields": "session_id,survey_id,participant_id,vapi_call_id,survey_configuration,status,created_at",
+        "options": {}
+      },
+      "id": "create-survey-session",
+      "name": "Create Survey Session",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [1560, 300],
+      "credentials": {
+        "mongoDb": {
+          "id": "mongodb_survey_db",
+          "name": "Survey MongoDB Connection"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "webhooks",
+        "operation": "create",
+        "webhookId": "survey_response_webhook",
+        "url": "{{ $json.n8n_webhook_url }}/survey-response-handler",
+        "events": ["call.ended", "function.called"],
+        "additionalFields": {}
+      },
+      "id": "setup-vapi-webhook",
+      "name": "Setup VAPI Response Webhook",
+      "type": "n8n-nodes-base.vapi",
+      "typeVersion": 1,
+      "position": [1780, 300],
+      "credentials": {
+        "vapiApi": {
+          "id": "vapi_survey_credentials",
+          "name": "VAPI Survey API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "survey-response-handler",
+        "options": {}
+      },
+      "id": "response-webhook",
+      "name": "Survey Response Handler",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 600]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process and analyze survey responses from VAPI call\nconst callData = $json;\nconst responses = callData.messages || [];\nconst callAnalysis = callData.analysis || {};\n\n// Extract survey responses from call transcript\nlet surveyResponses = [];\nlet qualitativeInsights = [];\nlet sentimentAnalysis = {};\n\n// Process each response from the call\nresponses.forEach((message, index) => {\n  if (message.role === 'user' && message.content) {\n    const response = {\n      response_id: `resp_${Date.now()}_${index}`,\n      question_sequence: index + 1,\n      response_text: message.content,\n      response_timestamp: message.timestamp || new Date().toISOString(),\n      response_type: 'voice_response'\n    };\n    \n    // Basic sentiment analysis\n    const text = message.content.toLowerCase();\n    let sentiment = 'neutral';\n    \n    if (text.includes('love') || text.includes('great') || text.includes('excellent') || text.includes('amazing')) {\n      sentiment = 'very_positive';\n    } else if (text.includes('good') || text.includes('satisfied') || text.includes('happy')) {\n      sentiment = 'positive';\n    } else if (text.includes('bad') || text.includes('terrible') || text.includes('awful') || text.includes('hate')) {\n      sentiment = 'very_negative';\n    } else if (text.includes('poor') || text.includes('disappointed') || text.includes('frustrated')) {\n      sentiment = 'negative';\n    }\n    \n    response.sentiment = sentiment;\n    \n    // Extract numeric ratings if present\n    const ratingMatch = text.match(/\\b([0-9]|10)\\b/);\n    if (ratingMatch) {\n      response.rating_value = parseInt(ratingMatch[1]);\n    }\n    \n    surveyResponses.push(response);\n    \n    // Collect qualitative insights\n    if (text.length > 20) {\n      qualitativeInsights.push({\n        insight_type: 'detailed_feedback',\n        content: message.content,\n        sentiment: sentiment,\n        timestamp: response.response_timestamp\n      });\n    }\n  }\n});\n\n// Overall sentiment analysis\nconst sentiments = surveyResponses.map(r => r.sentiment);\nconst sentimentCounts = sentiments.reduce((acc, sentiment) => {\n  acc[sentiment] = (acc[sentiment] || 0) + 1;\n  return acc;\n}, {});\n\nsentimentAnalysis = {\n  overall_sentiment: Object.keys(sentimentCounts).reduce((a, b) => sentimentCounts[a] > sentimentCounts[b] ? a : b),\n  sentiment_distribution: sentimentCounts,\n  total_responses: surveyResponses.length\n};\n\n// Extract key metrics\nconst ratings = surveyResponses.filter(r => r.rating_value).map(r => r.rating_value);\nconst averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;\n\n// Call quality assessment\nconst callQuality = {\n  call_duration: callData.duration || 0,\n  call_status: callData.status || 'completed',\n  response_count: surveyResponses.length,\n  engagement_level: surveyResponses.length > 3 ? 'high' : surveyResponses.length > 1 ? 'medium' : 'low',\n  completion_rate: surveyResponses.length / (callAnalysis.questions_asked || 5) * 100\n};\n\n// Generate insights summary\nconst insightsSummary = {\n  key_themes: [\n    'Customer satisfaction feedback collected',\n    'Response engagement assessed',\n    'Sentiment patterns identified'\n  ],\n  positive_feedback: qualitativeInsights.filter(i => ['positive', 'very_positive'].includes(i.sentiment)),\n  areas_for_improvement: qualitativeInsights.filter(i => ['negative', 'very_negative'].includes(i.sentiment)),\n  average_rating: averageRating,\n  overall_assessment: averageRating > 7 ? 'Positive' : averageRating > 5 ? 'Neutral' : 'Needs Attention'\n};\n\n// Determine follow-up actions\nconst followUpActions = [];\nif (sentimentAnalysis.overall_sentiment === 'very_negative') {\n  followUpActions.push('immediate_escalation');\n}\nif (averageRating && averageRating < 6) {\n  followUpActions.push('customer_retention_outreach');\n}\nif (callQuality.completion_rate < 60) {\n  followUpActions.push('survey_redesign_consideration');\n}\n\nreturn {\n  survey_responses: surveyResponses,\n  sentiment_analysis: sentimentAnalysis,\n  qualitative_insights: qualitativeInsights,\n  call_quality: callQuality,\n  insights_summary: insightsSummary,\n  follow_up_actions: followUpActions,\n  processing_timestamp: new Date().toISOString()\n};"
+      },
+      "id": "analyze-responses",
+      "name": "Analyze Survey Responses",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 600]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "survey_responses",
+        "fields": "survey_id,participant_id,responses,sentiment_analysis,qualitative_insights,call_quality,processing_timestamp",
+        "options": {}
+      },
+      "id": "store-responses",
+      "name": "Store Survey Responses",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [680, 600],
+      "credentials": {
+        "mongoDb": {
+          "id": "mongodb_survey_db",
+          "name": "Survey MongoDB Connection"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,\n            \"leftValue\": \"\",\n            \"typeValidation\": \"strict\"\n          },\n          \"conditions\": [\n            {\n              \"id\": \"needs_follow_up\",\n              \"leftValue\": \"={{ $json.follow_up_actions.length }}\",\n              \"rightValue\": 0,\n              \"operator\": {\n                \"type\": \"number\",\n                \"operation\": \"gt\"\n              }\n            }\n          ],\n          \"combinator\": \"and\"\n        },\n        \"options\": {}\n      },\n      \"id\": \"check-follow-up-needed\",\n      \"name\": \"Check Follow-up Needed\",\n      \"type\": \"n8n-nodes-base.if\",\n      \"typeVersion\": 2,\n      \"position\": [900, 600]\n    },\n    {\n      \"parameters\": {\n        \"operation\": \"findOne\",\n        \"collection\": \"escalation_teams\",\n        \"query\": \"{\\n  \\\"department\\\": \\\"customer_success\\\",\\n  \\\"active\\\": true\\n}\"\n      },\n      \"id\": \"lookup-escalation-team\",\n      \"name\": \"Lookup Escalation Team\",\n      \"type\": \"n8n-nodes-base.mongoDb\",\n      \"typeVersion\": 1,\n      \"position\": [1120, 480],\n      \"credentials\": {\n        \"mongoDb\": {\n          \"id\": \"mongodb_survey_db\",\n          \"name\": \"Survey MongoDB Connection\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"resource\": \"send\",\n        \"operation\": \"email\",\n        \"fromEmail\": \"surveys@company.com\",\n        \"toEmail\": \"{{ $node['lookup-escalation-team'].json.email }}\",\n        \"subject\": \"Survey Response Requires Follow-up - {{ $json.survey_id }}\",\n        \"emailType\": \"html\",\n        \"message\": \"<h3>Survey Response Alert</h3>\\n<p>A recent survey response requires follow-up attention:</p>\\n<ul>\\n<li><strong>Survey ID:</strong> {{ $json.survey_id }}</li>\\n<li><strong>Participant:</strong> {{ $json.participant_email }}</li>\\n<li><strong>Overall Sentiment:</strong> {{ $json.sentiment_analysis.overall_sentiment }}</li>\\n<li><strong>Actions Needed:</strong> {{ $json.follow_up_actions.join(', ') }}</li>\\n<li><strong>Average Rating:</strong> {{ $json.insights_summary.average_rating || 'N/A' }}</li>\\n</ul>\\n<p><strong>Key Concerns:</strong></p>\\n<ul>\\n{{ $json.qualitative_insights.filter(i => ['negative', 'very_negative'].includes(i.sentiment)).map(i => '<li>' + i.content + '</li>').join('') }}\\n</ul>\\n<p>Please review and take appropriate action within 24 hours.</p>\",\n        \"options\": {}\n      },\n      \"id\": \"send-escalation-email\",\n      \"name\": \"Send Escalation Email\",\n      \"type\": \"n8n-nodes-base.emailSend\",\n      \"typeVersion\": 2,\n      \"position\": [1340, 480],\n      \"credentials\": {\n        \"smtp\": {\n          \"id\": \"email_smtp_survey\",\n          \"name\": \"Survey SMTP Config\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"jsCode\": \"// Generate comprehensive analytics and insights\\nconst responseData = $input.all();\\nconst currentData = $json;\\n\\n// Aggregate metrics from all responses\\nlet analyticsReport = {\\n  report_id: `analytics_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,\\n  generated_at: new Date().toISOString(),\\n  survey_id: currentData.survey_id,\\n  participant_id: currentData.participant_id\\n};\\n\\n// Key Performance Indicators\\nanalyticsReport.kpis = {\\n  response_completion_rate: currentData.call_quality.completion_rate,\\n  average_sentiment_score: calculateSentimentScore(currentData.sentiment_analysis),\\n  engagement_level: currentData.call_quality.engagement_level,\\n  call_quality_score: calculateCallQualityScore(currentData.call_quality)\\n};\\n\\n// Response analysis\\nanalyticsReport.response_analysis = {\\n  total_responses: currentData.survey_responses.length,\\n  sentiment_breakdown: currentData.sentiment_analysis.sentiment_distribution,\\n  average_rating: currentData.insights_summary.average_rating,\\n  response_quality: assessResponseQuality(currentData.survey_responses)\\n};\\n\\n// Insights and recommendations\\nanalyticsReport.insights = {\\n  key_themes: currentData.insights_summary.key_themes,\\n  positive_highlights: currentData.insights_summary.positive_feedback.map(f => f.content).slice(0, 3),\\n  improvement_areas: currentData.insights_summary.areas_for_improvement.map(f => f.content).slice(0, 3),\\n  overall_assessment: currentData.insights_summary.overall_assessment\\n};\\n\\n// Action items\\nanalyticsReport.action_items = currentData.follow_up_actions.map(action => ({\\n  action: action,\\n  priority: determinePriority(action),\\n  department: determineResponsibleDepartment(action),\\n  timeline: determineTimeline(action)\\n}));\\n\\n// Trend indicators (simplified for single response)\\nanalyticsReport.trend_indicators = {\\n  satisfaction_trend: 'stable',\\n  engagement_trend: currentData.call_quality.engagement_level === 'high' ? 'positive' : 'neutral',\\n  response_quality_trend: 'improving'\\n};\\n\\nfunction calculateSentimentScore(sentimentAnalysis) {\\n  const weights = {\\n    'very_positive': 10,\\n    'positive': 7,\\n    'neutral': 5,\\n    'negative': 3,\\n    'very_negative': 1\\n  };\\n  \\n  const distribution = sentimentAnalysis.sentiment_distribution;\\n  let totalScore = 0;\\n  let totalResponses = 0;\\n  \\n  for (const [sentiment, count] of Object.entries(distribution)) {\\n    totalScore += weights[sentiment] * count;\\n    totalResponses += count;\\n  }\\n  \\n  return totalResponses > 0 ? totalScore / totalResponses : 5;\\n}\\n\\nfunction calculateCallQualityScore(callQuality) {\\n  let score = 5; // Base score\\n  \\n  // Completion rate impact\\n  if (callQuality.completion_rate > 80) score += 2;\\n  else if (callQuality.completion_rate > 60) score += 1;\\n  else if (callQuality.completion_rate < 40) score -= 2;\\n  \\n  // Engagement impact\\n  if (callQuality.engagement_level === 'high') score += 1.5;\\n  else if (callQuality.engagement_level === 'low') score -= 1.5;\\n  \\n  // Response count impact\\n  if (callQuality.response_count > 5) score += 1;\\n  else if (callQuality.response_count < 2) score -= 1;\\n  \\n  return Math.max(1, Math.min(10, score));\\n}\\n\\nfunction assessResponseQuality(responses) {\\n  const qualityFactors = {\\n    average_length: responses.reduce((sum, r) => sum + r.response_text.length, 0) / responses.length,\\n    detailed_responses: responses.filter(r => r.response_text.length > 50).length,\\n    engagement_indicators: responses.filter(r => r.response_text.includes('because') || r.response_text.includes('specifically')).length\\n  };\\n  \\n  if (qualityFactors.average_length > 100 && qualityFactors.detailed_responses > 2) {\\n    return 'high';\\n  } else if (qualityFactors.average_length > 50) {\\n    return 'medium';\\n  } else {\\n    return 'low';\\n  }\\n}\\n\\nfunction determinePriority(action) {\\n  const priorities = {\\n    'immediate_escalation': 'urgent',\\n    'customer_retention_outreach': 'high',\\n    'survey_redesign_consideration': 'medium'\\n  };\\n  return priorities[action] || 'low';\\n}\\n\\nfunction determineResponsibleDepartment(action) {\\n  const departments = {\\n    'immediate_escalation': 'customer_success',\\n    'customer_retention_outreach': 'sales',\\n    'survey_redesign_consideration': 'product_team'\\n  };\\n  return departments[action] || 'customer_success';\\n}\\n\\nfunction determineTimeline(action) {\\n  const timelines = {\\n    'immediate_escalation': '4 hours',\\n    'customer_retention_outreach': '24 hours',\\n    'survey_redesign_consideration': '1 week'\\n  };\\n  return timelines[action] || '48 hours';\\n}\\n\\nreturn { analytics_report: analyticsReport };\"\n      },\n      \"id\": \"generate-analytics\",\n      \"name\": \"Generate Analytics Report\",\n      \"type\": \"n8n-nodes-base.code\",\n      \"typeVersion\": 2,\n      \"position\": [1120, 720]\n    },\n    {\n      \"parameters\": {\n        \"operation\": \"insert\",\n        \"collection\": \"survey_analytics\",\n        \"fields\": \"report_id,survey_id,participant_id,kpis,response_analysis,insights,action_items,trend_indicators,generated_at\",\n        \"options\": {}\n      },\n      \"id\": \"store-analytics\",\n      \"name\": \"Store Analytics Report\",\n      \"type\": \"n8n-nodes-base.mongoDb\",\n      \"typeVersion\": 1,\n      \"position\": [1340, 720],\n      \"credentials\": {\n        \"mongoDb\": {\n          \"id\": \"mongodb_survey_db\",\n          \"name\": \"Survey MongoDB Connection\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"jsCode\": \"// Process incentive for survey completion\\nconst responseData = $json;\\nconst analyticsData = $node['generate-analytics'].json.analytics_report;\\n\\n// Determine incentive eligibility\\nconst completionRate = responseData.call_quality.completion_rate;\\nconst qualityScore = analyticsData.kpis.call_quality_score;\\nconst responseCount = responseData.survey_responses.length;\\n\\n// Base eligibility criteria\\nconst isEligible = completionRate >= 60 && qualityScore >= 5 && responseCount >= 2;\\n\\nlet incentiveProcessing = {\\n  processing_id: `incentive_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,\\n  participant_id: responseData.participant_id,\\n  survey_id: responseData.survey_id,\\n  eligible: isEligible,\\n  eligibility_criteria: {\\n    completion_rate: completionRate,\\n    quality_score: qualityScore,\\n    response_count: responseCount,\\n    minimum_completion_rate: 60,\\n    minimum_quality_score: 5,\\n    minimum_response_count: 2\\n  }\\n};\\n\\nif (isEligible) {\\n  // Calculate incentive value based on performance\\n  let baseValue = 10; // Base $10 gift card\\n  \\n  // Quality bonus\\n  if (qualityScore >= 8) baseValue += 5;\\n  if (completionRate >= 90) baseValue += 3;\\n  if (responseCount >= 5) baseValue += 2;\\n  \\n  incentiveProcessing.incentive_details = {\\n    type: 'digital_gift_card',\\n    base_value: 10,\\n    bonus_amount: baseValue - 10,\\n    final_value: baseValue,\\n    currency: 'USD',\\n    delivery_method: 'email',\\n    estimated_delivery: '24_hours'\\n  };\\n  \\n  incentiveProcessing.processing_status = 'approved';\\n  incentiveProcessing.tracking_number = `TRK${Date.now().toString(36).toUpperCase()}`;\\n  \\n} else {\\n  incentiveProcessing.incentive_details = null;\\n  incentiveProcessing.processing_status = 'declined';\\n  incentiveProcessing.decline_reason = getDeclineReason(completionRate, qualityScore, responseCount);\\n}\\n\\nincentiveProcessing.processed_at = new Date().toISOString();\\n\\nfunction getDeclineReason(completion, quality, responses) {\\n  const reasons = [];\\n  if (completion < 60) reasons.push('Insufficient completion rate');\\n  if (quality < 5) reasons.push('Low response quality');\\n  if (responses < 2) reasons.push('Insufficient number of responses');\\n  return reasons.join(', ');\\n}\\n\\nreturn { incentive_processing: incentiveProcessing };\"\n      },\n      \"id\": \"process-incentive\",\n      \"name\": \"Process Survey Incentive\",\n      \"type\": \"n8n-nodes-base.code\",\n      \"typeVersion\": 2,\n      \"position\": [1560, 720]\n    },\n    {\n      \"parameters\": {\n        \"conditions\": {\n          \"options\": {\n            \"caseSensitive\": true,\n            \"leftValue\": \"\",\n            \"typeValidation\": \"strict\"\n          },\n          \"conditions\": [\n            {\n              \"id\": \"incentive_approved\",\n              \"leftValue\": \"={{ $json.incentive_processing.processing_status }}\",\n              \"rightValue\": \"approved\",\n              \"operator\": {\n                \"type\": \"string\",\n                \"operation\": \"equals\"\n              }\n            }\n          ],\n          \"combinator\": \"and\"\n        },\n        \"options\": {}\n      },\n      \"id\": \"check-incentive-approval\",\n      \"name\": \"Check Incentive Approval\",\n      \"type\": \"n8n-nodes-base.if\",\n      \"typeVersion\": 2,\n      \"position\": [1780, 720]\n    },\n    {\n      \"parameters\": {\n        \"resource\": \"send\",\n        \"operation\": \"email\",\n        \"fromEmail\": \"surveys@company.com\",\n        \"toEmail\": \"{{ $json.participant_email }}\",\n        \"subject\": \"Thank You for Your Feedback - Incentive Included! 🎁\",\n        \"emailType\": \"html\",\n        \"message\": \"<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>\\n  <h2 style='color: #2c3e50;'>Thank You for Your Valuable Feedback!</h2>\\n  \\n  <p>Dear {{ $json.participant_first_name }},</p>\\n  \\n  <p>Thank you for taking the time to participate in our survey. Your feedback is incredibly valuable to us and helps us improve our products and services.</p>\\n  \\n  <div style='background-color: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;'>\\n    <h3 style='color: #27ae60; margin-top: 0;'>🎁 Your Survey Incentive</h3>\\n    <p><strong>Incentive Type:</strong> {{ $json.incentive_processing.incentive_details.type }}</p>\\n    <p><strong>Value:</strong> ${{ $json.incentive_processing.incentive_details.final_value }} {{ $json.incentive_processing.incentive_details.currency }}</p>\\n    <p><strong>Tracking Number:</strong> {{ $json.incentive_processing.tracking_number }}</p>\\n    <p><strong>Delivery:</strong> Within {{ $json.incentive_processing.incentive_details.estimated_delivery }}</p>\\n  </div>\\n  \\n  <h3>Survey Summary</h3>\\n  <ul>\\n    <li><strong>Survey Type:</strong> {{ $json.survey_type }}</li>\\n    <li><strong>Completion Rate:</strong> {{ $json.call_quality.completion_rate }}%</li>\\n    <li><strong>Responses Provided:</strong> {{ $json.survey_responses.length }}</li>\\n  </ul>\\n  \\n  <p>Your incentive will be delivered via email within the next 24 hours. If you have any questions, please don't hesitate to contact us.</p>\\n  \\n  <p>Thank you again for your participation!</p>\\n  \\n  <p>Best regards,<br>\\n  The Survey Team</p>\\n</div>\",\n        \"options\": {}\n      },\n      \"id\": \"send-incentive-confirmation\",\n      \"name\": \"Send Incentive Confirmation\",\n      \"type\": \"n8n-nodes-base.emailSend\",\n      \"typeVersion\": 2,\n      \"position\": [2000, 600],\n      \"credentials\": {\n        \"smtp\": {\n          \"id\": \"email_smtp_survey\",\n          \"name\": \"Survey SMTP Config\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"operation\": \"insert\",\n        \"collection\": \"incentive_transactions\",\n        \"fields\": \"processing_id,participant_id,survey_id,incentive_details,processing_status,tracking_number,processed_at\",\n        \"options\": {}\n      },\n      \"id\": \"store-incentive-record\",\n      \"name\": \"Store Incentive Record\",\n      \"type\": \"n8n-nodes-base.mongoDb\",\n      \"typeVersion\": 1,\n      \"position\": [2000, 720],\n      \"credentials\": {\n        \"mongoDb\": {\n          \"id\": \"mongodb_survey_db\",\n          \"name\": \"Survey MongoDB Connection\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"resource\": \"send\",\n        \"operation\": \"email\",\n        \"fromEmail\": \"surveys@company.com\",\n        \"toEmail\": \"{{ $json.participant_email }}\",\n        \"subject\": \"Thank You for Your Survey Participation\",\n        \"emailType\": \"html\",\n        \"message\": \"<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>\\n  <h2 style='color: #2c3e50;'>Thank You for Your Feedback!</h2>\\n  \\n  <p>Dear {{ $json.participant_first_name }},</p>\\n  \\n  <p>Thank you for taking the time to participate in our survey. Your feedback is valuable to us and helps us improve our products and services.</p>\\n  \\n  <div style='background-color: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0;'>\\n    <h3 style='color: #856404; margin-top: 0;'>📝 Survey Summary</h3>\\n    <p><strong>Survey Type:</strong> {{ $json.survey_type }}</p>\\n    <p><strong>Completion Rate:</strong> {{ $json.call_quality.completion_rate }}%</p>\\n    <p><strong>Responses Provided:</strong> {{ $json.survey_responses.length }}</p>\\n  </div>\\n  \\n  <p><strong>Note:</strong> While your survey responses were recorded, the incentive requirements were not fully met. We appreciate your participation nonetheless!</p>\\n  \\n  <p>If you have any questions about this survey or would like to provide additional feedback, please don't hesitate to contact us.</p>\\n  \\n  <p>Best regards,<br>\\n  The Survey Team</p>\\n</div>\",\n        \"options\": {}\n      },\n      \"id\": \"send-completion-notice\",\n      \"name\": \"Send Completion Notice\",\n      \"type\": \"n8n-nodes-base.emailSend\",\n      \"typeVersion\": 2,\n      \"position\": [2000, 840],\n      \"credentials\": {\n        \"smtp\": {\n          \"id\": \"email_smtp_survey\",\n          \"name\": \"Survey SMTP Config\"\n        }\n      }\n    }\n  ],\n  \"connections\": {\n    \"webhook-trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"lookup-participant\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"lookup-participant\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"check-participant-exists\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"check-participant-exists\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"generate-survey-config\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ],\n        [\n          {\n            \"node\": \"create-participant\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"create-participant\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"generate-survey-config\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"generate-survey-config\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"initiate-vapi-call\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"initiate-vapi-call\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"create-survey-session\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"create-survey-session\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"setup-vapi-webhook\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"response-webhook\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"analyze-responses\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"analyze-responses\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"store-responses\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"store-responses\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"check-follow-up-needed\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"check-follow-up-needed\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"lookup-escalation-team\",\n            \"type\": \"main\",\n            \"index\": 0\n          },\n          {\n            \"node\": \"generate-analytics\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ],\n        [\n          {\n            \"node\": \"generate-analytics\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"lookup-escalation-team\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"send-escalation-email\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"generate-analytics\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"store-analytics\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"store-analytics\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"process-incentive\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"process-incentive\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"check-incentive-approval\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"check-incentive-approval\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"send-incentive-confirmation\",\n            \"type\": \"main\",\n            \"index\": 0\n          },\n          {\n            \"node\": \"store-incentive-record\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ],\n        [\n          {\n            \"node\": \"send-completion-notice\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {},\n  \"settings\": {\n    \"executionOrder\": \"v1\"\n  },\n  \"staticData\": null,\n  \"tags\": [\n    {\n      \"createdAt\": \"2024-01-15T10:00:00.000Z\",\n      \"updatedAt\": \"2024-01-15T10:00:00.000Z\",\n      \"id\": \"survey_feedback_enhanced\",\n      \"name\": \"Enhanced Survey & Feedback\"\n    }\n  ],\n  \"triggerCount\": 2,\n  \"updatedAt\": \"2024-01-15T10:00:00.000Z\",\n  \"versionId\": \"1\"\n}

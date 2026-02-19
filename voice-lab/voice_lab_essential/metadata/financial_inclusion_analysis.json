@@ -1,0 +1,52 @@
+{
+  "analysis_date": "2025-09-05T19:25:20.538813",
+  "folder_id": "1dQ12lglUuxf7y8LZLChk2gv7HK7afw1-",
+  "dataset_statistics": {
+    "fante_10": {
+      "audio_files": 0,
+      "text_files": 1,
+      "size_mb": 0.31585121154785156,
+      "folder_id": "14SDYHjOhKj083mBskTBYeZWLjgs-Flbt"
+    },
+    "fante_90": {
+      "audio_files": 0,
+      "text_files": 1,
+      "size_mb": 2.7627382278442383,
+      "folder_id": "1khsX3kEywOvjkULM3Uf4zVGYqCjFqGFH"
+    },
+    "asante_twi_10": {
+      "audio_files": 0,
+      "text_files": 1,
+      "size_mb": 0.3696756362915039,
+      "folder_id": "12gjrKqNpkC9YSPNgjMNhrxQ66hJwAH2Q"
+    },
+    "asante_twi_90": {
+      "audio_files": 0,
+      "text_files": 1,
+      "size_mb": 3.2601613998413086,
+      "folder_id": "1ovGMu388kyEwQhgdXYxxALRjQgE9dQB9"
+    },
+    "akuapem_twi_10": {
+      "audio_files": 0,
+      "text_files": 1,
+      "size_mb": 0.3401670455932617,
+      "folder_id": "1CAokvAhUU853TsF07EuF_jr4KyYGm-5E"
+    },
+    "akuapem_twi_90": {
+      "audio_files": 0,
+      "text_files": 1,
+      "size_mb": 2.978938102722168,
+      "folder_id": "1T8tXiDk7_7wmqXqnBeGBcRvbs4TM6ct4"
+    },
+    ".git": {
+      "audio_files": 0,
+      "text_files": 0,
+      "size_mb": 0.02338886260986328,
+      "folder_id": "1yhylC1jXYqG20IB-jjrDaltoqSRsUF3M"
+    }
+  },
+  "total_datasets": 7,
+  "total_audio_files": 0,
+  "total_text_files": 6,
+  "total_size_mb": 10.050920486450195
+}

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "kasaai-473100",
+  "private_key_id": "d0a74c5cd843ae225e01a6407095263744bca42d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCmsAoo7ly6I4MP\n/98U9FM3LhNPUJEASpxkUk20mlhoDCawa1BtNN9EHjhpzIgMILNF3aXyUiQQJOmc\n74aRaWhee9MEUjjCA7wowaLvWKz4wT12cDybuMvx4sYTasbZxAud6jeWXOIVoS5P\noLtrc5xcl1ihyIDJDDG1z6GjcPxudjFurVDoQf79U2V8A1omBSgtHKLLReHK+d4A\nDt0cX8FtYNTCKKIBNPIaQz57BvR73m9SGVOEhcI0uYtaT8U2nnxFFErD9XUdfcTa\n3qX1GOx8oc14cZs9m58CPRsYAFPY6bolzKlPPlfneEWoEYO8yL7tw+fxnTa4iWWV\nrrYA4drrAgMBAAECggEAANR2olU7CAo6dKzcZEHbK0plcF7jtQL43BA+sKXSPaJh\n2p/wn6biDHhQ0b6mziT1/4wh5bKDT3RYNgsOV7NQCn1QkpQqiC3/Wa8PmCkto0xb\noOhqJ0zzerKHvfHuT4gvbp88sIozFVx8jDxVaLZ54UpLUF81gUDphTg5ILsMDhi8\nV/YRyl9dwx+iF1ppPHN7TysEmSCAT2aBH3D5yaA1TFdOFZ/Ch/1GAZ9Uwb9yRaM2\nn5NPGuG7VUZjzEbhu/tr+ycIWlHDLuokszeeCC/vIQhZ756gGu7NvPhqGaKgMZvU\n0kvKiw71xNDrcxUtqnswmxmzxIFYXBP1lERbxsrW4QKBgQDY4Z8kHXr0HatnjLc5\n2VLmqlxBUGXfm8ZBVcLRuyyGA8bhQwv4YRCPuWoDc4gQ42x0TN2B0KlecfuNw6IG\nfLBK1ORmcyjMWnxFXGqgR838edzK9rnSHKcqr1DwzUgyeVk/xpwCmql8rUf8E1SX\nqG648/DHCFjuExU+R09fIOwPowKBgQDEwMCFCZkxO719GcBCBaVJsPajBqAeQ3F7\nRkgu/xN84fJUiGg34jJEllrNy9UNOxEY0UQYpNdkqSFT98o4jomuRaFfscADmUo4\nD0hvj7+V0Lm/yJwezwMiye52p5Hh8ZbHZdSf4hy3b1vkbzDty4DCZhcf5061my+B\nDGZOP0+cGQKBgQDBcr3YINOC2tQAUOs9ljLzvBD90RCNGw0DSdOz7xgPkV7bnkoX\nCb0T9XYyDeLX7YLXWZhaKhxoOZL/J/hlgOJeXPY8y4sge7VMyNnyjRmWkbv27Yth\ndl1FHYs8vl4fZ03MLQMK75kttAH5PeS+QWZBYpTpcvCfqjXQjxqk52CnsQKBgHDr\no1J3UMmV3MnotpPtw5BIlTS5f7n+wSmcC5+VW6znzHnBk/bGxkzg8hp8qrkeNlDF\nAc0XBlvKSct0QkY1YEV5xwUx8d7e4l7MPqlwmec01PaB/0AbVVRpCohk4fAIBJ5K\nDj74ubx5mAbB3hYMHsjzaMAxs9W8zAXHhQvRgDI5AoGAC0Po7eRQj8AHS75h7Iw+\nWyWXtz8hILZFtNHDVlhl8O5A579umxki+airMto4L33Em1xe9rlOiIsTAJ031+dK\nxD+I1fkt1KoDCgDnWLduhV73mQwsacjd75V6Z9mztJBtO1VLrv5TPQo15mTwd18B\nd4wcPtQxZwd2NlT56i9VsM0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "kasaai-google-services@kasaai-473100.iam.gserviceaccount.com",
+  "client_id": "106743224632220573384",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kasaai-google-services%40kasaai-473100.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

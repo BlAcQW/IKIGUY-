@@ -1,0 +1,495 @@
+{
+  "name": "Premier Health Insurance Service Location Agent - With Freshdesk Escalation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "premier-health/provider-search",
+        "options": {}
+      },
+      "id": "c4f8b0e5-1d2c-4b6f-8e9a-3f7c5d8b2a6e",
+      "name": "VAPI Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "premier-health-vapi-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract and validate VAPI call data\nconst items = $input.all();\nconst callData = items[0].json;\n\n// Extract call information\nconst extractedData = {\n  call_id: callData.call?.id || 'unknown',\n  phone_number: callData.call?.phoneNumberId || callData.phoneNumber,\n  customer_number: callData.call?.customer?.number || callData.customer?.number,\n  transcript: callData.transcript || '',\n  assistant_message: callData.message?.content || '',\n  call_status: callData.call?.status || 'unknown',\n  timestamp: new Date().toISOString(),\n  \n  // Extract healthcare search intent from transcript or assistant message\n  search_query: callData.message?.content || callData.transcript || '',\n  \n  // VAPI function call data if present\n  function_call: callData.message?.function_call || null,\n  \n  // Call metadata\n  call_duration: callData.call?.duration || 0,\n  call_direction: callData.call?.type || 'inbound',\n  \n  // Customer contact preferences and details\n  customer_email: callData.customer?.email || null,\n  customer_name: callData.customer?.name || 'Customer',\n  customer_wants_email: false,\n  customer_wants_sms: false\n};\n\n// Check if customer requested email or SMS\nconst messageContent = (callData.message?.content || '').toLowerCase();\nif (messageContent.includes('email') || messageContent.includes('send me')) {\n  extractedData.customer_wants_email = true;\n}\nif (messageContent.includes('sms') || messageContent.includes('text') || messageContent.includes('message')) {\n  extractedData.customer_wants_sms = true;\n}\n\n// Log the received data for debugging\nconsole.log('VAPI Call Data Received:', JSON.stringify(extractedData, null, 2));\n\nreturn [{ json: extractedData }];"
+      },
+      "id": "a7b3f1e8-2c5d-4f9a-8b6e-1d4c7a9f3b2e",
+      "name": "Extract VAPI Call Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "healthcare_search",
+              "leftValue": "={{ $json.function_call?.name }}",
+              "rightValue": "search_healthcare_providers",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "escalation_request",
+              "leftValue": "={{ $json.function_call?.name }}",
+              "rightValue": "escalate_to_support",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "b8e4c2f7-3a6d-4e8b-9c5a-2f1e8d6c3a9b",
+      "name": "Check Function Call Type",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare healthcare search parameters from VAPI function call\nconst items = $input.all();\nconst callData = items[0].json;\n\nlet searchParams = {\n  query: 'general search',\n  max_results: 5,\n  location: null,\n  specialty: null,\n  provider_type: null\n};\n\n// Extract function call parameters if available\nif (callData.function_call && callData.function_call.arguments) {\n  const args = typeof callData.function_call.arguments === 'string' \n    ? JSON.parse(callData.function_call.arguments)\n    : callData.function_call.arguments;\n    \n  searchParams.query = args.query || callData.search_query || 'general search';\n  searchParams.max_results = args.max_results || 5;\n  searchParams.location = args.location || null;\n  searchParams.specialty = args.specialty || null;\n  searchParams.provider_type = args.provider_type || null;\n}\n\n// Prepare the complete call context\nconst enhancedData = {\n  ...callData,\n  search_params: searchParams,\n  api_endpoint: '/premier-health/search',\n  request_timestamp: new Date().toISOString()\n};\n\nconsole.log('Prepared Search Parameters:', JSON.stringify(searchParams, null, 2));\n\nreturn [{ json: enhancedData }];"
+      },
+      "id": "d9f5a3b8-4c7e-2f6a-8d9b-3e5c7a1f4b8d",
+      "name": "Prepare Healthcare Search",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare escalation parameters from VAPI function call\nconst items = $input.all();\nconst callData = items[0].json;\n\nlet escalationParams = {\n  customer_name: 'Customer',\n  customer_email: null,\n  customer_phone: null,\n  search_query: '',\n  location_searched: '',\n  issue_description: ''\n};\n\n// Extract function call parameters if available\nif (callData.function_call && callData.function_call.arguments) {\n  const args = typeof callData.function_call.arguments === 'string' \n    ? JSON.parse(callData.function_call.arguments)\n    : callData.function_call.arguments;\n    \n  escalationParams.customer_name = args.customer_name || callData.customer_name || 'Customer';\n  escalationParams.customer_email = args.customer_email || callData.customer_email;\n  escalationParams.customer_phone = args.customer_phone || callData.phone_number;\n  escalationParams.search_query = args.search_query || callData.search_query;\n  escalationParams.location_searched = args.location_searched;\n  escalationParams.issue_description = args.issue_description || '';\n}\n\n// Prepare the complete escalation context\nconst enhancedData = {\n  ...callData,\n  escalation_params: escalationParams,\n  api_endpoint: '/premier-health/escalate-to-support',\n  request_timestamp: new Date().toISOString()\n};\n\nconsole.log('Prepared Escalation Parameters:', JSON.stringify(escalationParams, null, 2));\n\nreturn [{ json: enhancedData }];"
+      },
+      "id": "p1q2r3s4-5t6u-7v8w-9x0y-1z2a3b4c5d6e",
+      "name": "Prepare Escalation Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/premier-health/search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json.search_params.query }}"
+            },
+            {
+              "name": "max_results",
+              "value": "={{ $json.search_params.max_results }}"
+            },
+            {
+              "name": "location",
+              "value": "={{ $json.search_params.location }}"
+            },
+            {
+              "name": "specialty",
+              "value": "={{ $json.search_params.specialty }}"
+            },
+            {
+              "name": "provider_type",
+              "value": "={{ $json.search_params.provider_type }}"
+            },
+            {
+              "name": "call_id",
+              "value": "={{ $json.call_id }}"
+            },
+            {
+              "name": "customer_number",
+              "value": "={{ $json.customer_number }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f2b9d5e1-6a3c-4d8f-9e2a-7c1f4b8d5e3a",
+      "name": "Call Premier Health API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/premier-health/escalate-to-support",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $credentials.premier_health_api.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_name",
+              "value": "={{ $json.escalation_params.customer_name }}"
+            },
+            {
+              "name": "customer_email",
+              "value": "={{ $json.escalation_params.customer_email }}"
+            },
+            {
+              "name": "customer_phone",
+              "value": "={{ $json.escalation_params.customer_phone }}"
+            },
+            {
+              "name": "search_query",
+              "value": "={{ $json.escalation_params.search_query }}"
+            },
+            {
+              "name": "location_searched",
+              "value": "={{ $json.escalation_params.location_searched }}"
+            },
+            {
+              "name": "issue_description",
+              "value": "={{ $json.escalation_params.issue_description }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "q2r3s4t5-6u7v-8w9x-0y1z-2a3b4c5d6e7f",
+      "name": "Call Freshdesk Escalation API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format the API response for VAPI with escalation check\nconst items = $input.all();\nconst apiResponse = items[0].json;\nconst originalData = items[0].json;\n\n// Extract provider data\nconst providers = apiResponse.data?.providers || [];\nconst totalFound = apiResponse.data?.total_found || 0;\nconst voiceResponse = apiResponse.data?.voice_response || 'No providers found.';\n\n// Check if no providers found and location-specific search\nconst shouldEscalate = providers.length === 0 && originalData.search_params?.location;\n\n// Store provider data for potential email/SMS use\nconst providerData = providers.map(provider => ({\n  name: provider.name,\n  specialty: provider.specialty,\n  location: provider.location,\n  phone: provider.phone,\n  address: provider.address,\n  rating: provider.rating\n}));\n\n// Create VAPI response format\nlet vapiResponse;\n\nif (shouldEscalate) {\n  // Suggest escalation when no providers found in specific location\n  vapiResponse = {\n    message: {\n      type: 'assistant',\n      content: `I couldn't find any providers in ${originalData.search_params.location} at the moment. Would you like me to escalate this to our support team? They can review our database and call you back within 24 hours with more options. I'll need your name, email, and phone number to create a support ticket.`,\n      function_call_result: {\n        success: false,\n        data: {\n          providers: [],\n          total_found: 0,\n          escalation_suggested: true,\n          location_searched: originalData.search_params.location\n        }\n      }\n    }\n  };\n} else {\n  // Normal response when providers found\n  vapiResponse = {\n    message: {\n      type: 'assistant',\n      content: voiceResponse + (providers.length > 0 ? ' Would you like me to send this information to your email or phone?' : ''),\n      function_call_result: {\n        success: apiResponse.success || false,\n        data: {\n          providers: providers.slice(0, 3), // Limit for voice response\n          total_found: totalFound,\n          search_completed: true\n        }\n      }\n    }\n  };\n}\n\n// Include original call data and provider data for follow-up actions\nconst enhancedResponse = {\n  ...originalData,\n  vapi_response: vapiResponse,\n  provider_data: providerData,\n  providers_found_count: providers.length,\n  search_successful: apiResponse.success,\n  escalation_suggested: shouldEscalate\n};\n\nconsole.log('VAPI Response Prepared:', JSON.stringify(vapiResponse, null, 2));\n\nreturn [{ json: enhancedResponse }];"
+      },
+      "id": "g3c1a6f2-7d4e-5b9c-8f1a-4e7d2c9a6f3b",
+      "name": "Format VAPI Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format the escalation response for VAPI\nconst items = $input.all();\nconst escalationResponse = items[0].json;\nconst originalData = items[0].json;\n\n// Extract escalation result\nconst escalationData = escalationResponse.data || {};\nconst voiceResponse = escalationData.voice_response || 'Your request has been escalated to our support team.';\n\n// Create VAPI response format for escalation\nconst vapiResponse = {\n  message: {\n    type: 'assistant',\n    content: voiceResponse,\n    function_call_result: {\n      success: escalationResponse.success || false,\n      data: {\n        escalated: escalationData.escalated || false,\n        ticket_id: escalationData.ticket_id,\n        estimated_callback: escalationData.estimated_callback,\n        escalation_completed: true\n      }\n    }\n  }\n};\n\n// Include original call data for analytics\nconst enhancedResponse = {\n  ...originalData,\n  vapi_response: vapiResponse,\n  escalation_result: escalationData,\n  escalation_successful: escalationResponse.success\n};\n\nconsole.log('Escalation VAPI Response Prepared:', JSON.stringify(vapiResponse, null, 2));\n\nreturn [{ json: enhancedResponse }];"
+      },
+      "id": "r3s4t5u6-7v8w-9x0y-1z2a-3b4c5d6e7f8g",
+      "name": "Format Escalation Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 400]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.function_call?.webhook_url || 'https://api.vapi.ai/webhook/response' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.vapi_response) }}",
+        "options": {}
+      },
+      "id": "h4d2b7f3-8e5c-6a9d-9f2b-5a8e3d7c1f4g",
+      "name": "Respond to VAPI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "email_requested",
+              "leftValue": "={{ $json.customer_wants_email }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equal"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "i5e3c8g4-9f6d-7b1e-1a3c-6b9f4e8d2c5h",
+      "name": "Check Email Request",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 100]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "sms_requested",
+              "leftValue": "={{ $json.customer_wants_sms }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equal"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "j6f4d9h5-1a7e-8c2f-2b4d-7c1a5f9e3d6i",
+      "name": "Check SMS Request",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/premier-health/send-call-summary",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $credentials.premier_health_api.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "call_data",
+              "value": "={{ JSON.stringify({ call_id: $json.call_id, phone_number: $json.phone_number, search_query: $json.search_params?.query || $json.escalation_params?.search_query, providers_found: $json.provider_data || [], duration: $json.call_duration, transcript: $json.transcript, customer_email: $json.customer_email, customer_sms: $json.customer_wants_sms, escalation_result: $json.escalation_result }) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "m9i7g3k8-4d1h-2f5c-5e7g-1f4d8c3b6i9l",
+      "name": "Send Call Summary to ailabsafrica@gmail.com",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 400]
+    }
+  ],
+  "connections": {
+    "VAPI Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract VAPI Call Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract VAPI Call Data": {
+      "main": [
+        [
+          {
+            "node": "Check Function Call Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Function Call Type": {
+      "main": [
+        [
+          {
+            "node": "Prepare Healthcare Search",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Escalation Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Healthcare Search": {
+      "main": [
+        [
+          {
+            "node": "Call Premier Health API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Escalation Request": {
+      "main": [
+        [
+          {
+            "node": "Call Freshdesk Escalation API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Premier Health API": {
+      "main": [
+        [
+          {
+            "node": "Format VAPI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Freshdesk Escalation API": {
+      "main": [
+        [
+          {
+            "node": "Format Escalation Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format VAPI Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to VAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Escalation Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to VAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to VAPI": {
+      "main": [
+        [
+          {
+            "node": "Check Email Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check SMS Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Call Summary to ailabsafrica@gmail.com",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-15T10:30:00.000Z",
+      "updatedAt": "2024-01-15T10:30:00.000Z",
+      "id": "premier-health-freshdesk-tag",
+      "name": "Premier Health"
+    },
+    {
+      "createdAt": "2024-01-15T10:30:00.000Z",
+      "updatedAt": "2024-01-15T10:30:00.000Z",
+      "id": "healthcare-freshdesk-tag",
+      "name": "Healthcare"
+    },
+    {
+      "createdAt": "2024-01-15T10:30:00.000Z",
+      "updatedAt": "2024-01-15T10:30:00.000Z",
+      "id": "vapi-freshdesk-tag",
+      "name": "VAPI"
+    },
+    {
+      "createdAt": "2024-01-15T10:30:00.000Z",
+      "updatedAt": "2024-01-15T10:30:00.000Z",
+      "id": "freshdesk-tag",
+      "name": "Freshdesk"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-15T10:30:00.000Z",
+  "versionId": "freshdesk-escalation-v1"
+}

@@ -1,0 +1,2193 @@
+🔧 MANUAL DOCUMENT INDEXING
+================================================================================
+Found 436 documents to index
+================================================================================
+
+[1/436] Healthcare Providers in ACCRA CENTRAL
+   Document ID: 8b7399df-633f-43a8-b9f9-f2f502d100cf
+   Content length: 2226 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[2/436] Healthcare Providers in TUDU
+   Document ID: e849df31-cb64-461a-9164-7591e8e2adaa
+   Content length: 2082 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[3/436] Healthcare Providers in MAKOLA
+   Document ID: 69c6cb1e-6090-41a8-83b4-8d638ad21aa5
+   Content length: 2114 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[4/436] Healthcare Providers in ADABRAKA
+   Document ID: 0f016960-0739-4ae1-84f6-493b72eb7d56
+   Content length: 1223 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[5/436] Healthcare Providers in AIRPORT RESIDENTIAL AREA
+   Document ID: edb7414c-f7d2-45cf-9282-bced224c7471
+   Content length: 2296 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[6/436] Healthcare Providers in 37 AREA
+   Document ID: 7da7605b-3d3d-453e-a12d-d138ad841a17
+   Content length: 2058 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[7/436] Healthcare Providers in ASYLUM DOWN
+   Document ID: 4dae2fc8-729a-4127-bb97-c8fcb3234f8b
+   Content length: 1597 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[8/436] Healthcare Providers in LEGON & NORTH LEGON
+   Document ID: 389a1c01-a0c5-474c-97ee-7eb817d3b4ff
+   Content length: 1520 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[9/436] Healthcare Providers in MADINA
+   Document ID: 410c03b6-07e4-482e-ae07-0ff4b0fe3e2a
+   Content length: 3566 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[10/436] Healthcare Providers in ADENTA
+   Document ID: 6d514e0f-412c-40b9-b69e-4f4daf4c3fdd
+   Content length: 3566 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[11/436] Healthcare Providers in DODOWA
+   Document ID: bbf74160-a7b7-4e4b-b7f0-a15b4f7b534c
+   Content length: 3566 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[12/436] Healthcare Providers in DZORWULU
+   Document ID: e3604c0a-3db7-48c0-af68-5c8a64ee4306
+   Content length: 1623 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[13/436] Healthcare Providers in ABELENKPE
+   Document ID: 2d287669-bd4b-495c-95f0-79d878038629
+   Content length: 1634 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[14/436] Healthcare Providers in CIRCLE
+   Document ID: 5280c08a-9465-4216-8c7c-8e277c88f426
+   Content length: 2324 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[15/436] Healthcare Providers in KANESHIE
+   Document ID: 5a50d200-0f43-4cb3-ba13-35d2c5cb72a4
+   Content length: 2356 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[16/436] Healthcare Providers in NORTH KANESHIE
+   Document ID: 49cd7fda-d4f3-4c53-bdd4-538f071bb50c
+   Content length: 2452 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[17/436] Healthcare Providers in INDUSTRIAL AREA
+   Document ID: 629a4e19-ebdc-4df1-a6d2-77fe8b4c26ba
+   Content length: 2468 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[18/436] Healthcare Providers in KOKOMLEMLE
+   Document ID: 3c2a52ac-d268-4ff6-9609-b9513af947a0
+   Content length: 527 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[19/436] Healthcare Providers in MAAMOBI
+   Document ID: ad84fd45-2e14-4766-97d5-2bfa7d675298
+   Content length: 512 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[20/436] Healthcare Providers in NIMA
+   Document ID: 51f4faa0-6c51-4952-9e5d-9dcf0cd549ea
+   Content length: 497 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[21/436] Healthcare Providers in LAPAZ
+   Document ID: 6f9babc0-ba70-4bb6-9a0d-629bdf0eb413
+   Content length: 1858 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[22/436] Healthcare Providers in NYAMEKYE
+   Document ID: c4c8d0a3-aa94-451b-9796-ee93edbd14fd
+   Content length: 1897 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[23/436] Healthcare Providers in DARKUMAN
+   Document ID: a447d319-6c26-4571-beea-d514aef899d6
+   Content length: 1897 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[24/436] Healthcare Providers in ODORKOR
+   Document ID: 6cd0b60b-c918-436e-8d5e-0b8002bc56de
+   Content length: 1884 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[25/436] Healthcare Providers in TESANO
+   Document ID: 1ca6917d-63b2-4622-9bec-76d3bd027c5e
+   Content length: 230 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[26/436] Healthcare Providers in LATEBIOKOSHIE
+   Document ID: 22484651-01f8-4f13-a4e2-b95afe7212f8
+   Content length: 843 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[27/436] Healthcare Providers in MATAHEKO
+   Document ID: 73592487-ce2d-4fa7-b970-6424f2961c76
+   Content length: 813 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[28/436] Healthcare Providers in DANSOMAN
+   Document ID: d21de3d9-a204-4564-ab44-8b6b833bb160
+   Content length: 2912 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[29/436] Healthcare Providers in MAMPROBI
+   Document ID: e935f7ce-c121-4c21-ae6d-b39fece63a74
+   Content length: 2912 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[30/436] Healthcare Providers in KORLE-BU
+   Document ID: 064d67fb-17dc-42af-8576-72fce0301848
+   Content length: 2912 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[31/436] Healthcare Providers in OSU
+   Document ID: cfb96cbd-a8e8-4c5b-8084-1d457827703f
+   Content length: 3092 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[32/436] Healthcare Providers in LABONE
+   Document ID: 974e13f5-99ef-40bb-9066-aea42d69f964
+   Content length: 2185 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[33/436] Healthcare Providers in LA
+   Document ID: 938bb224-c9c7-4822-9c0c-ebb0ca3b696b
+   Content length: 2129 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[34/436] Healthcare Providers in TSE ADDO
+   Document ID: 8aea75cb-7343-4dbe-a7ea-febf95d1514f
+   Content length: 2213 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[35/436] Healthcare Providers in CANTONMENTS
+   Document ID: 41971fc5-f5c2-4736-8ada-4a60cae0d3f7
+   Content length: 2255 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[36/436] Healthcare Providers in TANTRA HILL
+   Document ID: 0fdcab18-7b91-4bb0-a4e0-ad92807c1478
+   Content length: 902 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[37/436] Healthcare Providers in OFANKOR
+   Document ID: ecfb99d1-b4e0-4ec6-a0ae-e16c1a92ad27
+   Content length: 874 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[38/436] Healthcare Providers in SPINTEX ROAD
+   Document ID: 200012bb-1e9d-4d9a-881a-2fa54812bb02
+   Content length: 2507 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[39/436] Healthcare Providers in BAATSONA
+   Document ID: 2c987baa-a343-4fc0-9d66-ad03c5a6f13d
+   Content length: 2439 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[40/436] Healthcare Providers in DOME
+   Document ID: 450249a8-13d5-49ca-b9e8-944bda988377
+   Content length: 1748 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[41/436] Healthcare Providers in HAATSO
+   Document ID: 766995ff-2514-4031-bf78-c6aea01861fd
+   Content length: 1772 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[42/436] Healthcare Providers in ASHONGMAN
+   Document ID: c9b41a4c-8a90-4ddd-86b7-7a8c8aedc674
+   Content length: 1808 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[43/436] Healthcare Providers in KWABENYA
+   Document ID: b4781650-91b3-41de-b693-9ec49bf21a89
+   Content length: 1796 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[44/436] Healthcare Providers in TESHIE & NUNGUA
+   Document ID: 450ebb0e-23b4-41f3-acfa-edecbd2a7a1a
+   Content length: 1795 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[45/436] Healthcare Providers in ACHIMOTA & NEW ACHIMOTA
+   Document ID: a812032a-5d60-4cd9-9c39-0a18c1bd5d14
+   Content length: 1402 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[46/436] Healthcare Providers in EAST LEGON
+   Document ID: 3ec13a3d-620e-4760-b899-33d06e6d72d7
+   Content length: 3327 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[47/436] Healthcare Providers in ADJRINGANOR
+   Document ID: 68e1ad26-8314-4650-bcb9-8c539e01354f
+   Content length: 3349 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[48/436] Healthcare Providers in RIDGE
+   Document ID: b3bb911f-3dbd-40de-819e-c8983d1dd020
+   Content length: 883 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[49/436] Healthcare Providers in SAKUMONO ESTATE
+   Document ID: bda42290-7618-45f2-902d-ef307c0d4310
+   Content length: 3005 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[50/436] Healthcare Providers in LASHIBI
+   Document ID: 67e3cec7-b91e-443d-aa1c-0ae4159f7d0b
+   Content length: 2845 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[51/436] Healthcare Providers in COMM. 18,19,21
+   Document ID: c07cfda0-e548-438b-ae82-e775077ae0cb
+   Content length: 215 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[52/436] Healthcare Providers in COMM. 18,19,22
+   Document ID: 26713656-382f-4c41-90e2-c83e9c82c30e
+   Content length: 319 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[53/436] Healthcare Providers in COMM. 18,19,23
+   Document ID: 17f378a6-9d22-4460-99b3-30a823cb6b0d
+   Content length: 345 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[54/436] Healthcare Providers in COMM. 18,19,24
+   Document ID: 69e66da4-a511-4be7-b0f8-6d061d107b92
+   Content length: 304 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[55/436] Healthcare Providers in COMM. 18,19,25
+   Document ID: 208023d9-18d3-4c4f-8977-fa06a47e0052
+   Content length: 297 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[56/436] Healthcare Providers in COMM. 18,19,26
+   Document ID: 800d7a42-b27e-47e2-be2b-cbb218b011d6
+   Content length: 261 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[57/436] Healthcare Providers in COMM. 18,19,27
+   Document ID: de7ce25b-fb62-44a4-8a59-cdf8da0d49fb
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[58/436] Healthcare Providers in COMM. 18,19,28
+   Document ID: 476ab5ec-0aa8-494c-9b1a-ed580fee7504
+   Content length: 274 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[59/436] Healthcare Providers in COMM. 18,19,29
+   Document ID: 547f3984-c6cb-4b65-a2ba-593f4b9fa2d3
+   Content length: 280 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[60/436] Healthcare Providers in COMM. 18,19,30
+   Document ID: e46d0118-e6df-40aa-8bd0-093c9e308e6a
+   Content length: 271 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[61/436] Healthcare Providers in COMM. 18,19,31
+   Document ID: 1c572646-29c7-410a-bff9-dcee7bf471db
+   Content length: 317 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[62/436] Healthcare Providers in COMM. 18,19,32
+   Document ID: 8db15167-6820-4827-bd9e-49d0d8e23449
+   Content length: 292 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[63/436] Healthcare Providers in COMM. 18,19,33
+   Document ID: 4b1f0bc4-9ddf-4f34-a907-dea4b61b8449
+   Content length: 336 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[64/436] Healthcare Providers in COMM. 18,19,34
+   Document ID: 4b3e1872-bb22-4804-8db0-a04dc3f2c4d9
+   Content length: 304 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[65/436] Healthcare Providers in COMM. 18,19,35
+   Document ID: fb5dee99-10dd-4e6d-b9d4-1f70391fb780
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[66/436] Healthcare Providers in COMM. 18,19,36
+   Document ID: 4157b17c-71fe-4371-878d-8087b1f757c6
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[67/436] Healthcare Providers in COMM. 18,19,37
+   Document ID: a2dfe496-4cfb-4a5a-865d-1766aab9359b
+   Content length: 363 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[68/436] Healthcare Providers in COMM. 18,19,38
+   Document ID: 39fdefb4-9f4a-4531-a55d-b3c69a362a9d
+   Content length: 300 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[69/436] Healthcare Providers in ASHAIMAN
+   Document ID: 7c0e14d3-f975-4d60-8e26-ed452e7f7345
+   Content length: 2573 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[70/436] Healthcare Providers in COMMUNITY 26
+   Document ID: 497c6e4b-ee8b-4ec7-b25c-1d4add008dfa
+   Content length: 190 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[71/436] Healthcare Providers in COMMUNITY 27
+   Document ID: 105c3c07-706e-4593-9c6d-72c9e30c4959
+   Content length: 275 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[72/436] Healthcare Providers in COMMUNITY 28
+   Document ID: 844ece67-d69e-412d-8b21-9f430a5a24c0
+   Content length: 313 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[73/436] Healthcare Providers in COMMUNITY 29
+   Document ID: 74a0c408-65d2-487a-831a-7ad7134956a2
+   Content length: 260 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[74/436] Healthcare Providers in COMMUNITY 30
+   Document ID: a0f42717-53bd-4bb1-8beb-5d4649a87c20
+   Content length: 239 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[75/436] Healthcare Providers in COMMUNITY 31
+   Document ID: 06fc1f73-779d-4f35-a64b-ccac2393321b
+   Content length: 304 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[76/436] Healthcare Providers in COMMUNITY 32
+   Document ID: 21a8cd3d-5600-49d1-a29d-0f1cade0b318
+   Content length: 279 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[77/436] Healthcare Providers in COMMUNITY 33
+   Document ID: 796bda47-4584-4591-beb4-7cbd7ff3e3cf
+   Content length: 307 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[78/436] Healthcare Providers in COMMUNITY 34
+   Document ID: 9cdeaae2-5815-4f37-b410-29ebebc1faab
+   Content length: 310 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[79/436] Healthcare Providers in COMMUNITY 35
+   Document ID: d320343b-cfc8-4804-8016-53c31616369d
+   Content length: 329 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[80/436] Healthcare Providers in COMMUNITY 36
+   Document ID: 80417b53-7ad1-43bf-9e67-8c0572380810
+   Content length: 284 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[81/436] Healthcare Providers in COMMUNITY 37
+   Document ID: eb1d148f-f9a3-40ee-a3d5-6998b7120aa4
+   Content length: 323 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[82/436] Healthcare Providers in COMMUNITY 38
+   Document ID: 278fe49f-c8c7-451c-9eef-70ec6a860395
+   Content length: 363 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[83/436] Healthcare Providers in COMMUNITY 39
+   Document ID: fb57b359-7aab-4dc7-ae5e-2644fff3d4da
+   Content length: 256 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[84/436] Healthcare Providers in COMMUNITY 40
+   Document ID: 0888e567-f387-4e8e-860c-260a688a0c84
+   Content length: 291 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[85/436] Healthcare Providers in COMMUNITY 41
+   Document ID: 1f1401c1-ec06-425f-b2fd-0f5fc09c060e
+   Content length: 302 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[86/436] Healthcare Providers in COMM. 22
+   Document ID: b397eae1-b2b3-4c4f-8a8b-2cb9d65c3a8b
+   Content length: 2185 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[87/436] Healthcare Providers in MICHEL CAMP
+   Document ID: e3b935e5-609d-45b3-879f-48c93d80c3b0
+   Content length: 2230 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[88/436] Healthcare Providers in AFIENYA ROAD
+   Document ID: a94ca7ba-04b0-4b29-bf44-25cb4ef7ea9b
+   Content length: 2245 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[89/436] Healthcare Providers in TEMA COMMUNITY 4
+   Document ID: 0dbadd41-96d7-4190-b8c0-6ae89a971a37
+   Content length: 2919 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[90/436] Healthcare Providers in 5
+   Document ID: edd18a5c-5459-42e3-bd06-7b9de04f6a26
+   Content length: 2587 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[91/436] Healthcare Providers in 6
+   Document ID: f3a84d4f-6fd5-4db6-a50c-819581a3153a
+   Content length: 2588 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[92/436] Healthcare Providers in 9
+   Document ID: a72b1aa0-7411-4c17-80ad-c2e1b51f5829
+   Content length: 2434 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[93/436] Healthcare Providers in 10
+   Document ID: 3a372d62-d9e5-4471-a56c-2fce533506de
+   Content length: 2452 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[94/436] Healthcare Providers in 12
+   Document ID: ad29b286-7589-4a0d-bfaf-d14b53f1d3d1
+   Content length: 175 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[95/436] Healthcare Providers in 13
+   Document ID: de372e8c-55a8-4f62-afd9-467f32b9cab6
+   Content length: 282 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[96/436] Healthcare Providers in 14
+   Document ID: 5cc05203-74f8-4bf0-ba8a-fe75d738b9be
+   Content length: 264 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[97/436] Healthcare Providers in 15
+   Document ID: ce7bc00b-d087-4bcf-a552-251a0fcd9f30
+   Content length: 217 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[98/436] Healthcare Providers in 16
+   Document ID: f0588f1e-3a6c-42e3-8353-5679c33ab995
+   Content length: 281 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[99/436] Healthcare Providers in 17
+   Document ID: c2b5278d-93b8-4318-a32e-9650a9fc5ea9
+   Content length: 287 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[100/436] Healthcare Providers in 18
+   Document ID: 0fea143d-a159-45ca-b38f-91e762729b91
+   Content length: 292 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[101/436] Healthcare Providers in 19
+   Document ID: cd0cab40-2c50-4f13-b553-b1a577d0ee12
+   Content length: 270 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[102/436] Healthcare Providers in 20
+   Document ID: 909f9e00-fd2e-4821-8058-10386f2205ec
+   Content length: 227 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[103/436] Healthcare Providers in 21
+   Document ID: 48d8ef2f-1aca-4a0f-b0cf-7794e227e904
+   Content length: 288 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[104/436] Healthcare Providers in 22
+   Document ID: e7c6305f-4d9c-4763-b8b5-8ed59dc654d7
+   Content length: 210 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[105/436] Healthcare Providers in 23
+   Document ID: fbd9ec2b-0b04-4e21-b2e1-275ba3e2ee8a
+   Content length: 290 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[106/436] Healthcare Providers in 24
+   Document ID: 30eca51a-017f-43ed-9922-3f6461916307
+   Content length: 267 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[107/436] Healthcare Providers in 25
+   Document ID: 87eea667-3811-42d0-ae00-4692fc39d6af
+   Content length: 270 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[108/436] Healthcare Providers in 26
+   Document ID: 6fda28bb-6d4c-4eaf-a345-16792b8f2515
+   Content length: 278 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[109/436] Healthcare Providers in 27
+   Document ID: 8814869a-7342-4812-83ca-fe05b7b0fa6f
+   Content length: 234 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[110/436] Healthcare Providers in TEMA COMMUNITY 2
+   Document ID: 95b8492f-53b8-48d6-b702-2f8a1dd1b832
+   Content length: 852 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[111/436] Healthcare Providers in TEMA COMMUNITY 3
+   Document ID: 784cc1e9-4f6e-45a5-ad79-f44ebefb3dba
+   Content length: 276 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[112/436] Healthcare Providers in TEMA COMMUNITY 5
+   Document ID: 6b9eb9e3-96ad-4912-a141-3ccfedd12a6e
+   Content length: 302 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[113/436] Healthcare Providers in TEMA COMMUNITY 6
+   Document ID: c62e1615-6c1e-4f57-9b90-48a557a8a065
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[114/436] Healthcare Providers in TEMA COMMUNITY 7
+   Document ID: 2a5014a6-e489-4041-acc9-602f98945de1
+   Content length: 303 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[115/436] Healthcare Providers in TEMA COMMUNITY 8
+   Document ID: e5dc2ff1-5e85-4e70-99b8-44b9d965de9b
+   Content length: 287 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[116/436] Healthcare Providers in TEMA COMMUNITY 9
+   Document ID: fb331d4f-3878-40c1-a8b6-52ac67c8cb04
+   Content length: 317 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[117/436] Healthcare Providers in 4
+   Document ID: e18868e5-1b97-467c-89f4-9588051999dc
+   Content length: 154 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[118/436] Healthcare Providers in 7
+   Document ID: 591956bf-8931-4b46-abba-0c79985b991d
+   Content length: 249 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[119/436] Healthcare Providers in 8
+   Document ID: 922ec861-2919-4628-a4e7-2a3f2728b67f
+   Content length: 202 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[120/436] Healthcare Providers in AMANSAMAN
+   Document ID: abc8c167-a0c9-4ddf-b55b-bf9d49ea4a6d
+   Content length: 773 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[121/436] Healthcare Providers in POKUASE
+   Document ID: a4e2944d-f6a2-44c1-8b4b-8fccb9953f4b
+   Content length: 759 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[122/436] Healthcare Providers in WEIJA
+   Document ID: 02d2342e-c650-4b3f-8e9b-52ce3b104d16
+   Content length: 2734 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[123/436] Healthcare Providers in KASOA
+   Document ID: 2de57307-0e45-4c1a-bfcd-c4214fb2d9ec
+   Content length: 2734 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[124/436] Healthcare Providers in GBAWE
+   Document ID: 33a91747-ee78-4542-addd-0ee6a96fee62
+   Content length: 2734 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[125/436] Healthcare Providers in TAMALE
+   Document ID: 67de963a-b2f7-48f2-ab55-8758693b3d90
+   Content length: 7520 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[126/436] Healthcare Providers in WA
+   Document ID: 80a65cf3-fb6b-47fe-a8ff-abf6bbd2a6d6
+   Content length: 2230 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[127/436] Healthcare Providers in LAWRA
+   Document ID: b0917bdb-7361-488f-a78f-b96ce4de878e
+   Content length: 758 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[128/436] Healthcare Providers in BOLGATANGA
+   Document ID: df26dce5-267b-47f1-bc0f-2f36c796952b
+   Content length: 1464 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[129/436] Healthcare Providers in BAWKU
+   Document ID: 04daf057-c473-4ec1-9130-a99bb5dab3f2
+   Content length: 668 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[130/436] Healthcare Providers in NAVRONGO
+   Document ID: 7edc0305-58c1-4b1e-b8c3-970bf23f28ae
+   Content length: 573 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[131/436] Healthcare Providers in BOMSO
+   Document ID: 1522285f-c382-4b8c-9699-9220ed07b2a3
+   Content length: 2151 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[132/436] Healthcare Providers in KNUST
+   Document ID: 95fd38a3-6a04-4248-8fcd-4b568313a6e2
+   Content length: 2151 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[133/436] Healthcare Providers in EJISU
+   Document ID: d9a34841-1efa-4dbf-9dad-54a274981226
+   Content length: 2151 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[134/436] Healthcare Providers in ASOKWA
+   Document ID: f3a3abb2-1096-4c06-9569-13039e3c733e
+   Content length: 1240 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[135/436] Healthcare Providers in BANTAMA
+   Document ID: 49aae4d6-400c-49f9-a16a-d3a15677e8ac
+   Content length: 1405 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[136/436] Healthcare Providers in ABREPO
+   Document ID: a509a81c-0386-4ea5-bd80-e62cf5a7dd7e
+   Content length: 780 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[137/436] Healthcare Providers in TAFO
+   Document ID: 0f512660-92db-4841-aee7-a28dbfff99cb
+   Content length: 1536 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[138/436] Healthcare Providers in BREMANG
+   Document ID: 3ababebc-1de8-4624-b768-cb7f9c5b4605
+   Content length: 1572 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[139/436] Healthcare Providers in MAMPONTENG
+   Document ID: 9e5eb552-b772-46b7-85d6-3af5f53a1bf0
+   Content length: 662 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[140/436] Healthcare Providers in ABUAKWA
+   Document ID: efc097b7-5bb7-45b2-8b3f-ef2b794c0e0c
+   Content length: 934 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[141/436] Healthcare Providers in TANOSO
+   Document ID: 9a570a4e-5200-454a-8431-82ec57f5f341
+   Content length: 926 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[142/436] Healthcare Providers in SANTASI
+   Document ID: 2d261729-7b59-4bb5-a545-3fe17a380adc
+   Content length: 1881 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[143/436] Healthcare Providers in PATASE
+   Document ID: df4ae5a4-0c49-4e0d-986c-1341b2776bcc
+   Content length: 1867 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[144/436] Healthcare Providers in SUAME
+   Document ID: 9cdaff4e-0bde-4dff-a26c-f22d0849260f
+   Content length: 838 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[145/436] Healthcare Providers in ADUM
+   Document ID: 76e99bf9-a534-4daf-9200-493119c540c6
+   Content length: 829 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[146/436] Healthcare Providers in AHODWO
+   Document ID: 77120b22-1516-49d8-a207-d048d390ae2f
+   Content length: 1828 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[147/436] Healthcare Providers in AHINSAN
+   Document ID: e4281eb9-94ff-4031-b793-a7134d5d7b66
+   Content length: 1843 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[148/436] Healthcare Providers in MAMPONG
+   Document ID: 86d716b5-4c71-49e0-b2e9-c7c6f52383b0
+   Content length: 1273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[149/436] Healthcare Providers in AGONA
+   Document ID: 34c10b3a-d5c9-4960-b6f0-f38e2253a182
+   Content length: 1251 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[150/436] Healthcare Providers in WIAMOASE
+   Document ID: a9aefc26-c199-4d91-b725-f97c27b4e62a
+   Content length: 1284 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[151/436] Healthcare Providers in OBUASI
+   Document ID: 60cb68a7-1e50-4477-a9da-872a962a4c9b
+   Content length: 775 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[152/436] Healthcare Providers in DUNKWA
+   Document ID: 17142b06-2797-45c0-ad4b-154539623981
+   Content length: 775 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[153/436] Healthcare Providers in KONONGO
+   Document ID: 406bdaec-2dd0-4f13-9819-0d5e35d36edb
+   Content length: 412 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[154/436] Healthcare Providers in AGOGO
+   Document ID: ed559c0f-eb12-4edf-b987-071ccfb6dad8
+   Content length: 402 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[155/436] Healthcare Providers in NKORANZA
+   Document ID: c95dd404-197c-4ebd-869c-7ac742d181b8
+   Content length: 597 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[156/436] Healthcare Providers in DROBO
+   Document ID: 7cd95cd6-67d8-4fb3-9d18-1c21c77d8326
+   Content length: 282 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[157/436] Healthcare Providers in DORMAA
+   Document ID: 270de380-72f6-4979-b790-cd659f922a05
+   Content length: 561 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[158/436] Healthcare Providers in SUNYANI
+   Document ID: eeef033d-bf57-445c-a69d-e73f19fd4f7a
+   Content length: 5037 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[159/436] Healthcare Providers in GOASO
+   Document ID: 1de657b1-4ec0-4e7f-a66e-c9898c902814
+   Content length: 1010 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[160/436] Healthcare Providers in HWIDIEM
+   Document ID: b3e382ee-f6e6-435c-aad5-a39df7cac278
+   Content length: 455 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[161/436] Healthcare Providers in KENYASE
+   Document ID: d5c44f1e-49c8-4612-bce8-204c47902e44
+   Content length: 1051 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[162/436] Healthcare Providers in TECHIMAN
+   Document ID: 3006974c-c797-493c-bb43-8313fe45dbda
+   Content length: 1422 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[163/436] Healthcare Providers in WENCHI
+   Document ID: 6184f796-bb4b-46c8-b04d-00136f3fdf1e
+   Content length: 429 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[164/436] Healthcare Providers in BEREKUM
+   Document ID: 4149cbb5-4935-412c-aa9e-769991dfab2a
+   Content length: 580 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[165/436] Healthcare Providers in SAMPA
+   Document ID: 83763c7d-4be1-4c27-9d0b-d8b790c2f875
+   Content length: 270 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[166/436] Healthcare Providers in KINTAMPO, DUAYAW NKWANTA & OTHERS
+   Document ID: b9c28e27-339a-496d-a408-8ef25559d21b
+   Content length: 1122 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[167/436] Healthcare Providers in CAPE COAST
+   Document ID: a5dc2c7e-162c-4820-838d-761b1e0edfca
+   Content length: 1712 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[168/436] Healthcare Providers in ELMINA
+   Document ID: 0e3f1c85-43eb-42ac-b356-74098bfe6c37
+   Content length: 386 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[169/436] Healthcare Providers in ASSIN
+   Document ID: 7069e2bb-c4e1-40c9-9368-93b024102a65
+   Content length: 1046 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[170/436] Healthcare Providers in SWEDRU
+   Document ID: 2026f470-788f-400f-86d4-9cf18151200b
+   Content length: 1055 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[171/436] Healthcare Providers in WINNEBA
+   Document ID: fce01b41-cb3d-4e03-98f4-eecffe8f09ec
+   Content length: 478 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[172/436] Healthcare Providers in MANKESSIM
+   Document ID: 37c2d2f6-a55e-48b3-8f48-40a8c1f2fd2b
+   Content length: 416 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[173/436] Healthcare Providers in ASIKUMA
+   Document ID: c50ee965-ebec-4121-b97d-f9a8149b5653
+   Content length: 635 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[174/436] Healthcare Providers in AJUMAKO
+   Document ID: b8113713-6d93-446d-84d5-f15ab2fbb9cf
+   Content length: 635 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[175/436] Healthcare Providers in DUNKWA-ON-OFFIN
+   Document ID: 6c75402c-c8df-4eb7-bb19-3a48e7edb191
+   Content length: 721 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[176/436] Healthcare Providers in TAKORADI
+   Document ID: 46cb7ec7-579d-4626-9cdd-87d33f7bd2d8
+   Content length: 5866 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[177/436] Healthcare Providers in SEKONDI
+   Document ID: dce04ec8-4eed-4873-9251-1767c480e38f
+   Content length: 476 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[178/436] Healthcare Providers in INCHABAN
+   Document ID: bf668325-ae99-4960-b77f-53920622ca72
+   Content length: 325 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[179/436] Healthcare Providers in TARKWA
+   Document ID: 3cd578e8-c097-48a9-ac70-02c464222760
+   Content length: 1953 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[180/436] Healthcare Providers in BOGOSO
+   Document ID: 365f9abc-8d30-4272-b55b-5ea968cb6264
+   Content length: 288 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[181/436] Healthcare Providers in WASSA AKROPONG
+   Document ID: d00cbb4b-985d-49a3-9d85-a425dbd41e0b
+   Content length: 339 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[182/436] Healthcare Providers in ASANKRAGWA
+   Document ID: 35c4c9d7-28c2-4fa7-aff0-1456790d0819
+   Content length: 337 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[183/436] Healthcare Providers in SAMREBOI
+   Document ID: 60a6a3b6-41ac-41c8-9be8-e0c4f84f66f1
+   Content length: 341 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[184/436] Healthcare Providers in ENCHI
+   Document ID: 5be807af-36b9-4ce0-b03d-c538ee037867
+   Content length: 523 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[185/436] Healthcare Providers in SUAMAN DADIESO
+   Document ID: 43949806-b9f2-413e-b32e-4d675eadf965
+   Content length: 336 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[186/436] Healthcare Providers in SEFWI BIBIANI
+   Document ID: e65e13b3-5150-48f5-b99f-eec2f4f75a9a
+   Content length: 588 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[187/436] Healthcare Providers in SEFWI ANHWIASO
+   Document ID: 3282a979-7a2f-4db1-8738-b3c1a540bea8
+   Content length: 276 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[188/436] Healthcare Providers in SEFWI BEKWAI
+   Document ID: 12d4588f-48b1-45b5-bed8-432c16529d8b
+   Content length: 342 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[189/436] Healthcare Providers in SEFWI WIAWSO
+   Document ID: 7da4ff40-93a0-49c4-b0fc-d7678033d779
+   Content length: 505 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[190/436] Healthcare Providers in SEFWI ASAFO
+   Document ID: 88f88727-568d-413c-b0ef-f2c934ce9e8f
+   Content length: 359 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[191/436] Healthcare Providers in SEFWI ASAWINSO
+   Document ID: 3fcadf4e-92ff-49a0-a23a-af044c36b902
+   Content length: 477 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[192/436] Healthcare Providers in SEFWI BODI
+   Document ID: 52545cd6-d0b4-468d-b426-a1e48b95cb01
+   Content length: 330 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[193/436] Healthcare Providers in SEFWI AKONTOMBRA
+   Document ID: b3da2a80-cf05-4d69-8a32-30aa7fe5146d
+   Content length: 342 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[194/436] Healthcare Providers in SEFWI ESSAM
+   Document ID: 21e26cb6-5bce-46ba-a111-aed9179a3ffc
+   Content length: 338 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[195/436] Healthcare Providers in MAMPONG
+   Document ID: 03c036dc-08e0-4f29-a423-6e9b9894064a
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[196/436] Healthcare Providers in KOFORIDUA
+   Document ID: 4af941ac-8cb1-4113-96c4-1cf5f260db85
+   Content length: 3202 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[197/436] Healthcare Providers in MAMFE AKUAPEM
+   Document ID: d20af5ef-fa8b-4c71-a37a-f630a10fe13d
+   Content length: 367 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[198/436] Healthcare Providers in TAFO
+   Document ID: 8599be39-8550-4f6d-87ce-45fcced3cc07
+   Content length: 553 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[199/436] Healthcare Providers in NSAWAM
+   Document ID: c2ddd23d-3f8a-41fe-b870-10f55410f7c4
+   Content length: 932 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[200/436] Healthcare Providers in SUHUM
+   Document ID: f8271d5c-6607-4f7e-9575-d0a9cc67fe36
+   Content length: 484 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[201/436] Healthcare Providers in ASAMANKESE
+   Document ID: b3c3e281-7808-4661-b7de-1f65f4f8bc65
+   Content length: 448 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[202/436] Healthcare Providers in ASIAKWA
+   Document ID: 573e948f-af99-4c96-a2c6-19ade2b86388
+   Content length: 1110 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[203/436] Healthcare Providers in OSINO
+   Document ID: 8ce899c9-e602-48f9-90d7-48d3e042c5ea
+   Content length: 1088 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[204/436] Healthcare Providers in ANYINAM
+   Document ID: b7f4ff1f-8855-4324-a141-6b2b7d1facdf
+   Content length: 1110 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[205/436] Healthcare Providers in ENYIRESI
+   Document ID: d92b39f8-422e-4263-b61d-2be5453d46b1
+   Content length: 1121 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[206/436] Healthcare Providers in KIBI
+   Document ID: 40d2f590-1238-4f27-875e-a010ccab8223
+   Content length: 1077 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[207/436] Healthcare Providers in AKOSOMBO
+   Document ID: ee76f65b-8f23-4002-9ad2-39ab0dc11dc2
+   Content length: 454 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[208/436] Healthcare Providers in SOMANYA
+   Document ID: 54f8034c-6634-40a4-9572-31ffd17ccbda
+   Content length: 629 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[209/436] Healthcare Providers in ODUMASE KROBO
+   Document ID: caa9baf8-8700-4bb9-a1dd-9cd9024361d5
+   Content length: 671 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[210/436] Healthcare Providers in ODA
+   Document ID: 2d1505f2-d161-4617-a6c7-f05e64f5b70e
+   Content length: 689 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[211/436] Healthcare Providers in AKWATIA
+   Document ID: 5ac46e5b-fb10-4b2f-8786-5551e1ba04d4
+   Content length: 279 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[212/436] Healthcare Providers in KADE
+   Document ID: 34715749-9097-4758-aea1-3182192ba06d
+   Content length: 237 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[213/436] Healthcare Providers in BEGORO
+   Document ID: 58e3cb72-3940-4d98-a454-828492be06bd
+   Content length: 731 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[214/436] Healthcare Providers in OSIEM
+   Document ID: de97ca3c-bac0-4cd2-a949-1607f9b994cc
+   Content length: 723 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[215/436] Healthcare Providers in NKAWKAW
+   Document ID: d38c274b-76ee-4c46-b43f-3d7f5bd500c8
+   Content length: 1262 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[216/436] Healthcare Providers in NEW ABIREM
+   Document ID: 29dd8ab8-88a7-475e-b5b8-7eb3b6850ce4
+   Content length: 472 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[217/436] Healthcare Providers in HO
+   Document ID: 3c13a922-e5a1-4d26-bf13-1a1a86bee2bb
+   Content length: 1630 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[218/436] Healthcare Providers in HOHOE
+   Document ID: 5f1ee5ed-8f42-4903-9335-a8c2da0f9121
+   Content length: 577 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[219/436] Healthcare Providers in ACCRA CENTRAL
+   Document ID: 3949fa3a-6dd1-4513-abde-98654cc918e9
+   Content length: 2226 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[220/436] Healthcare Providers in TUDU
+   Document ID: 03a8f0ab-43a5-4975-ba47-ad563dc3c33d
+   Content length: 2082 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[221/436] Healthcare Providers in MAKOLA
+   Document ID: 429b867d-4dc3-44ba-9ace-468782b4841e
+   Content length: 2114 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[222/436] Healthcare Providers in ADABRAKA
+   Document ID: 085e2727-2339-4eb7-8ba8-f64e0016e3f3
+   Content length: 1223 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[223/436] Healthcare Providers in AIRPORT RESIDENTIAL AREA
+   Document ID: e79b9a4c-a6dd-48ac-8d80-e2f677ba3d26
+   Content length: 2296 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[224/436] Healthcare Providers in 37 AREA
+   Document ID: 8252a381-dcbc-4181-9e77-4e80101ca476
+   Content length: 2058 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[225/436] Healthcare Providers in ASYLUM DOWN
+   Document ID: 7ac4f743-b6ac-4cea-a974-2f3887aee677
+   Content length: 1597 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[226/436] Healthcare Providers in LEGON & NORTH LEGON
+   Document ID: 52398216-3286-4634-9635-538b4246b0da
+   Content length: 1520 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[227/436] Healthcare Providers in MADINA
+   Document ID: b3312214-adf4-40dd-9bde-6621b6ca007c
+   Content length: 3566 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[228/436] Healthcare Providers in ADENTA
+   Document ID: 46835085-8201-4615-957b-6992398c965c
+   Content length: 3566 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[229/436] Healthcare Providers in DODOWA
+   Document ID: 1f92b9b9-44aa-43af-9249-4699baeff16e
+   Content length: 3566 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[230/436] Healthcare Providers in DZORWULU
+   Document ID: 367e43da-9eb6-47fe-8512-833c4d567d75
+   Content length: 1623 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[231/436] Healthcare Providers in ABELENKPE
+   Document ID: 683466a7-409f-4b26-9323-5cc874fb6a36
+   Content length: 1634 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[232/436] Healthcare Providers in CIRCLE
+   Document ID: 1bb935f5-2916-4266-96b4-fb74fd405fc5
+   Content length: 2324 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[233/436] Healthcare Providers in KANESHIE
+   Document ID: 1ca226a1-e0b1-4f59-b276-49fdbbc74529
+   Content length: 2356 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[234/436] Healthcare Providers in NORTH KANESHIE
+   Document ID: 8d178ba5-72c7-43aa-a5c2-47516d0686c6
+   Content length: 2452 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[235/436] Healthcare Providers in INDUSTRIAL AREA
+   Document ID: 2bb3f742-53f5-460a-966b-54d351911a5b
+   Content length: 2468 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[236/436] Healthcare Providers in KOKOMLEMLE
+   Document ID: ba92234f-4e09-4b74-935a-05ac1e2bc09c
+   Content length: 527 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[237/436] Healthcare Providers in MAAMOBI
+   Document ID: 1bf03467-6e9f-4a52-8017-78d7a391cbdc
+   Content length: 512 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[238/436] Healthcare Providers in NIMA
+   Document ID: 1ac609e7-c735-4069-9f0b-06f4cea28ebe
+   Content length: 497 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[239/436] Healthcare Providers in LAPAZ
+   Document ID: 22afb2a3-cae4-44c9-be99-7cb378594f02
+   Content length: 1858 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[240/436] Healthcare Providers in NYAMEKYE
+   Document ID: 39f14822-3e18-4b5b-87a0-b94473a9445e
+   Content length: 1897 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[241/436] Healthcare Providers in DARKUMAN
+   Document ID: eaa3e890-27b6-4a16-b867-d17ade47e3ef
+   Content length: 1897 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[242/436] Healthcare Providers in ODORKOR
+   Document ID: 99e7bff3-d320-485a-8473-568e96e08d0c
+   Content length: 1884 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[243/436] Healthcare Providers in TESANO
+   Document ID: 762f8878-9061-4d96-8dc3-09da53ebcad8
+   Content length: 230 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[244/436] Healthcare Providers in LATEBIOKOSHIE
+   Document ID: 02affc62-1a35-4fc2-a014-5040376a894f
+   Content length: 843 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[245/436] Healthcare Providers in MATAHEKO
+   Document ID: 6f472953-4b28-495c-8d4f-76fd90ce15a5
+   Content length: 813 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[246/436] Healthcare Providers in DANSOMAN
+   Document ID: d1644e3b-c4a1-450d-ab78-c451f8d93979
+   Content length: 2912 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[247/436] Healthcare Providers in MAMPROBI
+   Document ID: 45111bc8-9e9a-4852-9494-182b4186fac9
+   Content length: 2912 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[248/436] Healthcare Providers in KORLE-BU
+   Document ID: d86bea7d-1842-4d38-899c-76f51a0673e9
+   Content length: 2912 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[249/436] Healthcare Providers in OSU
+   Document ID: 61d5bf03-9514-4cab-8d0e-d9c9f17b7336
+   Content length: 3092 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[250/436] Healthcare Providers in LABONE
+   Document ID: 05c2b86e-e55b-43ef-b10f-1dfc57774add
+   Content length: 2185 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[251/436] Healthcare Providers in LA
+   Document ID: a53722ac-425a-4d16-ab1a-6204648d59d9
+   Content length: 2129 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[252/436] Healthcare Providers in TSE ADDO
+   Document ID: a1080b0a-1e33-4338-80cb-6edea16a5580
+   Content length: 2213 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[253/436] Healthcare Providers in CANTONMENTS
+   Document ID: bc5f3185-bb4c-4ed8-b437-8a757b51c5f9
+   Content length: 2255 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[254/436] Healthcare Providers in TANTRA HILL
+   Document ID: 2f9a1e93-cb4c-4ff8-b39b-5426b2ffd574
+   Content length: 902 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[255/436] Healthcare Providers in OFANKOR
+   Document ID: 813783dc-19e4-4f13-9e98-b95ca697eb0f
+   Content length: 874 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[256/436] Healthcare Providers in SPINTEX ROAD
+   Document ID: 098a092d-4e3c-4977-8628-2864c76d2937
+   Content length: 2507 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[257/436] Healthcare Providers in BAATSONA
+   Document ID: 74197b70-d0a7-48da-b682-0ef94813a6e7
+   Content length: 2439 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[258/436] Healthcare Providers in DOME
+   Document ID: 77963a18-1850-4a89-b927-fc5b33060eae
+   Content length: 1748 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[259/436] Healthcare Providers in HAATSO
+   Document ID: b01e999c-2191-48e6-b49d-62bdd1ee1ae5
+   Content length: 1772 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[260/436] Healthcare Providers in ASHONGMAN
+   Document ID: 3002479e-3885-4da6-9ada-778e774b23e3
+   Content length: 1808 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[261/436] Healthcare Providers in KWABENYA
+   Document ID: 3f2e483d-ac53-4916-b3df-5b906bfad010
+   Content length: 1796 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[262/436] Healthcare Providers in TESHIE & NUNGUA
+   Document ID: aa3ab599-cb49-4d26-bd6e-816e473a6ea8
+   Content length: 1795 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[263/436] Healthcare Providers in ACHIMOTA & NEW ACHIMOTA
+   Document ID: e2c9c142-231e-4953-a6f9-886460672d95
+   Content length: 1402 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[264/436] Healthcare Providers in EAST LEGON
+   Document ID: 0ecfae25-7099-4530-a707-bf580332fa7d
+   Content length: 3327 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[265/436] Healthcare Providers in ADJRINGANOR
+   Document ID: b5670538-3ca9-4d53-9156-25c8496dd3a7
+   Content length: 3349 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[266/436] Healthcare Providers in RIDGE
+   Document ID: 17805809-f454-444c-ac7e-1b7221c4d8e0
+   Content length: 883 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[267/436] Healthcare Providers in SAKUMONO ESTATE
+   Document ID: 1c98b796-8a74-41f8-a142-c6891ab95d3e
+   Content length: 3005 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[268/436] Healthcare Providers in LASHIBI
+   Document ID: aa6d02fb-9a3a-4a5a-a74d-4e12aac0db06
+   Content length: 2845 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[269/436] Healthcare Providers in COMM. 18,19,21
+   Document ID: 5ad74087-303c-4a05-92f0-6c1ab0bb7c4f
+   Content length: 215 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[270/436] Healthcare Providers in COMM. 18,19,22
+   Document ID: 20968cfc-1464-4831-9815-2b8aee2a8d3d
+   Content length: 319 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[271/436] Healthcare Providers in COMM. 18,19,23
+   Document ID: 3dc5de77-b937-44b2-a93d-a28f72ab7162
+   Content length: 345 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[272/436] Healthcare Providers in COMM. 18,19,24
+   Document ID: 373b0c49-705d-4eb5-b1dd-19c47c45bf8b
+   Content length: 304 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[273/436] Healthcare Providers in COMM. 18,19,25
+   Document ID: a3f6be53-10b2-488e-8fae-a6f48d94436d
+   Content length: 297 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[274/436] Healthcare Providers in COMM. 18,19,26
+   Document ID: 8e5d3b15-2b6d-48ba-8c9f-807b8319e998
+   Content length: 261 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[275/436] Healthcare Providers in COMM. 18,19,27
+   Document ID: a30d31ad-7209-4eeb-bf42-4f3721300dd8
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[276/436] Healthcare Providers in COMM. 18,19,28
+   Document ID: c5c82cb4-5b59-4c54-a1c6-5f239818fb1a
+   Content length: 274 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[277/436] Healthcare Providers in COMM. 18,19,29
+   Document ID: 40166c38-48b6-4a4a-9b2e-7147ded2a25e
+   Content length: 280 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[278/436] Healthcare Providers in COMM. 18,19,30
+   Document ID: 6c714f78-b5a9-408d-ac28-69eeed35f768
+   Content length: 271 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[279/436] Healthcare Providers in COMM. 18,19,31
+   Document ID: 056a5078-5b71-4591-9a71-13ac4c3a1409
+   Content length: 317 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[280/436] Healthcare Providers in COMM. 18,19,32
+   Document ID: 5d259c2c-e3fb-48aa-85d3-ae18eacba4ef
+   Content length: 292 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[281/436] Healthcare Providers in COMM. 18,19,33
+   Document ID: d77bd874-9d63-488b-9170-3e7c2f51e737
+   Content length: 336 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[282/436] Healthcare Providers in COMM. 18,19,34
+   Document ID: 24fdf115-83d2-4742-a19a-fadbdda7c134
+   Content length: 304 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[283/436] Healthcare Providers in COMM. 18,19,35
+   Document ID: 1bee7edf-d4fa-47a2-b195-e40dd0bc8c29
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[284/436] Healthcare Providers in COMM. 18,19,36
+   Document ID: a6be2ade-4169-4a17-b82d-6ea9e0aab0a6
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[285/436] Healthcare Providers in COMM. 18,19,37
+   Document ID: b7638c93-040d-47d3-b4a2-f9febd013f77
+   Content length: 363 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[286/436] Healthcare Providers in COMM. 18,19,38
+   Document ID: 27bbf392-6174-4a9f-8cf5-8f11266a1442
+   Content length: 300 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[287/436] Healthcare Providers in ASHAIMAN
+   Document ID: ea38b89f-7345-4819-9359-53fe4d16c00f
+   Content length: 2573 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[288/436] Healthcare Providers in COMMUNITY 26
+   Document ID: 66e8f299-a9a8-4b9c-9eb3-c2c9213d45b3
+   Content length: 190 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[289/436] Healthcare Providers in COMMUNITY 27
+   Document ID: 744c20b0-e8fe-4b22-9070-6a16885b6646
+   Content length: 275 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[290/436] Healthcare Providers in COMMUNITY 28
+   Document ID: b95ec864-6fc4-434b-9c04-c1fbb29af413
+   Content length: 313 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[291/436] Healthcare Providers in COMMUNITY 29
+   Document ID: 1268b40d-4259-40e0-bbe1-ee06aa941612
+   Content length: 260 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[292/436] Healthcare Providers in COMMUNITY 30
+   Document ID: c9cbba3c-762f-41fd-9257-e29dd93e059b
+   Content length: 239 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[293/436] Healthcare Providers in COMMUNITY 31
+   Document ID: 25661f3b-b045-490c-b192-37ebfb025e2d
+   Content length: 304 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[294/436] Healthcare Providers in COMMUNITY 32
+   Document ID: 3db8cdf7-95c1-46ec-9388-3b5a3fd26509
+   Content length: 279 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[295/436] Healthcare Providers in COMMUNITY 33
+   Document ID: 58b659ab-7d6d-42b4-b927-c429e9ab781a
+   Content length: 307 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[296/436] Healthcare Providers in COMMUNITY 34
+   Document ID: d0d6fae2-ce04-4d82-9554-150357a766b0
+   Content length: 310 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[297/436] Healthcare Providers in COMMUNITY 35
+   Document ID: 98575ca2-456c-42aa-8f44-ac0a6dd558af
+   Content length: 329 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[298/436] Healthcare Providers in COMMUNITY 36
+   Document ID: 23acf16b-eb2c-4b76-a84f-e4d90a453dce
+   Content length: 284 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[299/436] Healthcare Providers in COMMUNITY 37
+   Document ID: 76037a4b-d901-4a68-b095-4ede58b3ae29
+   Content length: 323 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[300/436] Healthcare Providers in COMMUNITY 38
+   Document ID: 79463af5-cfdc-43b2-80c3-b2521b0c422b
+   Content length: 363 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[301/436] Healthcare Providers in COMMUNITY 39
+   Document ID: b3a7225f-2813-4a4b-8a49-890e1356c44f
+   Content length: 256 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[302/436] Healthcare Providers in COMMUNITY 40
+   Document ID: d08e312f-33bb-42d2-965d-470be9772d00
+   Content length: 291 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[303/436] Healthcare Providers in COMMUNITY 41
+   Document ID: baf570dd-4a74-42c4-b974-561cd2f52323
+   Content length: 302 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[304/436] Healthcare Providers in COMM. 22
+   Document ID: bcb7a640-e598-4922-b842-87470a84f267
+   Content length: 2185 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[305/436] Healthcare Providers in MICHEL CAMP
+   Document ID: e8c7b793-2324-4cc0-9f33-9e2a28744019
+   Content length: 2230 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[306/436] Healthcare Providers in AFIENYA ROAD
+   Document ID: a2f3af15-1d34-4d03-a161-83beeff13e98
+   Content length: 2245 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[307/436] Healthcare Providers in TEMA COMMUNITY 4
+   Document ID: 99a38029-c894-49bb-b454-178ee9bcc468
+   Content length: 2919 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[308/436] Healthcare Providers in 5
+   Document ID: a5167788-5612-4786-abf3-ba8050a07b67
+   Content length: 2587 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[309/436] Healthcare Providers in 6
+   Document ID: 0f1d5be6-92ff-4d10-ba5d-fbc1a7132d64
+   Content length: 2588 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[310/436] Healthcare Providers in 9
+   Document ID: d92b4d43-3248-44ef-a4dd-6d257e572fd2
+   Content length: 2434 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[311/436] Healthcare Providers in 10
+   Document ID: f480a1cf-5415-4542-8298-c0481cfaf487
+   Content length: 2452 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[312/436] Healthcare Providers in 12
+   Document ID: be3f9ed0-ae57-4144-8286-50b4f6ada138
+   Content length: 175 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[313/436] Healthcare Providers in 13
+   Document ID: 357d5cfd-07a3-4dda-afc5-4b57edf9e756
+   Content length: 282 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[314/436] Healthcare Providers in 14
+   Document ID: 76cf590b-16ea-4750-89c9-54fe066d00c4
+   Content length: 264 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[315/436] Healthcare Providers in 15
+   Document ID: 3a541e30-60df-43d1-95d5-b73d70ec8e09
+   Content length: 217 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[316/436] Healthcare Providers in 16
+   Document ID: cac52d41-59e3-42d3-9eac-58c7d8700a50
+   Content length: 281 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[317/436] Healthcare Providers in 17
+   Document ID: e5660325-34f6-4138-9c9f-58be35da1b05
+   Content length: 287 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[318/436] Healthcare Providers in 18
+   Document ID: a5a66342-cd75-4699-9906-a9587b034893
+   Content length: 292 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[319/436] Healthcare Providers in 19
+   Document ID: 795dd2f4-1a78-48c6-b4a0-3a361781ca43
+   Content length: 270 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[320/436] Healthcare Providers in 20
+   Document ID: 5d7b5d3c-296b-40f2-965a-8571d04a389b
+   Content length: 227 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[321/436] Healthcare Providers in 21
+   Document ID: c0961396-3ef9-4d60-bdf1-91001a7e71be
+   Content length: 288 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[322/436] Healthcare Providers in 22
+   Document ID: e7c6e754-aff0-4765-b7f0-0609678c9496
+   Content length: 210 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[323/436] Healthcare Providers in 23
+   Document ID: 4eaf242b-83bf-4c37-8fa2-8d464ca99852
+   Content length: 290 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[324/436] Healthcare Providers in 24
+   Document ID: becb598a-51a8-47b0-b112-286d97b820b2
+   Content length: 267 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[325/436] Healthcare Providers in 25
+   Document ID: f54a347f-b9af-4c4e-8cc7-01747d71c4d6
+   Content length: 270 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[326/436] Healthcare Providers in 26
+   Document ID: 0ff3fa9e-7cc6-4f8d-9523-0ef31f10a1b2
+   Content length: 278 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[327/436] Healthcare Providers in 27
+   Document ID: d389fec4-078e-4aa4-95c3-73a2c1533e6d
+   Content length: 234 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[328/436] Healthcare Providers in TEMA COMMUNITY 2
+   Document ID: 8fbaf4d7-7644-42dd-9988-2e35ce68248c
+   Content length: 852 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[329/436] Healthcare Providers in TEMA COMMUNITY 3
+   Document ID: 6ebb1822-961d-49c2-b90a-5759ff7478fb
+   Content length: 276 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[330/436] Healthcare Providers in TEMA COMMUNITY 5
+   Document ID: 1acf1e6b-a8fc-4250-89c7-9956d65e705e
+   Content length: 302 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[331/436] Healthcare Providers in TEMA COMMUNITY 6
+   Document ID: 69560c46-c2c9-4f62-bbe8-0006a0fcc108
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[332/436] Healthcare Providers in TEMA COMMUNITY 7
+   Document ID: 441ef8f3-2682-4b38-afe8-f509b7a38896
+   Content length: 303 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[333/436] Healthcare Providers in TEMA COMMUNITY 8
+   Document ID: 68bc926b-1858-40ae-abaa-f78e4950b4f4
+   Content length: 287 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[334/436] Healthcare Providers in TEMA COMMUNITY 9
+   Document ID: 81694283-640e-4ca7-8535-b07d10de7008
+   Content length: 317 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[335/436] Healthcare Providers in 4
+   Document ID: b7957b3b-8c2a-4a41-a14f-54c3ecc36062
+   Content length: 154 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[336/436] Healthcare Providers in 7
+   Document ID: 2c1d7639-3e1b-4c5e-9e18-d70f9f34653d
+   Content length: 249 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[337/436] Healthcare Providers in 8
+   Document ID: 4ed98770-5155-42c7-aa00-3c09cfdc667f
+   Content length: 202 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[338/436] Healthcare Providers in AMANSAMAN
+   Document ID: 66377962-71d4-4871-9f96-621bf81e20e9
+   Content length: 773 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[339/436] Healthcare Providers in POKUASE
+   Document ID: 0d41aaa7-335b-4985-9992-d129056b54fc
+   Content length: 759 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[340/436] Healthcare Providers in WEIJA
+   Document ID: b4fc4544-5c2c-4cc1-a565-dbca577af6fb
+   Content length: 2734 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[341/436] Healthcare Providers in KASOA
+   Document ID: 7e3a7756-9cd6-465f-ad4d-fe4644897b67
+   Content length: 2734 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[342/436] Healthcare Providers in GBAWE
+   Document ID: 876df4ae-8a31-442f-9690-b8914c162569
+   Content length: 2734 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[343/436] Healthcare Providers in TAMALE
+   Document ID: b2b424fe-3f36-4568-a0ed-fe5287ef2adf
+   Content length: 7520 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[344/436] Healthcare Providers in WA
+   Document ID: 0a9fb66f-9934-4a6f-995b-0bb1530e115d
+   Content length: 2230 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[345/436] Healthcare Providers in LAWRA
+   Document ID: 5af60bba-dcf5-4361-bc88-541e0eb3e35b
+   Content length: 758 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[346/436] Healthcare Providers in BOLGATANGA
+   Document ID: 23cdb8cd-6ed1-4689-9e6a-25b12bd3277e
+   Content length: 1464 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[347/436] Healthcare Providers in BAWKU
+   Document ID: 2a5a8e44-7b5d-4001-a2d4-b8c7cc75a24e
+   Content length: 668 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[348/436] Healthcare Providers in NAVRONGO
+   Document ID: 9d00dbc9-bbce-40a0-896c-646ef8b75bad
+   Content length: 573 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[349/436] Healthcare Providers in BOMSO
+   Document ID: c7f13572-61ba-4d60-8898-7c33be0c16f3
+   Content length: 2151 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[350/436] Healthcare Providers in KNUST
+   Document ID: 963be6ce-129e-4f8c-b958-65e098632ac3
+   Content length: 2151 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[351/436] Healthcare Providers in EJISU
+   Document ID: 2e91833b-7754-4dfb-8bb1-34c5029e4efa
+   Content length: 2151 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[352/436] Healthcare Providers in ASOKWA
+   Document ID: 682b2d1f-342c-46ce-b2b4-581264d7f32e
+   Content length: 1240 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[353/436] Healthcare Providers in BANTAMA
+   Document ID: fc36ac3d-42a9-4384-8936-6ae3e7293b58
+   Content length: 1405 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[354/436] Healthcare Providers in ABREPO
+   Document ID: 68552405-ddfd-4550-82bb-7c7f21b05dac
+   Content length: 780 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[355/436] Healthcare Providers in TAFO
+   Document ID: 8d60a053-e44b-46b6-b755-2e02a568c50c
+   Content length: 1536 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[356/436] Healthcare Providers in BREMANG
+   Document ID: f3a577b5-8658-4da5-8a08-3414e2b8b62e
+   Content length: 1572 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[357/436] Healthcare Providers in MAMPONTENG
+   Document ID: 6bf3625e-148e-4560-877c-496da33b67f1
+   Content length: 662 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[358/436] Healthcare Providers in ABUAKWA
+   Document ID: 667ce772-01a0-4a64-84ce-b847f7abb6fd
+   Content length: 934 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[359/436] Healthcare Providers in TANOSO
+   Document ID: 8e79fd5b-6011-413d-9cdb-867232df175d
+   Content length: 926 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[360/436] Healthcare Providers in SANTASI
+   Document ID: e9acdc05-b084-48f9-907b-c4dd948eff0d
+   Content length: 1881 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[361/436] Healthcare Providers in PATASE
+   Document ID: 1f7820c5-3011-4f36-ad94-4a351722af0e
+   Content length: 1867 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[362/436] Healthcare Providers in SUAME
+   Document ID: dee2ba1e-e8cd-4d3d-bba4-8f1011c378a2
+   Content length: 838 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[363/436] Healthcare Providers in ADUM
+   Document ID: 92b85421-e867-4a5a-a49f-5a345881b297
+   Content length: 829 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[364/436] Healthcare Providers in AHODWO
+   Document ID: 66643548-d11a-4292-91ba-bb62a0d33709
+   Content length: 1828 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[365/436] Healthcare Providers in AHINSAN
+   Document ID: 058e9a38-91d3-4517-81a9-a1ae563225ad
+   Content length: 1843 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[366/436] Healthcare Providers in MAMPONG
+   Document ID: 6d5ae899-6a08-4f94-84cd-7dc926ea5280
+   Content length: 1273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[367/436] Healthcare Providers in AGONA
+   Document ID: 6e93e33f-1bac-4b5d-b92c-e474c191c2b8
+   Content length: 1251 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[368/436] Healthcare Providers in WIAMOASE
+   Document ID: 3cad45aa-f624-4354-8ab1-972c18b34cae
+   Content length: 1284 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[369/436] Healthcare Providers in OBUASI
+   Document ID: d15058d6-1a16-4bfd-a037-241c28cb9d80
+   Content length: 775 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[370/436] Healthcare Providers in DUNKWA
+   Document ID: bd5b4c15-b6d8-4afe-a47d-9fc968e330a9
+   Content length: 775 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[371/436] Healthcare Providers in KONONGO
+   Document ID: dc5c8331-db3e-463a-a497-44ae5f54399c
+   Content length: 412 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[372/436] Healthcare Providers in AGOGO
+   Document ID: 980efdcf-6f20-4d36-a441-a32f4a0548b3
+   Content length: 402 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[373/436] Healthcare Providers in NKORANZA
+   Document ID: 170b7de8-f51b-4dac-8084-319bdf87529c
+   Content length: 597 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[374/436] Healthcare Providers in DROBO
+   Document ID: 641cd3e5-1d9c-460d-9562-bcc20d21abe0
+   Content length: 282 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[375/436] Healthcare Providers in DORMAA
+   Document ID: 2a3b2f72-ff60-45c2-b956-67bf53dbc8e3
+   Content length: 561 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[376/436] Healthcare Providers in SUNYANI
+   Document ID: 44f52725-566a-4b67-aeb5-9fc561f63a1d
+   Content length: 5037 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[377/436] Healthcare Providers in GOASO
+   Document ID: 5cf4a92b-9d05-41cd-909d-0cbb4b769a32
+   Content length: 1010 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[378/436] Healthcare Providers in HWIDIEM
+   Document ID: b83db212-4b4a-4bdf-abff-c1c44c04982a
+   Content length: 455 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[379/436] Healthcare Providers in KENYASE
+   Document ID: d19e7231-fb01-45cd-8a73-ac168fdc325a
+   Content length: 1051 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[380/436] Healthcare Providers in TECHIMAN
+   Document ID: 269a905b-90aa-4df3-991e-793768f837a8
+   Content length: 1422 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[381/436] Healthcare Providers in WENCHI
+   Document ID: be8d4f31-0e98-4340-80a9-4b7799319784
+   Content length: 429 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[382/436] Healthcare Providers in BEREKUM
+   Document ID: bc997b12-39b8-488b-bc4c-d569ee3aa851
+   Content length: 580 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[383/436] Healthcare Providers in SAMPA
+   Document ID: 2feb644f-b8fd-43af-91f7-db4813e1e7ef
+   Content length: 270 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[384/436] Healthcare Providers in KINTAMPO, DUAYAW NKWANTA & OTHERS
+   Document ID: fcdc1cc9-a447-4691-a74f-5efdb69682c7
+   Content length: 1122 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[385/436] Healthcare Providers in CAPE COAST
+   Document ID: 2539322d-c799-4e4d-a9b7-3bdbfd85cfca
+   Content length: 1712 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[386/436] Healthcare Providers in ELMINA
+   Document ID: 386b46ad-6aab-4344-bbbf-f0a19a23e107
+   Content length: 386 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[387/436] Healthcare Providers in ASSIN
+   Document ID: 7b8dcac8-32f0-4ace-85b3-7be298356427
+   Content length: 1046 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[388/436] Healthcare Providers in SWEDRU
+   Document ID: 60195aaa-6f32-4df6-af24-2edf094c6c2c
+   Content length: 1055 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[389/436] Healthcare Providers in WINNEBA
+   Document ID: 6a653c13-3bee-4877-88e5-8163f8f94ed9
+   Content length: 478 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[390/436] Healthcare Providers in MANKESSIM
+   Document ID: e56a0aaa-0d92-4f61-be86-a3e9b47b841c
+   Content length: 416 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[391/436] Healthcare Providers in ASIKUMA
+   Document ID: 7278216e-69ea-48e5-b624-99d6d8298c1b
+   Content length: 635 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[392/436] Healthcare Providers in AJUMAKO
+   Document ID: a4537077-89f9-4a74-b6d9-9d1d77ad3540
+   Content length: 635 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[393/436] Healthcare Providers in DUNKWA-ON-OFFIN
+   Document ID: c698f6fb-fd5f-499f-84b4-2f3acc27d5bb
+   Content length: 721 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[394/436] Healthcare Providers in TAKORADI
+   Document ID: 5718bda0-d7db-4933-b94d-afa5e9ffbbc7
+   Content length: 5866 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[395/436] Healthcare Providers in SEKONDI
+   Document ID: d0a1493b-0a4b-4a23-a0b1-4f2b11fc8cf4
+   Content length: 476 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[396/436] Healthcare Providers in INCHABAN
+   Document ID: ad070c09-0f54-4ae7-bc1d-f9570ed02cce
+   Content length: 325 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[397/436] Healthcare Providers in TARKWA
+   Document ID: e2168e71-468b-405d-a1c6-54b35127499f
+   Content length: 1953 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[398/436] Healthcare Providers in BOGOSO
+   Document ID: 2ca1453b-3699-4b06-baaf-232f0857043c
+   Content length: 288 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[399/436] Healthcare Providers in WASSA AKROPONG
+   Document ID: 485c25ee-5503-413d-b4ba-8c090f59c681
+   Content length: 339 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[400/436] Healthcare Providers in ASANKRAGWA
+   Document ID: 518e9329-c66b-4091-9620-e8b907d12d39
+   Content length: 337 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[401/436] Healthcare Providers in SAMREBOI
+   Document ID: 25061065-d1a5-4460-a5d2-79eb6eb04ea1
+   Content length: 341 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[402/436] Healthcare Providers in ENCHI
+   Document ID: 4de83218-e562-44cb-babc-1b39208beb6a
+   Content length: 523 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[403/436] Healthcare Providers in SUAMAN DADIESO
+   Document ID: 54f6b9cb-2f2f-4b3b-ad50-8a40a9a20d2e
+   Content length: 336 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[404/436] Healthcare Providers in SEFWI BIBIANI
+   Document ID: 92abeaf3-d30b-4ac3-8c42-5515a9cc6925
+   Content length: 588 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[405/436] Healthcare Providers in SEFWI ANHWIASO
+   Document ID: e315ddd5-0224-4a7f-ae9d-a71e5d55dfc6
+   Content length: 276 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[406/436] Healthcare Providers in SEFWI BEKWAI
+   Document ID: ac52cc67-ec92-4cc6-bd02-fcf71dde3577
+   Content length: 342 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[407/436] Healthcare Providers in SEFWI WIAWSO
+   Document ID: 52d4f7d7-9411-448a-8437-dad373d45e67
+   Content length: 505 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[408/436] Healthcare Providers in SEFWI ASAFO
+   Document ID: d320463a-3ead-4b0a-a666-49b318fa44f3
+   Content length: 359 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[409/436] Healthcare Providers in SEFWI ASAWINSO
+   Document ID: 42191a1c-bfb8-468e-9de4-d13f92c2c6c2
+   Content length: 477 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[410/436] Healthcare Providers in SEFWI BODI
+   Document ID: da20f587-669c-47c9-aedb-b7b6bbded0e8
+   Content length: 330 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[411/436] Healthcare Providers in SEFWI AKONTOMBRA
+   Document ID: f9c511d0-88cc-4359-bc9d-10f21f63f047
+   Content length: 342 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[412/436] Healthcare Providers in SEFWI ESSAM
+   Document ID: 32a56d77-b549-414d-a6a8-8abfc5805fc3
+   Content length: 338 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[413/436] Healthcare Providers in MAMPONG
+   Document ID: f73acd8e-44eb-4530-9cac-0b7bcc978674
+   Content length: 273 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[414/436] Healthcare Providers in KOFORIDUA
+   Document ID: 13ead7f6-d2af-4db8-b09a-f8f5a2a0bc90
+   Content length: 3202 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[415/436] Healthcare Providers in MAMFE AKUAPEM
+   Document ID: b1ee80a6-e0af-449b-8c07-a78fd64dbc6b
+   Content length: 367 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[416/436] Healthcare Providers in TAFO
+   Document ID: 2cd40463-d239-49c1-b12c-fb86a87035bc
+   Content length: 553 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[417/436] Healthcare Providers in NSAWAM
+   Document ID: 1c6b663a-9175-4569-aeab-e4d7f6696fd9
+   Content length: 932 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[418/436] Healthcare Providers in SUHUM
+   Document ID: f9744ece-34ee-4568-8d2a-37ea841daa63
+   Content length: 484 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[419/436] Healthcare Providers in ASAMANKESE
+   Document ID: c4806d67-c03e-427b-99b0-979da2006485
+   Content length: 448 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[420/436] Healthcare Providers in ASIAKWA
+   Document ID: b5f37ab0-96c8-47c0-99ea-b63e344e0a73
+   Content length: 1110 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[421/436] Healthcare Providers in OSINO
+   Document ID: 9e7ae68b-e63e-4890-a53c-e7d89f8d20b5
+   Content length: 1088 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[422/436] Healthcare Providers in ANYINAM
+   Document ID: a5d46293-3619-46d6-8d59-ab24b715e75a
+   Content length: 1110 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[423/436] Healthcare Providers in ENYIRESI
+   Document ID: 33a1fe27-903e-49a6-8bb8-8423e0227f59
+   Content length: 1121 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[424/436] Healthcare Providers in KIBI
+   Document ID: fb4c5483-1a4c-4048-9a38-96abc5dafeb9
+   Content length: 1077 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[425/436] Healthcare Providers in AKOSOMBO
+   Document ID: 8b071b2e-20d2-42ad-873e-d9fa7a55bf93
+   Content length: 454 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[426/436] Healthcare Providers in SOMANYA
+   Document ID: e6dea3ae-0d26-491c-a5d2-4d06401fce0f
+   Content length: 629 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[427/436] Healthcare Providers in ODUMASE KROBO
+   Document ID: a3e1f1fc-893d-47b3-93a4-12d8f2da4290
+   Content length: 671 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[428/436] Healthcare Providers in ODA
+   Document ID: a0996602-75a9-4d15-9482-9c86915bbccc
+   Content length: 689 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[429/436] Healthcare Providers in AKWATIA
+   Document ID: 2441f53a-a6c6-4c83-9949-ca086cc9051d
+   Content length: 279 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[430/436] Healthcare Providers in KADE
+   Document ID: 2380395f-8223-4d33-8cc0-5445bccbd028
+   Content length: 237 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[431/436] Healthcare Providers in BEGORO
+   Document ID: 98edc0c1-c6d5-4d23-9068-3d3b38638fc5
+   Content length: 731 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[432/436] Healthcare Providers in OSIEM
+   Document ID: 429c49be-f5b2-498c-89e6-4425ee21758a
+   Content length: 723 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[433/436] Healthcare Providers in NKAWKAW
+   Document ID: 62a3a984-0447-4d25-8d9f-7a70abf223a7
+   Content length: 1262 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[434/436] Healthcare Providers in NEW ABIREM
+   Document ID: a26f4759-c3c1-476a-acf1-f9a50654e444
+   Content length: 472 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[435/436] Healthcare Providers in HO
+   Document ID: bed0cfc8-4be3-4c0c-a83e-6f9fad776317
+   Content length: 1630 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+[436/436] Healthcare Providers in HOHOE
+   Document ID: bc2383da-ffb2-4ed6-8fac-fa63be159937
+   Content length: 577 chars
+   ❌ Error: No module named 'apps.core_backend.backend.models.knowledge_base_models'
+
+================================================================================
+📊 INDEXING SUMMARY
+================================================================================
+Total documents: 436
+Successfully indexed: 0
+Failed: 436
+Success rate: 0.0%
+================================================================================

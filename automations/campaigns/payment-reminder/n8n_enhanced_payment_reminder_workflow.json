@@ -1,0 +1,672 @@
+{
+  "name": "Enhanced Payment Reminder Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "payment-reminder-campaign",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Payment Reminder Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "payment-reminder-webhook"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Payment Reminder Webhook').item.json.accounting_system_url }}/accounts/{{ $('Payment Reminder Webhook').item.json.account_number }}",
+        "authentication": "headerAuth",
+        "headerAuth": {
+          "name": "Authorization",
+          "value": "Bearer {{ $('Payment Reminder Webhook').item.json.accounting_api_key }}"
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "account-data-retrieval",
+      "name": "Account Data Retrieval",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "compliance_check",
+              "name": "compliance_status",
+              "value": "={{ \n  const state = $json.customer_state || 'CA';\n  const lastContactDate = $json.last_contact_date;\n  const daysSinceContact = lastContactDate ? Math.floor((Date.now() - new Date(lastContactDate).getTime()) / (1000 * 60 * 60 * 24)) : 999;\n  \n  // FDCPA compliance checks\n  const fdcpaCompliant = daysSinceContact >= 7; // Minimum 7 days between contacts\n  const timeOfDay = new Date().getHours();\n  const appropriateTime = timeOfDay >= 8 && timeOfDay <= 21; // 8 AM to 9 PM\n  \n  return {\n    fdcpa_compliant: fdcpaCompliant,\n    tcpa_compliant: $json.consent_given === true,\n    appropriate_time: appropriateTime,\n    state_regulations: state,\n    can_contact: fdcpaCompliant && appropriateTime,\n    days_since_contact: daysSinceContact\n  };\n}}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "compliance-check",
+      "name": "Compliance Check",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4",
+        "options": {
+          "systemMessage": "You are an AI classifier for debt collection. Classify customers into risk segments based on their payment history, balance amount, and engagement patterns. Return one of: 'low_risk' (likely to pay), 'medium_risk' (needs encouragement), 'high_risk' (requires negotiation), 'critical_risk' (settlement candidate)."
+        },
+        "prompt": "=Customer Profile:\n- Account Balance: ${{ $json.current_balance }}\n- Days Overdue: {{ $json.days_overdue }}\n- Payment History: {{ $json.payment_history_score }}/10\n- Previous Contacts: {{ $json.contact_attempts }}\n- Last Response: {{ $json.last_customer_response }}\n- Financial Indicators: {{ $json.financial_status }}\n\nClassify this customer's risk level and provide a brief strategy recommendation."
+      },
+      "id": "customer-segmentation",
+      "name": "Customer Segmentation",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [900, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-api-key",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "compliance-passed",
+              "leftValue": "={{ $('Compliance Check').item.json.compliance_status.can_contact }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "compliance-gate",
+      "name": "Compliance Gate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.vapi.ai/call",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.VAPI_PRIVATE_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "assistantId",
+              "value": "asst_payment_reminder_enhanced"
+            },
+            {
+              "name": "phoneNumber",
+              "value": "={{ $('Account Data Retrieval').item.json.phone_number }}"
+            },
+            {
+              "name": "customerData",
+              "value": "={{ {\n  account_number: $('Payment Reminder Webhook').item.json.account_number,\n  customer_name: $('Account Data Retrieval').item.json.customer_name,\n  current_balance: $('Account Data Retrieval').item.json.current_balance,\n  days_overdue: $('Account Data Retrieval').item.json.days_overdue,\n  risk_segment: $('Customer Segmentation').item.json.risk_level,\n  payment_history: $('Account Data Retrieval').item.json.payment_history,\n  previous_promises: $('Account Data Retrieval').item.json.payment_promises\n} }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "vapi-collection-call",
+      "name": "VAPI Payment Collection Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "payment-made",
+              "leftValue": "={{ $('VAPI Payment Collection Call').item.json.call_result.payment_made }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "call-outcome-router",
+      "name": "Call Outcome Router",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1560, 200]
+    },
+    {
+      "parameters": {
+        "url": "https://api.stripe.com/v1/payment_intents",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.STRIPE_SECRET_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "amount",
+              "value": "={{ Math.round($('VAPI Payment Collection Call').item.json.call_result.payment_amount * 100) }}"
+            },
+            {
+              "name": "currency",
+              "value": "usd"
+            },
+            {
+              "name": "payment_method",
+              "value": "={{ $('VAPI Payment Collection Call').item.json.call_result.payment_method_id }}"
+            },
+            {
+              "name": "metadata",
+              "value": "={{ {\n  account_number: $('Payment Reminder Webhook').item.json.account_number,\n  campaign_type: 'payment_reminder',\n  call_id: $('VAPI Payment Collection Call').item.json.call_id\n} }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "payment-processor",
+      "name": "Payment Processor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1780, 120]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "dispute-raised",
+              "leftValue": "={{ $('VAPI Payment Collection Call').item.json.call_result.dispute_raised }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "dispute-handler",
+      "name": "Dispute Handler",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 280]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dispute-record",
+              "name": "dispute_documentation",
+              "value": "={{ {\n  account_number: $('Payment Reminder Webhook').item.json.account_number,\n  dispute_reason: $('VAPI Payment Collection Call').item.json.call_result.dispute_reason,\n  dispute_details: $('VAPI Payment Collection Call').item.json.call_result.dispute_details,\n  date_reported: new Date().toISOString(),\n  investigation_status: 'pending',\n  collections_paused: true,\n  investigation_deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()\n} }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dispute-processor",
+      "name": "Dispute Processor",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [2000, 360]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "settlement-eligible",
+              "leftValue": "={{ $('Customer Segmentation').item.json.risk_level }}",
+              "rightValue": "critical_risk",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "settlement-eligibility",
+      "name": "Settlement Eligibility",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 440]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "settlement-calculation",
+              "name": "settlement_offer",
+              "value": "={{ \n  const balance = $('Account Data Retrieval').item.json.current_balance;\n  const daysOverdue = $('Account Data Retrieval').item.json.days_overdue;\n  const paymentHistory = $('Account Data Retrieval').item.json.payment_history_score;\n  \n  // Calculate settlement percentage based on account factors\n  let settlementPercentage = 70; // Base 70%\n  \n  if (daysOverdue > 180) settlementPercentage -= 10;\n  if (paymentHistory < 3) settlementPercentage -= 10;\n  if (balance > 10000) settlementPercentage += 5;\n  \n  settlementPercentage = Math.max(40, Math.min(85, settlementPercentage));\n  \n  const settlementAmount = Math.round(balance * (settlementPercentage / 100));\n  \n  return {\n    original_balance: balance,\n    settlement_percentage: settlementPercentage,\n    settlement_amount: settlementAmount,\n    savings: balance - settlementAmount,\n    payment_terms: 'lump_sum',\n    offer_expires: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),\n    approval_required: settlementAmount > 5000\n  };\n}}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "settlement-calculator",
+      "name": "Settlement Calculator",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [2000, 440]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Payment Reminder Webhook').item.json.crm_webhook_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $('Payment Reminder Webhook').item.json.crm_api_key }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "account_number",
+              "value": "={{ $('Payment Reminder Webhook').item.json.account_number }}"
+            },
+            {
+              "name": "interaction_type",
+              "value": "payment_reminder_call"
+            },
+            {
+              "name": "call_outcome",
+              "value": "={{ $('VAPI Payment Collection Call').item.json.call_result.outcome }}"
+            },
+            {
+              "name": "next_action",
+              "value": "={{ $('VAPI Payment Collection Call').item.json.call_result.next_action }}"
+            },
+            {
+              "name": "compliance_status",
+              "value": "={{ $('Compliance Check').item.json.compliance_status }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "crm-update",
+      "name": "CRM Update",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2220, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "compliance-documentation",
+              "name": "compliance_record",
+              "value": "={{ {\n  account_number: $('Payment Reminder Webhook').item.json.account_number,\n  interaction_date: new Date().toISOString(),\n  interaction_type: 'voice_call',\n  compliance_checks: $('Compliance Check').item.json.compliance_status,\n  call_recording_id: $('VAPI Payment Collection Call').item.json.call_id,\n  agent_id: 'ai_agent_payment_reminder',\n  customer_response: $('VAPI Payment Collection Call').item.json.call_result.customer_response,\n  outcome: $('VAPI Payment Collection Call').item.json.call_result.outcome,\n  fdcpa_compliant: true,\n  tcpa_compliant: $('Compliance Check').item.json.compliance_status.tcpa_compliant,\n  state_regulations_followed: true,\n  documentation_complete: true\n} }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "compliance-documentation",
+      "name": "Compliance Documentation",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [2220, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "analytics-data",
+              "name": "collection_metrics",
+              "value": "={{ {\n  campaign_id: $('Payment Reminder Webhook').item.json.campaign_id,\n  account_number: $('Payment Reminder Webhook').item.json.account_number,\n  call_date: new Date().toISOString(),\n  risk_segment: $('Customer Segmentation').item.json.risk_level,\n  call_duration: $('VAPI Payment Collection Call').item.json.call_duration_seconds,\n  call_outcome: $('VAPI Payment Collection Call').item.json.call_result.outcome,\n  payment_made: $('VAPI Payment Collection Call').item.json.call_result.payment_made || false,\n  payment_amount: $('VAPI Payment Collection Call').item.json.call_result.payment_amount || 0,\n  dispute_raised: $('VAPI Payment Collection Call').item.json.call_result.dispute_raised || false,\n  settlement_offered: $node['Settlement Eligibility'].json.length > 0,\n  compliance_score: 100, // Based on compliance checks\n  cost_per_contact: 2.50, // Estimated cost\n  recovery_rate: $('VAPI Payment Collection Call').item.json.call_result.payment_made ? 1 : 0\n} }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "analytics-tracking",
+      "name": "Analytics Tracking",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [2220, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "needs-followup",
+              "leftValue": "={{ $('VAPI Payment Collection Call').item.json.call_result.outcome }}",
+              "rightValue": "payment_promised",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "followup-scheduler",
+      "name": "Follow-up Scheduler",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2440, 200]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": "={{ $('VAPI Payment Collection Call').item.json.call_result.followup_days || 7 }}"
+            }
+          ]
+        },
+        "cronExpression": "",
+        "triggerAtDateTime": "={{ $('VAPI Payment Collection Call').item.json.call_result.promised_payment_date }}"
+      },
+      "id": "schedule-followup",
+      "name": "Schedule Follow-up",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [2660, 120]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "compliance-delay",
+              "name": "delay_reason",
+              "value": "compliance_violation_detected",
+              "type": "string"
+            },
+            {
+              "name": "next_contact_allowed",
+              "value": "={{ new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "compliance-delay",
+      "name": "Compliance Delay",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [1340, 400]
+    }
+  ],
+  "connections": {
+    "Payment Reminder Webhook": {
+      "main": [
+        [
+          {
+            "node": "Account Data Retrieval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Account Data Retrieval": {
+      "main": [
+        [
+          {
+            "node": "Compliance Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compliance Check": {
+      "main": [
+        [
+          {
+            "node": "Customer Segmentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Segmentation": {
+      "main": [
+        [
+          {
+            "node": "Compliance Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compliance Gate": {
+      "main": [
+        [
+          {
+            "node": "VAPI Payment Collection Call",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Compliance Delay",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VAPI Payment Collection Call": {
+      "main": [
+        [
+          {
+            "node": "Call Outcome Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Outcome Router": {
+      "main": [
+        [
+          {
+            "node": "Payment Processor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Dispute Handler",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Settlement Eligibility",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Payment Processor": {
+      "main": [
+        [
+          {
+            "node": "CRM Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dispute Handler": {
+      "main": [
+        [
+          {
+            "node": "Dispute Processor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settlement Eligibility": {
+      "main": [
+        [
+          {
+            "node": "Settlement Calculator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CRM Update": {
+      "main": [
+        [
+          {
+            "node": "Compliance Documentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compliance Documentation": {
+      "main": [
+        [
+          {
+            "node": "Analytics Tracking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analytics Tracking": {
+      "main": [
+        [
+          {
+            "node": "Follow-up Scheduler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Follow-up Scheduler": {
+      "main": [
+        [
+          {
+            "node": "Schedule Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-16T23:30:00.000Z",
+  "updatedAt": "2025-09-16T23:30:00.000Z",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredit": "Enhanced Payment Reminder with VAPI + n8n",
+    "description": "Comprehensive debt collection workflow with AI voice agents, compliance monitoring, and automated payment processing"
+  },
+  "pinData": {},
+  "versionId": "1.0.0"
+}

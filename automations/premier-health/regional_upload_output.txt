@@ -1,0 +1,384 @@
+2025-10-21 14:42:41,544 - INFO - ================================================================================
+2025-10-21 14:42:41,544 - INFO - 🌍 PREMIER HEALTH - UPLOAD ALL REGIONAL DATA
+2025-10-21 14:42:41,544 - INFO - ================================================================================
+2025-10-21 14:42:41,544 - INFO - CSV Directory: /opt/kasaai/apps/automations/premier-health/regional_cities/enriched
+2025-10-21 14:42:41,544 - INFO - Collection: premier_health_production
+2025-10-21 14:42:41,544 - INFO - ================================================================================
+2025-10-21 14:42:41,544 - INFO - 📁 Processing: greater_accra_region_enriched.csv
+2025-10-21 14:42:41,545 - INFO -    Found 0 cities with 0 providers
+2025-10-21 14:42:41,545 - INFO - 
+2025-10-21 14:42:41,545 - INFO - 📁 Processing: all_northern_regions_enriched.csv
+2025-10-21 14:42:41,545 - INFO -    Found 6 cities with 84 providers
+2025-10-21 14:42:41,548 - INFO - Document created in PostgreSQL: e9129407-a2a3-40e8-853f-e546313f1fca for premier_health_production
+2025-10-21 14:42:41,548 - INFO -    ✅ TAMALE: 45 providers uploaded
+2025-10-21 14:42:41,549 - INFO - Document created in PostgreSQL: ff346533-51b4-4a2c-ae7b-cbca64e06ef7 for premier_health_production
+2025-10-21 14:42:41,549 - INFO -    ✅ WA: 15 providers uploaded
+2025-10-21 14:42:41,550 - INFO - Document created in PostgreSQL: 17bbb4d5-041c-4355-8900-3b1c67908713 for premier_health_production
+2025-10-21 14:42:41,550 - INFO -    ✅ LAWRA: 5 providers uploaded
+2025-10-21 14:42:41,550 - INFO - Document created in PostgreSQL: bc74dc19-65df-490d-8a5e-d948bcab337b for premier_health_production
+2025-10-21 14:42:41,550 - INFO -    ✅ BOLGATANGA: 10 providers uploaded
+2025-10-21 14:42:41,551 - INFO - Document created in PostgreSQL: 6dfc54d0-2ce4-4f79-bf3b-145f1246cf59 for premier_health_production
+2025-10-21 14:42:41,551 - INFO -    ✅ BAWKU: 5 providers uploaded
+2025-10-21 14:42:41,551 - INFO - Document created in PostgreSQL: e8e8d84f-bcd5-4134-83d2-767c4572fa05 for premier_health_production
+2025-10-21 14:42:41,551 - INFO -    ✅ NAVRONGO: 4 providers uploaded
+2025-10-21 14:42:41,551 - INFO - 
+2025-10-21 14:42:41,551 - INFO - 📁 Processing: ashanti_region_kumasi_enriched.csv
+2025-10-21 14:42:41,551 - INFO -    Found 0 cities with 0 providers
+2025-10-21 14:42:41,551 - INFO - 
+2025-10-21 14:42:41,551 - INFO - 📁 Processing: bono_regions_enriched.csv
+2025-10-21 14:42:41,552 - INFO -    Found 12 cities with 84 providers
+2025-10-21 14:42:41,552 - INFO - Document created in PostgreSQL: fcc0fd68-24f4-453f-b74e-78e388c7b9be for premier_health_production
+2025-10-21 14:42:41,552 - INFO -    ✅ NKORANZA: 4 providers uploaded
+2025-10-21 14:42:41,553 - INFO - Document created in PostgreSQL: f33af4f2-bc8c-4b5b-aa6c-94d11baf4cde for premier_health_production
+2025-10-21 14:42:41,553 - INFO -    ✅ DROBO: 2 providers uploaded
+2025-10-21 14:42:41,553 - INFO - Document created in PostgreSQL: 5e8e6661-197b-4d38-9068-36f7e86a3758 for premier_health_production
+2025-10-21 14:42:41,553 - INFO -    ✅ DORMAA: 4 providers uploaded
+2025-10-21 14:42:41,554 - INFO - Document created in PostgreSQL: fcd13ddb-1036-4bc8-9199-c06c50d62bb1 for premier_health_production
+2025-10-21 14:42:41,554 - INFO -    ✅ SUNYANI: 33 providers uploaded
+2025-10-21 14:42:41,555 - INFO - Document created in PostgreSQL: f630bca9-9f50-4212-b0e1-235694e80d2a for premier_health_production
+2025-10-21 14:42:41,555 - INFO -    ✅ GOASO: 7 providers uploaded
+2025-10-21 14:42:41,555 - INFO - Document created in PostgreSQL: f783399b-037c-40ad-a7e4-ff145c2d3485 for premier_health_production
+2025-10-21 14:42:41,555 - INFO -    ✅ HWIDIEM: 3 providers uploaded
+2025-10-21 14:42:41,556 - INFO - Document created in PostgreSQL: 6d74bbad-ba83-4b1e-a7fb-06efbde7a8ac for premier_health_production
+2025-10-21 14:42:41,556 - INFO -    ✅ KENYASE: 7 providers uploaded
+2025-10-21 14:42:41,556 - INFO - Document created in PostgreSQL: 26a45583-d6f0-4796-9c2e-7e97caee10d8 for premier_health_production
+2025-10-21 14:42:41,556 - INFO -    ✅ TECHIMAN: 9 providers uploaded
+2025-10-21 14:42:41,557 - INFO - Document created in PostgreSQL: 6c7823ac-51c9-4be1-af91-80ae0a290bc7 for premier_health_production
+2025-10-21 14:42:41,557 - INFO -    ✅ WENCHI: 3 providers uploaded
+2025-10-21 14:42:41,557 - INFO - Document created in PostgreSQL: d001084a-e805-4d9c-88f6-de521efdddff for premier_health_production
+2025-10-21 14:42:41,557 - INFO -    ✅ BEREKUM: 4 providers uploaded
+2025-10-21 14:42:41,557 - INFO - Document created in PostgreSQL: 0de4310a-5718-450d-83b4-86fb3973fd15 for premier_health_production
+2025-10-21 14:42:41,557 - INFO -    ✅ SAMPA: 2 providers uploaded
+2025-10-21 14:42:41,558 - INFO - Document created in PostgreSQL: bee3ab71-400d-4b1b-a655-397c5c6ae2fa for premier_health_production
+2025-10-21 14:42:41,558 - INFO -    ✅ KINTAMPO, DUAYAW NKWANTA & OTHERS: 6 providers uploaded
+2025-10-21 14:42:41,558 - INFO - 
+2025-10-21 14:42:41,558 - INFO - 📁 Processing: central_and_western_region_enriched.csv
+2025-10-21 14:42:41,558 - INFO -    Found 26 cities with 131 providers
+2025-10-21 14:42:41,559 - INFO - Document created in PostgreSQL: d17e8649-25e5-41c3-9dbb-019d74c4ff83 for premier_health_production
+2025-10-21 14:42:41,559 - INFO -    ✅ CAPE COAST: 11 providers uploaded
+2025-10-21 14:42:41,559 - INFO - Document created in PostgreSQL: c954d122-7951-4ca5-a77a-257cc5cb2b70 for premier_health_production
+2025-10-21 14:42:41,559 - INFO -    ✅ ELMINA: 3 providers uploaded
+2025-10-21 14:42:41,559 - INFO - Document created in PostgreSQL: 8367c9bc-c771-45dd-8462-6a1ef7b322a9 for premier_health_production
+2025-10-21 14:42:41,560 - INFO -    ✅ ASSIN/SWEDRU: 7 providers uploaded
+2025-10-21 14:42:41,560 - INFO - Document created in PostgreSQL: fe6ef48a-9df8-4705-820e-98b1977cfaad for premier_health_production
+2025-10-21 14:42:41,560 - INFO -    ✅ WINNEBA: 4 providers uploaded
+2025-10-21 14:42:41,560 - INFO - Document created in PostgreSQL: 614ac6b7-1865-4d91-97f5-eff5f4d194c2 for premier_health_production
+2025-10-21 14:42:41,560 - INFO -    ✅ MANKESSIM: 4 providers uploaded
+2025-10-21 14:42:41,561 - INFO - Document created in PostgreSQL: c7122501-3948-40c1-adfb-64617098db66 for premier_health_production
+2025-10-21 14:42:41,561 - INFO -    ✅ ASIKUMA /AJUMAKO: 5 providers uploaded
+2025-10-21 14:42:41,561 - INFO - Document created in PostgreSQL: 2dd5908d-ab5c-414a-8f45-ee70f8886773 for premier_health_production
+2025-10-21 14:42:41,561 - INFO -    ✅ DUNKWA-ON-OFFIN: 5 providers uploaded
+2025-10-21 14:42:41,562 - INFO - Document created in PostgreSQL: a8a3d3e1-1cdc-4d7d-9196-5fe05c03f66d for premier_health_production
+2025-10-21 14:42:41,562 - INFO -    ✅ TAKORADI: 39 providers uploaded
+2025-10-21 14:42:41,563 - INFO - Document created in PostgreSQL: 8eea8ca2-d640-4ec4-84d3-bec2db967bcd for premier_health_production
+2025-10-21 14:42:41,563 - INFO -    ✅ SEKONDI: 3 providers uploaded
+2025-10-21 14:42:41,563 - INFO - Document created in PostgreSQL: b1774629-dcf9-4f7e-97ca-f1f57d766cac for premier_health_production
+2025-10-21 14:42:41,563 - INFO -    ✅ INCHABAN: 2 providers uploaded
+2025-10-21 14:42:41,563 - INFO - Document created in PostgreSQL: 83b8ce6b-3b7e-4415-bdb8-c5c8ccbb1781 for premier_health_production
+2025-10-21 14:42:41,563 - INFO -    ✅ TARKWA: 13 providers uploaded
+2025-10-21 14:42:41,564 - INFO - Document created in PostgreSQL: 81b761ec-543f-4770-9e15-e775858a5082 for premier_health_production
+2025-10-21 14:42:41,564 - INFO -    ✅ BOGOSO: 2 providers uploaded
+2025-10-21 14:42:41,564 - INFO - Document created in PostgreSQL: 41557aa5-272c-48f3-a400-868b44dc55c5 for premier_health_production
+2025-10-21 14:42:41,564 - INFO -    ✅ WASSA AKROPONG: 2 providers uploaded
+2025-10-21 14:42:41,564 - INFO - Document created in PostgreSQL: e30003a4-4c4f-462d-8405-c09a65df83ad for premier_health_production
+2025-10-21 14:42:41,564 - INFO -    ✅ ASANKRAGWA: 2 providers uploaded
+2025-10-21 14:42:41,565 - INFO - Document created in PostgreSQL: 7af69741-6211-4ec6-a04e-ecc554b38f7f for premier_health_production
+2025-10-21 14:42:41,565 - INFO -    ✅ SAMREBOI: 2 providers uploaded
+2025-10-21 14:42:41,565 - INFO - Document created in PostgreSQL: 3255534d-9aca-4381-b2d4-2d25c79dba04 for premier_health_production
+2025-10-21 14:42:41,565 - INFO -    ✅ ENCHI: 4 providers uploaded
+2025-10-21 14:42:41,565 - INFO - Document created in PostgreSQL: a5f91fae-b54e-4a66-8e9c-bbdd373ad87e for premier_health_production
+2025-10-21 14:42:41,565 - INFO -    ✅ SUAMAN DADIESO: 2 providers uploaded
+2025-10-21 14:42:41,566 - INFO - Document created in PostgreSQL: efafd404-1567-4972-8b1e-a2673a5469c6 for premier_health_production
+2025-10-21 14:42:41,566 - INFO -    ✅ SEFWI BIBIANI: 4 providers uploaded
+2025-10-21 14:42:41,566 - INFO - Document created in PostgreSQL: dccdc3eb-f1b7-4819-a918-620888d27138 for premier_health_production
+2025-10-21 14:42:41,566 - INFO -    ✅ SEFWI ANHWIASO: 1 providers uploaded
+2025-10-21 14:42:41,567 - INFO - Document created in PostgreSQL: ae16db48-f92b-4b43-9f67-f68023d5bfe0 for premier_health_production
+2025-10-21 14:42:41,567 - INFO -    ✅ SEFWI BEKWAI: 2 providers uploaded
+2025-10-21 14:42:41,567 - INFO - Document created in PostgreSQL: 1e84884a-a678-405b-bf5f-357e21e83811 for premier_health_production
+2025-10-21 14:42:41,567 - INFO -    ✅ SEFWI WIAWSO: 3 providers uploaded
+2025-10-21 14:42:41,567 - INFO - Document created in PostgreSQL: 700d0407-c44c-48da-9198-b1db62ab331c for premier_health_production
+2025-10-21 14:42:41,567 - INFO -    ✅ SEFWI ASAFO: 2 providers uploaded
+2025-10-21 14:42:41,568 - INFO - Document created in PostgreSQL: 4d0d9add-f958-47b5-beab-9178e436bc6e for premier_health_production
+2025-10-21 14:42:41,568 - INFO -    ✅ SEFWI ASAWINSO: 3 providers uploaded
+2025-10-21 14:42:41,568 - INFO - Document created in PostgreSQL: 1a2f7b3b-b61a-4a8b-81c8-962089578cbf for premier_health_production
+2025-10-21 14:42:41,568 - INFO -    ✅ SEFWI BODI: 2 providers uploaded
+2025-10-21 14:42:41,568 - INFO - Document created in PostgreSQL: 39b6dd7c-ef4e-42c1-a39c-6d2ea9dcfe55 for premier_health_production
+2025-10-21 14:42:41,568 - INFO -    ✅ SEFWI AKONTOMBRA: 2 providers uploaded
+2025-10-21 14:42:41,569 - INFO - Document created in PostgreSQL: c61829e0-6f55-48ea-957c-4340a72bbbfd for premier_health_production
+2025-10-21 14:42:41,569 - INFO -    ✅ SEFWI ESSAM: 2 providers uploaded
+2025-10-21 14:42:41,569 - INFO - 
+2025-10-21 14:42:41,569 - INFO - 📁 Processing: eastern_and_volta_regions_enriched.csv
+2025-10-21 14:42:41,569 - INFO -    Found 18 cities with 103 providers
+2025-10-21 14:42:41,569 - INFO - Document created in PostgreSQL: c51ddac7-e7df-46d1-9012-b7e2a244c4c9 for premier_health_production
+2025-10-21 14:42:41,569 - INFO -    ✅ MAMPONG: 1 providers uploaded
+2025-10-21 14:42:41,570 - INFO - Document created in PostgreSQL: 5b110912-8a86-41f3-b4b8-b4a1dfb9c177 for premier_health_production
+2025-10-21 14:42:41,570 - INFO -    ✅ KOFORIDUA: 21 providers uploaded
+2025-10-21 14:42:41,570 - INFO - Document created in PostgreSQL: 24fab6c0-f679-47a1-a252-a7d3d33d1ec1 for premier_health_production
+2025-10-21 14:42:41,570 - INFO -    ✅ MAMFE AKUAPEM: 2 providers uploaded
+2025-10-21 14:42:41,571 - INFO - Document created in PostgreSQL: 8738ecc0-4533-4dd9-b92c-7c26ea2db054 for premier_health_production
+2025-10-21 14:42:41,571 - INFO -    ✅ TAFO: 4 providers uploaded
+2025-10-21 14:42:41,571 - INFO - Document created in PostgreSQL: 0c7d68ba-2642-4933-baf8-5497b18c893d for premier_health_production
+2025-10-21 14:42:41,571 - INFO -    ✅ NSAWAM: 6 providers uploaded
+2025-10-21 14:42:41,572 - INFO - Document created in PostgreSQL: fa3f95c5-5177-4150-933f-bfb512a402eb for premier_health_production
+2025-10-21 14:42:41,572 - INFO -    ✅ SUHUM: 4 providers uploaded
+2025-10-21 14:42:41,572 - INFO - Document created in PostgreSQL: bd636697-f089-4754-b6a1-d5d12151090b for premier_health_production
+2025-10-21 14:42:41,572 - INFO -    ✅ ASAMANKESE: 3 providers uploaded
+2025-10-21 14:42:41,572 - INFO - Document created in PostgreSQL: e0e35e91-693b-4684-ab41-c468f5bfad86 for premier_health_production
+2025-10-21 14:42:41,572 - INFO -    ✅ ASIAKWA / OSINO / ANYINAM / ENYIRESI / KIBI: 9 providers uploaded
+2025-10-21 14:42:41,573 - INFO - Document created in PostgreSQL: a943fecb-fcd4-4ad8-8edc-6a699f26d941 for premier_health_production
+2025-10-21 14:42:41,573 - INFO -    ✅ AKOSOMBO: 3 providers uploaded
+2025-10-21 14:42:41,573 - INFO - Document created in PostgreSQL: 8cc84b6a-fa75-49a8-8038-1a291ece128a for premier_health_production
+2025-10-21 14:42:41,573 - INFO -    ✅ SOMANYA / ODUMASE KROBO: 5 providers uploaded
+2025-10-21 14:42:41,574 - INFO - Document created in PostgreSQL: 1b0aaa88-e254-4a73-bbec-45cb7f99db21 for premier_health_production
+2025-10-21 14:42:41,574 - INFO -    ✅ ODA: 6 providers uploaded
+2025-10-21 14:42:41,574 - INFO - Document created in PostgreSQL: 0ad56351-cdbd-45fb-9f77-78c7621c1eaf for premier_health_production
+2025-10-21 14:42:41,574 - INFO -    ✅ AKWATIA: 2 providers uploaded
+2025-10-21 14:42:41,574 - INFO - Document created in PostgreSQL: 1f4caa6f-c4f7-49d4-9dd9-af4ad1bfcf34 for premier_health_production
+2025-10-21 14:42:41,574 - INFO -    ✅ KADE: 2 providers uploaded
+2025-10-21 14:42:41,575 - INFO - Document created in PostgreSQL: a4d0bbc8-bdae-4ad3-8939-f82e96bff469 for premier_health_production
+2025-10-21 14:42:41,575 - INFO -    ✅ BEGORO / OSIEM: 6 providers uploaded
+2025-10-21 14:42:41,575 - INFO - Document created in PostgreSQL: 53789cfe-3c43-42f5-bf00-8fbf0bda09a6 for premier_health_production
+2025-10-21 14:42:41,575 - INFO -    ✅ NKAWKAW: 9 providers uploaded
+2025-10-21 14:42:41,575 - INFO - Document created in PostgreSQL: 18b3a4fc-cac3-4482-99ae-d761ca544410 for premier_health_production
+2025-10-21 14:42:41,575 - INFO -    ✅ NEW ABIREM: 3 providers uploaded
+2025-10-21 14:42:41,576 - INFO - Document created in PostgreSQL: 327e7ff2-18c7-488f-b259-84b8358128a6 for premier_health_production
+2025-10-21 14:42:41,576 - INFO -    ✅ HO: 12 providers uploaded
+2025-10-21 14:42:41,576 - INFO - Document created in PostgreSQL: b6dc93de-071c-4954-a06f-9160afbfc909 for premier_health_production
+2025-10-21 14:42:41,576 - INFO -    ✅ HOHOE: 5 providers uploaded
+2025-10-21 14:42:41,576 - INFO - 
+2025-10-21 14:42:41,576 - INFO - ================================================================================
+2025-10-21 14:42:41,576 - INFO - 📊 UPLOAD SUMMARY
+2025-10-21 14:42:41,576 - INFO - ================================================================================
+2025-10-21 14:42:41,576 - INFO - 
+📁 greater_accra_region_enriched.csv
+2025-10-21 14:42:41,576 - INFO -    Cities: 0
+2025-10-21 14:42:41,576 - INFO -    Uploaded: 0
+2025-10-21 14:42:41,576 - INFO -    Skipped: 0
+2025-10-21 14:42:41,576 - INFO -    Errors: 0
+2025-10-21 14:42:41,576 - INFO - 
+📁 all_northern_regions_enriched.csv
+2025-10-21 14:42:41,576 - INFO -    Cities: 6
+2025-10-21 14:42:41,576 - INFO -    Uploaded: 6
+2025-10-21 14:42:41,576 - INFO -    Skipped: 0
+2025-10-21 14:42:41,576 - INFO -    Errors: 0
+2025-10-21 14:42:41,576 - INFO - 
+📁 ashanti_region_kumasi_enriched.csv
+2025-10-21 14:42:41,576 - INFO -    Cities: 0
+2025-10-21 14:42:41,576 - INFO -    Uploaded: 0
+2025-10-21 14:42:41,576 - INFO -    Skipped: 0
+2025-10-21 14:42:41,576 - INFO -    Errors: 0
+2025-10-21 14:42:41,576 - INFO - 
+📁 bono_regions_enriched.csv
+2025-10-21 14:42:41,576 - INFO -    Cities: 12
+2025-10-21 14:42:41,576 - INFO -    Uploaded: 12
+2025-10-21 14:42:41,576 - INFO -    Skipped: 0
+2025-10-21 14:42:41,576 - INFO -    Errors: 0
+2025-10-21 14:42:41,576 - INFO - 
+📁 central_and_western_region_enriched.csv
+2025-10-21 14:42:41,576 - INFO -    Cities: 26
+2025-10-21 14:42:41,577 - INFO -    Uploaded: 26
+2025-10-21 14:42:41,577 - INFO -    Skipped: 0
+2025-10-21 14:42:41,577 - INFO -    Errors: 0
+2025-10-21 14:42:41,577 - INFO - 
+📁 eastern_and_volta_regions_enriched.csv
+2025-10-21 14:42:41,577 - INFO -    Cities: 18
+2025-10-21 14:42:41,577 - INFO -    Uploaded: 18
+2025-10-21 14:42:41,577 - INFO -    Skipped: 0
+2025-10-21 14:42:41,577 - INFO -    Errors: 0
+2025-10-21 14:42:41,577 - INFO - 
+================================================================================
+2025-10-21 14:42:41,577 - INFO - 🎯 TOTALS
+2025-10-21 14:42:41,577 - INFO - ================================================================================
+2025-10-21 14:42:41,577 - INFO - Total cities: 62
+2025-10-21 14:42:41,577 - INFO - Newly uploaded: 62
+2025-10-21 14:42:41,577 - INFO - Already existed: 0
+2025-10-21 14:42:41,577 - INFO - Errors: 0
+2025-10-21 14:42:41,577 - INFO - ================================================================================
+2025-10-21 14:42:41,577 - INFO - ✅ ALL REGIONAL DATA UPLOADED SUCCESSFULLY!
+2025-10-21 14:42:41,577 - INFO - ================================================================================
+2025-10-21 14:42:41,578 - INFO - Updated document e9129407-a2a3-40e8-853f-e546313f1fca status to processing
+2025-10-21 14:42:43,389 - ERROR - Error indexing document e9129407-a2a3-40e8-853f-e546313f1fca: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,390 - INFO - Updated document e9129407-a2a3-40e8-853f-e546313f1fca status to failed
+2025-10-21 14:42:43,391 - INFO - Updated document ff346533-51b4-4a2c-ae7b-cbca64e06ef7 status to processing
+2025-10-21 14:42:43,393 - ERROR - Error indexing document ff346533-51b4-4a2c-ae7b-cbca64e06ef7: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,393 - INFO - Updated document ff346533-51b4-4a2c-ae7b-cbca64e06ef7 status to failed
+2025-10-21 14:42:43,393 - INFO - Updated document 17bbb4d5-041c-4355-8900-3b1c67908713 status to processing
+2025-10-21 14:42:43,395 - ERROR - Error indexing document 17bbb4d5-041c-4355-8900-3b1c67908713: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,396 - INFO - Updated document 17bbb4d5-041c-4355-8900-3b1c67908713 status to failed
+2025-10-21 14:42:43,396 - INFO - Updated document bc74dc19-65df-490d-8a5e-d948bcab337b status to processing
+2025-10-21 14:42:43,398 - ERROR - Error indexing document bc74dc19-65df-490d-8a5e-d948bcab337b: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,398 - INFO - Updated document bc74dc19-65df-490d-8a5e-d948bcab337b status to failed
+2025-10-21 14:42:43,398 - INFO - Updated document 6dfc54d0-2ce4-4f79-bf3b-145f1246cf59 status to processing
+2025-10-21 14:42:43,401 - ERROR - Error indexing document 6dfc54d0-2ce4-4f79-bf3b-145f1246cf59: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,402 - INFO - Updated document 6dfc54d0-2ce4-4f79-bf3b-145f1246cf59 status to failed
+2025-10-21 14:42:43,402 - INFO - Updated document e8e8d84f-bcd5-4134-83d2-767c4572fa05 status to processing
+2025-10-21 14:42:43,404 - ERROR - Error indexing document e8e8d84f-bcd5-4134-83d2-767c4572fa05: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,404 - INFO - Updated document e8e8d84f-bcd5-4134-83d2-767c4572fa05 status to failed
+2025-10-21 14:42:43,404 - INFO - Updated document fcc0fd68-24f4-453f-b74e-78e388c7b9be status to processing
+2025-10-21 14:42:43,406 - ERROR - Error indexing document fcc0fd68-24f4-453f-b74e-78e388c7b9be: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,407 - INFO - Updated document fcc0fd68-24f4-453f-b74e-78e388c7b9be status to failed
+2025-10-21 14:42:43,407 - INFO - Updated document f33af4f2-bc8c-4b5b-aa6c-94d11baf4cde status to processing
+2025-10-21 14:42:43,409 - ERROR - Error indexing document f33af4f2-bc8c-4b5b-aa6c-94d11baf4cde: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,410 - INFO - Updated document f33af4f2-bc8c-4b5b-aa6c-94d11baf4cde status to failed
+2025-10-21 14:42:43,410 - INFO - Updated document 5e8e6661-197b-4d38-9068-36f7e86a3758 status to processing
+2025-10-21 14:42:43,412 - ERROR - Error indexing document 5e8e6661-197b-4d38-9068-36f7e86a3758: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,412 - INFO - Updated document 5e8e6661-197b-4d38-9068-36f7e86a3758 status to failed
+2025-10-21 14:42:43,413 - INFO - Updated document fcd13ddb-1036-4bc8-9199-c06c50d62bb1 status to processing
+2025-10-21 14:42:43,415 - ERROR - Error indexing document fcd13ddb-1036-4bc8-9199-c06c50d62bb1: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,416 - INFO - Updated document fcd13ddb-1036-4bc8-9199-c06c50d62bb1 status to failed
+2025-10-21 14:42:43,416 - INFO - Updated document f630bca9-9f50-4212-b0e1-235694e80d2a status to processing
+2025-10-21 14:42:43,418 - ERROR - Error indexing document f630bca9-9f50-4212-b0e1-235694e80d2a: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,419 - INFO - Updated document f630bca9-9f50-4212-b0e1-235694e80d2a status to failed
+2025-10-21 14:42:43,419 - INFO - Updated document f783399b-037c-40ad-a7e4-ff145c2d3485 status to processing
+2025-10-21 14:42:43,421 - ERROR - Error indexing document f783399b-037c-40ad-a7e4-ff145c2d3485: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,421 - INFO - Updated document f783399b-037c-40ad-a7e4-ff145c2d3485 status to failed
+2025-10-21 14:42:43,421 - INFO - Updated document 6d74bbad-ba83-4b1e-a7fb-06efbde7a8ac status to processing
+2025-10-21 14:42:43,423 - ERROR - Error indexing document 6d74bbad-ba83-4b1e-a7fb-06efbde7a8ac: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,424 - INFO - Updated document 6d74bbad-ba83-4b1e-a7fb-06efbde7a8ac status to failed
+2025-10-21 14:42:43,424 - INFO - Updated document 26a45583-d6f0-4796-9c2e-7e97caee10d8 status to processing
+2025-10-21 14:42:43,426 - ERROR - Error indexing document 26a45583-d6f0-4796-9c2e-7e97caee10d8: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,426 - INFO - Updated document 26a45583-d6f0-4796-9c2e-7e97caee10d8 status to failed
+2025-10-21 14:42:43,427 - INFO - Updated document 6c7823ac-51c9-4be1-af91-80ae0a290bc7 status to processing
+2025-10-21 14:42:43,429 - ERROR - Error indexing document 6c7823ac-51c9-4be1-af91-80ae0a290bc7: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,429 - INFO - Updated document 6c7823ac-51c9-4be1-af91-80ae0a290bc7 status to failed
+2025-10-21 14:42:43,429 - INFO - Updated document d001084a-e805-4d9c-88f6-de521efdddff status to processing
+2025-10-21 14:42:43,431 - ERROR - Error indexing document d001084a-e805-4d9c-88f6-de521efdddff: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,432 - INFO - Updated document d001084a-e805-4d9c-88f6-de521efdddff status to failed
+2025-10-21 14:42:43,432 - INFO - Updated document 0de4310a-5718-450d-83b4-86fb3973fd15 status to processing
+2025-10-21 14:42:43,434 - ERROR - Error indexing document 0de4310a-5718-450d-83b4-86fb3973fd15: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,434 - INFO - Updated document 0de4310a-5718-450d-83b4-86fb3973fd15 status to failed
+2025-10-21 14:42:43,435 - INFO - Updated document bee3ab71-400d-4b1b-a655-397c5c6ae2fa status to processing
+2025-10-21 14:42:43,437 - ERROR - Error indexing document bee3ab71-400d-4b1b-a655-397c5c6ae2fa: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,437 - INFO - Updated document bee3ab71-400d-4b1b-a655-397c5c6ae2fa status to failed
+2025-10-21 14:42:43,438 - INFO - Updated document d17e8649-25e5-41c3-9dbb-019d74c4ff83 status to processing
+2025-10-21 14:42:43,440 - ERROR - Error indexing document d17e8649-25e5-41c3-9dbb-019d74c4ff83: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,440 - INFO - Updated document d17e8649-25e5-41c3-9dbb-019d74c4ff83 status to failed
+2025-10-21 14:42:43,441 - INFO - Updated document c954d122-7951-4ca5-a77a-257cc5cb2b70 status to processing
+2025-10-21 14:42:43,443 - ERROR - Error indexing document c954d122-7951-4ca5-a77a-257cc5cb2b70: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,443 - INFO - Updated document c954d122-7951-4ca5-a77a-257cc5cb2b70 status to failed
+2025-10-21 14:42:43,443 - INFO - Updated document 8367c9bc-c771-45dd-8462-6a1ef7b322a9 status to processing
+2025-10-21 14:42:43,445 - ERROR - Error indexing document 8367c9bc-c771-45dd-8462-6a1ef7b322a9: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,445 - INFO - Updated document 8367c9bc-c771-45dd-8462-6a1ef7b322a9 status to failed
+2025-10-21 14:42:43,446 - INFO - Updated document fe6ef48a-9df8-4705-820e-98b1977cfaad status to processing
+2025-10-21 14:42:43,447 - ERROR - Error indexing document fe6ef48a-9df8-4705-820e-98b1977cfaad: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,448 - INFO - Updated document fe6ef48a-9df8-4705-820e-98b1977cfaad status to failed
+2025-10-21 14:42:43,448 - INFO - Updated document 614ac6b7-1865-4d91-97f5-eff5f4d194c2 status to processing
+2025-10-21 14:42:43,450 - ERROR - Error indexing document 614ac6b7-1865-4d91-97f5-eff5f4d194c2: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,450 - INFO - Updated document 614ac6b7-1865-4d91-97f5-eff5f4d194c2 status to failed
+2025-10-21 14:42:43,451 - INFO - Updated document c7122501-3948-40c1-adfb-64617098db66 status to processing
+2025-10-21 14:42:43,454 - ERROR - Error indexing document c7122501-3948-40c1-adfb-64617098db66: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,454 - INFO - Updated document c7122501-3948-40c1-adfb-64617098db66 status to failed
+2025-10-21 14:42:43,455 - INFO - Updated document 2dd5908d-ab5c-414a-8f45-ee70f8886773 status to processing
+2025-10-21 14:42:43,457 - ERROR - Error indexing document 2dd5908d-ab5c-414a-8f45-ee70f8886773: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,458 - INFO - Updated document 2dd5908d-ab5c-414a-8f45-ee70f8886773 status to failed
+2025-10-21 14:42:43,459 - INFO - Updated document a8a3d3e1-1cdc-4d7d-9196-5fe05c03f66d status to processing
+2025-10-21 14:42:43,462 - ERROR - Error indexing document a8a3d3e1-1cdc-4d7d-9196-5fe05c03f66d: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,463 - INFO - Updated document a8a3d3e1-1cdc-4d7d-9196-5fe05c03f66d status to failed
+2025-10-21 14:42:43,463 - INFO - Updated document 8eea8ca2-d640-4ec4-84d3-bec2db967bcd status to processing
+2025-10-21 14:42:43,467 - ERROR - Error indexing document 8eea8ca2-d640-4ec4-84d3-bec2db967bcd: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,467 - INFO - Updated document 8eea8ca2-d640-4ec4-84d3-bec2db967bcd status to failed
+2025-10-21 14:42:43,468 - INFO - Updated document b1774629-dcf9-4f7e-97ca-f1f57d766cac status to processing
+2025-10-21 14:42:43,471 - ERROR - Error indexing document b1774629-dcf9-4f7e-97ca-f1f57d766cac: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,471 - INFO - Updated document b1774629-dcf9-4f7e-97ca-f1f57d766cac status to failed
+2025-10-21 14:42:43,472 - INFO - Updated document 83b8ce6b-3b7e-4415-bdb8-c5c8ccbb1781 status to processing
+2025-10-21 14:42:43,475 - ERROR - Error indexing document 83b8ce6b-3b7e-4415-bdb8-c5c8ccbb1781: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,475 - INFO - Updated document 83b8ce6b-3b7e-4415-bdb8-c5c8ccbb1781 status to failed
+2025-10-21 14:42:43,476 - INFO - Updated document 81b761ec-543f-4770-9e15-e775858a5082 status to processing
+2025-10-21 14:42:43,478 - ERROR - Error indexing document 81b761ec-543f-4770-9e15-e775858a5082: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,479 - INFO - Updated document 81b761ec-543f-4770-9e15-e775858a5082 status to failed
+2025-10-21 14:42:43,479 - INFO - Updated document 41557aa5-272c-48f3-a400-868b44dc55c5 status to processing
+2025-10-21 14:42:43,482 - ERROR - Error indexing document 41557aa5-272c-48f3-a400-868b44dc55c5: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,483 - INFO - Updated document 41557aa5-272c-48f3-a400-868b44dc55c5 status to failed
+2025-10-21 14:42:43,483 - INFO - Updated document e30003a4-4c4f-462d-8405-c09a65df83ad status to processing
+2025-10-21 14:42:43,486 - ERROR - Error indexing document e30003a4-4c4f-462d-8405-c09a65df83ad: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,487 - INFO - Updated document e30003a4-4c4f-462d-8405-c09a65df83ad status to failed
+2025-10-21 14:42:43,487 - INFO - Updated document 7af69741-6211-4ec6-a04e-ecc554b38f7f status to processing
+2025-10-21 14:42:43,490 - ERROR - Error indexing document 7af69741-6211-4ec6-a04e-ecc554b38f7f: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,491 - INFO - Updated document 7af69741-6211-4ec6-a04e-ecc554b38f7f status to failed
+2025-10-21 14:42:43,492 - INFO - Updated document 3255534d-9aca-4381-b2d4-2d25c79dba04 status to processing
+2025-10-21 14:42:43,494 - ERROR - Error indexing document 3255534d-9aca-4381-b2d4-2d25c79dba04: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,495 - INFO - Updated document 3255534d-9aca-4381-b2d4-2d25c79dba04 status to failed
+2025-10-21 14:42:43,495 - INFO - Updated document a5f91fae-b54e-4a66-8e9c-bbdd373ad87e status to processing
+2025-10-21 14:42:43,498 - ERROR - Error indexing document a5f91fae-b54e-4a66-8e9c-bbdd373ad87e: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,499 - INFO - Updated document a5f91fae-b54e-4a66-8e9c-bbdd373ad87e status to failed
+2025-10-21 14:42:43,499 - INFO - Updated document efafd404-1567-4972-8b1e-a2673a5469c6 status to processing
+2025-10-21 14:42:43,502 - ERROR - Error indexing document efafd404-1567-4972-8b1e-a2673a5469c6: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,503 - INFO - Updated document efafd404-1567-4972-8b1e-a2673a5469c6 status to failed
+2025-10-21 14:42:43,503 - INFO - Updated document dccdc3eb-f1b7-4819-a918-620888d27138 status to processing
+2025-10-21 14:42:43,506 - ERROR - Error indexing document dccdc3eb-f1b7-4819-a918-620888d27138: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,507 - INFO - Updated document dccdc3eb-f1b7-4819-a918-620888d27138 status to failed
+2025-10-21 14:42:43,507 - INFO - Updated document ae16db48-f92b-4b43-9f67-f68023d5bfe0 status to processing
+2025-10-21 14:42:43,510 - ERROR - Error indexing document ae16db48-f92b-4b43-9f67-f68023d5bfe0: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,510 - INFO - Updated document ae16db48-f92b-4b43-9f67-f68023d5bfe0 status to failed
+2025-10-21 14:42:43,511 - INFO - Updated document 1e84884a-a678-405b-bf5f-357e21e83811 status to processing
+2025-10-21 14:42:43,514 - ERROR - Error indexing document 1e84884a-a678-405b-bf5f-357e21e83811: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,514 - INFO - Updated document 1e84884a-a678-405b-bf5f-357e21e83811 status to failed
+2025-10-21 14:42:43,515 - INFO - Updated document 700d0407-c44c-48da-9198-b1db62ab331c status to processing
+2025-10-21 14:42:43,518 - ERROR - Error indexing document 700d0407-c44c-48da-9198-b1db62ab331c: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,518 - INFO - Updated document 700d0407-c44c-48da-9198-b1db62ab331c status to failed
+2025-10-21 14:42:43,519 - INFO - Updated document 4d0d9add-f958-47b5-beab-9178e436bc6e status to processing
+2025-10-21 14:42:43,522 - ERROR - Error indexing document 4d0d9add-f958-47b5-beab-9178e436bc6e: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,522 - INFO - Updated document 4d0d9add-f958-47b5-beab-9178e436bc6e status to failed
+2025-10-21 14:42:43,523 - INFO - Updated document 1a2f7b3b-b61a-4a8b-81c8-962089578cbf status to processing
+2025-10-21 14:42:43,526 - ERROR - Error indexing document 1a2f7b3b-b61a-4a8b-81c8-962089578cbf: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,526 - INFO - Updated document 1a2f7b3b-b61a-4a8b-81c8-962089578cbf status to failed
+2025-10-21 14:42:43,527 - INFO - Updated document 39b6dd7c-ef4e-42c1-a39c-6d2ea9dcfe55 status to processing
+2025-10-21 14:42:43,530 - ERROR - Error indexing document 39b6dd7c-ef4e-42c1-a39c-6d2ea9dcfe55: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,530 - INFO - Updated document 39b6dd7c-ef4e-42c1-a39c-6d2ea9dcfe55 status to failed
+2025-10-21 14:42:43,531 - INFO - Updated document c61829e0-6f55-48ea-957c-4340a72bbbfd status to processing
+2025-10-21 14:42:43,534 - ERROR - Error indexing document c61829e0-6f55-48ea-957c-4340a72bbbfd: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,534 - INFO - Updated document c61829e0-6f55-48ea-957c-4340a72bbbfd status to failed
+2025-10-21 14:42:43,535 - INFO - Updated document c51ddac7-e7df-46d1-9012-b7e2a244c4c9 status to processing
+2025-10-21 14:42:43,538 - ERROR - Error indexing document c51ddac7-e7df-46d1-9012-b7e2a244c4c9: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,538 - INFO - Updated document c51ddac7-e7df-46d1-9012-b7e2a244c4c9 status to failed
+2025-10-21 14:42:43,539 - INFO - Updated document 5b110912-8a86-41f3-b4b8-b4a1dfb9c177 status to processing
+2025-10-21 14:42:43,542 - ERROR - Error indexing document 5b110912-8a86-41f3-b4b8-b4a1dfb9c177: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,543 - INFO - Updated document 5b110912-8a86-41f3-b4b8-b4a1dfb9c177 status to failed
+2025-10-21 14:42:43,543 - INFO - Updated document 24fab6c0-f679-47a1-a252-a7d3d33d1ec1 status to processing
+2025-10-21 14:42:43,546 - ERROR - Error indexing document 24fab6c0-f679-47a1-a252-a7d3d33d1ec1: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,547 - INFO - Updated document 24fab6c0-f679-47a1-a252-a7d3d33d1ec1 status to failed
+2025-10-21 14:42:43,547 - INFO - Updated document 8738ecc0-4533-4dd9-b92c-7c26ea2db054 status to processing
+2025-10-21 14:42:43,550 - ERROR - Error indexing document 8738ecc0-4533-4dd9-b92c-7c26ea2db054: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,551 - INFO - Updated document 8738ecc0-4533-4dd9-b92c-7c26ea2db054 status to failed
+2025-10-21 14:42:43,551 - INFO - Updated document 0c7d68ba-2642-4933-baf8-5497b18c893d status to processing
+2025-10-21 14:42:43,554 - ERROR - Error indexing document 0c7d68ba-2642-4933-baf8-5497b18c893d: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,555 - INFO - Updated document 0c7d68ba-2642-4933-baf8-5497b18c893d status to failed
+2025-10-21 14:42:43,555 - INFO - Updated document fa3f95c5-5177-4150-933f-bfb512a402eb status to processing
+2025-10-21 14:42:43,558 - ERROR - Error indexing document fa3f95c5-5177-4150-933f-bfb512a402eb: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,558 - INFO - Updated document fa3f95c5-5177-4150-933f-bfb512a402eb status to failed
+2025-10-21 14:42:43,559 - INFO - Updated document bd636697-f089-4754-b6a1-d5d12151090b status to processing
+2025-10-21 14:42:43,561 - ERROR - Error indexing document bd636697-f089-4754-b6a1-d5d12151090b: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,562 - INFO - Updated document bd636697-f089-4754-b6a1-d5d12151090b status to failed
+2025-10-21 14:42:43,562 - INFO - Updated document e0e35e91-693b-4684-ab41-c468f5bfad86 status to processing
+2025-10-21 14:42:43,564 - ERROR - Error indexing document e0e35e91-693b-4684-ab41-c468f5bfad86: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,565 - INFO - Updated document e0e35e91-693b-4684-ab41-c468f5bfad86 status to failed
+2025-10-21 14:42:43,566 - INFO - Updated document a943fecb-fcd4-4ad8-8edc-6a699f26d941 status to processing
+2025-10-21 14:42:43,569 - ERROR - Error indexing document a943fecb-fcd4-4ad8-8edc-6a699f26d941: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,569 - INFO - Updated document a943fecb-fcd4-4ad8-8edc-6a699f26d941 status to failed
+2025-10-21 14:42:43,570 - INFO - Updated document 8cc84b6a-fa75-49a8-8038-1a291ece128a status to processing
+2025-10-21 14:42:43,573 - ERROR - Error indexing document 8cc84b6a-fa75-49a8-8038-1a291ece128a: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,573 - INFO - Updated document 8cc84b6a-fa75-49a8-8038-1a291ece128a status to failed
+2025-10-21 14:42:43,574 - INFO - Updated document 1b0aaa88-e254-4a73-bbec-45cb7f99db21 status to processing
+2025-10-21 14:42:43,576 - ERROR - Error indexing document 1b0aaa88-e254-4a73-bbec-45cb7f99db21: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,576 - INFO - Updated document 1b0aaa88-e254-4a73-bbec-45cb7f99db21 status to failed
+2025-10-21 14:42:43,576 - INFO - Updated document 0ad56351-cdbd-45fb-9f77-78c7621c1eaf status to processing
+2025-10-21 14:42:43,578 - ERROR - Error indexing document 0ad56351-cdbd-45fb-9f77-78c7621c1eaf: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,578 - INFO - Updated document 0ad56351-cdbd-45fb-9f77-78c7621c1eaf status to failed
+2025-10-21 14:42:43,579 - INFO - Updated document 1f4caa6f-c4f7-49d4-9dd9-af4ad1bfcf34 status to processing
+2025-10-21 14:42:43,580 - ERROR - Error indexing document 1f4caa6f-c4f7-49d4-9dd9-af4ad1bfcf34: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,581 - INFO - Updated document 1f4caa6f-c4f7-49d4-9dd9-af4ad1bfcf34 status to failed
+2025-10-21 14:42:43,581 - INFO - Updated document a4d0bbc8-bdae-4ad3-8939-f82e96bff469 status to processing
+2025-10-21 14:42:43,583 - ERROR - Error indexing document a4d0bbc8-bdae-4ad3-8939-f82e96bff469: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,583 - INFO - Updated document a4d0bbc8-bdae-4ad3-8939-f82e96bff469 status to failed
+2025-10-21 14:42:43,583 - INFO - Updated document 53789cfe-3c43-42f5-bf00-8fbf0bda09a6 status to processing
+2025-10-21 14:42:43,586 - ERROR - Error indexing document 53789cfe-3c43-42f5-bf00-8fbf0bda09a6: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,586 - INFO - Updated document 53789cfe-3c43-42f5-bf00-8fbf0bda09a6 status to failed
+2025-10-21 14:42:43,587 - INFO - Updated document 18b3a4fc-cac3-4482-99ae-d761ca544410 status to processing
+2025-10-21 14:42:43,588 - ERROR - Error indexing document 18b3a4fc-cac3-4482-99ae-d761ca544410: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,589 - INFO - Updated document 18b3a4fc-cac3-4482-99ae-d761ca544410 status to failed
+2025-10-21 14:42:43,589 - INFO - Updated document 327e7ff2-18c7-488f-b259-84b8358128a6 status to processing
+2025-10-21 14:42:43,591 - ERROR - Error indexing document 327e7ff2-18c7-488f-b259-84b8358128a6: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,591 - INFO - Updated document 327e7ff2-18c7-488f-b259-84b8358128a6 status to failed
+2025-10-21 14:42:43,592 - INFO - Updated document b6dc93de-071c-4954-a06f-9160afbfc909 status to processing
+2025-10-21 14:42:43,593 - ERROR - Error indexing document b6dc93de-071c-4954-a06f-9160afbfc909: GEMINI_API_KEY environment variable is required
+2025-10-21 14:42:43,594 - INFO - Updated document b6dc93de-071c-4954-a06f-9160afbfc909 status to failed

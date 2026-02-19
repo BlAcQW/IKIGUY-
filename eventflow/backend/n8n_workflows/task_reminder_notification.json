@@ -1,0 +1,217 @@
+{
+  "name": "EventFlow - Task Reminder Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eventflow/task-reminder",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "eventflow-task-reminder"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "task_id",
+              "name": "task_id",
+              "value": "={{ $json.body.task_id }}",
+              "type": "string"
+            },
+            {
+              "id": "task_title",
+              "name": "task_title",
+              "value": "={{ $json.body.task_title }}",
+              "type": "string"
+            },
+            {
+              "id": "task_priority",
+              "name": "task_priority",
+              "value": "={{ $json.body.task_priority }}",
+              "type": "string"
+            },
+            {
+              "id": "task_deadline",
+              "name": "task_deadline",
+              "value": "={{ $json.body.task_deadline }}",
+              "type": "string"
+            },
+            {
+              "id": "person_name",
+              "name": "person_name",
+              "value": "={{ $json.body.responsible_person.name }}",
+              "type": "string"
+            },
+            {
+              "id": "person_phone",
+              "name": "person_phone",
+              "value": "={{ $json.body.responsible_person.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "person_email",
+              "name": "person_email",
+              "value": "={{ $json.body.responsible_person.email }}",
+              "type": "string"
+            },
+            {
+              "id": "event_name",
+              "name": "event_name",
+              "value": "={{ $json.body.event_name }}",
+              "type": "string"
+            },
+            {
+              "id": "message",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Extract Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"from\": \"EventFlow <notifications@ailabsafrica.com>\",\n  \"to\": [\"{{ $json.person_email }}\"],\n  \"subject\": \"Task Reminder: {{ $json.task_title }}\",\n  \"html\": \"<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'><h2 style='color: #185ADB;'>Task Reminder</h2><p>Hello {{ $json.person_name }},</p><p>This is a reminder about your assigned task for <strong>{{ $json.event_name }}</strong>:</p><div style='background: #F4F6FB; padding: 15px; border-radius: 8px; margin: 20px 0;'><h3 style='margin-top: 0; color: #333;'>{{ $json.task_title }}</h3><p><strong>Priority:</strong> <span style='color: {{ $json.task_priority === 'critical' ? '#DC2626' : $json.task_priority === 'high' ? '#EA580C' : '#059669' }}; text-transform: uppercase;'>{{ $json.task_priority }}</span></p><p><strong>Deadline:</strong> {{ $json.task_deadline }}</p></div><p>{{ $json.message }}</p><p>Please log in to EventFlow to update the task status.</p><p>Best regards,<br>EventFlow Team</p></div>\"\n}",
+        "options": {}
+      },
+      "name": "Send Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twilio.com/2010-04-01/Accounts/{{ $env.TWILIO_ACCOUNT_SID }}/Messages.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "basicAuth",
+        "sendBody": true,
+        "specifyBody": "urlEncoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "To",
+              "value": "={{ $json.person_phone }}"
+            },
+            {
+              "name": "From",
+              "value": "={{ $env.TWILIO_PHONE_NUMBER }}"
+            },
+            {
+              "name": "Body",
+              "value": "=EventFlow Reminder: {{ $json.task_title }} ({{ $json.task_priority }}) - Deadline: {{ $json.task_deadline }}. Event: {{ $json.event_name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Send SMS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Notification sent successfully\",\n  \"task_id\": \"{{ $json.task_id }}\",\n  \"channels\": [\"email\", \"sms\"],\n  \"timestamp\": \"{{ $now }}\"\n}",
+        "options": {}
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        900,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Data": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send SMS": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["eventflow", "notifications", "task-reminder"],
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

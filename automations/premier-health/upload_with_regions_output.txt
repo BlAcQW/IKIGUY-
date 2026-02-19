@@ -1,0 +1,214 @@
+Error indexing document 459c13c0-297b-4c79-8a36-575635a91bb7: GEMINI_API_KEY environment variable is required
+Error indexing document c2e98213-6b41-4555-a50a-64d801406665: GEMINI_API_KEY environment variable is required
+Error indexing document 40918b43-31d5-4807-8c00-cab94de578bd: GEMINI_API_KEY environment variable is required
+Error indexing document 74e6a02e-18ef-4c18-a6fa-a3e100e4dfa3: GEMINI_API_KEY environment variable is required
+Error indexing document 53d6139d-a479-403c-bc4f-bb728c2bcfbc: GEMINI_API_KEY environment variable is required
+Error indexing document a7988905-d951-46a7-a209-c93926bc3e1d: GEMINI_API_KEY environment variable is required
+Error indexing document 85a6f369-f24a-4f07-a925-78c864434da5: GEMINI_API_KEY environment variable is required
+Error indexing document 07795cc1-b1c2-4a24-bc94-69c44cf441b0: GEMINI_API_KEY environment variable is required
+Error indexing document 12f80df8-51ac-4d2f-b6b3-17436401ab34: GEMINI_API_KEY environment variable is required
+Error indexing document d31fb24c-2d01-40b6-891f-30d3a58964c7: GEMINI_API_KEY environment variable is required
+Error indexing document 11d5f5ce-16ca-4bbb-b611-625ddc081b71: GEMINI_API_KEY environment variable is required
+Error indexing document d3bf29e0-9467-4caa-ac7a-a2cef28e984d: GEMINI_API_KEY environment variable is required
+Error indexing document f6cdb972-84c4-44f8-9bd7-ce595207a873: GEMINI_API_KEY environment variable is required
+Error indexing document de1b5e0f-9827-40ac-bab8-0452e779a4a8: GEMINI_API_KEY environment variable is required
+Error indexing document fa570fe5-a077-45b0-af04-873cccb64f2c: GEMINI_API_KEY environment variable is required
+Error indexing document d5a08d73-9b5f-4788-84ba-d1a955a725ea: GEMINI_API_KEY environment variable is required
+Error indexing document 98d38464-6f45-46cd-a3d4-a697b9b8157f: GEMINI_API_KEY environment variable is required
+Error indexing document 9d078909-71f8-41e9-925b-18ae665d7604: GEMINI_API_KEY environment variable is required
+Error indexing document ab4271ac-329a-4e1d-b8b3-ff9f60cb69fc: GEMINI_API_KEY environment variable is required
+Error indexing document fffae336-2a2e-4f2e-981a-2ee33ba8a773: GEMINI_API_KEY environment variable is required
+Error indexing document dedbbcd8-fd9b-497e-a2ab-26e304b9e69c: GEMINI_API_KEY environment variable is required
+Error indexing document e7653b62-98da-4bd3-89de-d30e6f8136d8: GEMINI_API_KEY environment variable is required
+Error indexing document b36ecfed-5344-41b9-abbc-0b1485b42546: GEMINI_API_KEY environment variable is required
+Error indexing document c5e7d16f-028e-4012-b354-e01f08e447a3: GEMINI_API_KEY environment variable is required
+Error indexing document e29b6e41-5d1c-4dd9-8095-6d58970b2c06: GEMINI_API_KEY environment variable is required
+Error indexing document 03d9f103-9e3a-4468-879f-f8f63f394709: GEMINI_API_KEY environment variable is required
+Error indexing document a233aca4-4d43-455c-b2de-45cc95b8d59d: GEMINI_API_KEY environment variable is required
+Error indexing document b01838ee-7324-426b-a81b-0aa633e77e1e: GEMINI_API_KEY environment variable is required
+Error indexing document ad989975-ac8d-4520-aa78-3e210e0abfba: GEMINI_API_KEY environment variable is required
+Error indexing document 7c92fb6f-b510-4e37-9556-c4933faee938: GEMINI_API_KEY environment variable is required
+Error indexing document 913fa88d-68de-455c-8851-6729d8db4b0b: GEMINI_API_KEY environment variable is required
+Error indexing document e6c12330-2d59-4198-b11e-4001b2a2aa62: GEMINI_API_KEY environment variable is required
+Error indexing document 2bb17521-c892-40e3-a109-0d9cd433d793: GEMINI_API_KEY environment variable is required
+Error indexing document 2a5d0714-225c-4618-8b0b-3a9d0ca6123f: GEMINI_API_KEY environment variable is required
+Error indexing document 08265d27-a472-4b02-9399-393d75199b7f: GEMINI_API_KEY environment variable is required
+Error indexing document cf2ef700-8dc7-4940-90bc-f8095f746512: GEMINI_API_KEY environment variable is required
+Error indexing document 2cfe025e-fd2a-48c3-a900-fb44430396e0: GEMINI_API_KEY environment variable is required
+Error indexing document 10030c48-a430-4049-a7e7-86eeffb3b753: GEMINI_API_KEY environment variable is required
+Error indexing document f50dd3ee-eebd-41a2-ac03-daaec457bdfa: GEMINI_API_KEY environment variable is required
+Error indexing document a906228d-f11b-410e-ad90-fe7cfe62a4d0: GEMINI_API_KEY environment variable is required
+Error indexing document a52fdfef-d7c1-4d79-beef-523066829d2f: GEMINI_API_KEY environment variable is required
+Error indexing document ea1598db-8e19-4931-beea-d6942737b7af: GEMINI_API_KEY environment variable is required
+Error indexing document 74a785b5-f2cf-4227-8de2-b96170bd274c: GEMINI_API_KEY environment variable is required
+Error indexing document 83ffa115-19b9-466d-a996-b80e6722d918: GEMINI_API_KEY environment variable is required
+Error indexing document 63373ba3-d259-4b38-bf93-4eb0cbed4bd6: GEMINI_API_KEY environment variable is required
+Error indexing document 3df4f1d8-9e66-454c-98f7-bde16b2c4171: GEMINI_API_KEY environment variable is required
+Error indexing document 9c02fa5a-2ef7-4350-9a26-86ba39c9784f: GEMINI_API_KEY environment variable is required
+Error indexing document 66d35b29-4229-48e1-8e20-dfd3ae7ddbe2: GEMINI_API_KEY environment variable is required
+Error indexing document 1e3d2cff-713f-4fba-b244-0c7fbce0b2a2: GEMINI_API_KEY environment variable is required
+Error indexing document 6d0b81f5-5bcb-4008-bc07-04f7c4c931a7: GEMINI_API_KEY environment variable is required
+Error indexing document 92cc0aed-67a7-4efa-98e8-142235b7a371: GEMINI_API_KEY environment variable is required
+Error indexing document 0955e7e1-6ff3-4f42-8ac6-4317a88a956f: GEMINI_API_KEY environment variable is required
+Error indexing document 638e6a77-2382-4e2f-ad5c-82ddd491bb69: GEMINI_API_KEY environment variable is required
+Error indexing document 11136d1e-ff7a-4ac4-b640-25ad5ba36952: GEMINI_API_KEY environment variable is required
+Error indexing document 4b87203f-7c62-4842-bd88-a8f5d9d3a551: GEMINI_API_KEY environment variable is required
+Error indexing document c710fbce-79ce-4ccc-a2fa-193c019131e7: GEMINI_API_KEY environment variable is required
+Error indexing document 244f9f2d-0b9b-49ce-a0b8-0d68f058b33e: GEMINI_API_KEY environment variable is required
+Error indexing document 264ee606-7665-41a4-9c8d-f9cab4e7a942: GEMINI_API_KEY environment variable is required
+Error indexing document cf3b4342-94bc-483d-b0f8-6c030206742e: GEMINI_API_KEY environment variable is required
+Error indexing document 1bc86631-3622-456a-8fda-cca14e8d9dd8: GEMINI_API_KEY environment variable is required
+Error indexing document f5432ba5-1b2d-41e5-b181-d1ba50fbcc0e: GEMINI_API_KEY environment variable is required
+Error indexing document c94cef47-1dad-455f-a04e-4d8158f90ca4: GEMINI_API_KEY environment variable is required
+Error indexing document a0fa76b7-235d-4939-98ec-388579ce151f: GEMINI_API_KEY environment variable is required
+Error indexing document 890d184e-6b38-4db0-ba54-f104c7879c3e: GEMINI_API_KEY environment variable is required
+Error indexing document ebccfdd4-899c-4fb8-be2a-84a091e75437: GEMINI_API_KEY environment variable is required
+Error indexing document 807a48a4-275b-45ca-8ea1-2cc47085df18: GEMINI_API_KEY environment variable is required
+Error indexing document 82793e82-0c31-4cf9-9373-00380726ec8a: GEMINI_API_KEY environment variable is required
+Error indexing document d180248c-895c-4b7d-ac4e-f388fc44a3cb: GEMINI_API_KEY environment variable is required
+Error indexing document 768ce6d1-f035-41bf-a32d-b9328c5efb3c: GEMINI_API_KEY environment variable is required
+Error indexing document c020623c-0b14-43d5-b99d-ce7f39a50be1: GEMINI_API_KEY environment variable is required
+Error indexing document 07e20a63-fc6d-4d3f-bf30-3a56286dac88: GEMINI_API_KEY environment variable is required
+Error indexing document cea68ec0-d0b0-45b9-88a1-82c615454555: GEMINI_API_KEY environment variable is required
+Error indexing document 1e60b978-14ac-49b0-afac-d651cf50076c: GEMINI_API_KEY environment variable is required
+Error indexing document ed6e6757-ca2f-4aea-b4bd-a9e6b716a107: GEMINI_API_KEY environment variable is required
+Error indexing document 7d003d83-5f80-4350-9d89-01af25ee2589: GEMINI_API_KEY environment variable is required
+Error indexing document 81113b7a-12fb-4c59-8d69-334ca1608c44: GEMINI_API_KEY environment variable is required
+Error indexing document 44fc7d3e-e013-46ad-8aa0-b849e4061586: GEMINI_API_KEY environment variable is required
+Error indexing document 2ffca172-aa63-4a33-a5f8-e6fad9c12e62: GEMINI_API_KEY environment variable is required
+Error indexing document c17a5657-f41b-4d97-8de7-3aae492cf487: GEMINI_API_KEY environment variable is required
+Error indexing document d070f6e0-5e3f-49e2-89eb-36fc3741bff2: GEMINI_API_KEY environment variable is required
+Error indexing document ec35e2d8-c8b2-4b0e-82b8-e5ca98587df3: GEMINI_API_KEY environment variable is required
+Error indexing document 7275504b-16f4-49c8-8b4e-fcd9962fee36: GEMINI_API_KEY environment variable is required
+Error indexing document b3b880b0-8145-4711-b679-e30b8702c4e0: GEMINI_API_KEY environment variable is required
+Error indexing document 926033f3-640d-47de-bbb0-11104d89ed70: GEMINI_API_KEY environment variable is required
+Error indexing document ab1c1944-cbbc-4c71-afa8-5ae2145f118a: GEMINI_API_KEY environment variable is required
+Error indexing document 1c7dd230-be49-4096-9d23-c228a34d0617: GEMINI_API_KEY environment variable is required
+Error indexing document 420e0826-595d-4bec-9538-79519d2f8a18: GEMINI_API_KEY environment variable is required
+Error indexing document 23882202-0451-4927-a58f-13a50fc173f9: GEMINI_API_KEY environment variable is required
+Error indexing document 6a66ce6f-f52f-4d42-9da5-366475b47b7b: GEMINI_API_KEY environment variable is required
+Error indexing document 729a4272-a665-4e17-baa2-fda2e2e6a460: GEMINI_API_KEY environment variable is required
+Error indexing document 2c881747-3a52-4b22-8b3b-0712e4415e61: GEMINI_API_KEY environment variable is required
+Error indexing document c8c02159-a1b1-4486-ae85-7fcc08a8ece3: GEMINI_API_KEY environment variable is required
+Error indexing document 3cfc59e2-01f4-43d8-81fa-acda2f5b7aa2: GEMINI_API_KEY environment variable is required
+📤 UPLOADING DOCUMENTS WITH REGION METADATA
+================================================================================
+
+📄 Processing all_northern_regions_enriched.csv...
+   ✅ Found 6 cities (after splitting compound names)
+✅ TAMALE (NORTHERN REGION) - 44 providers
+✅ WA (UPPER WEST REGION) - 14 providers
+✅ LAWRA (UPPER WEST REGION) - 4 providers
+✅ BOLGATANGA (UPPER EAST REGION) - 9 providers
+✅ BAWKU (UPPER EAST REGION) - 4 providers
+✅ NAVRONGO (UPPER EAST REGION) - 3 providers
+
+📄 Processing ashanti_region_kumasi_enriched.csv...
+   ✅ Found 24 cities (after splitting compound names)
+✅ BOMSO (ASHANTI) - 13 providers
+✅ KNUST (ASHANTI) - 13 providers
+✅ EJISU (ASHANTI) - 13 providers
+✅ ASOKWA (ASHANTI) - 7 providers
+✅ BANTAMA (ASHANTI) - 8 providers
+✅ ABREPO (ASHANTI) - 4 providers
+✅ TAFO (ASHANTI REGION) - 9 providers
+✅ BREMANG (ASHANTI) - 9 providers
+✅ MAMPONTENG (ASHANTI REGION) - 3 providers
+✅ ABUAKWA (WESTERN) - 5 providers
+✅ TANOSO (ASHANTI) - 5 providers
+✅ SANTASI (ASHANTI REGION) - 11 providers
+✅ PATASE (ASHANTI REGION) - 11 providers
+✅ SUAME (ASHANTI REGION) - 5 providers
+✅ ADUM (ASHANTI) - 5 providers
+✅ AHODWO (ASHANTI) - 12 providers
+✅ AHINSAN (ASHANTI) - 12 providers
+✅ MAMPONG (ASHANTI) - 8 providers
+✅ AGONA (ASHANTI REGION) - 8 providers
+✅ WIAMOASE (ASHANTI) - 8 providers
+✅ OBUASI (ASHANTI REGION) - 4 providers
+✅ DUNKWA (ASHANTI REGION) - 4 providers
+✅ KONONGO (ASHANTI) - 2 providers
+✅ AGOGO (ASHANTI) - 2 providers
+
+📄 Processing bono_regions_enriched.csv...
+   ✅ Found 13 cities (after splitting compound names)
+✅ NKORANZA (BONO, BONO EAST & AHAFO REGIONS) - 3 providers
+✅ DROBO (BONO, BONO EAST & AHAFO REGIONS) - 1 providers
+✅ DORMAA (BONO, BONO EAST & AHAFO REGIONS) - 3 providers
+✅ SUNYANI (BONO, BONO EAST & AHAFO REGIONS) - 32 providers
+✅ GOASO (BONO, BONO EAST & AHAFO REGIONS) - 6 providers
+✅ HWIDIEM (BONO, BONO EAST & AHAFO REGIONS) - 2 providers
+✅ KENYASE (BONO, BONO EAST & AHAFO REGIONS) - 5 providers
+✅ TECHIMAN (BONO, BONO EAST & AHAFO REGIONS) - 8 providers
+✅ WENCHI (BONO, BONO EAST & AHAFO REGIONS) - 2 providers
+✅ BEREKUM (BONO, BONO EAST & AHAFO REGIONS) - 3 providers
+✅ SAMPA (BONO, BONO EAST & AHAFO REGIONS) - 1 providers
+✅ KINTAMPO, DUAYAW NKWANTA (BONO, BONO EAST & AHAFO REGIONS) - 5 providers
+✅ OTHERS (BONO, BONO EAST & AHAFO REGIONS) - 5 providers
+
+📄 Processing central_and_western_region_enriched.csv...
+   ✅ Found 26 cities (after splitting compound names)
+✅ CAPE COAST (CENTRAL REGION) - 11 providers
+✅ ELMINA (CENTRAL REGION) - 2 providers
+✅ ASSIN (CENTRAL) - 6 providers
+✅ SWEDRU (CENTRAL) - 6 providers
+✅ WINNEBA (CENTRAL REGION) - 3 providers
+✅ MANKESSIM (CENTRAL REGION) - 1 providers
+✅ ASIKUMA (CENTRAL) - 4 providers
+✅ AJUMAKO (CENTRAL) - 4 providers
+✅ TAKORADI (WESTERN REGION) - 36 providers
+✅ SEKONDI (WESTERN REGION) - 2 providers
+✅ INCHABAN (WESTERN REGION) - 1 providers
+✅ TARKWA (WESTERN REGION) - 12 providers
+✅ BOGOSO (WESTERN REGION) - 1 providers
+✅ WASSA AKROPONG (WESTERN REGION) - 1 providers
+✅ ASANKRAGWA (WESTERN REGION) - 1 providers
+✅ SAMREBOI (WESTERN REGION) - 1 providers
+✅ ENCHI (WESTERN REGION) - 3 providers
+✅ SUAMAN DADIESO (WESTERN REGION) - 1 providers
+✅ SEFWI BIBIANI (WESTERN REGION) - 3 providers
+✅ SEFWI ANHWIASO (WESTERN REGION) - 1 providers
+✅ SEFWI BEKWAI (WESTERN REGION) - 1 providers
+✅ SEFWI WIAWSO (WESTERN REGION) - 2 providers
+✅ SEFWI ASAFO (WESTERN REGION) - 1 providers
+✅ SEFWI ASAWINSO (WESTERN REGION) - 2 providers
+✅ SEFWI BODI (WESTERN REGION) - 1 providers
+✅ SEFWI ESSAM (WESTERN REGION) - 1 providers
+
+📄 Processing eastern_and_volta_regions_enriched.csv...
+   ✅ Found 24 cities (after splitting compound names)
+✅ MAMPONG (ASHANTI) - 1 providers
+✅ KOFORIDUA (EASTERN REGION) - 21 providers
+✅ MAMFE AKUAPEM (EASTERN REGION) - 1 providers
+✅ TAFO (EASTERN REGION) - 3 providers
+✅ NSAWAM (EASTERN REGION) - 5 providers
+✅ SUHUM (EASTERN REGION) - 2 providers
+✅ ASAMANKESE (EASTERN REGION) - 2 providers
+✅ ASIAKWA (EASTERN) - 8 providers
+✅ OSINO (EASTERN) - 8 providers
+✅ ANYINAM (EASTERN) - 8 providers
+✅ ENYIRESI (EASTERN) - 8 providers
+✅ KIBI (EASTERN) - 8 providers
+✅ AKOSOMBO (EASTERN REGION) - 2 providers
+✅ SOMANYA (EASTERN REGION) - 4 providers
+✅ ODUMASE KROBO (EASTERN REGION) - 4 providers
+✅ ODA (EASTERN REGION) - 5 providers
+✅ AKWATIA (EASTERN REGION) - 1 providers
+✅ KADE (EASTERN REGION) - 1 providers
+✅ BEGORO (EASTERN) - 4 providers
+✅ OSIEM (EASTERN REGION) - 4 providers
+✅ NKAWKAW (EASTERN REGION) - 8 providers
+✅ NEW ABIREM (EASTERN REGION) - 2 providers
+✅ HO (VOLTA REGION) - 11 providers
+✅ HOHOE (VOLTA REGION) - 4 providers
+
+📄 Processing greater_accra_region_enriched.csv...
+   ✅ Found 0 cities (after splitting compound names)
+
+================================================================================
+📊 UPLOAD SUMMARY
+================================================================================
+Total cities processed: 93
+Successfully uploaded: 93
+Errors: 0
+================================================================================

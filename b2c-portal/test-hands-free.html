@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hands-Free Voice Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .info { background: #e3f2fd; }
+        .success { background: #c8e6c9; }
+        .error { background: #ffcdd2; }
+        button { padding: 10px 20px; margin: 5px; font-size: 16px; }
+        #audioLevel { width: 300px; height: 30px; background: #ddd; margin: 10px 0; }
+        #audioLevelBar { height: 100%; background: #4caf50; width: 0%; transition: width 0.1s; }
+        #log { background: #f5f5f5; padding: 10px; height: 400px; overflow-y: auto; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Hands-Free Voice Test</h1>
+
+    <button id="startBtn" onclick="startTest()">Start Test</button>
+    <button id="stopBtn" onclick="stopTest()" disabled>Stop Test</button>
+
+    <div class="status info">
+        <strong>Status:</strong> <span id="status">Ready</span>
+    </div>
+
+    <div>
+        <strong>Audio Level:</strong>
+        <div id="audioLevel"><div id="audioLevelBar"></div></div>
+        <span id="audioValue">0</span>
+    </div>
+
+    <div>
+        <strong>VAD State:</strong> <span id="vadState">Idle</span>
+    </div>
+
+    <div>
+        <strong>Recording Cycle:</strong> <span id="cycle">0</span>
+    </div>
+
+    <h3>Log:</h3>
+    <div id="log"></div>
+
+    <script>
+        let mediaRecorder = null;
+        let audioContext = null;
+        let analyser = null;
+        let stream = null;
+        let cycle = 0;
+        let silenceStart = null;
+        let monitoringInterval = null;
+
+        const SILENCE_THRESHOLD = 30;
+        const SILENCE_DURATION = 2000;
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function updateStatus(status) {
+            document.getElementById('status').textContent = status;
+        }
+
+        async function startRecording() {
+            cycle++;
+            document.getElementById('cycle').textContent = cycle;
+            log(`🎤 Starting recording cycle #${cycle}`);
+
+            try {
+                // Get microphone
+                if (!stream) {
+                    log('📡 Requesting microphone access...');
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true
+                        }
+                    });
+                    log('✅ Microphone access granted');
+                }
+
+                // Set up audio analysis
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const source = audioContext.createMediaStreamSource(stream);
+                    analyser = audioContext.createAnalyser();
+                    analyser.fftSize = 2048;
+                    source.connect(analyser);
+                    log('✅ Audio analyser connected');
+                }
+
+                // Start MediaRecorder
+                const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+                    ? 'audio/webm;codecs=opus'
+                    : 'audio/webm';
+
+                mediaRecorder = new MediaRecorder(stream, { mimeType });
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        log(`📦 Audio chunk: ${event.data.size} bytes`);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    log(`⏹️  Recording stopped (cycle #${cycle})`);
+                    updateStatus('Idle');
+                    document.getElementById('vadState').textContent = 'Idle';
+
+                    // Simulate assistant response (2 seconds)
+                    setTimeout(() => {
+                        log('🤖 Assistant would respond here...');
+                        log('⏱️  Waiting 2.5s for "audio playback"...');
+
+                        // Auto-resume after 2.5 seconds
+                        setTimeout(() => {
+                            log('🔄 Auto-resuming recording...');
+                            startRecording();
+                        }, 2500);
+                    }, 500);
+                };
+
+                mediaRecorder.start(1000);
+                updateStatus('Recording...');
+                log('▶️  MediaRecorder started');
+
+                // Start VAD monitoring
+                startVADMonitoring();
+
+            } catch (error) {
+                log(`❌ Error: ${error.message}`);
+                updateStatus('Error');
+            }
+        }
+
+        function startVADMonitoring() {
+            silenceStart = null;
+
+            const checkAudioLevel = () => {
+                if (!mediaRecorder || mediaRecorder.state !== 'recording') {
+                    return;
+                }
+
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                analyser.getByteTimeDomainData(dataArray);
+
+                // Calculate RMS
+                let sum = 0;
+                for (let i = 0; i < bufferLength; i++) {
+                    const normalized = (dataArray[i] - 128) / 128;
+                    sum += normalized * normalized;
+                }
+                const rms = Math.sqrt(sum / bufferLength) * 100;
+
+                // Update UI
+                document.getElementById('audioValue').textContent = rms.toFixed(1);
+                document.getElementById('audioLevelBar').style.width = `${Math.min(rms * 3, 100)}%`;
+
+                if (rms < SILENCE_THRESHOLD) {
+                    // Silence
+                    if (silenceStart === null) {
+                        silenceStart = Date.now();
+                        log(`🔇 Silence detected (level: ${rms.toFixed(1)})`);
+                        document.getElementById('vadState').textContent = 'Silence';
+                    } else {
+                        const silenceDuration = Date.now() - silenceStart;
+                        if (silenceDuration >= SILENCE_DURATION) {
+                            log(`⏱️  ${silenceDuration}ms of silence - auto-stopping!`);
+                            stopRecording();
+                            return;
+                        }
+                    }
+                } else {
+                    // Speech
+                    if (silenceStart !== null) {
+                        log(`🗣️  Speech detected (level: ${rms.toFixed(1)})`);
+                    }
+                    silenceStart = null;
+                    document.getElementById('vadState').textContent = 'Speech';
+                }
+
+                setTimeout(checkAudioLevel, 500);
+            };
+
+            log('🎧 VAD monitoring started');
+            setTimeout(checkAudioLevel, 1000);
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+            }
+        }
+
+        async function startTest() {
+            log('=== Test Started ===');
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+            cycle = 0;
+            await startRecording();
+        }
+
+        function stopTest() {
+            log('=== Test Stopped ===');
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+
+            if (mediaRecorder) {
+                mediaRecorder.stop();
+                mediaRecorder = null;
+            }
+
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+
+            if (audioContext) {
+                audioContext.close();
+                audioContext = null;
+            }
+
+            updateStatus('Stopped');
+        }
+    </script>
+</body>
+</html>

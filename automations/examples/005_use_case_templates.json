@@ -1,0 +1,311 @@
+{
+  "master_vapi_use_case_templates": {
+    "version": "1.0",
+    "description": "Pre-configured templates for different business use cases",
+    "templates": {
+      "sales_assistant": {
+        "name": "Sales Assistant",
+        "description": "AI sales representative for lead qualification and opportunity management",
+        "recommended_integrations": [
+          "hubspot_crm",
+          "resend_email",
+          "calendly_scheduling",
+          "tavily_search",
+          "supabase_database"
+        ],
+        "personality": "professional",
+        "industry_focus": ["technology", "consulting", "finance"],
+        "sample_configuration": {
+          "useCase": "sales",
+          "organizationName": "TechCorp Solutions",
+          "industry": "technology",
+          "primaryContactEmail": "sales@techcorp.com",
+          "supportEmail": "support@techcorp.com",
+          "targetLocationRegion": "North America",
+          "activeIntegrations": "hubspot_crm,resend_email,calendly_scheduling,tavily_search",
+          "voicePersonality": "professional",
+          "hipaaComplianceRequired": "No"
+        },
+        "conversation_flows": [
+          {
+            "scenario": "Inbound Lead Qualification",
+            "steps": [
+              "Greet caller and identify their interest",
+              "Qualify budget, authority, need, timeline (BANT)",
+              "Capture contact information using save_contact_to_crm",
+              "Schedule demo using schedule_appointment",
+              "Send follow-up information using send_email_notification"
+            ]
+          },
+          {
+            "scenario": "Product Information Request",
+            "steps": [
+              "Understand specific product interests",
+              "Search for current information using search_web_information",
+              "Provide relevant details",
+              "Capture lead information using save_contact_to_crm",
+              "Send detailed brochure using send_email_notification"
+            ]
+          }
+        ],
+        "kpis": [
+          "Lead conversion rate",
+          "Appointment booking rate",
+          "Information capture completeness",
+          "Follow-up email delivery rate"
+        ]
+      },
+
+      "helpdesk_support": {
+        "name": "Helpdesk Support",
+        "description": "Customer support assistant for issue resolution and ticket management",
+        "recommended_integrations": [
+          "freshdesk_support",
+          "resend_email",
+          "tavily_search",
+          "supabase_database",
+          "vonage_sms"
+        ],
+        "personality": "empathetic",
+        "industry_focus": ["technology", "retail", "education"],
+        "sample_configuration": {
+          "useCase": "helpdesk",
+          "organizationName": "ServiceDesk Pro",
+          "industry": "technology",
+          "primaryContactEmail": "admin@servicedesk.com",
+          "supportEmail": "help@servicedesk.com",
+          "targetLocationRegion": "Global",
+          "activeIntegrations": "freshdesk_support,resend_email,tavily_search,supabase_database",
+          "voicePersonality": "empathetic",
+          "hipaaComplianceRequired": "No"
+        },
+        "conversation_flows": [
+          {
+            "scenario": "Technical Issue Resolution",
+            "steps": [
+              "Gather issue details and affected systems",
+              "Search knowledge base using search_web_information",
+              "Provide troubleshooting guidance",
+              "Create ticket if unresolved using create_support_ticket",
+              "Save interaction data using save_interaction_data"
+            ]
+          },
+          {
+            "scenario": "Escalation Management",
+            "steps": [
+              "Assess issue complexity and urgency",
+              "Create high-priority ticket using create_support_ticket",
+              "Notify customer via send_email_notification",
+              "Send SMS for urgent issues using send_sms_notification",
+              "Log escalation using save_interaction_data"
+            ]
+          }
+        ],
+        "kpis": [
+          "First call resolution rate",
+          "Ticket creation accuracy",
+          "Customer satisfaction score",
+          "Average resolution time"
+        ]
+      },
+
+      "healthcare_assistant": {
+        "name": "Healthcare Assistant",
+        "description": "HIPAA-compliant healthcare support for appointments and provider information",
+        "recommended_integrations": [
+          "calendly_scheduling",
+          "resend_email",
+          "tavily_search",
+          "hubspot_crm",
+          "freshdesk_support"
+        ],
+        "personality": "empathetic",
+        "industry_focus": ["healthcare"],
+        "sample_configuration": {
+          "useCase": "healthcare",
+          "organizationName": "HealthCare Partners",
+          "industry": "healthcare",
+          "primaryContactEmail": "admin@healthcare.com",
+          "supportEmail": "support@healthcare.com",
+          "targetLocationRegion": "Metropolitan Area",
+          "activeIntegrations": "calendly_scheduling,resend_email,tavily_search,hubspot_crm",
+          "voicePersonality": "empathetic",
+          "hipaaComplianceRequired": "Yes"
+        },
+        "conversation_flows": [
+          {
+            "scenario": "Appointment Scheduling",
+            "steps": [
+              "Verify patient identity (HIPAA compliant)",
+              "Understand appointment needs",
+              "Check provider availability using schedule_appointment",
+              "Confirm appointment details",
+              "Send confirmation using send_email_notification"
+            ]
+          },
+          {
+            "scenario": "Provider Information",
+            "steps": [
+              "Understand specialty and location requirements",
+              "Search provider directories using search_web_information",
+              "Provide relevant provider information",
+              "Offer to schedule appointments",
+              "Save patient inquiry using save_contact_to_crm"
+            ]
+          }
+        ],
+        "compliance_notes": [
+          "All interactions must be HIPAA compliant",
+          "No PHI (Protected Health Information) in logs",
+          "Secure data transmission required",
+          "Patient consent for data collection"
+        ],
+        "kpis": [
+          "Appointment booking success rate",
+          "Provider search accuracy",
+          "HIPAA compliance score",
+          "Patient satisfaction"
+        ]
+      },
+
+      "lead_generation": {
+        "name": "Lead Generation Specialist",
+        "description": "Focused lead generation and qualification for B2B sales",
+        "recommended_integrations": [
+          "hubspot_crm",
+          "resend_email",
+          "tavily_search",
+          "calendly_scheduling",
+          "supabase_database"
+        ],
+        "personality": "friendly",
+        "industry_focus": ["technology", "consulting", "manufacturing"],
+        "sample_configuration": {
+          "useCase": "lead_generation",
+          "organizationName": "LeadGen Solutions",
+          "industry": "consulting",
+          "primaryContactEmail": "leads@leadgen.com",
+          "supportEmail": "support@leadgen.com",
+          "targetLocationRegion": "Global",
+          "activeIntegrations": "hubspot_crm,resend_email,tavily_search,calendly_scheduling",
+          "voicePersonality": "friendly",
+          "hipaaComplianceRequired": "No"
+        },
+        "conversation_flows": [
+          {
+            "scenario": "Cold Call Qualification",
+            "steps": [
+              "Introduce value proposition briefly",
+              "Qualify decision-making authority",
+              "Assess pain points and budget",
+              "Capture detailed lead info using save_contact_to_crm",
+              "Schedule discovery call using schedule_appointment"
+            ]
+          }
+        ],
+        "kpis": [
+          "Lead qualification rate",
+          "BANT completion percentage",
+          "Meeting booking conversion",
+          "Lead score accuracy"
+        ]
+      },
+
+      "appointment_booking": {
+        "name": "Appointment Booking Specialist",
+        "description": "Dedicated appointment scheduling and calendar management",
+        "recommended_integrations": [
+          "calendly_scheduling",
+          "resend_email",
+          "vonage_sms",
+          "hubspot_crm",
+          "supabase_database"
+        ],
+        "personality": "professional",
+        "industry_focus": ["healthcare", "consulting", "real_estate"],
+        "sample_configuration": {
+          "useCase": "appointment_booking",
+          "organizationName": "BookingPro Services",
+          "industry": "consulting",
+          "primaryContactEmail": "bookings@bookingpro.com",
+          "supportEmail": "support@bookingpro.com",
+          "targetLocationRegion": "Regional",
+          "activeIntegrations": "calendly_scheduling,resend_email,vonage_sms,hubspot_crm",
+          "voicePersonality": "professional",
+          "hipaaComplianceRequired": "No"
+        },
+        "conversation_flows": [
+          {
+            "scenario": "New Appointment Booking",
+            "steps": [
+              "Gather customer information",
+              "Understand appointment requirements",
+              "Check availability using schedule_appointment",
+              "Confirm booking details",
+              "Send confirmation via send_email_notification",
+              "Set SMS reminder using send_sms_notification"
+            ]
+          },
+          {
+            "scenario": "Rescheduling Request",
+            "steps": [
+              "Verify existing appointment",
+              "Understand new requirements",
+              "Find alternative slots using schedule_appointment",
+              "Update booking and send notifications"
+            ]
+          }
+        ],
+        "kpis": [
+          "Booking success rate",
+          "No-show reduction",
+          "Customer satisfaction",
+          "Calendar utilization rate"
+        ]
+      },
+
+      "customer_support": {
+        "name": "Customer Success Manager",
+        "description": "Proactive customer support for retention and growth",
+        "recommended_integrations": [
+          "hubspot_crm",
+          "resend_email",
+          "freshdesk_support",
+          "tavily_search",
+          "calendly_scheduling"
+        ],
+        "personality": "friendly",
+        "industry_focus": ["technology", "finance", "retail"],
+        "sample_configuration": {
+          "useCase": "customer_support",
+          "organizationName": "CustomerSuccess Inc",
+          "industry": "technology",
+          "primaryContactEmail": "success@customersuccess.com",
+          "supportEmail": "support@customersuccess.com",
+          "targetLocationRegion": "Global",
+          "activeIntegrations": "hubspot_crm,resend_email,freshdesk_support,tavily_search",
+          "voicePersonality": "friendly",
+          "hipaaComplianceRequired": "No"
+        },
+        "conversation_flows": [
+          {
+            "scenario": "Account Health Check",
+            "steps": [
+              "Review account status and usage",
+              "Identify potential issues or opportunities",
+              "Update customer record using save_contact_to_crm",
+              "Schedule follow-up if needed using schedule_appointment",
+              "Send summary using send_email_notification"
+            ]
+          }
+        ],
+        "kpis": [
+          "Customer retention rate",
+          "Upsell opportunity identification",
+          "Issue prevention rate",
+          "Customer satisfaction score"
+        ]
+      }
+    }
+  }
+}

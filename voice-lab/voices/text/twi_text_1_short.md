@@ -1,0 +1,1 @@
+Wo tumi de Ghana kasa Twi no di dwuma ma w'adwen mu nsɛm adi mu yiye. Twi yɛ kasa a ɛda so reyɛ den wɔ Amansan mu, na ɛma nnipa tumi kasa ahotɔ mu na wɔte wɔn ho ase. Sɛ yɛde Twi ka nsɛm a, ɛma yɛtumi kyerɛ yɛn amammerɛ.

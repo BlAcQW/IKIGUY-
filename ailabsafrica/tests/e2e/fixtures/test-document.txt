@@ -1,0 +1,18 @@
+This is a test document for E2E testing of file upload functionality.
+
+It contains sample text that can be used to test knowledge base uploads for voice assistants.
+
+The document includes:
+- Multiple paragraphs
+- Various types of content
+- Special characters: !@#$%^&*()
+- Numbers: 1234567890
+- Line breaks and formatting
+
+This document should be used to test:
+1. File upload validation
+2. File processing
+3. Knowledge base integration
+4. Error handling for file uploads
+
+End of test document.

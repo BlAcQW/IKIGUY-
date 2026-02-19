@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premier Health Insurance - Your Bridge to Premier Healthcare</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0A2342 0%, #1e3a5f 50%, #5BA3D0 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><circle cx="100" cy="100" r="80" fill="rgba(255,255,255,0.05)"/><circle cx="900" cy="200" r="120" fill="rgba(255,255,255,0.03)"/><circle cx="500" cy="400" r="100" fill="rgba(255,255,255,0.04)"/><path d="M0,300 Q300,100 600,300 T1200,300 L1200,600 L0,600 Z" fill="rgba(255,255,255,0.08)"/></svg>') no-repeat bottom;
+            background-size: cover;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card {
+            transition: all 0.3s ease-in-out;
+            border: 1px solid #e5e7eb;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #E31E24;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #E31E24 0%, #c41519 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .assistant-section {
+            background: linear-gradient(to bottom, #f9fafb 0%, #ffffff 100%);
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .assistant-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .assistant-card:hover {
+            border-color: #E31E24;
+            box-shadow: 0 20px 25px -5px rgba(227, 30, 36, 0.1), 0 10px 10px -5px rgba(227, 30, 36, 0.04);
+        }
+
+        .assistant-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0A2342 0%, #1e3a5f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(10, 35, 66, 0.3);
+        }
+
+        .pulse-ring {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #E31E24 0%, #c41519 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(227, 30, 36, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(227, 30, 36, 0.4);
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: rgba(227, 30, 36, 0.15);
+            color: #E31E24;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #E31E24 0%, #0A2342 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Vapi Widget Customization */
+        #vapi-widget-container {
+            z-index: 9999 !important;
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 998;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E31E24 0%, #c41519 100%);
+            box-shadow: 0 10px 20px rgba(227, 30, 36, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(227, 30, 36, 0.4);
+        }
+
+        /* CTA Section hover fix */
+        #contact a.hover\:bg-white:hover {
+            color: #0A2342 !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto py-4 px-6">
+            <nav class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-heartbeat text-white text-xl"></i>
+                    </div>
+                    <a href="#" class="text-2xl font-bold" style="color: #0A2342;">Premier Health Insurance</a>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#about" class="text-gray-700 hover:text-red-600 transition">About Us</a>
+                    <a href="#plans" class="text-gray-700 hover:text-red-600 transition">Plans</a>
+                    <a href="#assistants" class="text-gray-700 hover:text-red-600 transition">AI Assistants</a>
+                    <a href="#contact" class="text-gray-700 hover:text-red-600 transition">Contact</a>
+                </div>
+                <button class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero py-20 md:py-32">
+        <div class="container mx-auto text-center hero-content px-6">
+            <div class="feature-badge">
+                <i class="fas fa-shield-alt"></i> Ghana's Trusted Health Insurance Provider
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Your Bridge to<br/>Premier Healthcare</h1>
+            <p class="text-lg md:text-xl mb-10 max-w-2xl mx-auto opacity-90">
+                Comprehensive and affordable healthcare solutions powered by AI technology.
+                Get instant support from Ama, our intelligent health assistant.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#plans" class="cta-button text-white font-bold py-4 px-8 rounded-lg inline-flex items-center justify-center">
+                    <i class="fas fa-clipboard-list mr-2"></i>
+                    Explore Our Plans
+                </a>
+                <a href="#assistants" class="bg-white font-bold py-4 px-8 rounded-lg inline-flex items-center justify-center hover:bg-gray-50 transition" style="color: #0A2342;">
+                    <i class="fas fa-comments mr-2"></i>
+                    Talk to Ama
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stat-card">
+                    <div class="stat-number">50K+</div>
+                    <p class="text-gray-600 font-medium">Happy Members</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">200+</div>
+                    <p class="text-gray-600 font-medium">Partner Hospitals</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <p class="text-gray-600 font-medium">AI Support</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <p class="text-gray-600 font-medium">Satisfaction Rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-16 md:py-20" id="about">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="feature-badge">Our Services</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">Why Choose Premier Health?</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">
+                    We provide comprehensive healthcare coverage with cutting-edge AI support to ensure you get the best care possible.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="service-card bg-white rounded-2xl p-6">
+                    <div class="service-icon">
+                        <i class="fas fa-hospital text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Comprehensive Coverage</h3>
+                    <p class="text-gray-600">Access a wide range of medical services, including consultations, hospital stays, surgeries, and medications.</p>
+                </div>
+                <div class="service-card bg-white rounded-2xl p-6">
+                    <div class="service-icon">
+                        <i class="fas fa-dollar-sign text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Affordable Plans</h3>
+                    <p class="text-gray-600">Choose from various flexible plans tailored to your budget and healthcare needs starting from GH₵ 50/month.</p>
+                </div>
+                <div class="service-card bg-white rounded-2xl p-6">
+                    <div class="service-icon">
+                        <i class="fas fa-robot text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">AI-Powered Support</h3>
+                    <p class="text-gray-600">Get instant answers from Ama, our AI assistant, available 24/7 via voice or chat in English and Twi.</p>
+                </div>
+                <div class="service-card bg-white rounded-2xl p-6">
+                    <div class="service-icon">
+                        <i class="fas fa-map-marked-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Nationwide Network</h3>
+                    <p class="text-gray-600">Access 200+ healthcare providers across Ghana through our extensive network of hospitals and clinics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Assistants Section -->
+    <section class="assistant-section py-16 md:py-20" id="assistants">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="feature-badge">
+                    <i class="fas fa-magic"></i> AI-Powered Assistance
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">Meet Ama, Your Health Assistant</h2>
+                <p class="text-gray-600 mt-4 max-w-3xl mx-auto">
+                    Premier Apomoden (Premier Health Helper) - Get instant answers about our insurance plans,
+                    find nearby hospitals, check coverage, and more. Available in English and Twi.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Voice Assistant -->
+                <div class="assistant-card">
+                    <div class="assistant-icon pulse-ring">
+                        <i class="fas fa-phone-alt text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 text-center mb-3">Voice Assistant</h3>
+                    <p class="text-gray-600 text-center mb-6">
+                        Talk to Ama like you're speaking to a real person. Ask questions in English or Twi and get instant voice responses.
+                    </p>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-red-600 mt-1"></i>
+                            <span class="text-gray-700">Natural voice conversations</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-red-600 mt-1"></i>
+                            <span class="text-gray-700">Bilingual support (English & Twi)</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-red-600 mt-1"></i>
+                            <span class="text-gray-700">Find hospitals and check coverage</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-red-600 mt-1"></i>
+                            <span class="text-gray-700">Get plan recommendations</span>
+                        </div>
+                    </div>
+                    <button onclick="triggerVapiVoice()" class="cta-button w-full text-white font-bold py-4 px-6 rounded-lg inline-flex items-center justify-center">
+                        <i class="fas fa-phone-volume mr-2"></i>
+                        Start Voice Call
+                    </button>
+                </div>
+
+                <!-- Chat Assistant -->
+                <div class="assistant-card">
+                    <div class="assistant-icon pulse-ring" style="animation-delay: 1s;">
+                        <i class="fas fa-comments text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 text-center mb-3">Chat Assistant</h3>
+                    <p class="text-gray-600 text-center mb-6">
+                        Prefer texting? Chat with Ama through our text interface. Type your questions and get detailed responses instantly.
+                    </p>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-red-600 mt-1"></i>
+                            <span class="text-gray-700">Quick text-based support</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-red-600 mt-1"></i>
+                            <span class="text-gray-700">Detailed plan comparisons</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-red-600 mt-1"></i>
+                            <span class="text-gray-700">Search hospital database</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-check-circle text-red-600 mt-1"></i>
+                            <span class="text-gray-700">Save conversation history</span>
+                        </div>
+                    </div>
+                    <button onclick="triggerVapiChat()" class="cta-button w-full text-white font-bold py-4 px-6 rounded-lg inline-flex items-center justify-center">
+                        <i class="fas fa-comment-dots mr-2"></i>
+                        Start Chat
+                    </button>
+                </div>
+            </div>
+
+            <!-- Example Questions -->
+            <div class="mt-12 bg-gradient-to-br from-red-50 to-blue-50 rounded-2xl p-8 max-w-5xl mx-auto shadow-2xl border-2 border-red-200">
+                <h4 class="text-2xl font-bold text-gray-800 mb-2 text-center">
+                    <i class="fas fa-lightbulb text-yellow-500 mr-2 animate-pulse"></i>
+                    Try Asking Ama About:
+                </h4>
+                <p class="text-center text-gray-600 mb-6">Real questions from our Premier Health knowledge base</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <button onclick="askQuestion(this)" class="flex items-start space-x-3 p-4 bg-white hover:bg-red-50 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer text-left border-2 border-gray-200 hover:border-red-500">
+                        <i class="fas fa-hospital text-red-600 text-xl mt-1"></i>
+                        <span class="text-gray-700 font-medium">"Show me healthcare providers in Kaneshie"</span>
+                    </button>
+                    <button onclick="askQuestion(this)" class="flex items-start space-x-3 p-4 bg-white hover:bg-red-50 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer text-left border-2 border-gray-200 hover:border-red-500">
+                        <i class="fas fa-map-marker-alt text-red-600 text-xl mt-1"></i>
+                        <span class="text-gray-700 font-medium">"Which providers are in Tema Community 4?"</span>
+                    </button>
+                    <button onclick="askQuestion(this)" class="flex items-start space-x-3 p-4 bg-white hover:bg-red-50 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer text-left border-2 border-gray-200 hover:border-red-500">
+                        <i class="fas fa-gem text-red-600 text-xl mt-1"></i>
+                        <span class="text-gray-700 font-medium">"Find Platinum Plus facilities in Kaneshie"</span>
+                    </button>
+                    <button onclick="askQuestion(this)" class="flex items-start space-x-3 p-4 bg-white hover:bg-red-50 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer text-left border-2 border-gray-200 hover:border-red-500">
+                        <i class="fas fa-tooth text-red-600 text-xl mt-1"></i>
+                        <span class="text-gray-700 font-medium">"Do you have dental services in North Kaneshie?"</span>
+                    </button>
+                    <button onclick="askQuestion(this)" class="flex items-start space-x-3 p-4 bg-white hover:bg-red-50 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer text-left border-2 border-gray-200 hover:border-red-500">
+                        <i class="fas fa-eye text-red-600 text-xl mt-1"></i>
+                        <span class="text-gray-700 font-medium">"Where can I find optical services?"</span>
+                    </button>
+                    <button onclick="askQuestion(this)" class="flex items-start space-x-3 p-4 bg-white hover:bg-red-50 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer text-left border-2 border-gray-200 hover:border-red-500">
+                        <i class="fas fa-building text-red-600 text-xl mt-1"></i>
+                        <span class="text-gray-700 font-medium">"Healthcare facilities in Sakumono Estate?"</span>
+                    </button>
+                </div>
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-red-600 mr-1"></i>
+                        Click any question above to automatically start chatting with Ama
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans Section -->
+    <section class="py-16 md:py-20 bg-white" id="plans">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="feature-badge">Our Plans</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">Choose Your Perfect Plan</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">
+                    Flexible healthcare coverage options designed to meet your needs and budget
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Regular Plan -->
+                <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-red-500 transition">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Regular</h3>
+                    <p class="text-gray-600 mb-6">Essential coverage for everyday healthcare needs</p>
+                    <div class="text-4xl font-bold text-gray-800 mb-6">
+                        GH₵ 50<span class="text-lg text-gray-600">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>Basic consultations</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>Generic medications</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>Selected clinics</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>AI assistant access</span>
+                        </li>
+                    </ul>
+                    <button class="w-full border-2 border-red-600 text-red-600 font-bold py-3 px-6 rounded-lg hover:bg-red-600 hover:text-white transition">
+                        Learn More
+                    </button>
+                </div>
+
+                <!-- Mercury Plan -->
+                <div class="bg-gradient-to-br text-white rounded-2xl p-8 transform scale-105 shadow-2xl" style="background: linear-gradient(135deg, #0A2342 0%, #1e3a5f 100%);">
+                    <div class="bg-white px-3 py-1 rounded-full text-sm font-bold inline-block mb-4" style="color: #E31E24;">
+                        MOST POPULAR
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Mercury</h3>
+                    <p class="opacity-90 mb-6">Enhanced coverage for comprehensive care</p>
+                    <div class="text-4xl font-bold mb-6">
+                        GH₵ 120<span class="text-lg opacity-90">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-2"></i>
+                            <span>Everything in Regular</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-2"></i>
+                            <span>Specialist consultations</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-2"></i>
+                            <span>Diagnostic tests</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-2"></i>
+                            <span>150+ partner facilities</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-2"></i>
+                            <span>Minor surgeries covered</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-white font-bold py-3 px-6 rounded-lg hover:bg-gray-50 transition" style="color: #E31E24;">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Platinum Plus Plan -->
+                <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-red-500 transition">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Platinum Plus</h3>
+                    <p class="text-gray-600 mb-6">Premium coverage with VIP benefits</p>
+                    <div class="text-4xl font-bold text-gray-800 mb-6">
+                        GH₵ 250<span class="text-lg text-gray-600">/month</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>Everything in Mercury</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>All major surgeries</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>200+ premium hospitals</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>International coverage</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-red-600 mr-2"></i>
+                            <span>VIP hospital rooms</span>
+                        </li>
+                    </ul>
+                    <button class="w-full border-2 border-red-600 text-red-600 font-bold py-3 px-6 rounded-lg hover:bg-red-600 hover:text-white transition">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 text-white" id="contact" style="background: linear-gradient(135deg, #0A2342 0%, #1e3a5f 50%, #5BA3D0 100%);">
+        <div class="container mx-auto text-center px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
+            <p class="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                Join thousands of Ghanaians who trust Premier Health Insurance for their healthcare needs.
+                Talk to Ama now to find your perfect plan!
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="triggerVapiVoice()" class="bg-white font-bold py-4 px-8 rounded-lg inline-flex items-center justify-center hover:bg-gray-100 transition" style="color: #E31E24;">
+                    <i class="fas fa-phone-alt mr-2"></i>
+                    Call Ama Now
+                </button>
+                <a href="#assistants" class="bg-transparent border-2 border-white text-white font-bold py-4 px-8 rounded-lg inline-flex items-center justify-center hover:bg-white transition" style="hover:color: #0A2342;">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">Premier Health</span>
+                    </div>
+                    <p class="text-gray-400">Your Bridge to Premier Healthcare across Ghana</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#about" class="hover:text-red-400 transition">About Us</a></li>
+                        <li><a href="#plans" class="hover:text-red-400 transition">Plans & Pricing</a></li>
+                        <li><a href="#assistants" class="hover:text-red-400 transition">AI Assistants</a></li>
+                        <li><a href="#contact" class="hover:text-red-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-red-400 transition">Find a Hospital</a></li>
+                        <li><a href="#" class="hover:text-red-400 transition">Claims Process</a></li>
+                        <li><a href="#" class="hover:text-red-400 transition">FAQs</a></li>
+                        <li><a href="#" class="hover:text-red-400 transition">Member Portal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-phone mr-2"></i> 0302-123-456</li>
+                        <li><i class="fas fa-envelope mr-2"></i> info@premierhealth.gh</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Accra, Ghana</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Premier Health Insurance. All rights reserved. | Powered by AI Labs Africa</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Vapi Voice Widget - Router Assistant (Fallback) -->
+    <vapi-widget
+        id="voice-widget"
+        public-key="0c22dcea-0d6c-4fc0-8fb2-93292d8575e8"
+        assistant-id="87182b39-a050-4ef4-9319-773666fabd6d"
+        mode="voice"
+        theme="dark"
+        base-bg-color="#0A2342"
+        accent-color="#E31E24"
+        cta-button-color="#E31E24"
+        cta-button-text-color="#ffffff"
+        border-radius="large"
+        size="full"
+        position="bottom-right"
+        title="Talk to Ama - Premier Health Assistant"
+        start-button-text="Start Call"
+        end-button-text="End Call"
+        chat-first-message="Maakye! I'm Ama, your Premier Health assistant. How can I help you today?"
+        chat-placeholder="Type your message..."
+        voice-show-transcript="false"
+        consent-required="true"
+        consent-title="Terms and conditions"
+        consent-content="By clicking 'Agree,' and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service."
+        consent-storage-key="vapi_widget_consent"
+    ></vapi-widget>
+
+    <!-- Vapi Chat Widget -->
+    <vapi-widget
+        public-key="0c22dcea-0d6c-4fc0-8fb2-93292d8575e8"
+        assistant-id="baa69b3a-8944-4557-9ef9-3a5aa6956eb3"
+        mode="chat"
+        theme="dark"
+        base-bg-color="#0A2342"
+        accent-color="#E31E24"
+        cta-button-color="#E31E24"
+        cta-button-text-color="#ffffff"
+        border-radius="large"
+        size="full"
+        position="bottom-left"
+        title="Chat with Ama for information on all facilities covered by Premier Health Services nationwide"
+        start-button-text="Start"
+        end-button-text="End Chat"
+        chat-first-message="Hey, How can I help you today?"
+        chat-placeholder="Type your message..."
+        voice-show-transcript="true"
+        consent-required="false"
+    ></vapi-widget>
+
+    <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+
+    <!-- Load Vapi Web SDK via ES module CDN -->
+    <script type="module">
+        import Vapi from 'https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.5.0/+esm';
+
+        // Make Vapi available globally
+        window.VapiSDK = Vapi;
+        window.vapiWebInstance = null;
+        window.vapiSdkReady = false;
+        window.pendingWidgetClick = null;
+
+        const squadId = "d9c801a1-34df-4496-bb90-7ac9e3f9e44e";
+        const vapiPublicKey = "0c22dcea-0d6c-4fc0-8fb2-93292d8575e8";
+
+        // Initialize Vapi instance
+        window.vapiWebInstance = new Vapi(vapiPublicKey);
+
+        console.log('Vapi Web SDK loaded and instance created');
+        console.log('Configuration:', {
+            publicKey: vapiPublicKey,
+            squadId: squadId
+        });
+
+        // Mark SDK as ready and process any pending clicks
+        window.vapiSdkReady = true;
+        console.log('✅ Vapi Web SDK is ready for squad calls');
+
+        // If there was a pending widget click, process it now
+        if (window.pendingWidgetClick) {
+            console.log('→ Processing pending widget click');
+            setTimeout(() => {
+                if (typeof window.startSquadCall === 'function') {
+                    window.startSquadCall().catch(err => {
+                        console.error('Failed to start queued squad call:', err);
+                    });
+                }
+                window.pendingWidgetClick = null;
+            }, 100);
+        }
+
+        // Event listeners
+        window.vapiWebInstance.on('call-start', () => {
+            console.log('Squad call started successfully');
+        });
+
+        window.vapiWebInstance.on('call-end', () => {
+            console.log('Squad call ended');
+        });
+
+        window.vapiWebInstance.on('error', (error) => {
+            console.error('Vapi SDK error event:', error);
+
+            // Show user-friendly error message
+            if (error && error.message) {
+                if (error.message.includes('400') || error.message.includes('Bad Request')) {
+                    alert('🔧 Voice assistant is being configured. Please try:\n\n' +
+                          '✅ Chat option (click "Start Chat" button)\n' +
+                          '✅ Call us directly at +233 24 242 6051\n\n' +
+                          'Our team is working to restore voice functionality.');
+                }
+            }
+        });
+
+        // Make squad start function available globally
+        window.startSquadCall = async function() {
+            try {
+                console.log('='.repeat(80));
+                console.log('▶ STARTING SQUAD CALL');
+                console.log('='.repeat(80));
+                console.log('Squad ID:', squadId);
+                console.log('Squad ID type:', typeof squadId);
+                console.log('Squad ID length:', squadId ? squadId.length : 0);
+                console.log('='.repeat(80));
+                console.log('Call parameters:');
+                console.log('  assistantId (param1):', null);
+                console.log('  assistantOverrides (param2):', null);
+                console.log('  squadId (param3):', squadId);
+                console.log('='.repeat(80));
+
+                // Start call with squad ID as third parameter: start(assistantId, assistantOverrides, squadId)
+                console.log('Executing: vapiWebInstance.start(null, null, "' + squadId + '")');
+                const result = await window.vapiWebInstance.start(null, null, squadId);
+
+                console.log('='.repeat(80));
+                console.log('✓ SQUAD CALL INITIATED SUCCESSFULLY');
+                console.log('='.repeat(80));
+                console.log('Result:', JSON.stringify(result, null, 2));
+                return result;
+            } catch (error) {
+                console.error('='.repeat(80));
+                console.error('❌ ERROR STARTING SQUAD CALL');
+                console.error('='.repeat(80));
+                console.error('Error object:', error);
+                console.error('Error type:', error.constructor.name);
+                console.error('Error message:', error.message);
+                console.error('Error stack:', error.stack);
+
+                // Try to extract response data
+                if (error.response) {
+                    console.error('Response status:', error.response.status);
+                    console.error('Response data:', error.response.data);
+                }
+
+                console.error('Full error details:', JSON.stringify({
+                    message: error.message,
+                    response: error.response,
+                    status: error.status || error.statusCode,
+                    name: error.name
+                }, null, 2));
+
+                // Check if this is a 400 error
+                if (error.status === 400 || (error.message && error.message.includes('400'))) {
+                    console.error('⚠ 400 Bad Request - This typically means:');
+                    console.error('  • Assistant server.url is incorrect or unreachable');
+                    console.error('  • Squad configuration is invalid');
+                    console.error('  • Expected server.url: https://api.ailabsafrica.com/premier-health/vapi-webhook');
+                }
+
+                throw error;
+            }
+        };
+
+        // Make stop function available globally
+        window.stopSquadCall = function() {
+            if (window.vapiWebInstance) {
+                window.vapiWebInstance.stop();
+                console.log('Squad call stopped');
+            }
+        };
+    </script>
+
+    <script>
+        // Helper function to trigger Vapi voice call with squad
+        async function triggerVapiVoice() {
+            try {
+                console.log('=== VAPI VOICE CALL TRIGGERED ===');
+                console.log('Timestamp:', new Date().toISOString());
+
+                // Check if the Web SDK is loaded
+                if (typeof window.startSquadCall === 'function') {
+                    console.log('✓ Vapi Web SDK detected');
+                    console.log('Starting squad call...');
+                    await window.startSquadCall();
+                } else {
+                    console.warn('⚠ Vapi Web SDK not ready, falling back to widget');
+                    console.log('✓ Widget is configured with squad-id: d9c801a1-34df-4496-bb90-7ac9e3f9e44e');
+                    console.log('✓ This will start with Router assistant first');
+                    // Fallback: trigger the widget
+                    const voiceWidget = document.getElementById('voice-widget');
+                    if (voiceWidget) {
+                        voiceWidget.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                    }
+                }
+            } catch (error) {
+                console.error('❌ ERROR in triggerVapiVoice:', error);
+                console.error('Error details:', {
+                    message: error.message,
+                    type: error.type || 'unknown',
+                    stack: error.stack
+                });
+
+                // Handle different error types
+                let userMessage = '';
+
+                if (error.message && (error.message.includes('400') || error.message.includes('Bad Request'))) {
+                    console.error('⚠ 400 Bad Request detected - Assistant configuration issue');
+                    userMessage = '🔧 Voice assistant is being configured\n\n' +
+                                'The voice call feature is temporarily unavailable. Please try:\n\n' +
+                                '✅ Click "Start Chat" button below for text chat\n' +
+                                '✅ Call us directly at +233 24 242 6051\n\n' +
+                                'For technical support: api.ailabsafrica.com/premier-health';
+                } else if (error.message && error.message.includes('microphone')) {
+                    console.error('⚠ Microphone permission issue');
+                    userMessage = '🎤 Microphone Access Required\n\n' +
+                                'Please allow microphone access in your browser to use voice calls.\n\n' +
+                                'Alternative: Use the chat option below.';
+                } else if (error.message && error.message.includes('network')) {
+                    console.error('⚠ Network connectivity issue');
+                    userMessage = '🌐 Network Connection Issue\n\n' +
+                                'Please check your internet connection and try again.\n\n' +
+                                'Alternative: Call +233 24 242 6051 directly.';
+                } else {
+                    console.error('⚠ Unknown error type');
+                    userMessage = '⚠ Unable to start voice call\n\n' +
+                                'Error: ' + (error.message || 'Unknown error') + '\n\n' +
+                                'Please try:\n' +
+                                '• Chat option below\n' +
+                                '• Call +233 24 242 6051';
+                }
+
+                alert(userMessage);
+            }
+        }
+
+        function triggerVapiChat() {
+            // Trigger the chat widget (bottom-left)
+            const vapiWidgets = document.querySelectorAll('vapi-widget');
+            const chatWidget = Array.from(vapiWidgets).find(w => w.getAttribute('mode') === 'chat');
+            if (chatWidget) {
+                // Scroll to widget
+                chatWidget.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                // The widget will open automatically when user interacts
+            }
+        }
+
+        // Function to ask a specific question via chat
+        function askQuestion(button) {
+            // Extract the question text from the button
+            const questionText = button.querySelector('span').textContent.replace(/"/g, '');
+
+            // Trigger the chat widget
+            triggerVapiChat();
+
+            // Visual feedback
+            button.classList.add('ring-4', 'ring-teal-300');
+            setTimeout(() => {
+                button.classList.remove('ring-4', 'ring-teal-300');
+            }, 1000);
+
+            // Log for debugging
+            console.log('Question clicked:', questionText);
+
+            // Note: Actual pre-filling of the question would require Vapi SDK integration
+            // For now, this opens the chat widget and the user can type or paste the question
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add entrance animation to question cards
+            const questionCards = document.querySelectorAll('button[onclick="askQuestion(this)"]');
+            questionCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 100);
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+{
+  "destinations": [
+    {
+      "id": "dest_001",
+      "name": "Kakum National Park",
+      "region": "Central",
+      "category": ["nature", "adventure", "wildlife"],
+      "description": "Famous rainforest with canopy walkway suspended 40 meters above ground. Home to diverse wildlife including forest elephants, monkeys, and over 300 bird species.",
+      "highlights": ["Canopy walkway", "Rainforest trekking", "Birdwatching", "Wildlife viewing"],
+      "best_time_to_visit": "November to March (dry season)",
+      "entry_fee": "GHS 50 for Ghanaians, GHS 80 for non-Ghanaians",
+      "location": {
+        "district": "Cape Coast",
+        "coordinates": {"lat": 5.3478, "lon": -1.3715},
+        "distance_from_accra_km": 170
+      },
+      "activities": ["Hiking", "Canopy walk", "Photography", "Bird watching"],
+      "difficulty": "Moderate",
+      "duration_hours": "3-4",
+      "contact": {
+        "phone": "+233 332 132 044",
+        "email": "kakumnationalpark@gmail.com"
+      }
+    },
+    {
+      "id": "dest_002",
+      "name": "Cape Coast Castle",
+      "region": "Central",
+      "category": ["historical", "cultural"],
+      "description": "UNESCO World Heritage site. Former slave trading post with deep historical significance. Museum provides powerful insight into the transatlantic slave trade.",
+      "highlights": ["Dungeon tours", "Museum exhibits", "Panoramic ocean views", "Historical significance"],
+      "best_time_to_visit": "Year-round",
+      "entry_fee": "GHS 40 for Ghanaians, GHS 60 for non-Ghanaians",
+      "location": {
+        "district": "Cape Coast",
+        "coordinates": {"lat": 5.1053, "lon": -1.2474},
+        "distance_from_accra_km": 160
+      },
+      "activities": ["Historical tours", "Museum visits", "Photography"],
+      "difficulty": "Easy",
+      "duration_hours": "2-3",
+      "contact": {
+        "phone": "+233 332 132 149",
+        "website": "http://www.ghanamuseums.org"
+      }
+    },
+    {
+      "id": "dest_003",
+      "name": "Mole National Park",
+      "region": "Northern",
+      "category": ["wildlife", "nature", "adventure"],
+      "description": "Ghana's largest wildlife refuge. Best place to see elephants, antelope, baboons, and warthogs. Walking safaris available.",
+      "highlights": ["Elephant viewing", "Walking safaris", "Wildlife photography", "Scenic landscapes"],
+      "best_time_to_visit": "November to April (dry season for wildlife viewing)",
+      "entry_fee": "GHS 30 for Ghanaians, GHS 50 for non-Ghanaians",
+      "location": {
+        "district": "West Gonja",
+        "coordinates": {"lat": 9.3316, "lon": -1.8605},
+        "distance_from_accra_km": 610
+      },
+      "activities": ["Safari drives", "Walking safaris", "Wildlife photography", "Bird watching"],
+      "difficulty": "Easy to Moderate",
+      "duration_hours": "Full day recommended",
+      "accommodation_available": true,
+      "contact": {
+        "phone": "+233 244 378 216",
+        "email": "molenationalpark@gmail.com"
+      }
+    },
+    {
+      "id": "dest_004",
+      "name": "Kwame Nkrumah Memorial Park",
+      "region": "Greater Accra",
+      "category": ["historical", "cultural"],
+      "description": "Mausoleum and memorial dedicated to Ghana's first president and pan-African leader Kwame Nkrumah. Beautiful gardens and museum.",
+      "highlights": ["Nkrumah mausoleum", "Pan-African history", "Museum exhibits", "Peaceful gardens"],
+      "best_time_to_visit": "Year-round",
+      "entry_fee": "GHS 10 for Ghanaians, GHS 20 for non-Ghanaians",
+      "location": {
+        "district": "Accra",
+        "neighborhood": "High Street",
+        "coordinates": {"lat": 5.5466, "lon": -0.2175},
+        "distance_from_accra_km": 0
+      },
+      "activities": ["Museum tours", "Photography", "Learning history"],
+      "difficulty": "Easy",
+      "duration_hours": "1-2",
+      "contact": {
+        "phone": "+233 302 664 093"
+      }
+    },
+    {
+      "id": "dest_005",
+      "name": "Labadi Beach",
+      "region": "Greater Accra",
+      "category": ["beach", "recreation"],
+      "description": "Most popular beach in Accra. Lively atmosphere with local music, food vendors, and beach activities. Great for relaxation and entertainment.",
+      "highlights": ["Beach relaxation", "Local food", "Live music", "Horseback riding"],
+      "best_time_to_visit": "Weekends for lively atmosphere, weekdays for quieter experience",
+      "entry_fee": "GHS 5-10",
+      "location": {
+        "district": "Accra",
+        "neighborhood": "La Dade Kotopon",
+        "coordinates": {"lat": 5.5971, "lon": -0.1437},
+        "distance_from_accra_km": 10
+      },
+      "activities": ["Swimming", "Beach volleyball", "Horseback riding", "Dining"],
+      "difficulty": "Easy",
+      "duration_hours": "2-6",
+      "facilities": ["Restaurants", "Bar", "Changing rooms", "Parking"],
+      "contact": {
+        "phone": "+233 244 318 841"
+      }
+    },
+    {
+      "id": "dest_006",
+      "name": "Wli Waterfalls",
+      "region": "Volta",
+      "category": ["nature", "adventure"],
+      "description": "Highest waterfall in Ghana. Beautiful hike through tropical forest to reach lower and upper falls. Bat colony visible at dusk.",
+      "highlights": ["Waterfall viewing", "Forest hiking", "Bat colony", "Swimming pool at base"],
+      "best_time_to_visit": "June to October (rainy season for maximum flow)",
+      "entry_fee": "GHS 20 for Ghanaians, GHS 40 for non-Ghanaians",
+      "location": {
+        "district": "Hohoe",
+        "coordinates": {"lat": 7.0986, "lon": 0.5894},
+        "distance_from_accra_km": 280
+      },
+      "activities": ["Hiking", "Swimming", "Photography", "Bird watching"],
+      "difficulty": "Moderate (lower falls), Difficult (upper falls)",
+      "duration_hours": "3-5",
+      "contact": {
+        "phone": "+233 244 765 332"
+      }
+    },
+    {
+      "id": "dest_007",
+      "name": "Elmina Castle",
+      "region": "Central",
+      "category": ["historical", "cultural"],
+      "description": "First European structure built in sub-Saharan Africa. UNESCO World Heritage site with significant slave trade history.",
+      "highlights": ["Historical tours", "Slave dungeons", "Ocean views", "Portuguese architecture"],
+      "best_time_to_visit": "Year-round",
+      "entry_fee": "GHS 40 for Ghanaians, GHS 60 for non-Ghanaians",
+      "location": {
+        "district": "Komenda Edina Eguafo Abirem",
+        "town": "Elmina",
+        "coordinates": {"lat": 5.0825, "lon": -1.3498},
+        "distance_from_accra_km": 145
+      },
+      "activities": ["Historical tours", "Photography", "Museum visits"],
+      "difficulty": "Easy",
+      "duration_hours": "2-3",
+      "contact": {
+        "phone": "+233 332 133 313"
+      }
+    },
+    {
+      "id": "dest_008",
+      "name": "Lake Volta",
+      "region": "Volta",
+      "category": ["nature", "adventure", "recreation"],
+      "description": "One of the world's largest man-made lakes. Boat cruises, fishing, and scenic views. Gateway to Volta Region attractions.",
+      "highlights": ["Boat cruises", "Fishing", "Island visits", "Scenic views"],
+      "best_time_to_visit": "November to March",
+      "entry_fee": "Varies by activity",
+      "location": {
+        "district": "Multiple districts",
+        "main_point": "Akosombo",
+        "coordinates": {"lat": 6.3333, "lon": 0.0833},
+        "distance_from_accra_km": 90
+      },
+      "activities": ["Boat cruises", "Fishing", "Photography", "Swimming"],
+      "difficulty": "Easy",
+      "duration_hours": "Half day to full day",
+      "contact": {
+        "phone": "+233 342 020 048"
+      }
+    },
+    {
+      "id": "dest_009",
+      "name": "Aburi Botanical Gardens",
+      "region": "Eastern",
+      "category": ["nature", "recreation"],
+      "description": "Historic botanical gardens established in 1890. Cool climate, diverse plant species, and beautiful landscaping. Popular weekend getaway from Accra.",
+      "highlights": ["Diverse plants", "Cool climate", "Scenic views", "Peaceful atmosphere"],
+      "best_time_to_visit": "Year-round",
+      "entry_fee": "GHS 5 for Ghanaians, GHS 10 for non-Ghanaians",
+      "location": {
+        "district": "Akuapem South",
+        "town": "Aburi",
+        "coordinates": {"lat": 5.8500, "lon": -0.1833},
+        "distance_from_accra_km": 30
+      },
+      "activities": ["Walking", "Photography", "Picnicking", "Relaxation"],
+      "difficulty": "Easy",
+      "duration_hours": "2-3",
+      "contact": {
+        "phone": "+233 244 366 719"
+      }
+    },
+    {
+      "id": "dest_010",
+      "name": "Busua Beach",
+      "region": "Western",
+      "category": ["beach", "adventure"],
+      "description": "Premier surfing destination in Ghana. Beautiful beach with great waves, relaxed vibe, and beachfront accommodations.",
+      "highlights": ["Surfing", "Beach relaxation", "Sunset views", "Beachfront dining"],
+      "best_time_to_visit": "Year-round; April-October for best surf",
+      "entry_fee": "Free access",
+      "location": {
+        "district": "Ahanta West",
+        "town": "Busua",
+        "coordinates": {"lat": 4.8158, "lon": -2.2516},
+        "distance_from_accra_km": 270
+      },
+      "activities": ["Surfing", "Swimming", "Beach volleyball", "Dining"],
+      "difficulty": "Easy",
+      "duration_hours": "Half day to multiple days",
+      "facilities": ["Surf shops", "Restaurants", "Accommodations", "Bar"],
+      "contact": {
+        "phone": "+233 244 789 123"
+      }
+    }
+  ],
+  "metadata": {
+    "last_updated": "2025-10-02",
+    "total_destinations": 10,
+    "source": "Ghana Tourism Authority, compiled by AI Labs Africa",
+    "currency": "GHS (Ghana Cedis)"
+  }
+}

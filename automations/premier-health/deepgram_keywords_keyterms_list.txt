@@ -1,0 +1,232 @@
+================================================================================
+DEEPGRAM KEYWORDS (163 single words):
+================================================================================
+  1. Abelenkpe
+  2. Abirem
+  3. Abrepo
+  4. Abuakwatanoso
+  5. Accra
+  6. Achimota
+  7. Adabraka
+  8. Addo
+  9. Adenta
+ 10. Adjringanor
+ 11. Adum
+ 12. Afienya
+ 13. Agogo
+ 14. Agona
+ 15. Ahinsan
+ 16. Ahodwo
+ 17. Airport
+ 18. Ajumako
+ 19. Akosombo
+ 20. Akropong
+ 21. Akuapem
+ 22. Akwatia
+ 23. Amansaman
+ 24. Anhwiaso
+ 25. Anyinam
+ 26. Asafo
+ 27. Asamankese
+ 28. Asankragwa
+ 29. Asawinso
+ 30. Ashaiman
+ 31. Ashongman
+ 32. Asiakwa
+ 33. Asikuma
+ 34. Asokwa
+ 35. Assinswedru
+ 36. Asylum
+ 37. Baatsona
+ 38. Bantama
+ 39. Bawku
+ 40. Bechem
+ 41. Begoroosiem
+ 42. Bekwai
+ 43. Berekum
+ 44. Bibiani
+ 45. Bodi
+ 46. Bogoso
+ 47. Bolgatanga
+ 48. Bomso
+ 49. Bu
+ 50. Camp
+ 51. Cantonments
+ 52. Cape
+ 53. Central
+ 54. Circle
+ 55. Coast
+ 56. Dadieso
+ 57. Dansoman
+ 58. Darkuman
+ 59. Dodowa
+ 60. Dome
+ 61. Dormaa
+ 62. Down
+ 63. Drobo
+ 64. Duayaw
+ 65. Dunkwa
+ 66. Dzorwulu
+ 67. East
+ 68. Ejisu
+ 69. Elmina
+ 70. Enchi
+ 71. Environs
+ 72. Enyiresi
+ 73. Essam
+ 74. Gbawe
+ 75. Goaso
+ 76. Haatso
+ 77. Hill
+ 78. Ho
+ 79. Hohoe
+ 80. Hwidiem
+ 81. Inchaban
+ 82. Industrial
+ 83. Juaboso
+ 84. Kade
+ 85. Kaneshie
+ 86. Kasoa
+ 87. Kenyase
+ 88. Kibi
+ 89. Kintampo
+ 90. Knust
+ 91. Koforidua
+ 92. Kokomlemle
+ 93. Konongo
+ 94. Korle
+ 95. Krobo
+ 96. Kwabenya
+ 97. La
+ 98. Labone
+ 99. Lapaz
+100. Lashibi
+101. Latebiokoshie
+102. Lawra
+103. Legon
+104. Maamobi
+105. Madina
+106. Makola
+107. Mamfe
+108. Mampong
+109. Mamponteng
+110. Mamprobi
+111. Mankessim
+112. Mataheko
+113. Michel
+114. Navrongo
+115. New
+116. Nima
+117. Nkawkaw
+118. Nkoranza
+119. Nkwanta
+120. North
+121. Nsawam
+122. Nungua
+123. Nyamekye
+124. Obuasi
+125. Oda
+126. Odorkor
+127. Ofankor
+128. Osino
+129. Osu
+130. Pokuase
+131. Residential
+132. Ridge
+133. Sakumono
+134. Sampa
+135. Samreboi
+136. Santasipatase
+137. Sefwi
+138. Sekondi
+139. Somanyaodumase
+140. Spintex
+141. Suaman
+142. Suame
+143. Suhum
+144. Sunyani
+145. Tafo
+146. Tafobremang
+147. Takoradi
+148. Tamale
+149. Tantra
+150. Tarkwa
+151. Techiman
+152. Tema
+153. Tesano
+154. Teshie
+155. Tse
+156. Tudu
+157. Wa
+158. Wassa
+159. Weija
+160. Wenchi
+161. Wiamoase
+162. Wiawso
+163. Winneba
+
+================================================================================
+DEEPGRAM KEYTERMS (58 multi-word phrases):
+================================================================================
+ 1. Accra Central Tudu Makola
+ 2. Achimota New Achimota
+ 3. Ahodwo Ahinsan
+ 4. Airport Residential Area 37 Area
+ 5. Amansaman Pokuase
+ 6. Ashaiman Community 26
+ 7. Asiakwa Osino Anyinam Enyiresi Kibi
+ 8. Asikuma Ajumako
+ 9. Asylum Down
+10. Bomso Knust Ejisu
+11. Cape Coast Environs
+12. Circle Kaneshie North Kaneshie Industrial Area
+13. Dansoman Mamprobi Korle Bu
+14. Dome Haatso Ashongman Kwabenya
+15. Dzorwulu Abelenkpe
+16. East Legon Adjringanor
+17. Kintampo Duayaw Nkwanta Others
+18. Kokomlemle Maamobi Nima
+19. Konongo Agogo
+20. Labone La Tse Addo Cantonments
+21. Lapaz Nyamekye Darkuman Odorkor
+22. Latebiokoshie Mataheko
+23. Legon North Legon
+24. Madina Adenta Dodowa
+25. Mamfe Akuapem
+26. Mampong Agona Wiamoase
+27. New Abirem
+28. Obuasi Dunkwa
+29. Sakumono Estate Lashibi Comm 181921
+30. Sefwi Anhwiaso
+31. Sefwi Asafo
+32. Sefwi Asawinso
+33. Sefwi Bekwai
+34. Sefwi Bibiani
+35. Sefwi Bodi
+36. Sefwi Essam
+37. Sefwi Juaboso
+38. Sefwi Wiawso
+39. Somanyaodumase Krobo
+40. Spintex Road Baatsona
+41. Suaman Dadieso
+42. Tantra Hill Ofankor
+43. Tema Community 2
+44. Tema Community 2 4
+45. Tema Community 4 5 6 9 10 12
+46. Teshie Nungua
+47. Wassa Akropong
+48. Weija Kasoa Gbawe
+49. cardiologist
+50. dermatologist
+51. emergency medicine
+52. family medicine
+53. general practitioner
+54. gynecologist
+55. internal medicine
+56. ophthalmologist
+57. orthopedic surgeon
+58. pediatrician
+
+================================================================================
+TOTAL: 163 keywords + 58 keyterms = 221 terms
+================================================================================

@@ -1,0 +1,464 @@
+{
+  "name": "Premier Health Insurance Service Location Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "premier-health/provider-search",
+        "options": {}
+      },
+      "id": "c4f8b0e5-1d2c-4b6f-8e9a-3f7c5d8b2a6e",
+      "name": "VAPI Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "premier-health-vapi-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract and validate VAPI call data\nconst items = $input.all();\nconst callData = items[0].json;\n\n// Extract call information\nconst extractedData = {\n  call_id: callData.call?.id || 'unknown',\n  phone_number: callData.call?.phoneNumberId || callData.phoneNumber,\n  customer_number: callData.call?.customer?.number || callData.customer?.number,\n  transcript: callData.transcript || '',\n  assistant_message: callData.message?.content || '',\n  call_status: callData.call?.status || 'unknown',\n  timestamp: new Date().toISOString(),\n  \n  // Extract healthcare search intent from transcript or assistant message\n  search_query: callData.message?.content || callData.transcript || '',\n  \n  // VAPI function call data if present\n  function_call: callData.message?.function_call || null,\n  \n  // Call metadata\n  call_duration: callData.call?.duration || 0,\n  call_direction: callData.call?.type || 'inbound'\n};\n\n// Log the received data for debugging\nconsole.log('VAPI Call Data Received:', JSON.stringify(extractedData, null, 2));\n\nreturn [{ json: extractedData }];"
+      },
+      "id": "a7b3f1e8-2c5d-4f9a-8b6e-1d4c7a9f3b2e",
+      "name": "Extract VAPI Call Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1a2b3c4d",
+              "leftValue": "={{ $json.function_call?.name }}",
+              "rightValue": "search_healthcare_providers",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f9d2c8b5-4e7a-4b3f-9c6d-2a5f8e1b7c9d",
+      "name": "Check Function Call Type",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Premier Health Voice Tools Integration\n// This code integrates with the Premier Health voice agent tools\n\nconst items = $input.all();\nconst callData = items[0].json;\n\n// Import Premier Health tools configuration\nconst DB_CONFIG = {\n  host: 'localhost',\n  port: 5432,\n  database: 'community',\n  user: 'postgres',\n  password: 'aawwER44444'\n};\n\n// Extract search parameters from VAPI function call\nlet searchQuery = '';\nlet maxResults = 5;\nlet location = null;\nlet specialty = null;\nlet providerType = null;\n\nif (callData.function_call) {\n  const params = callData.function_call.arguments;\n  searchQuery = params.query || '';\n  maxResults = params.max_results || 5;\n  location = params.location || null;\n  specialty = params.specialty || null;\n  providerType = params.provider_type || null;\n} else {\n  // Fallback to transcript analysis\n  searchQuery = callData.search_query || callData.transcript || '';\n}\n\n// Simple intent extraction for fallback\nif (!location && !specialty && !providerType) {\n  const query = searchQuery.toLowerCase();\n  \n  // Extract location hints\n  const locationPatterns = {\n    'accra': 'ACCRA CENTRAL',\n    'madina': 'MADINA',\n    'circle': 'CIRCLE',\n    'tesano': 'KOKOMLEMLE',\n    'east legon': 'LEGON',\n    'korle-bu': 'ADABRAKA',\n    'airport': 'AIRPORT RESIDENTIAL AREA'\n  };\n  \n  for (const [pattern, area] of Object.entries(locationPatterns)) {\n    if (query.includes(pattern)) {\n      location = area;\n      break;\n    }\n  }\n  \n  // Extract specialty hints\n  const specialtyPatterns = {\n    'eye': 'Ophthalmology',\n    'children': 'Pediatrics',\n    'pediatric': 'Pediatrics',\n    'women': 'Obstetrics/Gynecology',\n    'dental': 'Dental',\n    'emergency': 'Emergency',\n    'general': 'General Practice'\n  };\n  \n  for (const [pattern, spec] of Object.entries(specialtyPatterns)) {\n    if (query.includes(pattern)) {\n      specialty = spec;\n      break;\n    }\n  }\n  \n  // Extract provider type hints\n  if (query.includes('hospital')) providerType = 'hospital';\n  else if (query.includes('clinic')) providerType = 'clinic';\n  else if (query.includes('pharmacy')) providerType = 'pharmacy';\n}\n\n// Prepare search parameters\nconst searchParams = {\n  query: searchQuery,\n  max_results: maxResults,\n  location: location,\n  specialty: specialty,\n  provider_type: providerType,\n  db_config: DB_CONFIG,\n  call_id: callData.call_id,\n  customer_number: callData.customer_number,\n  timestamp: callData.timestamp\n};\n\nconsole.log('Healthcare Search Parameters:', JSON.stringify(searchParams, null, 2));\n\nreturn [{ json: searchParams }];"
+      },
+      "id": "e3c6f8a2-5b1d-4f7e-9a3c-6d2f8b4e7a1c",
+      "name": "Prepare Healthcare Search",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list"
+        },
+        "table": {
+          "__rl": true,
+          "value": "healthcare_providers",
+          "mode": "list"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "is_active",
+              "condition": "equal",
+              "value": "true"
+            }
+          ]
+        },
+        "sort": {
+          "values": [
+            {
+              "column": "name",
+              "direction": "ASC"
+            }
+          ]
+        },
+        "limit": "={{ $json.max_results }}",
+        "additionalFields": {}
+      },
+      "id": "b8d5e1f7-3a9c-4e6b-8f2d-5c7a9e3b6f8d",
+      "name": "Query Healthcare Providers",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1120, 300],
+      "credentials": {
+        "postgres": {
+          "id": "premier-health-postgres",
+          "name": "Premier Health PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/api/premier-health/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "httpMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyContentType": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "d7a2f5c8-6e3b-4d9f-8a5c-2f6d9b3e7a4f",
+      "name": "Call Premier Health API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format voice response for VAPI\nconst items = $input.all();\nlet providers = [];\n\n// Handle both direct database results and API results\nif (items.length > 0) {\n  if (Array.isArray(items)) {\n    providers = items.map(item => item.json);\n  } else {\n    providers = items[0].json.providers || items;\n  }\n}\n\nconst searchParams = $('Prepare Healthcare Search').first().json;\nconst callData = $('Extract VAPI Call Data').first().json;\n\n// Generate voice-optimized response\nlet voiceResponse = '';\nlet confidence = 0.0;\n\nif (providers.length === 0) {\n  voiceResponse = \"I couldn't find any healthcare providers matching your request. You might want to try a different location or service type. For emergencies, please call 193 immediately.\";\n  confidence = 0.0;\n} else if (providers.length === 1) {\n  const provider = providers[0];\n  voiceResponse = `I found ${provider.name}, a ${provider.provider_type} in ${provider.area}.`;\n  if (provider.specialties && provider.specialties.length > 0) {\n    voiceResponse += ` They offer ${provider.specialties.join(', ')}.`;\n  }\n  if (provider.phone_primary) {\n    voiceResponse += ` You can reach them at ${provider.phone_primary}.`;\n  }\n  if (provider.address) {\n    voiceResponse += ` They are located at ${provider.address}.`;\n  }\n  confidence = 0.9;\n} else {\n  voiceResponse = `I found ${providers.length} options for you. `;\n  \n  // Add details for first 3 providers\n  for (let i = 0; i < Math.min(3, providers.length); i++) {\n    const provider = providers[i];\n    voiceResponse += `${i + 1}. ${provider.name} in ${provider.area}`;\n    if (provider.phone_primary) {\n      voiceResponse += `, phone ${provider.phone_primary}`;\n    }\n    voiceResponse += '. ';\n  }\n  \n  if (providers.length > 3) {\n    voiceResponse += `And ${providers.length - 3} more options available.`;\n  }\n  \n  confidence = Math.min(0.9, 0.5 + (providers.length * 0.1));\n}\n\n// Add emergency guidance if needed\nif (searchParams.query && searchParams.query.toLowerCase().includes('emergency')) {\n  voiceResponse += \" For life-threatening emergencies, please call 193 or go to the nearest hospital immediately.\";\n}\n\n// Prepare response for VAPI\nconst vapiResponse = {\n  call_id: callData.call_id,\n  providers: providers,\n  total_found: providers.length,\n  voice_response: voiceResponse,\n  confidence: confidence,\n  search_query: searchParams.query,\n  location: searchParams.location,\n  specialty: searchParams.specialty,\n  timestamp: new Date().toISOString(),\n  \n  // VAPI-specific response format\n  message: {\n    type: \"assistant\",\n    content: voiceResponse,\n    function_call_result: {\n      success: true,\n      data: {\n        providers: providers.slice(0, 5), // Limit to 5 for response size\n        total_found: providers.length,\n        confidence: confidence\n      }\n    }\n  },\n  \n  // Continue conversation flag\n  end_call: false,\n  transfer_to_human: false\n};\n\nconsole.log('VAPI Response Generated:', JSON.stringify(vapiResponse, null, 2));\n\nreturn [{ json: vapiResponse }];"
+      },
+      "id": "c9f3a6d2-7e4b-4c8f-9a6d-3f8c2e5b7d4a",
+      "name": "Format VAPI Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "respond-to-webhook",
+        "respondWith": "json",
+        "responseHeaders": {
+          "entries": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "responseBody": "={{ $json.message }}",
+        "options": {}
+      },
+      "id": "a5d8c3f6-2b9e-4a7c-8d5f-6c3a9f2e8b5d",
+      "name": "Respond to VAPI",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list"
+        },
+        "table": {
+          "__rl": true,
+          "value": "healthcare_search_logs",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "call_id": "={{ $('Extract VAPI Call Data').first().json.call_id }}",
+            "search_query": "={{ $('Prepare Healthcare Search').first().json.query }}",
+            "location": "={{ $('Prepare Healthcare Search').first().json.location }}",
+            "specialty": "={{ $('Prepare Healthcare Search').first().json.specialty }}",
+            "provider_type": "={{ $('Prepare Healthcare Search').first().json.provider_type }}",
+            "results_count": "={{ $json.total_found }}",
+            "confidence": "={{ $json.confidence }}",
+            "voice_response": "={{ $json.voice_response }}",
+            "customer_number": "={{ $('Extract VAPI Call Data').first().json.customer_number }}",
+            "call_duration": "={{ $('Extract VAPI Call Data').first().json.call_duration }}",
+            "created_at": "={{ $json.timestamp }}",
+            "hipaa_compliant": true,
+            "phi_protected": true
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f2e7b4c9-8d6a-4f3e-9b7c-5a8f3e2d6c9f",
+      "name": "Log Healthcare Search",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1560, 500],
+      "credentials": {
+        "postgres": {
+          "id": "premier-health-postgres",
+          "name": "Premier Health PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:3000/api/metabase/dashboard/premier-health-analytics",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "httpMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $secrets.METABASE_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyContentType": "json",
+        "jsonBody": "={\n  \"event_type\": \"healthcare_search\",\n  \"call_id\": \"{{ $('Extract VAPI Call Data').first().json.call_id }}\",\n  \"search_query\": \"{{ $('Prepare Healthcare Search').first().json.query }}\",\n  \"results_count\": {{ $('Format VAPI Response').first().json.total_found }},\n  \"confidence\": {{ $('Format VAPI Response').first().json.confidence }},\n  \"location\": \"{{ $('Prepare Healthcare Search').first().json.location }}\",\n  \"specialty\": \"{{ $('Prepare Healthcare Search').first().json.specialty }}\",\n  \"timestamp\": \"{{ $('Format VAPI Response').first().json.timestamp }}\",\n  \"success\": {{ $('Format VAPI Response').first().json.total_found > 0 }}\n}",
+        "options": {}
+      },
+      "id": "e8a3f5d7-4c2b-4e9f-8a6d-7f5c3a9e2b8d",
+      "name": "Update Analytics Dashboard",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 500]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "emergency_check",
+              "leftValue": "={{ $('Prepare Healthcare Search').first().json.query.toLowerCase() }}",
+              "rightValue": "emergency",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "d4b7f2a9-6e8c-4d3f-9b5a-8c2f6d9e3b7a",
+      "name": "Check Emergency Status",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.vapi.ai/call/{{ $('Extract VAPI Call Data').first().json.call_id }}/transfer",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "httpMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $secrets.VAPI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyContentType": "json",
+        "jsonBody": "={\n  \"destination\": {\n    \"type\": \"number\",\n    \"number\": \"193\",\n    \"message\": \"Transferring you to emergency services. Please stay on the line.\"\n  }\n}",
+        "options": {}
+      },
+      "id": "b6c9e3f8-7a4d-4e2f-9c6b-5d8f2a7e4c9b",
+      "name": "Transfer to Emergency",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 200]
+    }
+  ],
+  "connections": {
+    "VAPI Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract VAPI Call Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract VAPI Call Data": {
+      "main": [
+        [
+          {
+            "node": "Check Function Call Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Function Call Type": {
+      "main": [
+        [
+          {
+            "node": "Prepare Healthcare Search",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Healthcare Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Healthcare Search": {
+      "main": [
+        [
+          {
+            "node": "Query Healthcare Providers",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Call Premier Health API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Healthcare Providers": {
+      "main": [
+        [
+          {
+            "node": "Format VAPI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Premier Health API": {
+      "main": [
+        [
+          {
+            "node": "Format VAPI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format VAPI Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to VAPI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log Healthcare Search",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check Emergency Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Healthcare Search": {
+      "main": [
+        [
+          {
+            "node": "Update Analytics Dashboard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Emergency Status": {
+      "main": [
+        [
+          {
+            "node": "Transfer to Emergency",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-09-16T20:00:00.000Z",
+      "updatedAt": "2025-09-16T20:00:00.000Z",
+      "id": "premier-health",
+      "name": "Premier Health"
+    },
+    {
+      "createdAt": "2025-09-16T20:00:00.000Z",
+      "updatedAt": "2025-09-16T20:00:00.000Z",
+      "id": "healthcare",
+      "name": "Healthcare"
+    },
+    {
+      "createdAt": "2025-09-16T20:00:00.000Z",
+      "updatedAt": "2025-09-16T20:00:00.000Z",
+      "id": "vapi",
+      "name": "VAPI"
+    },
+    {
+      "createdAt": "2025-09-16T20:00:00.000Z",
+      "updatedAt": "2025-09-16T20:00:00.000Z",
+      "id": "insurance",
+      "name": "Insurance"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-16T20:00:00.000Z",
+  "versionId": "1"
+}

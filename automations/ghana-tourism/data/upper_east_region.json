@@ -1,0 +1,240 @@
+{
+  "destinations": [
+    {
+      "id": "dest_016",
+      "name": "Paga Crocodile Pond",
+      "region": "Upper East",
+      "city": "Paga",
+      "category": ["wildlife", "cultural", "adventure"],
+      "description": "Famous sacred crocodile pond where visitors can interact with tame crocodiles. The pond is home to over 100 crocodiles that are considered sacred by the local community. A unique cultural and wildlife experience.",
+      "highlights": [
+        "Interact with sacred crocodiles",
+        "Touch and take photos with crocodiles",
+        "Learn about traditional beliefs and conservation",
+        "Visit the chief's palace nearby",
+        "Cultural significance and traditions"
+      ],
+      "activities": [
+        "Crocodile interaction",
+        "Photography",
+        "Cultural tours",
+        "Village visits",
+        "Traditional storytelling"
+      ],
+      "best_time_to_visit": "October to April (dry season)",
+      "estimated_visit_duration": "1-2 hours",
+      "entry_fee": "GHS 20 for adults, GHS 10 for students (plus optional guide tip)",
+      "accessibility": "Accessible by car, 10 minutes from Paga border",
+      "location_details": "Paga town, near Ghana-Burkina Faso border. 2 hours drive from Bolgatanga."
+    },
+    {
+      "id": "dest_017",
+      "name": "Tongo Hills (Tengzug Shrine)",
+      "region": "Upper East",
+      "city": "Tongo",
+      "category": ["cultural", "historical", "spiritual", "adventure"],
+      "description": "Sacred hills and ancient shrine complex built into massive rock formations. The Tengzug Shrine is a mystical site with deep spiritual significance, featuring centuries-old traditional architecture integrated with natural rock formations.",
+      "highlights": [
+        "Ancient shrine complex in rock formations",
+        "Spectacular panoramic views",
+        "Traditional whistle rock communication system",
+        "Sacred spiritual site",
+        "Unique rock architecture",
+        "Local guide storytelling"
+      ],
+      "activities": [
+        "Guided shrine tours",
+        "Rock climbing",
+        "Photography",
+        "Cultural immersion",
+        "Hiking",
+        "Traditional ceremonies (if permitted)"
+      ],
+      "best_time_to_visit": "October to April (dry season, easier climbing)",
+      "estimated_visit_duration": "2-3 hours",
+      "entry_fee": "GHS 30 per person (includes mandatory guide)",
+      "accessibility": "Requires hiking and climbing, moderate fitness needed",
+      "location_details": "Tongo village, 20km east of Bolgatanga. Accessible by car and hiking."
+    },
+    {
+      "id": "dest_018",
+      "name": "Pikworo Slave Camp",
+      "region": "Upper East",
+      "city": "Paga",
+      "category": ["historical", "cultural", "educational"],
+      "description": "Historic slave camp site where captured slaves were held before being transported to the coast. A sobering reminder of the transatlantic slave trade, featuring the original holding areas, punishment stones, and market grounds.",
+      "highlights": [
+        "Original slave holding camp",
+        "Punishment and execution stones",
+        "Slave bathing area",
+        "Market ground where slaves were traded",
+        "Educational historical site",
+        "Powerful historical narrative"
+      ],
+      "activities": [
+        "Guided historical tours",
+        "Photography",
+        "Historical education",
+        "Reflection and remembrance",
+        "Cultural learning"
+      ],
+      "best_time_to_visit": "Year-round, cooler in November-February",
+      "estimated_visit_duration": "1-2 hours",
+      "entry_fee": "GHS 15 per person (guide included)",
+      "accessibility": "Easy access, mostly flat terrain",
+      "location_details": "Near Paga, Upper East Region. Can be combined with Paga Crocodile Pond visit."
+    },
+    {
+      "id": "dest_019",
+      "name": "Sirigu Women's Village",
+      "region": "Upper East",
+      "city": "Sirigu",
+      "category": ["cultural", "art", "community"],
+      "description": "Community-based tourism initiative showcasing traditional Kassena wall painting and pottery. The village is famous for its beautifully decorated houses with intricate traditional designs created by local women.",
+      "highlights": [
+        "Traditional Kassena architecture",
+        "Intricate wall painting demonstrations",
+        "Pottery making workshops",
+        "Support local women artisans",
+        "Purchase authentic handicrafts",
+        "Cultural homestay experiences"
+      ],
+      "activities": [
+        "Wall painting workshops",
+        "Pottery classes",
+        "Village tours",
+        "Art purchases",
+        "Cultural immersion",
+        "Photography",
+        "Traditional cooking classes"
+      ],
+      "best_time_to_visit": "Year-round, workshops available by arrangement",
+      "estimated_visit_duration": "2-4 hours (or overnight homestay)",
+      "entry_fee": "GHS 20 village tour, workshops GHS 50-100",
+      "accessibility": "Accessible by car, 30 minutes from Bolgatanga",
+      "location_details": "Sirigu village, near Bolgatanga, Upper East Region."
+    },
+    {
+      "id": "dest_020",
+      "name": "Bolgatanga Market (Bolga Basket Market)",
+      "region": "Upper East",
+      "city": "Bolgatanga",
+      "category": ["shopping", "cultural", "urban"],
+      "description": "Famous market known for traditional handwoven baskets, leather goods, and crafts. One of West Africa's best markets for authentic handicrafts. The colorful Bolga baskets are internationally recognized.",
+      "highlights": [
+        "World-famous Bolga baskets",
+        "Traditional leather goods",
+        "Authentic handicrafts",
+        "Smock weaving demonstrations",
+        "Local food and produce",
+        "Vibrant market atmosphere"
+      ],
+      "activities": [
+        "Shopping for handicrafts",
+        "Basket weaving observations",
+        "Bargaining and trading",
+        "Local food tasting",
+        "Photography",
+        "Meeting local artisans"
+      ],
+      "best_time_to_visit": "Morning (7 AM - 12 PM) for best selection",
+      "estimated_visit_duration": "2-3 hours",
+      "entry_fee": "Free entry",
+      "accessibility": "Easy access in city center",
+      "location_details": "Central Bolgatanga, Upper East Region. Main market day is every 3 days."
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "acc_016",
+      "name": "Sand Gardens Hotel",
+      "type": "hotel",
+      "star_rating": 3,
+      "city": "Bolgatanga",
+      "region": "Upper East",
+      "description": "Comfortable mid-range hotel in central Bolgatanga with good facilities and restaurant. Popular with NGO workers and tourists exploring the Upper East.",
+      "amenities": [
+        "Free Wi-Fi",
+        "Restaurant",
+        "Bar",
+        "Conference room",
+        "24-hour reception",
+        "Parking",
+        "Laundry service",
+        "Airport shuttle"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "200-300"
+        },
+        {
+          "type": "Deluxe Room",
+          "price_range_ghs": "350-450"
+        }
+      ],
+      "phone": "+233 382 023 224",
+      "email": "info@sandgardenshotel.com",
+      "website": null,
+      "additional_info": "Central location, good base for exploring Upper East attractions."
+    },
+    {
+      "id": "acc_017",
+      "name": "Black Star Hotel Bolgatanga",
+      "type": "hotel",
+      "star_rating": 2,
+      "city": "Bolgatanga",
+      "region": "Upper East",
+      "description": "Budget-friendly hotel offering basic comfortable accommodations in Bolgatanga. Clean rooms and friendly service at affordable rates.",
+      "amenities": [
+        "Restaurant",
+        "Bar",
+        "24-hour reception",
+        "Parking",
+        "Basic Wi-Fi"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "120-180"
+        },
+        {
+          "type": "VIP Room",
+          "price_range_ghs": "200-250"
+        }
+      ],
+      "phone": "+233 382 XXX XXX",
+      "email": null,
+      "website": null,
+      "additional_info": "Good budget option for travelers exploring Upper East."
+    },
+    {
+      "id": "acc_018",
+      "name": "Sirigu Women's Village Homestay",
+      "type": "guesthouse",
+      "star_rating": null,
+      "city": "Sirigu",
+      "region": "Upper East",
+      "description": "Community-based homestay experience in traditional Kassena compound. Immersive cultural experience with local families, including meals and cultural activities.",
+      "amenities": [
+        "Traditional accommodation",
+        "Local meals included",
+        "Cultural activities",
+        "Pottery workshops",
+        "Wall painting classes",
+        "Community tourism",
+        "Authentic experience"
+      ],
+      "room_types": [
+        {
+          "type": "Traditional Compound Room",
+          "price_range_ghs": "80-150 (includes meals and activities)"
+        }
+      ],
+      "phone": "+233 244 XXX XXX",
+      "email": "sirigu.womens.village@gmail.com",
+      "website": null,
+      "additional_info": "Authentic cultural immersion, proceeds support local women. Book in advance."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Premier Health Navigator Squad",
+  "members": [
+    {
+      "assistant": "{{ROUTER_ASSISTANT_ID}}",
+      "assistantDestinations": [
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Greater Accra",
+          "message": "Let me connect you to our Greater Accra specialist.",
+          "description": "Transfer to Greater Accra for healthcare queries"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Ashanti",
+          "message": "Let me connect you to our Ashanti specialist.",
+          "description": "Transfer to Ashanti for healthcare queries"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Northern Regions",
+          "message": "Let me connect you to our Northern Regions specialist.",
+          "description": "Transfer to Northern Regions for healthcare queries"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Western and Central",
+          "message": "Let me connect you to our Western and Central specialist.",
+          "description": "Transfer to Western and Central for healthcare queries"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Eastern and Volta",
+          "message": "Let me connect you to our Eastern and Volta specialist.",
+          "description": "Transfer to Eastern and Volta for healthcare queries"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Bono Regions",
+          "message": "Let me connect you to our Bono Regions specialist.",
+          "description": "Transfer to Bono Regions for healthcare queries"
+        }
+      ]
+    },
+    {
+      "assistant": "{{ASSISTANT_ID_GREATER_ACCRA}}"
+    },
+    {
+      "assistant": "{{ASSISTANT_ID_ASHANTI}}"
+    },
+    {
+      "assistant": "{{ASSISTANT_ID_NORTHERN_REGIONS}}"
+    },
+    {
+      "assistant": "{{ASSISTANT_ID_WESTERN_AND_CENTRAL}}"
+    },
+    {
+      "assistant": "{{ASSISTANT_ID_EASTERN_AND_VOLTA}}"
+    },
+    {
+      "assistant": "{{ASSISTANT_ID_BONO_REGIONS}}"
+    }
+  ]
+}

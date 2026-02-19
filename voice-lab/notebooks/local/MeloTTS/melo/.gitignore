@@ -1,0 +1,16 @@
+# Training logs and checkpoints
+logs/
+*.pth
+*.pt
+
+# Large dataset files
+*.list
+*.list.cleaned
+*.list.shuffled
+
+# Cache files
+__pycache__/
+*.pyc
+
+# Backup files
+*.backup

@@ -1,0 +1,18 @@
+[Unit]
+Description=KasaAI Drive Frontend
+After=network.target
+
+[Service]
+Type=simple
+User=dev
+Group=dev
+WorkingDirectory=/opt/kasaai/apps/drive/frontend
+Environment="NODE_ENV=production"
+Environment="PORT=3005"
+Environment="PATH=/home/dev/.nvm/versions/node/v22.20.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStart=/home/dev/.nvm/versions/node/v22.20.0/bin/npm start
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

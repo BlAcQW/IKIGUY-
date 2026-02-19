@@ -1,0 +1,20 @@
+[
+  {
+    "provider": "f5tts",
+    "voice": "nana_aba",
+    "language": "tw",
+    "status": "success",
+    "duration": 8.924698,
+    "file_size": 900428,
+    "output_file": "/opt/kasaai/apps/voice-lab/clones/f5tts/nana_aba_f5tts_twi_20251109_221908.wav"
+  },
+  {
+    "provider": "f5tts",
+    "voice": "nana_aba",
+    "language": "en",
+    "status": "success",
+    "duration": 8.696821,
+    "file_size": 1491836,
+    "output_file": "/opt/kasaai/apps/voice-lab/clones/f5tts/nana_aba_f5tts_eng_20251109_221919.wav"
+  }
+]

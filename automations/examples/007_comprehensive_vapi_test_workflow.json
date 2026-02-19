@@ -1,0 +1,469 @@
+{
+  "name": "Comprehensive Vapi Integration Test Workflow",
+  "version": 1,
+  "description": "Complete workflow to test Vapi assistant creation and all integration tools",
+  "nodes": [
+    {
+      "id": "test-config",
+      "name": "Test Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [240, 300],
+      "parameters": {
+        "mode": "manual",
+        "fields": {
+          "values": [
+            {
+              "name": "useCase",
+              "type": "string",
+              "value": "sales"
+            },
+            {
+              "name": "organizationName",
+              "type": "string",
+              "value": "AI Labs Africa Test"
+            },
+            {
+              "name": "industry",
+              "type": "string",
+              "value": "technology"
+            },
+            {
+              "name": "backendServerUrl",
+              "type": "string",
+              "value": "https://api.ailabsafrica.com"
+            },
+            {
+              "name": "testEmail",
+              "type": "string",
+              "value": "ailabsafrica@gmail.com"
+            },
+            {
+              "name": "activeIntegrations",
+              "type": "string",
+              "value": "hubspot_crm,resend_email,tavily_search,calendly_scheduling,supabase_database"
+            },
+            {
+              "name": "voicePersonality",
+              "type": "string",
+              "value": "professional"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "create-vapi-tools",
+      "name": "Create Vapi Tools",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [480, 300],
+      "parameters": {
+        "language": "javascript",
+        "jsCode": "const config = $input.all()[0].json;\nconst serverUrl = config.backendServerUrl;\nconst integrations = config.activeIntegrations.split(',');\n\nconst tools = [\n  {\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"save_contact_to_crm\",\n      \"description\": \"Save customer contact information to HubSpot CRM\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"firstName\": {\"type\": \"string\", \"description\": \"Customer's first name\"},\n          \"lastName\": {\"type\": \"string\", \"description\": \"Customer's last name\"},\n          \"email\": {\"type\": \"string\", \"description\": \"Customer's email address\"},\n          \"phone\": {\"type\": \"string\", \"description\": \"Customer's phone number\"},\n          \"company\": {\"type\": \"string\", \"description\": \"Customer's company name\"},\n          \"notes\": {\"type\": \"string\", \"description\": \"Additional notes about the contact\"}\n        },\n        \"required\": [\"firstName\", \"email\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integrations/hubspot/webhook`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"send_email_notification\",\n      \"description\": \"Send email notifications to customers\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"to_email\": {\"type\": \"string\", \"description\": \"Recipient email address\"},\n          \"subject\": {\"type\": \"string\", \"description\": \"Email subject line\"},\n          \"message\": {\"type\": \"string\", \"description\": \"Email message content\"},\n          \"customer_name\": {\"type\": \"string\", \"description\": \"Customer name for personalization\"}\n        },\n        \"required\": [\"to_email\", \"subject\", \"message\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integrations/resend/webhook`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"search_web_information\",\n      \"description\": \"Search the web for current information\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"query\": {\"type\": \"string\", \"description\": \"Search query\"},\n          \"max_results\": {\"type\": \"integer\", \"default\": 5, \"description\": \"Max search results\"}\n        },\n        \"required\": [\"query\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integrations/tavily/webhook`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"schedule_appointment\",\n      \"description\": \"Schedule appointments with customers\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"customer_name\": {\"type\": \"string\", \"description\": \"Customer's name\"},\n          \"customer_email\": {\"type\": \"string\", \"description\": \"Customer's email\"},\n          \"appointment_date\": {\"type\": \"string\", \"description\": \"Appointment date (YYYY-MM-DD)\"},\n          \"appointment_time\": {\"type\": \"string\", \"description\": \"Appointment time (HH:MM)\"},\n          \"meeting_type\": {\"type\": \"string\", \"description\": \"Type of meeting\"}\n        },\n        \"required\": [\"customer_name\", \"customer_email\", \"appointment_date\", \"appointment_time\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integrations/calendly/webhook`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"save_call_data\",\n      \"description\": \"Save call information to database\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"customer_name\": {\"type\": \"string\", \"description\": \"Customer's name\"},\n          \"customer_email\": {\"type\": \"string\", \"description\": \"Customer's email\"},\n          \"call_purpose\": {\"type\": \"string\", \"description\": \"Purpose of the call\"},\n          \"call_outcome\": {\"type\": \"string\", \"description\": \"Outcome of the call\"}\n        },\n        \"required\": [\"customer_name\", \"call_purpose\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integrations/supabase/webhook`,\n      \"method\": \"POST\"\n    }\n  }\n];\n\nreturn { tools, config };"
+      }
+    },
+    {
+      "id": "create-vapi-assistant",
+      "name": "Create Vapi Assistant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [720, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/assistant",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 2fac5c5d-5355-463c-82ed-4df8f4690a6e"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $('Test Configuration').item.json.organizationName + ' AI Sales Assistant' }}"
+            },
+            {
+              "name": "model",
+              "value": {
+                "provider": "anthropic",
+                "model": "claude-3-5-sonnet-20241022",
+                "temperature": 0.7,
+                "maxTokens": 2048,
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are an intelligent sales representative for AI Labs Africa Test. You are professional, courteous, and business-focused. Your capabilities include lead qualification, CRM integration, and demo scheduling. Use the available tools to save customer information, send emails, search for information, schedule appointments, and save call data."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "voice",
+              "value": {
+                "provider": "11labs",
+                "voiceId": "pNInz6obpgDQGcFmaJgB"
+              }
+            },
+            {
+              "name": "firstMessage",
+              "value": "Hello! I'm AI Labs Africa Test's AI sales assistant. I can help you learn about our solutions and see if we're a good fit for your needs. How can I assist you today?"
+            },
+            {
+              "name": "tools",
+              "value": "={{ $('Create Vapi Tools').item.json.tools }}"
+            },
+            {
+              "name": "recordingEnabled",
+              "value": true
+            },
+            {
+              "name": "clientMessages",
+              "value": ["transcript", "hang", "function-call", "tool-calls"]
+            },
+            {
+              "name": "serverMessages",
+              "value": ["end-of-call-report", "status-update", "hang", "function-call"]
+            },
+            {
+              "name": "endCallMessage",
+              "value": "Thank you for contacting AI Labs Africa Test. Have a great day!"
+            },
+            {
+              "name": "serverUrl",
+              "value": "={{ $('Test Configuration').item.json.backendServerUrl + '/integrations/vapi-webhook' }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "create-phone-number",
+      "name": "Create Phone Number",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [960, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/phone-number",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 2fac5c5d-5355-463c-82ed-4df8f4690a6e"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "provider",
+              "value": "twilio"
+            },
+            {
+              "name": "assistantId",
+              "value": "={{ $('Create Vapi Assistant').item.json.id }}"
+            },
+            {
+              "name": "name",
+              "value": "AI Labs Africa Test Sales Line"
+            },
+            {
+              "name": "serverUrl",
+              "value": "={{ $('Test Configuration').item.json.backendServerUrl + '/integrations/vapi-webhook' }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "test-hubspot-integration",
+      "name": "Test HubSpot Integration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 500],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Test Configuration').item.json.backendServerUrl + '/integrations/hubspot/webhook' }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "firstName",
+              "value": "John"
+            },
+            {
+              "name": "lastName",
+              "value": "Doe"
+            },
+            {
+              "name": "email",
+              "value": "={{ $('Test Configuration').item.json.testEmail }}"
+            },
+            {
+              "name": "phone",
+              "value": "+1234567890"
+            },
+            {
+              "name": "company",
+              "value": "Test Company"
+            },
+            {
+              "name": "notes",
+              "value": "Test contact from Vapi integration workflow"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "test-email-integration",
+      "name": "Test Email Integration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [720, 500],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Test Configuration').item.json.backendServerUrl + '/integrations/resend/webhook' }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to_email",
+              "value": "={{ $('Test Configuration').item.json.testEmail }}"
+            },
+            {
+              "name": "subject",
+              "value": "Vapi Integration Test - Email Working"
+            },
+            {
+              "name": "message",
+              "value": "This is a test email from the Vapi integration workflow to confirm email functionality is working properly."
+            },
+            {
+              "name": "customer_name",
+              "value": "Test User"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "test-tavily-integration",
+      "name": "Test Tavily Integration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [960, 500],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Test Configuration').item.json.backendServerUrl + '/integrations/tavily/webhook' }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "AI technology trends 2024"
+            },
+            {
+              "name": "max_results",
+              "value": 3
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "test-calendly-integration",
+      "name": "Test Calendly Integration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 700],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Test Configuration').item.json.backendServerUrl + '/integrations/calendly/webhook' }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_name",
+              "value": "Test Customer"
+            },
+            {
+              "name": "customer_email",
+              "value": "={{ $('Test Configuration').item.json.testEmail }}"
+            },
+            {
+              "name": "appointment_date",
+              "value": "2024-01-25"
+            },
+            {
+              "name": "appointment_time",
+              "value": "14:00"
+            },
+            {
+              "name": "meeting_type",
+              "value": "Sales Demo"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "test-supabase-integration",
+      "name": "Test Supabase Integration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [720, 700],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Test Configuration').item.json.backendServerUrl + '/integrations/supabase/webhook' }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_name",
+              "value": "Test Customer"
+            },
+            {
+              "name": "customer_email",
+              "value": "={{ $('Test Configuration').item.json.testEmail }}"
+            },
+            {
+              "name": "call_purpose",
+              "value": "Sales inquiry about AI solutions"
+            },
+            {
+              "name": "call_outcome",
+              "value": "Scheduled demo for next week"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "generate-test-results",
+      "name": "Generate Test Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [960, 700],
+      "parameters": {
+        "language": "javascript",
+        "jsCode": "const config = $('Test Configuration').item.json;\nconst assistant = $('Create Vapi Assistant').item.json;\nconst phoneNumber = $('Create Phone Number').item.json;\nconst hubspotTest = $('Test HubSpot Integration').item.json;\nconst emailTest = $('Test Email Integration').item.json;\nconst tavilyTest = $('Test Tavily Integration').item.json;\nconst calendlyTest = $('Test Calendly Integration').item.json;\nconst supabaseTest = $('Test Supabase Integration').item.json;\n\nconst testResults = {\n  workflow_completed: true,\n  test_timestamp: new Date().toISOString(),\n  organization: config.organizationName,\n  vapi_assistant: {\n    id: assistant.id,\n    name: assistant.name,\n    phone_number: phoneNumber.number || 'Phone number pending',\n    status: 'created'\n  },\n  integration_tests: {\n    hubspot: {\n      tested: true,\n      status: hubspotTest ? 'success' : 'failed',\n      endpoint: config.backendServerUrl + '/integrations/hubspot/webhook'\n    },\n    resend_email: {\n      tested: true,\n      status: emailTest ? 'success' : 'failed',\n      endpoint: config.backendServerUrl + '/integrations/resend/webhook'\n    },\n    tavily_search: {\n      tested: true,\n      status: tavilyTest ? 'success' : 'failed',\n      endpoint: config.backendServerUrl + '/integrations/tavily/webhook'\n    },\n    calendly: {\n      tested: true,\n      status: calendlyTest ? 'success' : 'failed',\n      endpoint: config.backendServerUrl + '/integrations/calendly/webhook'\n    },\n    supabase: {\n      tested: true,\n      status: supabaseTest ? 'success' : 'failed',\n      endpoint: config.backendServerUrl + '/integrations/supabase/webhook'\n    }\n  },\n  voice_test_instructions: {\n    phone_number: phoneNumber.number || 'Phone number pending',\n    test_script: [\n      '1. Call the phone number above',\n      '2. Say: \"I\\'m interested in your AI solutions\"',\n      '3. Provide name and email when asked',\n      '4. Ask to schedule a demo',\n      '5. Request information to be sent via email',\n      '6. Check if all integrations were triggered'\n    ]\n  },\n  next_steps: [\n    'Call the phone number to test voice interactions',\n    'Verify data appears in HubSpot',\n    'Check email was sent to ' + config.testEmail,\n    'Confirm appointment in Calendly',\n    'Validate call data in Supabase'\n  ]\n};\n\nreturn testResults;"
+      }
+    }
+  ],
+  "connections": {
+    "Test Configuration": {
+      "main": [
+        [
+          {
+            "node": "Create Vapi Tools",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Test HubSpot Integration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Vapi Tools": {
+      "main": [
+        [
+          {
+            "node": "Create Vapi Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Vapi Assistant": {
+      "main": [
+        [
+          {
+            "node": "Create Phone Number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test HubSpot Integration": {
+      "main": [
+        [
+          {
+            "node": "Test Email Integration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Email Integration": {
+      "main": [
+        [
+          {
+            "node": "Test Tavily Integration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Tavily Integration": {
+      "main": [
+        [
+          {
+            "node": "Test Calendly Integration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Calendly Integration": {
+      "main": [
+        [
+          {
+            "node": "Test Supabase Integration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Supabase Integration": {
+      "main": [
+        [
+          {
+            "node": "Generate Test Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": ["vapi", "testing", "integrations"],
+  "triggerCount": 1
+}

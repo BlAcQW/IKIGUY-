@@ -1,0 +1,20 @@
+[
+  {
+    "provider": "f5tts",
+    "voice": "juliet_bawuah",
+    "language": "tw",
+    "status": "success",
+    "duration": 8.200504,
+    "file_size": 1115132,
+    "output_file": "/opt/kasaai/apps/voice-lab/clones/f5tts/juliet_bawuah_f5tts_twi_20251109_221158.wav"
+  },
+  {
+    "provider": "f5tts",
+    "voice": "juliet_bawuah",
+    "language": "en",
+    "status": "success",
+    "duration": 8.407876,
+    "file_size": 1343996,
+    "output_file": "/opt/kasaai/apps/voice-lab/clones/f5tts/juliet_bawuah_f5tts_eng_20251109_221208.wav"
+  }
+]

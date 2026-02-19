@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "python",
+      "args": ["/opt/kasaai/apps/shared/integration/supabase_mcp_server.py"],
+      "env": {
+        "DEMO_SUPABASE_URL": "https://fwbntpzdlrtxelizkprl.supabase.co",
+        "DEMO_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3Ym50cHpkbHJ0eGVsaXprcHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY2NzEwNzQsImV4cCI6MjA3MjI0NzA3NH0.HGswLDX1biCsA1I3yMVZ1SxszLdnyVpIyDCiqYJ3auE",
+        "DEMO_SUPABASE_SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3Ym50cHpkbHJ0eGVsaXprcHJsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NjY3MTA3NCwiZXhwIjoyMDcyMjQ3MDc0fQ.wTCQhurA1P_LNYwocHkq9BRrfkl9yOJxrkrYLamEhPk"
+      }
+    },
+    "hubspot": {
+      "command": "python",
+      "args": ["/opt/kasaai/apps/shared/integration/hubspot_mcp_server.py"],
+      "env": {
+        "HUBSPOT_ACCESS_TOKEN": "pat-na2-be182d71-d2e7-4c11-a405-d335560644db",
+        "HUBSPOT_PORTAL_ID": "243880132",
+        "HUBSPOT_TIMEOUT": "30"
+      }
+    }
+  }
+}

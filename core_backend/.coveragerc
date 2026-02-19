@@ -1,0 +1,76 @@
+# Coverage configuration for core_backend
+# Created: 2025-10-26
+# Purpose: Configure code coverage measurement
+
+[run]
+source = backend,apps/shared
+omit =
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */migrations/*
+    */venv/*
+    */.venv/*
+    */conftest.py
+    */setup.py
+    */.eggs/*
+
+branch = True
+parallel = True
+
+[report]
+# Fail if coverage below 80%
+fail_under = 80
+
+# Show missing lines
+show_missing = True
+
+# Skip covered files in report
+skip_covered = False
+
+# Precision of coverage percentage
+precision = 2
+
+# Sort report by coverage percentage
+sort = Cover
+
+# Exclude lines from coverage
+exclude_lines =
+    # Standard pragma
+    pragma: no cover
+
+    # Don't complain about missing debug-only code
+    def __repr__
+    def __str__
+
+    # Don't complain if tests don't hit defensive assertion code
+    raise AssertionError
+    raise NotImplementedError
+
+    # Don't complain if non-runnable code isn't run
+    if __name__ == .__main__.:
+    if __name__=="__main__":
+
+    # Don't complain about abstract methods
+    @abstractmethod
+    @abc.abstractmethod
+
+    # Don't complain about type checking blocks
+    if TYPE_CHECKING:
+    if typing.TYPE_CHECKING:
+
+    # Don't complain about pass statements
+    pass
+
+    # Don't complain about ellipsis
+    \.\.\.
+
+[html]
+directory = htmlcov
+title = Core Backend Test Coverage Report
+
+[xml]
+output = coverage.xml
+
+[json]
+output = coverage.json

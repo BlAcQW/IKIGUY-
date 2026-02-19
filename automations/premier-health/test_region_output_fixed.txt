@@ -1,0 +1,69 @@
+Failed to track query for analytics: MONGODB_URL environment variable is required
+Failed to track query for analytics: MONGODB_URL environment variable is required
+Failed to track query for analytics: MONGODB_URL environment variable is required
+Failed to track query for analytics: MONGODB_URL environment variable is required
+================================================================================
+TESTING REGION FILTERING IN RAG QUERIES
+================================================================================
+
+1️⃣  TEST 1: Western Region providers WITH region filter
+--------------------------------------------------------------------------------
+✅ Success: True
+📚 Sources used: ['Healthcare Providers in TAKORADI', 'Healthcare Providers in TARKWA', 'Healthcare Providers in WASSA AKROPONG', 'Healthcare Providers in SEFWI ESSAM']
+🔍 Response preview: Premier Health Insurance has a wide range of network providers in the Western Region. Here is a list of some of them, categorized by their location within the region:
+
+**In Takoradi:**
+*   **WESTVIEW MEDICAL CENTRE**
+    *   **Specialties**: GP/OBS/GYN/PAED/PHY
+    *   **Phone**: 0209899589/ 0509435...
+❌ ERROR: WA (Upper West) found in Western Region results!
+
+
+2️⃣  TEST 2: WA providers WITH Upper West Region filter
+--------------------------------------------------------------------------------
+✅ Success: True
+📚 Sources used: ['Healthcare Providers in WA']
+🔍 Response preview: Here are the Premier Health Insurance network providers in WA, Upper West Region:
+
+*   **ISLAMIC HOSPITAL**
+    *   Specialties: GP
+    *   Phone: 0392020343
+    *   Location: WA
+
+*   **UPPER WEST REGIONAL HOSPITAL**
+    *   Specialties: GP/OBS/GYN/SRY
+    *   Phone: 0243653389
+    *   Location: WA
+...
+
+
+3️⃣  TEST 3: Community 6 WITH Greater Accra filter
+--------------------------------------------------------------------------------
+✅ Success: True
+📚 Sources used: ['Healthcare Providers in TEMA COMMUNITY 6', 'Healthcare Providers in 6', 'Healthcare Providers in 7', 'Healthcare Providers in 21', 'Healthcare Providers in 13', 'Healthcare Providers in 8', 'Healthcare Providers in COMM. 18,19,27', 'Healthcare Providers in COMMUNITY 38', 'Healthcare Providers in 5', 'Healthcare Providers in 20']
+🔍 Response preview: Here are the Premier Health Insurance network providers in Community 6, Greater Accra:
+
+*   **MERIDIAN CLINIC**
+    *   **Specialties**: GP
+    *   **Phone**: 0303-202545
+    *   **Location**: NEAR THE POST OFFICE.
+
+*   **COY PAEDIATRIC PRACTICE (PLAT PLUS)**
+    *   **Specialties**: PED.
+    *   **...
+
+
+4️⃣  TEST 4: Tema Community 5 WITH Greater Accra filter
+--------------------------------------------------------------------------------
+✅ Success: True
+📚 Sources used: ['Healthcare Providers in TEMA COMMUNITY 6', 'Healthcare Providers in TEMA COMMUNITY 5', 'Healthcare Providers in 5', 'Healthcare Providers in TEMA COMMUNITY 3', 'Healthcare Providers in 19', 'Healthcare Providers in TEMA COMMUNITY 4', 'Healthcare Providers in 13', 'Healthcare Providers in 7', 'Healthcare Providers in 20', 'Healthcare Providers in 6']
+🔍 Response preview: Here are the Premier Health Insurance network providers in Tema Community 5, Greater Accra:
+
+*   **LAGOON CLINIC**
+    *   **Specialties**: GP
+    *   **Phone**: 0302-206780
+    *   **Location**: SITE 13, COMMUNITY ONE, TEMA. NEAR THE POST OFFICE....
+
+================================================================================
+TESTING COMPLETE
+================================================================================

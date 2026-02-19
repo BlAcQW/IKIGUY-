@@ -1,0 +1,41 @@
+{
+  "total_providers": 753,
+  "total_regions": 106,
+  "providers_with_contact": 677,
+  "providers_without_contact": 76,
+  "top_10_regions": {
+    "Tamale": 44,
+    "Takoradi": 37,
+    "Sunyani": 32,
+    "Madina  Adenta  Dodowa": 22,
+    "Koforidua": 21,
+    "East Legon  Adjringanor": 20,
+    "Osu": 19,
+    "Dansoman  Mamprobi  Korle-Bu": 18,
+    "Sakumono Estate  Lashibi  Comm 181921": 17,
+    "Weija  Kasoa  Gbawe": 17
+  },
+  "top_20_specialties": {
+    "GP": 410,
+    "GYN": 210,
+    "OBS": 196,
+    "PHY": 184,
+    "PHARMACY": 144,
+    "SRY": 135,
+    "PED": 126,
+    "OPTICAL": 75,
+    "SERVICES": 70,
+    "ENT": 54,
+    "EYE": 46,
+    "GYNAE": 44,
+    "DENTAL": 40,
+    "PAED": 34,
+    "SUR": 32,
+    "HOSPITAL": 21,
+    "DIET": 20,
+    "CLINIC": 17,
+    "SP": 17,
+    "PAE": 16
+  },
+  "provider_tiers": {
+    "PLATINUM": 

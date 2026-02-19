@@ -1,0 +1,863 @@
+"""
+Integration Package
+
+This package contains integration capabilities for the KasaAI platform.
+"""
+
+from .integration_manager import IntegrationManager
+from .email import (
+    EmailIntegration,
+    EmailProvider,
+    EmailAttachment,
+    EmailTemplate,
+    EmailDeliveryReport,
+    SMTPEmailProvider,
+    SendGridEmailProvider,
+    GmailEmailProvider,
+    OutlookEmailProvider,
+    MailgunEmailProvider,
+    AWSSESEmailProvider
+)
+from .sms import (
+    SMSIntegration,
+    SMSProvider,
+    SMSDeliveryReport,
+    TwilioSMSProvider,
+    MessageBirdSMSProvider
+)
+from .whatsapp import (
+    WhatsAppIntegration,
+    WhatsAppMessageType,
+    WhatsAppButton,
+    WhatsAppMedia,
+    WhatsAppTemplate,
+    WhatsAppDeliveryReport
+)
+from .chat import (
+    ChatIntegration,
+    ChatProvider,
+    ChatMessage,
+    ChatDeliveryReport,
+    SlackChatProvider,
+    MicrosoftTeamsChatProvider
+)
+from .google_workspace import (
+    GoogleWorkspaceIntegration,
+    GoogleWorkspaceConfig,
+    GoogleSheetsConfig,
+    GoogleCalendarConfig,
+    GoogleDocsConfig,
+    GoogleSheetsIntegration,
+    GoogleCalendarIntegration,
+    GoogleDocsIntegration,
+    GoogleWorkspaceService,
+)
+from .microsoft_365 import (
+    Microsoft365Integration,
+    Microsoft365Config,
+    ExcelConfig,
+    OutlookConfig,
+    OneDriveConfig,
+    SharePointConfig,
+    ExcelIntegration,
+    OutlookIntegration,
+    OneDriveIntegration,
+    SharePointIntegration,
+    Microsoft365Service,
+)
+from .web_chat import (
+    WebChatIntegration,
+    WebChatProvider,
+    WebChatMessage,
+    WebChatUser,
+    WebChatSession,
+    WebChatWidget,
+    CustomWebChatProvider,
+    TidioWebChatProvider,
+)
+
+from .zendesk import (
+    ZendeskIntegration,
+    ZendeskConfig,
+    ZendeskTicket,
+    ZendeskUser,
+    ZendeskComment,
+    ZendeskStatus,
+    ZendeskPriority,
+    ZendeskType,
+)
+
+from .paystack import (
+    PaystackIntegration,
+    PaystackConfig,
+    PaystackTransaction,
+    PaystackCustomer,
+    PaystackPlan,
+    PaystackWebhookEvent,
+    PaystackTransactionStatus,
+    PaystackChannel,
+)
+
+from .google_analytics import (
+    GoogleAnalyticsIntegration,
+    GoogleAnalyticsConfig,
+    AnalyticsReport,
+    CampaignData,
+    UserBehaviorData,
+    AnalyticsMetric,
+    AnalyticsDimension,
+)
+
+from .grafana import (
+    GrafanaIntegration,
+    GrafanaConfig,
+    Dashboard,
+    AlertRule,
+    DataSource,
+    User,
+    DashboardPermission,
+    AlertSeverity,
+)
+
+from .zapier import (
+    ZapierIntegration,
+    ZapierConfig,
+    Zap,
+    ZapTask,
+    WebhookPayload,
+    ZapTemplate,
+    ZapStatus,
+    ZapTriggerType,
+)
+
+from .telegram import (
+    TelegramIntegration,
+    TelegramConfig,
+    TelegramMessage,
+    TelegramChat,
+    TelegramUser,
+    TelegramUpdate,
+    TelegramMessageType,
+    TelegramChatType,
+)
+
+from .discord import (
+    DiscordIntegration,
+    DiscordConfig,
+    DiscordMessage,
+    DiscordChannel,
+    DiscordGuild,
+    DiscordMessageType,
+    DiscordChannelType,
+)
+
+from .mixpanel import (
+    MixpanelIntegration,
+    MixpanelConfig,
+    MixpanelEvent,
+    MixpanelUser,
+    MixpanelProfile,
+    MixpanelFunnel,
+    MixpanelRetention,
+    MixpanelEventType,
+)
+
+from .n8n import (
+    N8NIntegration,
+    N8NConfig,
+    N8NWorkflow,
+    N8NExecution,
+    N8NWebhook,
+    N8NWorkflowStatus,
+    N8NExecutionStatus,
+)
+
+from .make import (
+    MakeIntegration,
+    MakeConfig,
+    MakeScenario,
+    MakeExecution,
+    MakeConnection,
+    MakeScenarioStatus,
+    MakeExecutionStatus,
+)
+
+from .flutterwave import (
+    FlutterwaveIntegration,
+    FlutterwaveConfig,
+    FlutterwaveTransaction,
+    FlutterwaveCustomer,
+    FlutterwavePlan,
+    FlutterwaveWebhookEvent,
+    FlutterwaveTransactionStatus,
+    FlutterwavePaymentType,
+)
+
+from .quickbooks import (
+    QuickBooksIntegration,
+    QuickBooksConfig,
+    QuickBooksCustomer,
+    QuickBooksInvoice,
+    QuickBooksPayment,
+    QuickBooksExpense,
+    QuickBooksEntityType,
+    QuickBooksTransactionStatus,
+)
+
+# Temporarily disabled due to dataclass field ordering issues
+# from .zoho import (
+#     ZohoIntegration,
+#     ZohoConfig,
+#     ZohoLead,
+#     ZohoContact,
+#     ZohoDeal,
+#     ZohoTask,
+#     ZohoModuleType,
+#     ZohoLeadStatus,
+#     ZohoDealStage,
+# )
+
+from .google_drive import (
+    GoogleDriveIntegration,
+    GoogleDriveConfig,
+    GoogleDriveFile,
+    GoogleDrivePermission,
+    GoogleDriveFileType,
+    GoogleDrivePermissionRole,
+)
+
+# Temporarily disabled due to dataclass field ordering issues
+# from .freshsales import (
+#     FreshsalesIntegration,
+#     FreshsalesConfig,
+#     FreshsalesLead,
+#     FreshsalesContact,
+#     FreshsalesDeal,
+#     FreshsalesTask,
+#     FreshsalesModuleType,
+#     FreshsalesLeadStatus,
+#     FreshsalesDealStage,
+# )
+
+from .pipedrive import (
+    PipedriveIntegration,
+    PipedriveConfig,
+    PipedriveDeal,
+    PipedrivePerson,
+    PipedriveOrganization,
+    PipedriveActivity,
+    PipedriveStage,
+    PipedriveEntityType,
+    PipedriveDealStage as PipedriveDealStageEnum,
+    PipedriveActivityType,
+)
+
+from .odoo import (
+    OdooIntegration,
+    OdooConfig,
+    OdooSaleOrder,
+    OdooPurchaseOrder,
+    OdooInvoice,
+    OdooPartner,
+    OdooProduct,
+    OdooModuleType,
+    OdooOrderStatus,
+    OdooInvoiceStatus,
+)
+
+from .microsoft_dynamics import (
+    MicrosoftDynamicsIntegration,
+    DynamicsConfig,
+    DynamicsAccount,
+    DynamicsContact,
+    DynamicsLead,
+    DynamicsOpportunity,
+    DynamicsInvoice,
+    DynamicsModuleType,
+    DynamicsLeadStatus,
+    DynamicsOpportunityStatus,
+)
+
+from .mtn_mobile_money import (
+    MTNMobileMoneyIntegration,
+    MTNConfig,
+    MTNTransaction,
+    MTNBalance,
+    MTNUser,
+    MTNTransactionType,
+    MTNTransactionStatus,
+    MTNCurrency,
+)
+
+from .prometheus import (
+    PrometheusIntegration,
+    PrometheusConfig,
+    PrometheusMetric,
+    PrometheusQuery,
+    PrometheusAlert,
+    PrometheusTarget,
+    PrometheusMetricType,
+    PrometheusAlertSeverity,
+)
+
+from .mongodb import (
+    MongoDBIntegration,
+    MongoDBConfig,
+    MongoDBDocument,
+    MongoDBQuery,
+    MongoDBIndex,
+    MongoDBStats,
+    MongoDBOperationType,
+    MongoDBIndexType,
+)
+
+from .whatsapp_business import (
+    WhatsAppBusinessIntegration,
+    WhatsAppBusinessConfig,
+    WhatsAppMessage,
+    WhatsAppMedia,
+    WhatsAppTemplate,
+    WhatsAppInteractive,
+    WhatsAppButton,
+    WhatsAppWebhookEvent,
+    WhatsAppMessageType,
+    WhatsAppTemplateStatus,
+    WhatsAppInteractiveType,
+    WhatsAppButtonType,
+)
+
+from .sms_providers import (
+    SMSProvidersIntegration,
+    SMSConfig,
+    VonageSMSConfig,
+    AWSSNSConfig,
+    TelnyxSMSConfig,
+    AfricasTalkingConfig,
+    SMSMessage,
+    SMSDeliveryReport,
+    SMSBalance,
+    SMSProviderType,
+    SMSMessageStatus,
+    SMSMessageType,
+    BaseSMSProvider,
+    VonageSMSProvider,
+    AWSSNSProvider,
+    TelnyxSMSProvider,
+    AfricasTalkingProvider,
+)
+
+from .freshdesk import (
+    FreshdeskIntegration,
+    FreshdeskConfig,
+    FreshdeskTicket,
+    FreshdeskContact,
+    FreshdeskCompany,
+    FreshdeskConversation,
+    FreshdeskAgent,
+    FreshdeskTicketStatus,
+    FreshdeskTicketPriority,
+    FreshdeskTicketSource,
+    FreshdeskTicketType,
+)
+
+from .intercom import (
+    IntercomIntegration,
+    IntercomConfig,
+    IntercomContact,
+    IntercomConversation,
+    IntercomMessage,
+    IntercomEvent,
+    IntercomTag,
+    IntercomCompany,
+    IntercomMessageType,
+    IntercomConversationState,
+    IntercomContactType,
+    IntercomEventType,
+)
+
+from .servicenow import (
+    ServiceNowIntegration,
+    ServiceNowConfig,
+    ServiceNowIncident,
+    ServiceNowChangeRequest,
+    ServiceNowProblem,
+    ServiceNowUser,
+    ServiceNowConfigurationItem,
+    ServiceNowPriority,
+    ServiceNowState,
+    ServiceNowCategory,
+    ServiceNowImpact,
+    ServiceNowUrgency,
+)
+
+from .zendesk import (
+    ZendeskIntegration,
+    ZendeskConfig,
+    ZendeskTicket,
+    ZendeskUser,
+    ZendeskComment,
+    ZendeskOrganization,
+    ZendeskGroup,
+    ZendeskPriority,
+    ZendeskStatus,
+    ZendeskType,
+    ZendeskUserRole,
+)
+
+from .notion import (
+    NotionIntegration,
+    NotionConfig,
+    NotionPage,
+    NotionDatabase,
+    NotionBlock,
+    NotionUser,
+    NotionComment,
+    NotionProperty,
+    NotionRichText,
+    NotionObjectType,
+    NotionBlockType,
+    NotionPropertyType,
+)
+
+from .confluence import (
+    ConfluenceIntegration,
+    ConfluenceConfig,
+    ConfluenceSpace,
+    ConfluenceContent,
+    ConfluenceComment,
+    ConfluenceAttachment,
+    ConfluenceUser,
+    ConfluenceContentType,
+    ConfluenceContentStatus,
+    ConfluenceSpaceType,
+    ConfluenceSpaceStatus,
+    # Ghana Interbank Payment Switch
+    GhIPSSIntegration,
+    GhIPSSConfig,
+    GhIPSSTransaction,
+    GhIPSSAccount,
+    GhIPSSBalance,
+    GhIPSSStatement,
+    GhIPSSTransactionType,
+    GhIPSSTransactionStatus,
+    GhIPSSAccountType,
+    GhIPSSBankCode,
+    # Bank USSD APIs
+    BankUSSDIntegration,
+    USSDConfig,
+    USSDTransaction,
+    USSDBalance,
+    USSDStatement,
+    USSDMenu,
+    USSDUser,
+    USSDTransactionType,
+    USSDTransactionStatus,
+    USSDServiceType,
+    USSDChannel,
+    # FindHelp.org
+    FindHelpIntegration,
+    FindHelpConfig,
+    FindHelpOrganization,
+    FindHelpService,
+    FindHelpSearchResult,
+    FindHelpReferral,
+    FindHelpClient,
+    FindHelpCategory,
+    FindHelpServiceType,
+    FindHelpAvailability,
+    # Local Payment Systems
+    LocalPaymentSystemsIntegration,
+    LocalPaymentConfig,
+    LocalPaymentTransaction,
+    LocalPaymentAccount,
+    LocalPaymentBalance,
+    LocalPaymentProviderInfo,
+    LocalPaymentExchangeRate,
+    LocalPaymentType,
+    LocalPaymentStatus,
+    LocalPaymentProvider,
+    LocalPaymentCurrency,
+    # Google Maps for Clinics
+    GoogleMapsClinicsIntegration,
+    GoogleMapsClinicsConfig,
+    ClinicLocation,
+    ClinicHours,
+    ClinicService,
+    ClinicReview,
+    ClinicSearchResult,
+    RouteInfo,
+    ClinicType,
+    ClinicSpecialty,
+    ClinicAvailability,
+    InsuranceType,
+)
+
+from .ghana_interbank import (
+    GhIPSSIntegration,
+    GhIPSSConfig,
+    GhIPSSTransaction,
+    GhIPSSAccount,
+    GhIPSSBalance,
+    GhIPSSStatement,
+    GhIPSSTransactionType,
+    GhIPSSTransactionStatus,
+    GhIPSSAccountType,
+    GhIPSSBankCode,
+)
+
+from .bank_ussd import (
+    BankUSSDIntegration,
+    USSDConfig,
+    USSDTransaction,
+    USSDBalance,
+    USSDStatement,
+    USSDMenu,
+    USSDUser,
+    USSDTransactionType,
+    USSDTransactionStatus,
+    USSDServiceType,
+    USSDChannel,
+)
+
+from .findhelp import (
+    FindHelpIntegration,
+    FindHelpConfig,
+    FindHelpOrganization,
+    FindHelpService,
+    FindHelpSearchResult,
+    FindHelpReferral,
+    FindHelpClient,
+    FindHelpCategory,
+    FindHelpServiceType,
+    FindHelpAvailability,
+)
+
+from .local_payment_systems import (
+    LocalPaymentSystemsIntegration,
+    LocalPaymentConfig,
+    LocalPaymentTransaction,
+    LocalPaymentAccount,
+    LocalPaymentBalance,
+    LocalPaymentProviderInfo,
+    LocalPaymentExchangeRate,
+    LocalPaymentType,
+    LocalPaymentStatus,
+    LocalPaymentProvider,
+    LocalPaymentCurrency,
+)
+
+from .google_maps_clinics import (
+    GoogleMapsClinicsIntegration,
+    GoogleMapsClinicsConfig,
+    ClinicLocation,
+    ClinicHours,
+    ClinicService,
+    ClinicReview,
+    ClinicSearchResult,
+    RouteInfo,
+    ClinicType,
+    ClinicSpecialty,
+    ClinicAvailability,
+    InsuranceType,
+)
+
+__all__ = [
+    # Integration Manager
+    "IntegrationManager",
+    
+    # Email Integration
+    "EmailIntegration",
+    "EmailProvider",
+    "EmailAttachment",
+    "EmailTemplate",
+    "EmailDeliveryReport",
+    "SMTPEmailProvider",
+    "SendGridEmailProvider",
+    "GmailEmailProvider",
+    "OutlookEmailProvider",
+    "MailgunEmailProvider",
+    "AWSSESEmailProvider",
+    
+    # SMS Integration
+    "SMSIntegration",
+    "SMSProvider",
+    "SMSDeliveryReport",
+    "TwilioSMSProvider",
+    "MessageBirdSMSProvider",
+    
+    # WhatsApp Integration
+    "WhatsAppIntegration",
+    "WhatsAppMessageType",
+    "WhatsAppButton",
+    "WhatsAppMedia",
+    "WhatsAppTemplate",
+    "WhatsAppDeliveryReport",
+    
+    # Chat Integration
+    "ChatIntegration",
+    "ChatProvider",
+    "ChatMessage",
+    "ChatDeliveryReport",
+    "SlackChatProvider",
+    "MicrosoftTeamsChatProvider",
+    
+    # Google Workspace Integration
+    "GoogleWorkspaceIntegration",
+    "GoogleWorkspaceConfig",
+    "GoogleSheetsConfig",
+    "GoogleCalendarConfig",
+    "GoogleDocsConfig",
+    "GoogleSheetsIntegration",
+    "GoogleCalendarIntegration",
+    "GoogleDocsIntegration",
+    "GoogleWorkspaceService",
+    
+    # Microsoft 365 Integration
+    "Microsoft365Integration",
+    "Microsoft365Config",
+    "ExcelConfig",
+    "OutlookConfig",
+    "OneDriveConfig",
+    "SharePointConfig",
+    "ExcelIntegration",
+    "OutlookIntegration",
+    "OneDriveIntegration",
+    "SharePointIntegration",
+    "Microsoft365Service",
+    
+    # Web Chat Integration
+    "WebChatIntegration",
+    "WebChatProvider",
+    "WebChatMessage",
+    "WebChatUser",
+    "WebChatSession",
+    "WebChatWidget",
+    "CustomWebChatProvider",
+    "TidioWebChatProvider",
+    
+    # Zendesk Integration
+    "ZendeskIntegration",
+    "ZendeskConfig",
+    "ZendeskTicket",
+    "ZendeskUser",
+    "ZendeskComment",
+    "ZendeskStatus",
+    "ZendeskPriority",
+    "ZendeskType",
+    
+    # Paystack Integration
+    "PaystackIntegration",
+    "PaystackConfig",
+    "PaystackTransaction",
+    "PaystackCustomer",
+    "PaystackPlan",
+    "PaystackWebhookEvent",
+    "PaystackTransactionStatus",
+    "PaystackChannel",
+    
+    # Google Analytics Integration
+    "GoogleAnalyticsIntegration",
+    "GoogleAnalyticsConfig",
+    "AnalyticsReport",
+    "CampaignData",
+    "UserBehaviorData",
+    "AnalyticsMetric",
+    "AnalyticsDimension",
+    
+    # Grafana Integration
+    "GrafanaIntegration",
+    "GrafanaConfig",
+    "Dashboard",
+    "AlertRule",
+    "DataSource",
+    "User",
+    "DashboardPermission",
+    "AlertSeverity",
+    
+    # Zapier Integration
+    "ZapierIntegration",
+    "ZapierConfig",
+    "Zap",
+    "ZapTask",
+    "WebhookPayload",
+    "ZapTemplate",
+    "ZapStatus",
+    "ZapTriggerType",
+    
+    # Telegram Integration
+    "TelegramIntegration",
+    "TelegramConfig",
+    "TelegramMessage",
+    "TelegramChat",
+    "TelegramUser",
+    "TelegramUpdate",
+    "TelegramMessageType",
+    "TelegramChatType",
+    
+    # Discord Integration
+    "DiscordIntegration",
+    "DiscordConfig",
+    "DiscordMessage",
+    "DiscordChannel",
+    "DiscordGuild",
+    "DiscordMessageType",
+    "DiscordChannelType",
+    
+    # Mixpanel Integration
+    "MixpanelIntegration",
+    "MixpanelConfig",
+    "MixpanelEvent",
+    "MixpanelUser",
+    "MixpanelProfile",
+    "MixpanelFunnel",
+    "MixpanelRetention",
+    "MixpanelEventType",
+    
+    # n8n Integration
+    "N8NIntegration",
+    "N8NConfig",
+    "N8NWorkflow",
+    "N8NExecution",
+    "N8NWebhook",
+    "N8NWorkflowStatus",
+    "N8NExecutionStatus",
+    
+    # Make Integration
+    "MakeIntegration",
+    "MakeConfig",
+    "MakeScenario",
+    "MakeExecution",
+    "MakeConnection",
+    "MakeScenarioStatus",
+    "MakeExecutionStatus",
+    
+    # Flutterwave Integration
+    "FlutterwaveIntegration",
+    "FlutterwaveConfig",
+    "FlutterwaveTransaction",
+    "FlutterwaveCustomer",
+    "FlutterwavePlan",
+    "FlutterwaveWebhookEvent",
+    "FlutterwaveTransactionStatus",
+    "FlutterwavePaymentType",
+    
+    # QuickBooks Integration
+    "QuickBooksIntegration",
+    "QuickBooksConfig",
+    "QuickBooksCustomer",
+    "QuickBooksInvoice",
+    "QuickBooksPayment",
+    "QuickBooksExpense",
+    "QuickBooksEntityType",
+    "QuickBooksTransactionStatus",
+    
+    # Zoho Integration
+    "ZohoIntegration",
+    "ZohoConfig",
+    "ZohoLead",
+    "ZohoContact",
+    "ZohoDeal",
+    "ZohoTask",
+    "ZohoModuleType",
+    "ZohoLeadStatus",
+    "ZohoDealStage",
+    
+    # Google Drive Integration
+    "GoogleDriveIntegration",
+    "GoogleDriveConfig",
+    "GoogleDriveFile",
+    "GoogleDrivePermission",
+    "GoogleDriveFileType",
+    "GoogleDrivePermissionRole",
+
+    # Freshsales Integration
+    "FreshsalesIntegration",
+    "FreshsalesConfig",
+    "FreshsalesLead",
+    "FreshsalesContact",
+    "FreshsalesDeal",
+    "FreshsalesTask",
+    "FreshsalesModuleType",
+    "FreshsalesLeadStatus",
+    "FreshsalesDealStage",
+
+    # Pipedrive Integration
+    "PipedriveIntegration",
+    "PipedriveConfig",
+    "PipedriveDeal",
+    "PipedrivePerson",
+    "PipedriveOrganization",
+    "PipedriveActivity",
+    "PipedriveStage",
+    "PipedriveEntityType",
+    "PipedriveDealStageEnum",
+    "PipedriveActivityType",
+
+    # Odoo Integration
+    "OdooIntegration",
+    "OdooConfig",
+    "OdooSaleOrder",
+    "OdooPurchaseOrder",
+    "OdooInvoice",
+    "OdooPartner",
+    "OdooProduct",
+    "OdooModuleType",
+    "OdooOrderStatus",
+    "OdooInvoiceStatus",
+
+    # Microsoft Dynamics Integration
+    "MicrosoftDynamicsIntegration",
+    "DynamicsConfig",
+    "DynamicsAccount",
+    "DynamicsContact",
+    "DynamicsLead",
+    "DynamicsOpportunity",
+    "DynamicsInvoice",
+    "DynamicsModuleType",
+    "DynamicsLeadStatus",
+    "DynamicsOpportunityStatus",
+
+    # MTN Mobile Money Integration
+    "MTNMobileMoneyIntegration",
+    "MTNConfig",
+    "MTNTransaction",
+    "MTNBalance",
+    "MTNUser",
+    "MTNTransactionType",
+    "MTNTransactionStatus",
+    "MTNCurrency",
+
+    # Prometheus Integration
+    "PrometheusIntegration",
+    "PrometheusConfig",
+    "PrometheusMetric",
+    "PrometheusQuery",
+    "PrometheusAlert",
+    "PrometheusTarget",
+    "PrometheusMetricType",
+    "PrometheusAlertSeverity",
+
+    # MongoDB Integration
+    "MongoDBIntegration",
+    "MongoDBConfig",
+    "MongoDBDocument",
+    "MongoDBQuery",
+    "MongoDBIndex",
+    "MongoDBStats",
+    "MongoDBOperationType",
+    "MongoDBIndexType",
+
+    # WhatsApp Business Integration
+    "WhatsAppBusinessIntegration",
+    "WhatsAppBusinessConfig",
+    "WhatsAppMessage",
+    "WhatsAppMedia",
+    "WhatsAppTemplate",
+    "WhatsAppInteractive",
+    "WhatsAppButton",
+    "WhatsAppWebhookEvent",
+    "WhatsAppMessageType",
+    "WhatsAppTemplateStatus",
+    "WhatsAppInteractiveType",
+    "WhatsAppButtonType",
+]

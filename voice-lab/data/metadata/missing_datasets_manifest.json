@@ -1,0 +1,33 @@
+{
+  "missing_datasets": [
+    "BibleTTS (Akuapem Twi)",
+    "BibleTTS (Asante Twi)",
+    "Financial Inclusion",
+    "Common Voice",
+    "AfriSpeech-200",
+    "African Whisper",
+    "Twi Speech-Text Parallel",
+    "JW300 Corpus"
+  ],
+  "download_instructions": {
+    "BibleTTS (Akuapem Twi)": [
+      "https://www.openslr.org/resources/129/akuapem-twi.tgz",
+      "https://us.openslr.org/resources/129/akuapem-twi.tgz",
+      "https://cn.openslr.org/resources/129/akuapem-twi.tgz"
+    ],
+    "BibleTTS (Asante Twi)": [
+      "https://www.openslr.org/resources/129/asante-twi.tgz",
+      "https://us.openslr.org/resources/129/asante-twi.tgz",
+      "https://cn.openslr.org/resources/129/asante-twi.tgz"
+    ],
+    "Financial Inclusion": {
+      "akuapem_twi_90": "https://fisd-dataset.s3.amazonaws.com/fisd-akuapim-twi-90p.zip",
+      "akuapem_twi_10": "https://fisd-dataset.s3.amazonaws.com/fisd-akuapim-twi-10p.zip",
+      "asante_twi_90": "https://fisd-dataset.s3.amazonaws.com/fisd-asanti-twi-90p.zip",
+      "asante_twi_10": "https://fisd-dataset.s3.amazonaws.com/fisd-asanti-twi-10p.zip",
+      "fante_90": "https://fisd-dataset.s3.amazonaws.com/fisd-fanti-90p.zip",
+      "fante_10": "https://fisd-dataset.s3.amazonaws.com/fisd-fanti-10p.zip"
+    }
+  },
+  "total_missing": 8
+}

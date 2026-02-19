@@ -1,0 +1,32 @@
+[Unit]
+Description=African Language Community Frontend (Vite)
+After=network.target language-community-api.service
+Wants=language-community-api.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/kasaai/apps/community/frontend-main
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/python3 -m http.server 8080 --directory dist
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=on-failure
+RestartSec=10
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Security settings
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/kasaai/apps/community/frontend-main/dist /tmp
+
+[Install]
+WantedBy=multi-user.target

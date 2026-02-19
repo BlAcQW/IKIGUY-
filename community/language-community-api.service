@@ -1,0 +1,36 @@
+[Unit]
+Description=African Language Community API
+After=network.target mongodb.service redis.service
+Wants=mongodb.service redis.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/kasaai/apps/community/backend
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=PYTHONPATH=/opt/kasaai/apps/community/backend
+ExecStart=/usr/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 8001 --workers 4
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=on-failure
+RestartSec=10
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Security settings
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/kasaai/data/community /tmp /var/log
+
+# Environment variables
+Environment="ENVIRONMENT=production"
+Environment="DEBUG=False"
+
+[Install]
+WantedBy=multi-user.target

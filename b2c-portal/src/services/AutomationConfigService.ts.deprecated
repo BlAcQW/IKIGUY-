@@ -1,0 +1,299 @@
+/**
+ * Service for managing automation configurations
+ * Handles save, load, delete, and status management for automation configurations
+ */
+
+export interface AutomationConfig {
+  id: string;
+  automationName: string;
+  companyInfo: {
+    name: string;
+    description: string;
+    url: string;
+    extractedInfo?: {
+      services: string[];
+      businessHours: string;
+      contactInfo: {
+        phone?: string;
+        email?: string;
+        address?: string;
+      };
+      aboutText: string;
+    };
+  };
+  vapiAgent: {
+    assistantId: string;
+    phoneNumberId: string;
+    systemPrompt: string;
+    voiceSettings: {
+      voiceId: string;
+      model: string;
+      maxDuration: number;
+    };
+    tools: string[];
+  };
+  n8nWorkflow: {
+    workflowId: string;
+    workflowName: string;
+    webhookUrl: string;
+    endpoints: {
+      calendar: string;
+      tickets: string;
+      availability: string;
+      escalation: string;
+      analytics: string;
+    };
+  };
+  integrations: {
+    calendly: { enabled: boolean; apiKey: string; };
+    supabase: { enabled: boolean; projectId: string; };
+    tavily: { enabled: boolean; apiKey: string; };
+    resend: { enabled: boolean; apiKey: string; };
+    vonage: { enabled: boolean; apiKey: string; };
+  };
+  customTools: {
+    enabled: boolean;
+    selectedTools: string[];
+    availableTools: Array<{
+      name: string;
+      description: string;
+      endpoint: string;
+      method: string;
+      category: string;
+      enabled: boolean;
+    }>;
+  };
+  demoSettings: {
+    enableDemo: boolean;
+    demoUrl: string;
+    htmlTemplate: string;
+  };
+  analytics: {
+    enableTracking: boolean;
+    webhookUrl: string;
+    reportEmail: string;
+  };
+  status: 'draft' | 'deployed' | 'stopped';
+  templateId?: string;
+  createdAt: string;
+  updatedAt: string;
+  userId?: string;
+  organizationId?: string;
+}
+
+class AutomationConfigService {
+  private baseUrl: string;
+  private authToken: string | null;
+
+  constructor(baseUrl: string = 'https://api.ailabsafrica.com') {
+    this.baseUrl = baseUrl;
+    this.authToken = localStorage.getItem('token');
+  }
+
+  private getHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      ...(this.authToken && { 'Authorization': `Bearer ${this.authToken}` })
+    };
+  }
+
+  /**
+   * Save automation configuration
+   */
+  async saveConfig(config: Omit<AutomationConfig, 'id' | 'createdAt' | 'updatedAt'>): Promise<AutomationConfig> {
+    // Only send fields that match the backend AutomationConfigCreate model
+    const configToSend = {
+      automationName: config.automationName,
+      companyInfo: config.companyInfo,
+      vapiAgent: config.vapiAgent,
+      n8nWorkflow: config.n8nWorkflow,
+      integrations: config.integrations,
+      customTools: config.customTools ? {
+        ...config.customTools,
+        availableTools: config.customTools.availableTools || []
+      } : undefined,
+      demoSettings: config.demoSettings,
+      analytics: config.analytics,
+      templateId: config.templateId
+    };
+
+    const response = await fetch(`${this.baseUrl}/automation-configs`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify(configToSend)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Save automation config error:', errorData);
+
+      // Handle validation errors more specifically
+      if (response.status === 422 && errorData.detail) {
+        const validationErrors = errorData.detail.map((err: any) =>
+          `${err.loc.join('.')}: ${err.msg}`
+        ).join(', ');
+        throw new Error(`Validation failed: ${validationErrors}`);
+      }
+
+      throw new Error(errorData.detail || errorData.message || 'Failed to save automation configuration');
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Update existing automation configuration
+   */
+  async updateConfig(id: string, config: Partial<AutomationConfig>): Promise<AutomationConfig> {
+    // Only send fields that match the backend AutomationConfigUpdate model
+    const updateData: any = {};
+    if (config.automationName !== undefined) updateData.automationName = config.automationName;
+    if (config.companyInfo !== undefined) updateData.companyInfo = config.companyInfo;
+    if (config.vapiAgent !== undefined) updateData.vapiAgent = config.vapiAgent;
+    if (config.n8nWorkflow !== undefined) updateData.n8nWorkflow = config.n8nWorkflow;
+    if (config.integrations !== undefined) updateData.integrations = config.integrations;
+    if (config.demoSettings !== undefined) updateData.demoSettings = config.demoSettings;
+    if (config.analytics !== undefined) updateData.analytics = config.analytics;
+    if (config.status !== undefined) updateData.status = config.status;
+
+    const response = await fetch(`${this.baseUrl}/automation-configs/${id}`, {
+      method: 'PUT',
+      headers: this.getHeaders(),
+      body: JSON.stringify(updateData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Update automation config error:', errorData);
+      throw new Error(errorData.detail || errorData.message || 'Failed to update automation configuration');
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Get automation configuration by ID
+   */
+  async getConfig(id: string): Promise<AutomationConfig> {
+    const response = await fetch(`${this.baseUrl}/automation-configs/${id}`, {
+      headers: this.getHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to load automation configuration');
+    }
+
+    return response.json();
+  }
+
+  /**
+   * List all automation configurations
+   */
+  async listConfigs(filters?: {
+    status?: 'draft' | 'deployed' | 'stopped';
+    limit?: number;
+    offset?: number;
+  }): Promise<{ configs: AutomationConfig[]; total: number }> {
+    const queryParams = new URLSearchParams();
+    if (filters?.status) queryParams.append('status', filters.status);
+    if (filters?.limit) queryParams.append('limit', filters.limit.toString());
+    if (filters?.offset) queryParams.append('offset', filters.offset.toString());
+
+    const response = await fetch(`${this.baseUrl}/automation-configs?${queryParams}`, {
+      headers: this.getHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to list automation configurations');
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Delete automation configuration
+   */
+  async deleteConfig(id: string): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/automation-configs/${id}`, {
+      method: 'DELETE',
+      headers: this.getHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete automation configuration');
+    }
+  }
+
+  /**
+   * Deploy automation (change status to deployed and activate services)
+   */
+  async deployAutomation(id: string): Promise<{ success: boolean; demoUrl?: string; error?: string }> {
+    const response = await fetch(`${this.baseUrl}/automation-configs/${id}/deploy`, {
+      method: 'POST',
+      headers: this.getHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to deploy automation');
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Stop automation (change status to stopped and deactivate services)
+   */
+  async stopAutomation(id: string): Promise<{ success: boolean; error?: string }> {
+    const response = await fetch(`${this.baseUrl}/automation-configs/${id}/stop`, {
+      method: 'POST',
+      headers: this.getHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to stop automation');
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Get automation status and metrics
+   */
+  async getAutomationStatus(id: string): Promise<{
+    status: 'draft' | 'deployed' | 'stopped';
+    lastActivity?: string;
+    callCount?: number;
+    successRate?: number;
+    errors?: string[];
+  }> {
+    const response = await fetch(`${this.baseUrl}/automation-configs/${id}/status`, {
+      headers: this.getHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get automation status');
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Duplicate automation configuration
+   */
+  async duplicateConfig(id: string, newName: string): Promise<AutomationConfig> {
+    const response = await fetch(`${this.baseUrl}/automation-configs/${id}/duplicate`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify({ newName })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to duplicate automation configuration');
+    }
+
+    return response.json();
+  }
+}
+
+export const automationConfigService = new AutomationConfigService();
+export default AutomationConfigService;

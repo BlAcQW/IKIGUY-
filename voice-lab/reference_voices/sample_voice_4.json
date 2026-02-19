@@ -1,0 +1,22 @@
+{
+  "voice_id": "sample_voice_4",
+  "audio_file": "/opt/kasaai/apps/voice-lab/reference_voices/sample_voice_4.wav",
+  "validation": {
+    "valid": true,
+    "metadata": {
+      "format": "wav",
+      "channels": 1,
+      "sample_rate": 22050,
+      "duration": 5.3244897959183675,
+      "frames": 117405,
+      "sample_width": 2,
+      "rms_energy": 3357.3248751731885,
+      "quality_score": 100.0
+    },
+    "warnings": []
+  },
+  "name": "Sample Voice 4",
+  "source": "/opt/kasaai/apps/voice-lab/notebooks/local/coqui-tts/tests/data/ljspeech/wavs/LJ001-0029.wav",
+  "language": "en",
+  "description": "Test reference voice for XTTS cloning"
+}

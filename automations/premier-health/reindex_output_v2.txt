@@ -1,0 +1,348 @@
+
+================================================================================
+🔄 FULL RE-INDEXING: Premier Health Documents
+================================================================================
+
+This will:
+  1. Delete all existing documents and embeddings
+  2. Re-create documents from enriched CSV files
+  3. Generate fresh embeddings for all documents
+
+================================================================================
+
+⚠️  WARNING: This will delete all existing documents!
+   Press Ctrl+C to cancel, or wait 5 seconds to continue...
+
+🗑️  STEP 1: Deleting all existing documents...
+================================================================================
+   Deleted: Healthcare Providers in WINNEBA (8357fc78-9e1a-45b1-97dd-ca9f3b14f050)
+   Deleted: Healthcare Providers in WENCHI (e4341968-c67e-4970-a926-3044e3f2a6dc)
+   Deleted: Healthcare Providers in WASSA AKROPONG (cd2f032c-6a65-4cb1-9a2f-b71f259a76b1)
+   Deleted: Healthcare Providers in WA (08cb1d46-ba38-424b-a231-d275713dedcd)
+   Deleted: Healthcare Providers in TECHIMAN (9cdb247e-ea81-49c0-9dbe-7fe8e8065494)
+   Deleted: Healthcare Providers in TARKWA (4420d4e2-63b0-4f09-ba5c-1698719912de)
+   Deleted: Healthcare Providers in TAMALE (b7531e40-7133-4697-8d2c-9b181241c1a4)
+   Deleted: Healthcare Providers in TAKORADI (954c0b9e-c765-4cc5-9c96-7de65523217d)
+   Deleted: Healthcare Providers in TAFO (b9ebb8fb-66fc-4f3a-9b12-61908ca8feb6)
+   Deleted: Healthcare Providers in SWEDRU (d0f26f33-bd91-488c-a612-977400c07266)
+   Deleted: Healthcare Providers in SUNYANI (1d508246-e58b-4d80-9c35-e7b1532b68c0)
+   Deleted: Healthcare Providers in SUHUM (2f916b39-585b-437b-8601-5aaa16455f86)
+   Deleted: Healthcare Providers in SUAMAN DADIESO (1d03d1d0-5cb9-4902-ab4f-cfd09e0677f2)
+   Deleted: Healthcare Providers in SOMANYA (c75be1d6-0e55-4e7e-a0f2-f3a831b939b9)
+   Deleted: Healthcare Providers in SEKONDI (aa5f30a4-cf19-41fa-bb8a-afa838ff38ac)
+   Deleted: Healthcare Providers in SEFWI WIAWSO (3d87def9-2726-47c8-aa8f-35af152cf4e2)
+   Deleted: Healthcare Providers in SEFWI ESSAM (fa5f093d-8bf4-4e96-888a-a29ce8e50b61)
+   Deleted: Healthcare Providers in SEFWI BODI (4c97f5ab-49f3-4c4e-9d8a-08143d67eca0)
+   Deleted: Healthcare Providers in SEFWI BIBIANI (a5a49970-0306-4058-9968-f705b82fe6eb)
+   Deleted: Healthcare Providers in SEFWI BEKWAI (303d9212-a91f-449c-ac9f-77b0841820ec)
+   Deleted: Healthcare Providers in SEFWI ASAWINSO (8c5d700f-9d3d-4d26-bc0f-0aff5cca4a9f)
+   Deleted: Healthcare Providers in SEFWI ASAFO (b3577f2c-fff2-47fc-a130-a1421b17000e)
+   Deleted: Healthcare Providers in SEFWI ANHWIASO (ac2ec843-142d-486b-94b1-55772eb7af0d)
+   Deleted: Healthcare Providers in SEFWI AKONTOMBRA (cce518ef-bb79-4092-ae02-fa1278461592)
+   Deleted: Healthcare Providers in SAMREBOI (8dda6bd6-19e6-4f18-b9ca-35df1dc2f341)
+   Deleted: Healthcare Providers in SAMPA (82f047e4-77f6-40e8-aba6-7625119fa8f2)
+   Deleted: Healthcare Providers in OSINO (f0b5ff59-f630-4b6e-bcdd-c162f53d84ba)
+   Deleted: Healthcare Providers in OSIEM (8a6723b2-6d40-47ff-aa5f-27ebd570d86b)
+   Deleted: Healthcare Providers in ODUMASE KROBO (ca880917-7b99-4f1c-851b-9a89c154386a)
+   Deleted: Healthcare Providers in ODA (9644df40-93a9-457e-9da8-40aa2d25b02a)
+   Deleted: Healthcare Providers in NSAWAM (0a07d22a-800c-431e-8194-026ca1306033)
+   Deleted: Healthcare Providers in NKORANZA (628ab886-a980-45c5-be8e-17e69cc1439e)
+   Deleted: Healthcare Providers in NKAWKAW (a243d1fc-5ae2-40ce-8471-ba6e86364a4b)
+   Deleted: Healthcare Providers in NEW ABIREM (ce171fad-4a50-473b-9ae9-334e862f4dc5)
+   Deleted: Healthcare Providers in NAVRONGO (9620869c-9a12-4b94-9e3c-93892dd4d1a0)
+   Deleted: Healthcare Providers in MANKESSIM (f05dcac5-c81f-4d9a-a6ed-bcace6cec414)
+   Deleted: Healthcare Providers in MAMPONG (17012cfd-01bf-4059-8607-5fa7098330eb)
+   Deleted: Healthcare Providers in MAMFE AKUAPEM (8baab77e-f0db-4b2d-a45d-23246ad04e15)
+   Deleted: Healthcare Providers in LAWRA (5a5e8f70-8433-4304-89ea-c9363b721fdf)
+   Deleted: Healthcare Providers in KOFORIDUA (58438586-339a-4b15-bcf4-78783eba7617)
+   Deleted: Healthcare Providers in KINTAMPO, DUAYAW NKWANTA & OTHERS (118eac72-70c3-47ed-a1c1-c17873981951)
+   Deleted: Healthcare Providers in KIBI (78fbbd41-6802-4e2c-a236-a81e23ca981e)
+   Deleted: Healthcare Providers in KENYASE (f55e3fdc-864d-49ce-a1a1-46cb4c4365f3)
+   Deleted: Healthcare Providers in KADE (249a50cb-9e33-4b77-97ca-49e7e3ce0ccf)
+   Deleted: Healthcare Providers in INCHABAN (39150a87-7d37-4b4d-9f33-43c7786697f7)
+   Deleted: Healthcare Providers in HWIDIEM (20e6501f-660c-49ed-b68f-438ca3d5f22c)
+   Deleted: Healthcare Providers in HOHOE (29b11e52-07e0-4c2b-b2cc-0d359b1d9e0c)
+   Deleted: Healthcare Providers in HO (ea457017-70f9-4e77-a1cf-4812f17fffc1)
+   Deleted: Healthcare Providers in GOASO (724f7e4d-811b-4f49-82cc-157200ec2508)
+   Deleted: Healthcare Providers in ENYIRESI (b704b8cd-31b6-4640-bcf2-e013aa87bf28)
+   Deleted: Healthcare Providers in ENCHI (776c7d98-d790-474d-a29f-dbc1c13f75d9)
+   Deleted: Healthcare Providers in ELMINA (c9aea14e-542a-4221-b57e-cbb1009b85c6)
+   Deleted: Healthcare Providers in DUNKWA-ON-OFFIN (1ed95f62-709c-4795-a4b8-b05a6d36e3d7)
+   Deleted: Healthcare Providers in DROBO (837824ae-18e1-44c8-a9af-571a2efaf88c)
+   Deleted: Healthcare Providers in DORMAA (3733037f-950b-4bd4-9bf0-cba84098ea51)
+   Deleted: Healthcare Providers in CAPE COAST (06f085b8-129f-4ac7-b5c0-5e2fa1dd4b83)
+   Deleted: Healthcare Providers in BOLGATANGA (606f9023-5717-411e-830a-7c11afe4cc99)
+   Deleted: Healthcare Providers in BOGOSO (66b9d29d-d198-4164-88b4-de46478c86a3)
+   Deleted: Healthcare Providers in BEREKUM (73c9dc5e-fbb5-4c44-88c5-36bbc2f7fedc)
+   Deleted: Healthcare Providers in BEGORO (67736292-1545-4539-ab17-df18e264c642)
+   Deleted: Healthcare Providers in BAWKU (5a909fd0-aafd-49d1-a47b-4208e1166bd3)
+   Deleted: Healthcare Providers in ASSIN (e37c86d0-c728-4a60-bd04-d91154c6cf0c)
+   Deleted: Healthcare Providers in ASIKUMA (65b87a15-44f3-4f43-b126-c82b66cd1865)
+   Deleted: Healthcare Providers in ASIAKWA (4e2a3bb6-5ae4-4144-9ce4-612ac3095a79)
+   Deleted: Healthcare Providers in ASANKRAGWA (195a41f3-e86d-4caf-8702-893981727f6d)
+   Deleted: Healthcare Providers in ASAMANKESE (aa4478f0-610f-4589-afdd-aee1aca8bf67)
+   Deleted: Healthcare Providers in ANYINAM (c5faca99-5d62-4499-87a4-9d34b8b21b71)
+   Deleted: Healthcare Providers in AKWATIA (c6153106-53ae-4e74-bedc-6396cbc391d1)
+   Deleted: Healthcare Providers in AKOSOMBO (449f2356-905d-42b7-b7d3-c16bea73bf31)
+   Deleted: Healthcare Providers in AJUMAKO (a9fdb7f9-f64b-4e31-a6f1-cc19654d1ef1)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 21 (042f0f7c-db25-4210-a1ba-8588e8a78450)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 20 (092e4693-fb2c-4390-9892-79c18b9812ef)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 19 (a5d6a287-1736-459b-8b86-c136fadb6f76)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 18 (88d3240d-7df5-45da-b5df-19a74f027314)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 17 (1ec0208e-2ffb-4c5d-bf78-6b0bb5564adf)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 16 (a4eb376d-000c-4d53-9ffd-6db7b399fd5b)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 15 (965d34bc-b5d3-4d02-9e6a-a4252b384f77)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 14 (d9712809-b3a8-46c5-9a42-44d16aa02f59)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 13 (d756a7d6-8e17-42c2-a676-5859f1c15b24)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 12 (8baffe93-6690-4da3-a29f-00896fd09eb2)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 10 (d6db1233-89d5-4680-90d1-9e3d2d03450e)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 9 (66e957b9-1aab-47d1-a743-8649bf48f832)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 6 (58fa35c9-52a4-4d37-95a8-851e08f0b622)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 5 (5f31f6c9-279d-4510-bfb9-4206dc131950)
+   Deleted: Healthcare Providers in TEMA COMMUNITY 4 (8cc88d90-ec59-496d-af1a-3ffa07c5ba7b)
+   Deleted: Healthcare Providers in AFIENYA ROAD (742a3266-38ae-4b5b-9486-9104b953f4c5)
+   Deleted: Healthcare Providers in MICHEL CAMP (935679e6-d42d-4a64-89c3-6a6849e10f15)
+   Deleted: Healthcare Providers in COMMUNITY 22 (f3cadef5-8d23-4ffc-a5e0-67b4863ecd2a)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 41 (65855aaa-cbc4-4e51-8273-bba3323f3ab2)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 40 (64490533-3248-40c5-891f-6529e9a38308)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 39 (c2be959d-448b-4121-8c2a-a1664d09607d)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 38 (24324782-14b3-4e6d-8f3a-116e466f381b)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 37 (39163689-bca3-49f0-a8e8-80691b6e5d56)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 36 (8973985d-c002-473e-a00a-10cc0ffed0e7)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 35 (059af9f0-db43-4308-b6cd-4e4251c3c9de)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 34 (a09cf298-6ddf-49e0-9d9c-f7b282e74ab4)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 33 (3c285045-fea8-45a1-8ee7-610cf1f0e394)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 32 (dba0967e-06d2-46ac-b511-78a4d1646eab)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 31 (7bc6b364-9e5f-4818-b434-3c163cc9eaa8)
+   Deleted: Healthcare Providers in ASHAIMAN / COMMUNITY 30 (3b31ef71-7498-4a9f-9413-407f2b84b8c5)
+   Deleted: Phys Providers - Premier Health Network (providers_specialty_phys)
+   Deleted: Urology Providers - Premier Health Network (providers_specialty_urology)
+   Deleted: Obs & Gynae Providers - Premier Health Network (providers_specialty_obs_&_gynae)
+   Deleted: Mat Providers - Premier Health Network (providers_specialty_mat)
+   Deleted: Phy. Spec Providers - Premier Health Network (providers_specialty_phy._spec)
+   Deleted: Radiology Lab Providers - Premier Health Network (providers_specialty_radiology_lab)
+   Deleted: Neu Providers - Premier Health Network (providers_specialty_neu)
+   Deleted: Den Providers - Premier Health Network (providers_specialty_den)
+   Deleted: Uro Providers - Premier Health Network (providers_specialty_uro)
+   Deleted: Pead Providers - Premier Health Network (providers_specialty_pead)
+   Deleted: Lab Providers - Premier Health Network (providers_specialty_lab)
+   Deleted: Scan Providers - Premier Health Network (providers_specialty_scan)
+   Deleted: Ps Providers - Premier Health Network (providers_specialty_ps)
+   Deleted: Sry Providers - Premier Health Network (providers_specialty_sry)
+   Deleted: Diagnostic Providers - Premier Health Network (providers_specialty_diagnostic)
+   Deleted: Ultrascan Laboratory Providers - Premier Health Network (providers_specialty_ultrascan_laboratory)
+   Deleted: Paediatrics Providers - Premier Health Network (providers_specialty_paediatrics)
+   Deleted: Eye Providers - Premier Health Network (providers_specialty_eye)
+   Deleted: Derm Providers - Premier Health Network (providers_specialty_derm)
+   Deleted: Surg Providers - Premier Health Network (providers_specialty_surg)
+   Deleted: Gu Providers - Premier Health Network (providers_specialty_gu)
+   Deleted: Diet Providers - Premier Health Network (providers_specialty_diet)
+   Deleted: Gynecology Providers - Premier Health Network (providers_specialty_gynecology)
+   Deleted: Obs Providers - Premier Health Network (providers_specialty_obs)
+   Deleted: Laboratory Providers - Premier Health Network (providers_specialty_laboratory)
+   Deleted: Ophthalmology Providers - Premier Health Network (providers_specialty_ophthalmology)
+   Deleted: Dental Providers - Premier Health Network (providers_specialty_dental)
+   Deleted: Ear Nose Throat Providers - Premier Health Network (providers_specialty_ear_nose_throat)
+   Deleted: Physiotherapy Providers - Premier Health Network (providers_specialty_physiotherapy)
+   Deleted: General Practice Providers - Premier Health Network (providers_specialty_general_practice)
+   Deleted: Pediatrics Providers - Premier Health Network (providers_specialty_pediatrics)
+   Deleted: Pharmacy Providers - Premier Health Network (providers_specialty_pharmacy)
+   Deleted: Healthcare Providers in MADINA / ADENTA / DODOWA (providers_area_madina_/_adenta_/_dodowa)
+   Deleted: Healthcare Providers in LEGON & NORTH LEGON (providers_area_legon_&_north_legon)
+   Deleted: Healthcare Providers in LAPAZ / NYAMEKYE / DARKUMAN / ODORKOR (providers_area_lapaz_/_nyamekye_/_darkuman_/_odorkor)
+   Deleted: Healthcare Providers in KOKOMLEMLE / MAAMOBI / NIMA (providers_area_kokomlemle_/_maamobi_/_nima)
+   Deleted: Healthcare Providers in DZORWULU & ABELENKPE (providers_area_dzorwulu_&_abelenkpe)
+   Deleted: Healthcare Providers in CIRCLE / KANESHIE / NORTH KANESHIE / INDUSTRIAL AREA (providers_area_circle_/_kaneshie_/_north_kaneshie_/_industrial_area)
+   Deleted: Healthcare Providers in ASYLUM DOWN (providers_area_asylum_down)
+   Deleted: Healthcare Providers in AIRPORT RESIDENTIAL AREA / 37 AREA (providers_area_airport_residential_area_/_37_area)
+   Deleted: Healthcare Providers in ADABRAKA (providers_area_adabraka)
+   Deleted: Healthcare Providers in ACCRA CENTRAL / TUDU / MAKOLA (providers_area_accra_central_/_tudu_/_makola)
+
+   ✅ Total documents deleted: 142
+
+📝 STEP 2: Indexing documents from CSV files...
+================================================================================
+
+   📄 Parsing all_northern_regions_enriched.csv...
+      ✅ Found 6 cities with 84 total provider entries
+
+   📄 Parsing ashanti_region_kumasi_enriched.csv...
+      ✅ Found 0 cities with 0 total provider entries
+
+   📄 Parsing bono_regions_enriched.csv...
+      ✅ Found 12 cities with 84 total provider entries
+
+   📄 Parsing central_and_western_region_enriched.csv...
+      ✅ Found 28 cities with 143 total provider entries
+
+   📄 Parsing eastern_and_volta_regions_enriched.csv...
+      ✅ Found 24 cities with 150 total provider entries
+
+   📄 Parsing greater_accra_region_enriched.csv...
+      ✅ Found 0 cities with 0 total provider entries
+
+   📊 Total cities to index: 70
+   📊 Total providers: 461
+
+   🔄 Creating documents with embeddings...
+   ✅ [1/70] Created: Healthcare Providers in AJUMAKO
+   ✅ [2/70] Created: Healthcare Providers in AKOSOMBO
+   ✅ [3/70] Created: Healthcare Providers in AKWATIA
+   ✅ [4/70] Created: Healthcare Providers in ANYINAM
+   ✅ [5/70] Created: Healthcare Providers in ASAMANKESE
+   ✅ [6/70] Created: Healthcare Providers in ASANKRAGWA
+   ✅ [7/70] Created: Healthcare Providers in ASIAKWA
+   ✅ [8/70] Created: Healthcare Providers in ASIKUMA
+   ✅ [9/70] Created: Healthcare Providers in ASSIN
+   ✅ [10/70] Created: Healthcare Providers in BAWKU
+   ✅ [11/70] Created: Healthcare Providers in BEGORO
+   ✅ [12/70] Created: Healthcare Providers in BEREKUM
+   ✅ [13/70] Created: Healthcare Providers in BOGOSO
+   ✅ [14/70] Created: Healthcare Providers in BOLGATANGA
+   ✅ [15/70] Created: Healthcare Providers in CAPE COAST
+   ✅ [16/70] Created: Healthcare Providers in DORMAA
+   ✅ [17/70] Created: Healthcare Providers in DROBO
+   ✅ [18/70] Created: Healthcare Providers in DUNKWA-ON-OFFIN
+   ✅ [19/70] Created: Healthcare Providers in ELMINA
+   ✅ [20/70] Created: Healthcare Providers in ENCHI
+   ✅ [21/70] Created: Healthcare Providers in ENYIRESI
+   ✅ [22/70] Created: Healthcare Providers in GOASO
+   ✅ [23/70] Created: Healthcare Providers in HO
+   ✅ [24/70] Created: Healthcare Providers in HOHOE
+   ✅ [25/70] Created: Healthcare Providers in HWIDIEM
+   ✅ [26/70] Created: Healthcare Providers in INCHABAN
+   ✅ [27/70] Created: Healthcare Providers in KADE
+   ✅ [28/70] Created: Healthcare Providers in KENYASE
+   ✅ [29/70] Created: Healthcare Providers in KIBI
+   ✅ [30/70] Created: Healthcare Providers in KINTAMPO, DUAYAW NKWANTA & OTHERS
+   ✅ [31/70] Created: Healthcare Providers in KOFORIDUA
+   ✅ [32/70] Created: Healthcare Providers in LAWRA
+   ✅ [33/70] Created: Healthcare Providers in MAMFE AKUAPEM
+   ✅ [34/70] Created: Healthcare Providers in MAMPONG
+   ✅ [35/70] Created: Healthcare Providers in MANKESSIM
+Error indexing document b56ad762-2396-4124-af73-1fe8c0f4f2e0: GEMINI_API_KEY environment variable is required
+Error indexing document 588836f4-ca97-43b1-8548-83688665e6fa: GEMINI_API_KEY environment variable is required
+Error indexing document 85182614-485d-47ac-9942-3b7b9583ace4: GEMINI_API_KEY environment variable is required
+Error indexing document 251ea8f3-f4b3-4425-8845-8b6abae97ece: GEMINI_API_KEY environment variable is required
+Error indexing document 177e6be7-1aa0-4b43-af3b-eebb9bc24386: GEMINI_API_KEY environment variable is required
+Error indexing document 99198030-9966-494c-a1f5-4c95f2a3e842: GEMINI_API_KEY environment variable is required
+Error indexing document c62e0e43-2444-498f-b8b9-bfc553a0aec4: GEMINI_API_KEY environment variable is required
+Error indexing document 5cc0aab0-2cb4-4e68-b94c-7cb77f07719c: GEMINI_API_KEY environment variable is required
+Error indexing document a2dd28f8-67b5-402b-8b04-f1512c7b045e: GEMINI_API_KEY environment variable is required
+Error indexing document 9fbf5287-d3df-4251-845d-944fe4e28f6f: GEMINI_API_KEY environment variable is required
+Error indexing document 803b36a0-ca0b-4827-a103-e26bef88fc7d: GEMINI_API_KEY environment variable is required
+Error indexing document 604239eb-ea71-40af-9bb3-ed6e1a966b26: GEMINI_API_KEY environment variable is required
+Error indexing document 12eefcbd-d80c-4c53-90e3-0cfe4253d5e5: GEMINI_API_KEY environment variable is required
+Error indexing document 9394cf93-7e7e-4333-93bf-36964058238b: GEMINI_API_KEY environment variable is required
+Error indexing document c738b52c-c12e-4e94-abfe-821e6d886bd7: GEMINI_API_KEY environment variable is required
+Error indexing document 1f544ee0-a4e1-4714-8f20-b55c089e2e6b: GEMINI_API_KEY environment variable is required
+Error indexing document 2e19ac5b-d793-4a9a-94b6-9e915b69d071: GEMINI_API_KEY environment variable is required
+Error indexing document 1b89f4f4-c2dc-4f36-878d-ec5f6c9fa6d2: GEMINI_API_KEY environment variable is required
+Error indexing document 05590af7-8970-447e-805d-1961c4527c4b: GEMINI_API_KEY environment variable is required
+Error indexing document 5cbfe3ac-3d93-48b4-aa98-c9347057b7f8: GEMINI_API_KEY environment variable is required
+Error indexing document e5c5cb55-4316-4ea6-ac71-d09135cf4891: GEMINI_API_KEY environment variable is required
+Error indexing document 9eb8c742-4d4a-4489-a389-5416ae7c49aa: GEMINI_API_KEY environment variable is required
+Error indexing document 1d8631b5-4c55-4382-a8fb-dfbe11f72d3f: GEMINI_API_KEY environment variable is required
+Error indexing document b3b54b60-5336-4348-b4c6-cabc16403b77: GEMINI_API_KEY environment variable is required
+Error indexing document 3fc64958-6516-4650-a34c-2308020978c2: GEMINI_API_KEY environment variable is required
+Error indexing document 325442db-a63f-4f10-b8ba-2fd933aedccd: GEMINI_API_KEY environment variable is required
+Error indexing document ec9383b6-b47b-4658-b159-1126ccf0a4bb: GEMINI_API_KEY environment variable is required
+Error indexing document 764da598-582c-4194-b723-14fa68cf9091: GEMINI_API_KEY environment variable is required
+Error indexing document c5454e3b-2ff4-4b4a-a1d9-b8321e1abbf7: GEMINI_API_KEY environment variable is required
+Error indexing document 532409f0-f785-4ff6-be4d-94539df60661: GEMINI_API_KEY environment variable is required
+Error indexing document e007dc6a-202e-4004-8b67-6c42ad16e370: GEMINI_API_KEY environment variable is required
+Error indexing document 9e94114c-d66e-488e-a945-cf998d31a049: GEMINI_API_KEY environment variable is required
+Error indexing document 60f9d4d3-8493-4638-b409-214f3c1c9b23: GEMINI_API_KEY environment variable is required
+Error indexing document 8f5afdc2-7417-431e-97dc-324fce7a564e: GEMINI_API_KEY environment variable is required
+Error indexing document 289c87ca-9eaf-4e7b-8a83-e04581d1e009: GEMINI_API_KEY environment variable is required
+Error indexing document 08a49978-4e20-4225-aa1d-643a171e7af6: GEMINI_API_KEY environment variable is required
+Error indexing document 21855db7-6d1a-4f62-a842-1b9d547b3f93: GEMINI_API_KEY environment variable is required
+Error indexing document 1ecdc74e-43ae-47ae-9403-9c0fa9947a18: GEMINI_API_KEY environment variable is required
+Error indexing document bb6a8019-1f89-4e18-b409-45416136cdd2: GEMINI_API_KEY environment variable is required
+Error indexing document 9340f12e-a5d5-48f7-a7f2-6662d04b7fee: GEMINI_API_KEY environment variable is required
+Error indexing document 7b1ac8f6-08b3-43c7-87bd-c0afe03ba4b4: GEMINI_API_KEY environment variable is required
+Error indexing document 10e25c0e-65d9-42ed-8743-2fce17d10b54: GEMINI_API_KEY environment variable is required
+Error indexing document b3a753a8-ec33-4e72-96e2-f439db8ae448: GEMINI_API_KEY environment variable is required
+Error indexing document 01c05b65-6902-42b5-8a4a-8b56353496db: GEMINI_API_KEY environment variable is required
+Error indexing document b7a539f2-c0dd-489a-b988-75733fe89217: GEMINI_API_KEY environment variable is required
+Error indexing document 535d4b17-b100-46c0-b72f-db93ead9c5f5: GEMINI_API_KEY environment variable is required
+Error indexing document 7a7a0692-4e58-4c46-bb0b-77c1760dd946: GEMINI_API_KEY environment variable is required
+Error indexing document 6c0da911-4bae-4ebd-a065-b439eacac94f: GEMINI_API_KEY environment variable is required
+Error indexing document 6454f7c5-79b7-437a-b121-5e941772073b: GEMINI_API_KEY environment variable is required
+Error indexing document 903dd3cb-5ebf-4009-8984-99fe5dd9cf5e: GEMINI_API_KEY environment variable is required
+Error indexing document 6e876138-1ef5-4a41-ab1c-9d196b5d2ef1: GEMINI_API_KEY environment variable is required
+Error indexing document 73df2e3f-aee1-4c39-a310-e6d5b4c8d84d: GEMINI_API_KEY environment variable is required
+Error indexing document 20732497-3ba9-4cd6-accf-a502eb9a38e2: GEMINI_API_KEY environment variable is required
+Error indexing document bae3692d-e46c-4ccd-9c44-c304eec25aa5: GEMINI_API_KEY environment variable is required
+Error indexing document 72f7e100-74f3-454b-b47e-d3ec6fb03e3a: GEMINI_API_KEY environment variable is required
+Error indexing document bd0c632c-2c58-41b0-9508-67563bb37cb7: GEMINI_API_KEY environment variable is required
+Error indexing document b633b561-fb88-428e-a609-51c955f9d5a2: GEMINI_API_KEY environment variable is required
+Error indexing document d045cf36-7426-4566-b11c-4d0a17274c44: GEMINI_API_KEY environment variable is required
+Error indexing document c0192852-428d-4207-a063-a3a45f6b83be: GEMINI_API_KEY environment variable is required
+Error indexing document 8aedbc75-d83a-4d15-bc34-57b13e1a7775: GEMINI_API_KEY environment variable is required
+Error indexing document 7a405d05-0e39-426a-a1c1-7c6713cdd2a0: GEMINI_API_KEY environment variable is required
+Error indexing document 2af24406-1e43-45a7-9749-74c50d957243: GEMINI_API_KEY environment variable is required
+Error indexing document 05486353-b157-4eb7-aced-eb2065df70e7: GEMINI_API_KEY environment variable is required
+Error indexing document 8e01aed8-f20c-41a1-9f5c-486f7fc73e5c: GEMINI_API_KEY environment variable is required
+Error indexing document 1d5d160a-64a2-4027-9a03-340f172d254d: GEMINI_API_KEY environment variable is required
+Error indexing document 23d09a6b-9a36-4dd9-9646-72d84bd731f8: GEMINI_API_KEY environment variable is required
+Error indexing document 77e2ae10-0327-4cdb-bbd2-3e267f2f4866: GEMINI_API_KEY environment variable is required
+Error indexing document 59289a63-532a-48f4-a3a4-2c630832dcaa: GEMINI_API_KEY environment variable is required
+Error indexing document 418be483-783b-44e3-9ff8-307aede9c0fd: GEMINI_API_KEY environment variable is required
+Error indexing document 1a3d630c-071a-488e-849f-1001d1cba4cd: GEMINI_API_KEY environment variable is required
+   ✅ [36/70] Created: Healthcare Providers in NAVRONGO
+   ✅ [37/70] Created: Healthcare Providers in NEW ABIREM
+   ✅ [38/70] Created: Healthcare Providers in NKAWKAW
+   ✅ [39/70] Created: Healthcare Providers in NKORANZA
+   ✅ [40/70] Created: Healthcare Providers in NSAWAM
+   ✅ [41/70] Created: Healthcare Providers in ODA
+   ✅ [42/70] Created: Healthcare Providers in ODUMASE KROBO
+   ✅ [43/70] Created: Healthcare Providers in OSIEM
+   ✅ [44/70] Created: Healthcare Providers in OSINO
+   ✅ [45/70] Created: Healthcare Providers in SAMPA
+   ✅ [46/70] Created: Healthcare Providers in SAMREBOI
+   ✅ [47/70] Created: Healthcare Providers in SEFWI AKONTOMBRA
+   ✅ [48/70] Created: Healthcare Providers in SEFWI ANHWIASO
+   ✅ [49/70] Created: Healthcare Providers in SEFWI ASAFO
+   ✅ [50/70] Created: Healthcare Providers in SEFWI ASAWINSO
+   ✅ [51/70] Created: Healthcare Providers in SEFWI BEKWAI
+   ✅ [52/70] Created: Healthcare Providers in SEFWI BIBIANI
+   ✅ [53/70] Created: Healthcare Providers in SEFWI BODI
+   ✅ [54/70] Created: Healthcare Providers in SEFWI ESSAM
+   ✅ [55/70] Created: Healthcare Providers in SEFWI WIAWSO
+   ✅ [56/70] Created: Healthcare Providers in SEKONDI
+   ✅ [57/70] Created: Healthcare Providers in SOMANYA
+   ✅ [58/70] Created: Healthcare Providers in SUAMAN DADIESO
+   ✅ [59/70] Created: Healthcare Providers in SUHUM
+   ✅ [60/70] Created: Healthcare Providers in SUNYANI
+   ✅ [61/70] Created: Healthcare Providers in SWEDRU
+   ✅ [62/70] Created: Healthcare Providers in TAFO
+   ✅ [63/70] Created: Healthcare Providers in TAKORADI
+   ✅ [64/70] Created: Healthcare Providers in TAMALE
+   ✅ [65/70] Created: Healthcare Providers in TARKWA
+   ✅ [66/70] Created: Healthcare Providers in TECHIMAN
+   ✅ [67/70] Created: Healthcare Providers in WA
+   ✅ [68/70] Created: Healthcare Providers in WASSA AKROPONG
+   ✅ [69/70] Created: Healthcare Providers in WENCHI
+   ✅ [70/70] Created: Healthcare Providers in WINNEBA
+
+   📊 Summary:
+      ✅ Successfully indexed: 70
+      ❌ Failed: 0
+
+🔍 STEP 3: Verifying indexing...
+================================================================================
+Traceback (most recent call last):
+  File "/opt/kasaai/apps/automations/premier-health/full_reindex_documents.py", line 340, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/kasaai/apps/automations/premier-health/full_reindex_documents.py", line 317, in main
+    verified = await verify_indexing()
+  File "/opt/kasaai/apps/automations/premier-health/full_reindex_documents.py", line 281, in verify_indexing
+    print(f"   ✅ Found {result.total} documents in database")
+  File "/opt/kasaai/apps/venv/lib/python3.10/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'DocumentListResponse' object has no attribute 'total'

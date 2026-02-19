@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Labs Africa - Demo Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-card h2 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .demo-card .icon {
+            font-size: 2rem;
+        }
+
+        .demo-card p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .demo-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .tag.primary {
+            background: #14B8A6;
+            color: white;
+        }
+
+        .demo-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .demo-link:hover {
+            color: #764ba2;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            background: white;
+            border-radius: 15px;
+            padding: 60px 30px;
+            text-align: center;
+            color: #718096;
+        }
+
+        .empty-state h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Labs Africa</h1>
+            <p class="subtitle">Demo Showcase & Interactive Examples</p>
+        </header>
+
+        <div class="demos-grid" id="demosGrid">
+            <!-- VAPI Voice Assistant Demo -->
+            <a href="/tts_test.html" class="demo-card">
+                <h2>
+                    <span class="icon">🎙️</span>
+                    VAPI Voice Assistant
+                </h2>
+                <p>
+                    Test our AI-powered voice assistant with real-time speech recognition and natural language processing.
+                    Experience seamless voice interactions with customizable consent management.
+                </p>
+                <div class="tags">
+                    <span class="tag primary">Voice AI</span>
+                    <span class="tag">VAPI SDK</span>
+                    <span class="tag">Real-time</span>
+                    <span class="tag">Privacy-First</span>
+                </div>
+                <span class="demo-link">Launch Demo →</span>
+            </a>
+
+            <!-- Placeholder for future demos -->
+            <!-- More demos will be added here automatically -->
+        </div>
+
+        <div class="footer">
+            <p>
+                <strong>AI Labs Africa</strong> - Pioneering AI Solutions for Africa<br>
+                <a href="https://ailabsafrica.com" target="_blank">Visit Our Website</a> |
+                <a href="https://developer.ailabsafrica.com" target="_blank">Developer Portal</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-discover and list HTML files in the demos directory
+        // This would typically be done server-side, but for static hosting
+        // we're manually maintaining the list in the HTML above
+
+        // Future enhancement: Add a backend endpoint to dynamically list demos
+        console.log('AI Labs Africa - Demo Showcase loaded');
+    </script>
+</body>
+</html>

@@ -1,0 +1,561 @@
+"""
+Reference Audio Upload API for Zero-Shot TTS Providers.
+
+Allows users to upload reference audio files that can be used with
+zero-shot voice cloning providers like StyleTTS2, Coqui XTTS, OpenVoice, and F5-TTS.
+"""
+
+import sys
+import os
+import logging
+import uuid
+from pathlib import Path
+from typing import Optional, List
+from datetime import datetime
+
+from fastapi import APIRouter, File, UploadFile, Form, Depends, HTTPException, status
+from fastapi.responses import JSONResponse, FileResponse
+from pydantic import BaseModel, Field
+
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../../")))
+
+from app.core.auth import get_current_user
+from app.core.database import get_db
+from apps.shared.services.voice_library_service import VoiceLibraryService
+# Storage will be handled via local filesystem for now
+# Can be enhanced to use HetznerStorageBox later if needed
+
+logger = logging.getLogger(__name__)
+
+router = APIRouter(prefix="/reference-audio", tags=["Reference Audio"])
+
+# Zero-shot TTS providers that support reference audio
+ZERO_SHOT_PROVIDERS = ["styletts2", "coqui_xtts", "openvoice", "f5tts"]
+
+# Supported audio formats
+SUPPORTED_FORMATS = [".wav", ".mp3", ".ogg", ".flac", ".m4a"]
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
+
+
+class ReferenceAudioResponse(BaseModel):
+    """Reference audio upload response."""
+    
+    success: bool = Field(..., description="Upload success status")
+    reference_audio_id: str = Field(..., description="Unique ID for reference audio")
+    voice_id: Optional[str] = Field(None, description="Linked voice library ID if created")
+    audio_url: str = Field(..., description="Public URL to access the audio file")
+    file_size_bytes: int = Field(..., description="File size in bytes")
+    duration_seconds: Optional[float] = Field(None, description="Audio duration in seconds")
+    compatible_providers: List[str] = Field(default_factory=lambda: ZERO_SHOT_PROVIDERS)
+    message: str = Field(..., description="Response message")
+
+
+class ReferenceAudioInfo(BaseModel):
+    """Reference audio information."""
+    
+    reference_audio_id: str
+    name: str
+    description: Optional[str]
+    audio_url: str
+    file_size_bytes: int
+    duration_seconds: Optional[float]
+    compatible_providers: List[str]
+    created_at: datetime
+    user_id: str
+
+
+def validate_audio_file(file: UploadFile) -> tuple[bool, Optional[str]]:
+    """
+    Validate uploaded audio file.
+    
+    Args:
+        file: Uploaded file
+        
+    Returns:
+        (is_valid, error_message)
+    """
+    # Check file size
+    if hasattr(file, 'size') and file.size and file.size > MAX_FILE_SIZE:
+        return False, f"File size exceeds maximum of {MAX_FILE_SIZE / 1024 / 1024}MB"
+    
+    # Check content type
+    if file.content_type and not file.content_type.startswith("audio/"):
+        return False, "File must be an audio file"
+    
+    # Check file extension
+    if file.filename:
+        ext = Path(file.filename).suffix.lower()
+        if ext not in SUPPORTED_FORMATS:
+            return False, f"Unsupported format. Supported: {', '.join(SUPPORTED_FORMATS)}"
+    
+    return True, None
+
+
+async def get_audio_duration(audio_bytes: bytes, format: str) -> Optional[float]:
+    """
+    Get audio duration from audio bytes.
+    
+    Args:
+        audio_bytes: Audio file bytes
+        format: Audio format (wav, mp3, etc.)
+        
+    Returns:
+        Duration in seconds or None if unable to determine
+    """
+    try:
+        import librosa
+        import io
+        
+        # Create temporary file-like object
+        audio_io = io.BytesIO(audio_bytes)
+        
+        # Load audio and get duration
+        y, sr = librosa.load(audio_io, sr=None)
+        duration = len(y) / sr if sr > 0 else None
+        
+        return duration
+    except Exception as e:
+        logger.warning(f"Could not determine audio duration: {e}")
+        return None
+
+
+@router.post("/upload", response_model=ReferenceAudioResponse)
+async def upload_reference_audio(
+    audio_file: UploadFile = File(..., description="Reference audio file (WAV, MP3, OGG, FLAC, M4A)"),
+    name: str = Form(..., description="Name for this reference audio"),
+    description: Optional[str] = Form(None, description="Optional description"),
+    create_voice: bool = Form(False, description="Create a voice library entry for this reference audio"),
+    gender: Optional[str] = Form(None, description="Voice gender (male, female, neutral)"),
+    language: Optional[str] = Form("en", description="Primary language code"),
+    tags: Optional[str] = Form(None, description="Comma-separated tags"),
+    current_user: dict = Depends(get_current_user),
+    db = Depends(get_db)
+):
+    """
+    Upload reference audio for zero-shot TTS providers.
+    
+    This endpoint allows users to upload reference audio files that can be used
+    with zero-shot voice cloning providers (StyleTTS2, Coqui XTTS, OpenVoice, F5-TTS).
+    The audio file is stored and can be linked to a voice library entry for easy access.
+    
+    Args:
+        audio_file: Audio file to upload (max 10MB)
+        name: Display name for the reference audio
+        description: Optional description
+        create_voice: Whether to create a voice library entry
+        gender: Voice gender for voice library entry
+        language: Primary language code
+        tags: Comma-separated tags for voice library entry
+        
+    Returns:
+        Reference audio metadata with public URL
+    """
+    try:
+        user_id = current_user.get("user_id") or str(current_user.get("_id", ""))
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User authentication required"
+            )
+        
+        # Validate audio file
+        is_valid, error_msg = validate_audio_file(audio_file)
+        if not is_valid:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=error_msg
+            )
+        
+        # Read audio file
+        audio_bytes = await audio_file.read()
+        
+        # Check file size after reading
+        if len(audio_bytes) > MAX_FILE_SIZE:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"File size exceeds maximum of {MAX_FILE_SIZE / 1024 / 1024}MB"
+            )
+        
+        if len(audio_bytes) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Empty audio file"
+            )
+        
+        # Generate unique ID
+        reference_audio_id = f"ref_audio_{uuid.uuid4().hex[:12]}"
+        
+        # Get file extension
+        file_ext = Path(audio_file.filename or "audio.wav").suffix.lower()
+        if not file_ext or file_ext not in SUPPORTED_FORMATS:
+            file_ext = ".wav"
+        
+        # Determine audio duration
+        audio_format = file_ext[1:]  # Remove leading dot
+        duration_seconds = await get_audio_duration(audio_bytes, audio_format)
+        
+        # Store audio file locally first (can enhance to cloud later)
+        local_storage_dir = Path("/opt/kasaai/apps/inkwave/backend/storage/reference_audio") / user_id
+        local_storage_dir.mkdir(parents=True, exist_ok=True)
+        
+        local_file_path = local_storage_dir / f"{reference_audio_id}{file_ext}"
+        local_file_path.write_bytes(audio_bytes)
+        
+        logger.info(f"Stored reference audio locally: {local_file_path}")
+        
+        # Create storage path for reference
+        storage_path = f"reference_audio/{user_id}/{reference_audio_id}{file_ext}"
+        # Use API endpoint for serving audio files (requires auth)
+        audio_url = f"/api/v1/reference-audio/{reference_audio_id}/audio"
+        
+        # Create voice library entry if requested
+        voice_id = None
+        if create_voice:
+            try:
+                from apps.shared.services.voice_library_service import (
+                    VoiceLibraryService,
+                    VoiceCreate,
+                    VoiceCharacteristics,
+                    VoiceGender,
+                    VoiceAccess,
+                    VoiceVisibility,
+                    VoiceMetadata
+                )
+                
+                voice_service = VoiceLibraryService()
+                
+                # Parse tags
+                tags_list = [t.strip() for t in tags.split(",")] if tags else []
+                
+                # Create voice data
+                voice_data = VoiceCreate(
+                    name=name,
+                    description=description or f"Reference audio for zero-shot TTS: {name}",
+                    characteristics=VoiceCharacteristics(
+                        gender=VoiceGender(gender) if gender else VoiceGender.UNKNOWN,
+                        language=language or "en"
+                    ),
+                    access=VoiceAccess(visibility=VoiceVisibility.PRIVATE),
+                    metadata=VoiceMetadata(
+                        tags=tags_list,
+                        categories=["zero-shot-tts", "reference-audio"],
+                        use_cases=["audiobook", "narration"]
+                    )
+                )
+                
+                # Create voice with reference audio
+                voice = await voice_service.create_voice(
+                    voice_data=voice_data,
+                    audio_file=audio_bytes,
+                    audio_filename=f"{reference_audio_id}{file_ext}",
+                    user_id=user_id,
+                    organization_id=current_user.get("organization_id")
+                )
+                
+                voice_id = voice.get("voice_id") if isinstance(voice, dict) else getattr(voice, "voice_id", None)
+                logger.info(f"Created voice library entry: {voice_id}")
+                
+            except Exception as e:
+                logger.error(f"Failed to create voice library entry: {e}")
+                # Don't fail the upload if voice creation fails
+        
+        # Store reference audio metadata in MongoDB
+        reference_audio_doc = {
+            "reference_audio_id": reference_audio_id,
+            "user_id": user_id,
+            "name": name,
+            "description": description,
+            "audio_url": audio_url,
+            "storage_path": storage_path if upload_success else None,
+            "file_size_bytes": len(audio_bytes),
+            "duration_seconds": duration_seconds,
+            "format": audio_format,
+            "compatible_providers": ZERO_SHOT_PROVIDERS,
+            "voice_id": voice_id,
+            "created_at": datetime.utcnow(),
+            "organization_id": current_user.get("organization_id")
+        }
+        
+        # Insert into database
+        reference_audio_collection = db.reference_audio
+        await reference_audio_collection.insert_one(reference_audio_doc)
+        
+        logger.info(f"Reference audio uploaded: {reference_audio_id} by user {user_id}")
+        
+        return ReferenceAudioResponse(
+            success=True,
+            reference_audio_id=reference_audio_id,
+            voice_id=voice_id,
+            audio_url=audio_url,
+            file_size_bytes=len(audio_bytes),
+            duration_seconds=duration_seconds,
+            compatible_providers=ZERO_SHOT_PROVIDERS,
+            message="Reference audio uploaded successfully"
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to upload reference audio: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to upload reference audio: {str(e)}"
+        )
+
+
+@router.get("/", response_model=List[ReferenceAudioInfo])
+async def list_reference_audio(
+    current_user: dict = Depends(get_current_user),
+    db = Depends(get_db)
+):
+    """
+    List all reference audio files for the current user.
+    
+    Returns:
+        List of reference audio files with metadata
+    """
+    try:
+        user_id = current_user.get("user_id") or str(current_user.get("_id", ""))
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User authentication required"
+            )
+        
+        # Query user's reference audio
+        reference_audio_collection = db.reference_audio
+        cursor = reference_audio_collection.find({"user_id": user_id}).sort("created_at", -1)
+        
+        reference_audios = []
+        async for doc in cursor:
+            reference_audios.append(ReferenceAudioInfo(
+                reference_audio_id=doc["reference_audio_id"],
+                name=doc["name"],
+                description=doc.get("description"),
+                audio_url=doc["audio_url"],
+                file_size_bytes=doc["file_size_bytes"],
+                duration_seconds=doc.get("duration_seconds"),
+                compatible_providers=doc.get("compatible_providers", ZERO_SHOT_PROVIDERS),
+                created_at=doc["created_at"],
+                user_id=doc["user_id"]
+            ))
+        
+        return reference_audios
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to list reference audio: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to list reference audio: {str(e)}"
+        )
+
+
+@router.get("/{reference_audio_id}")
+async def get_reference_audio(
+    reference_audio_id: str,
+    current_user: dict = Depends(get_current_user),
+    db = Depends(get_db)
+):
+    """
+    Get reference audio metadata by ID.
+    
+    Args:
+        reference_audio_id: Reference audio ID
+        
+    Returns:
+        Reference audio metadata
+    """
+    try:
+        user_id = current_user.get("user_id") or str(current_user.get("_id", ""))
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User authentication required"
+            )
+        
+        reference_audio_collection = db.reference_audio
+        doc = await reference_audio_collection.find_one({
+            "reference_audio_id": reference_audio_id,
+            "user_id": user_id
+        })
+        
+        if not doc:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Reference audio not found"
+            )
+        
+        return ReferenceAudioInfo(
+            reference_audio_id=doc["reference_audio_id"],
+            name=doc["name"],
+            description=doc.get("description"),
+            audio_url=doc["audio_url"],
+            file_size_bytes=doc["file_size_bytes"],
+            duration_seconds=doc.get("duration_seconds"),
+            compatible_providers=doc.get("compatible_providers", ZERO_SHOT_PROVIDERS),
+            created_at=doc["created_at"],
+            user_id=doc["user_id"]
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to get reference audio: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get reference audio: {str(e)}"
+        )
+
+
+@router.delete("/{reference_audio_id}")
+async def delete_reference_audio(
+    reference_audio_id: str,
+    current_user: dict = Depends(get_current_user),
+    db = Depends(get_db)
+):
+    """
+    Delete reference audio by ID.
+    
+    Args:
+        reference_audio_id: Reference audio ID to delete
+        
+    Returns:
+        Success message
+    """
+    try:
+        user_id = current_user.get("user_id") or str(current_user.get("_id", ""))
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User authentication required"
+            )
+        
+        reference_audio_collection = db.reference_audio
+        doc = await reference_audio_collection.find_one({
+            "reference_audio_id": reference_audio_id,
+            "user_id": user_id
+        })
+        
+        if not doc:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Reference audio not found"
+            )
+        
+        # Delete file from local storage if path is available
+        storage_path = doc.get("storage_path")
+        if storage_path:
+            try:
+                # Extract user_id and filename from storage path
+                # Format: reference_audio/{user_id}/{reference_audio_id}{ext}
+                parts = storage_path.split("/")
+                if len(parts) >= 3:
+                    user_id_from_path = parts[1]
+                    filename = parts[2]
+                    local_file_path = Path("/opt/kasaai/apps/inkwave/backend/storage/reference_audio") / user_id_from_path / filename
+                    if local_file_path.exists():
+                        local_file_path.unlink()
+                        logger.info(f"Deleted local reference audio file: {local_file_path}")
+            except Exception as e:
+                logger.warning(f"Failed to delete file from storage: {e}")
+        
+        # Delete from database
+        await reference_audio_collection.delete_one({
+            "reference_audio_id": reference_audio_id,
+            "user_id": user_id
+        })
+        
+        logger.info(f"Reference audio deleted: {reference_audio_id} by user {user_id}")
+        
+        return {"success": True, "message": "Reference audio deleted successfully"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to delete reference audio: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete reference audio: {str(e)}"
+        )
+
+
+@router.get("/{reference_audio_id}/audio")
+async def get_reference_audio_file(
+    reference_audio_id: str,
+    current_user: dict = Depends(get_current_user),
+    db = Depends(get_db)
+):
+    """
+    Serve reference audio file.
+    
+    Args:
+        reference_audio_id: Reference audio ID
+        
+    Returns:
+        Audio file
+    """
+    try:
+        user_id = current_user.get("user_id") or str(current_user.get("_id", ""))
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User authentication required"
+            )
+        
+        reference_audio_collection = db.reference_audio
+        doc = await reference_audio_collection.find_one({
+            "reference_audio_id": reference_audio_id,
+            "user_id": user_id
+        })
+        
+        if not doc:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Reference audio not found"
+            )
+        
+        # Get file path
+        storage_path = doc.get("storage_path", "")
+        if storage_path:
+            # Extract user_id and filename from storage path
+            # Format: reference_audio/{user_id}/{reference_audio_id}{ext}
+            parts = storage_path.split("/")
+            if len(parts) >= 3:
+                user_id_from_path = parts[1]
+                filename = parts[2]
+                local_file_path = Path("/opt/kasaai/apps/inkwave/backend/storage/reference_audio") / user_id_from_path / filename
+                
+                if local_file_path.exists():
+                    # Determine content type from file extension
+                    ext = local_file_path.suffix.lower()
+                    content_type_map = {
+                        ".wav": "audio/wav",
+                        ".mp3": "audio/mpeg",
+                        ".ogg": "audio/ogg",
+                        ".flac": "audio/flac",
+                        ".m4a": "audio/mp4"
+                    }
+                    content_type = content_type_map.get(ext, "audio/wav")
+                    
+                    return FileResponse(
+                        path=str(local_file_path),
+                        media_type=content_type,
+                        filename=filename
+                    )
+        
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Audio file not found"
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to serve reference audio file: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to serve audio file: {str(e)}"
+        )

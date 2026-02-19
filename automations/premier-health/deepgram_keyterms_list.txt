@@ -1,0 +1,60 @@
+DEEPGRAM KEYTERMS (58 multi-word phrases):
+================================================================================
+ 1. Accra Central Tudu Makola
+ 2. Achimota New Achimota
+ 3. Ahodwo Ahinsan
+ 4. Airport Residential Area 37 Area
+ 5. Amansaman Pokuase
+ 6. Ashaiman Community 26
+ 7. Asiakwa Osino Anyinam Enyiresi Kibi
+ 8. Asikuma Ajumako
+ 9. Asylum Down
+10. Bomso Knust Ejisu
+11. Cape Coast Environs
+12. Circle Kaneshie North Kaneshie Industrial Area
+13. Dansoman Mamprobi Korle Bu
+14. Dome Haatso Ashongman Kwabenya
+15. Dzorwulu Abelenkpe
+16. East Legon Adjringanor
+17. Kintampo Duayaw Nkwanta Others
+18. Kokomlemle Maamobi Nima
+19. Konongo Agogo
+20. Labone La Tse Addo Cantonments
+21. Lapaz Nyamekye Darkuman Odorkor
+22. Latebiokoshie Mataheko
+23. Legon North Legon
+24. Madina Adenta Dodowa
+25. Mamfe Akuapem
+26. Mampong Agona Wiamoase
+27. New Abirem
+28. Obuasi Dunkwa
+29. Sakumono Estate Lashibi Comm 181921
+30. Sefwi Anhwiaso
+31. Sefwi Asafo
+32. Sefwi Asawinso
+33. Sefwi Bekwai
+34. Sefwi Bibiani
+35. Sefwi Bodi
+36. Sefwi Essam
+37. Sefwi Juaboso
+38. Sefwi Wiawso
+39. Somanyaodumase Krobo
+40. Spintex Road Baatsona
+41. Suaman Dadieso
+42. Tantra Hill Ofankor
+43. Tema Community 2
+44. Tema Community 2 4
+45. Tema Community 4 5 6 9 10 12
+46. Teshie Nungua
+47. Wassa Akropong
+48. Weija Kasoa Gbawe
+49. cardiologist
+50. dermatologist
+51. emergency medicine
+52. family medicine
+53. general practitioner
+54. gynecologist
+55. internal medicine
+56. ophthalmologist
+57. orthopedic surgeon
+58. pediatrician

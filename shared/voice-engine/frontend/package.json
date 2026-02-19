@@ -1,0 +1,11 @@
+{
+  "name": "voice-engine-frontend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "tsx client.test.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1"
+  }
+}

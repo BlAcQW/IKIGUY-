@@ -1,0 +1,15 @@
+{
+  "updated_at": "2025-10-18T16:11:11.299837",
+  "results": {
+    "premier_health_rag": {
+      "tool_id": "560adfee-43bf-4614-baa8-0d5ccfbe9769",
+      "status": "success",
+      "error": null
+    },
+    "ghana_tourism_rag": {
+      "tool_id": "2bac26dc-5f8e-4d3d-82b2-ca55286ddf36",
+      "status": "success",
+      "error": null
+    }
+  }
+}

@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  voice-lab-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: voice-lab-api
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CUDA_VISIBLE_DEVICES=0
+      - MODEL_CACHE_DIR=/app/models
+      - DATA_DIR=/app/data
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./notebooks:/app/notebooks
+      - ./configs:/app/configs
+      - ./scripts:/app/scripts
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - voice-lab-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  redis:
+    image: redis:7-alpine
+    container_name: voice-lab-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - voice-lab-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  nginx:
+    image: nginx:alpine
+    container_name: voice-lab-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - voice-lab-api
+    networks:
+      - voice-lab-network
+    restart: unless-stopped
+
+networks:
+  voice-lab-network:
+    driver: bridge
+
+volumes:
+  redis-data:

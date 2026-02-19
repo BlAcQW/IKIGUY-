@@ -1,0 +1,303 @@
+{
+  "destinations": [
+    {
+      "id": "dest_011",
+      "name": "Manhyia Palace Museum",
+      "region": "Ashanti",
+      "city": "Kumasi",
+      "category": ["historical", "cultural", "museum"],
+      "description": "The official palace of the Asantehene, the King of the Ashanti people. The museum showcases the rich history and culture of the Ashanti Kingdom, including royal artifacts, traditional clothing, and historical exhibits.",
+      "highlights": [
+        "Royal regalia and ceremonial items",
+        "Traditional Ashanti architecture",
+        "Historical exhibits on Ashanti Kingdom",
+        "Cultural heritage displays",
+        "Royal artifacts collection"
+      ],
+      "activities": [
+        "Museum tour",
+        "Cultural education",
+        "Photography",
+        "Historical learning"
+      ],
+      "best_time_to_visit": "Year-round",
+      "estimated_visit_duration": "2-3 hours",
+      "entry_fee": "GHS 20 for adults, GHS 10 for students",
+      "accessibility": "Wheelchair accessible",
+      "location_details": "Located in Kumasi, capital of Ashanti Region. Easily accessible from the city center."
+    },
+    {
+      "id": "dest_012",
+      "name": "Kejetia Market",
+      "region": "Ashanti",
+      "city": "Kumasi",
+      "category": ["shopping", "cultural", "urban"],
+      "description": "The largest open-air market in West Africa, Kejetia Market is a bustling commercial hub with over 11,000 stores selling everything from traditional crafts to modern goods.",
+      "highlights": [
+        "Largest market in West Africa",
+        "Traditional Ghanaian crafts",
+        "Kente cloth and textiles",
+        "Local food and spices",
+        "Authentic shopping experience"
+      ],
+      "activities": [
+        "Shopping for traditional crafts",
+        "Local food tasting",
+        "Photography",
+        "Cultural immersion",
+        "Bargaining and trade"
+      ],
+      "best_time_to_visit": "Morning (8 AM - 12 PM) for best experience",
+      "estimated_visit_duration": "2-4 hours",
+      "entry_fee": "Free entry",
+      "accessibility": "Some areas accessible, but crowded",
+      "location_details": "Central Kumasi, near Adum and the central business district."
+    },
+    {
+      "id": "dest_013",
+      "name": "Lake Bosumtwi",
+      "region": "Ashanti",
+      "city": "Bosumtwi District",
+      "category": ["nature", "recreation", "adventure"],
+      "description": "Ghana's only natural lake, formed in an ancient meteorite crater. Surrounded by lush forests and traditional fishing villages, it's a serene destination for nature lovers.",
+      "highlights": [
+        "Meteorite crater lake",
+        "Traditional fishing villages",
+        "Swimming and water activities",
+        "Scenic hiking trails",
+        "Birdwatching opportunities"
+      ],
+      "activities": [
+        "Swimming",
+        "Boat rides",
+        "Hiking",
+        "Village tours",
+        "Photography",
+        "Birdwatching"
+      ],
+      "best_time_to_visit": "Dry season (November - March)",
+      "estimated_visit_duration": "Full day or overnight",
+      "entry_fee": "GHS 10 per person",
+      "accessibility": "Accessible by car, some hiking required",
+      "location_details": "30 km southeast of Kumasi. Accessible via road."
+    },
+    {
+      "id": "dest_014",
+      "name": "Okomfo Anokye Sword Site",
+      "region": "Ashanti",
+      "city": "Kumasi",
+      "category": ["historical", "cultural", "spiritual"],
+      "description": "A legendary site featuring a sword driven into the ground by the powerful priest Okomfo Anokye centuries ago. According to Ashanti tradition, if the sword is removed, the Ashanti Kingdom will fall.",
+      "highlights": [
+        "Sacred Ashanti heritage site",
+        "Ancient legendary sword",
+        "Cultural significance",
+        "Traditional spiritual site",
+        "Historical monument"
+      ],
+      "activities": [
+        "Site visit",
+        "Cultural education",
+        "Photography",
+        "Historical tour"
+      ],
+      "best_time_to_visit": "Year-round",
+      "estimated_visit_duration": "30 minutes - 1 hour",
+      "entry_fee": "Small donation expected",
+      "accessibility": "Easy access",
+      "location_details": "Near Komfo Anokye Teaching Hospital in Kumasi."
+    },
+    {
+      "id": "dest_015",
+      "name": "Asante Traditional Buildings (UNESCO)",
+      "region": "Ashanti",
+      "city": "Various villages near Kumasi",
+      "category": ["historical", "cultural", "heritage"],
+      "description": "UNESCO World Heritage Site featuring traditional Ashanti architecture. These buildings showcase the unique construction techniques and cultural significance of Ashanti heritage.",
+      "highlights": [
+        "UNESCO World Heritage Site",
+        "Traditional Ashanti architecture",
+        "Cultural heritage preservation",
+        "Ancient construction techniques",
+        "Village cultural experience"
+      ],
+      "activities": [
+        "Guided village tours",
+        "Cultural education",
+        "Photography",
+        "Traditional architecture study"
+      ],
+      "best_time_to_visit": "Dry season (November - March)",
+      "estimated_visit_duration": "Half day",
+      "entry_fee": "GHS 30 per person",
+      "accessibility": "Accessible by car and walking",
+      "location_details": "Located in villages around Kumasi, including Asawase, Edweso, and Ejisu."
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "acc_011",
+      "name": "Golden Tulip Kumasi City",
+      "type": "hotel",
+      "star_rating": 4,
+      "city": "Kumasi",
+      "region": "Ashanti",
+      "description": "A modern 4-star hotel in the heart of Kumasi offering comfortable accommodations, excellent dining, and business facilities.",
+      "amenities": [
+        "Free Wi-Fi",
+        "Swimming pool",
+        "Restaurant and bar",
+        "Business center",
+        "Conference facilities",
+        "Gym",
+        "24-hour reception",
+        "Parking"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "450-600"
+        },
+        {
+          "type": "Deluxe Room",
+          "price_range_ghs": "650-800"
+        },
+        {
+          "type": "Suite",
+          "price_range_ghs": "1000-1200"
+        }
+      ],
+      "phone": "+233 322 028 800",
+      "email": "info@goldentulipkumasi.com",
+      "website": "https://www.goldentulipkumasi.com",
+      "additional_info": "Located near Kejetia Market and major business districts."
+    },
+    {
+      "id": "acc_012",
+      "name": "Four Villages Inn",
+      "type": "hotel",
+      "star_rating": 4,
+      "city": "Kumasi",
+      "region": "Ashanti",
+      "description": "A boutique hotel offering a blend of traditional Ashanti hospitality and modern comfort. Located in a serene environment.",
+      "amenities": [
+        "Free Wi-Fi",
+        "Swimming pool",
+        "Restaurant",
+        "Garden area",
+        "Conference room",
+        "24-hour security",
+        "Parking"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "400-550"
+        },
+        {
+          "type": "Executive Room",
+          "price_range_ghs": "600-750"
+        }
+      ],
+      "phone": "+233 322 025 955",
+      "email": "info@fourvillagesinn.com",
+      "website": "https://www.fourvillagesinn.com",
+      "additional_info": "Peaceful location with easy access to major attractions."
+    },
+    {
+      "id": "acc_013",
+      "name": "Lancaster Kumasi City Hotel",
+      "type": "hotel",
+      "star_rating": 3,
+      "city": "Kumasi",
+      "region": "Ashanti",
+      "description": "A comfortable 3-star hotel offering good value for money with modern amenities and friendly service.",
+      "amenities": [
+        "Free Wi-Fi",
+        "Restaurant",
+        "Bar",
+        "Conference facilities",
+        "24-hour reception",
+        "Parking",
+        "Laundry service"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "300-400"
+        },
+        {
+          "type": "Deluxe Room",
+          "price_range_ghs": "450-550"
+        }
+      ],
+      "phone": "+233 322 042 000",
+      "email": "reservations@lancasterkumasi.com",
+      "website": "https://www.lancasterkumasi.com",
+      "additional_info": "Central location, good for business and leisure travelers."
+    },
+    {
+      "id": "acc_014",
+      "name": "Lake Bosumtwi Paradise Resort",
+      "type": "resort",
+      "star_rating": 3,
+      "city": "Lake Bosumtwi",
+      "region": "Ashanti",
+      "description": "A lakeside resort offering stunning views of Lake Bosumtwi, perfect for a peaceful getaway in nature.",
+      "amenities": [
+        "Lakeside location",
+        "Restaurant",
+        "Bar",
+        "Boat rental",
+        "Swimming access",
+        "Nature trails",
+        "Parking"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Cottage",
+          "price_range_ghs": "350-450"
+        },
+        {
+          "type": "Lakeside Chalet",
+          "price_range_ghs": "500-650"
+        }
+      ],
+      "phone": "+233 24 XXX XXXX",
+      "email": "info@lakebosumtwiparadise.com",
+      "website": null,
+      "additional_info": "Perfect for nature lovers and those seeking tranquility."
+    },
+    {
+      "id": "acc_015",
+      "name": "Miklin Hotel",
+      "type": "hotel",
+      "star_rating": 3,
+      "city": "Kumasi",
+      "region": "Ashanti",
+      "description": "A well-established hotel in Kumasi offering comfortable rooms and good facilities at affordable rates.",
+      "amenities": [
+        "Free Wi-Fi",
+        "Restaurant",
+        "Conference room",
+        "24-hour reception",
+        "Parking",
+        "Laundry service"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "250-350"
+        },
+        {
+          "type": "Executive Room",
+          "price_range_ghs": "400-500"
+        }
+      ],
+      "phone": "+233 322 023 390",
+      "email": "info@miklinhotel.com",
+      "website": "https://www.miklinhotel.com",
+      "additional_info": "Good value accommodation in central Kumasi."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1761063230.803081 3004683 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1761063230.805592 3004683 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1761063230.827637 3004683 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Error querying knowledge base for premier_health_production: Invalid operator: $contains. Expected one of {'$not', '$gte', '$or', '$lt', '$nin', '$and', '$eq', '$exists', '$between', '$ne', '$like', '$in', '$gt', '$lte', '$ilike'}
+Error querying knowledge base for premier_health_production: Invalid operator: $contains. Expected one of {'$not', '$gte', '$or', '$lt', '$nin', '$and', '$eq', '$exists', '$between', '$ne', '$like', '$in', '$gt', '$lte', '$ilike'}
+Error querying knowledge base for premier_health_production: Invalid operator: $contains. Expected one of {'$not', '$gte', '$or', '$lt', '$nin', '$and', '$eq', '$exists', '$between', '$ne', '$like', '$in', '$gt', '$lte', '$ilike'}
+Error querying knowledge base for premier_health_production: Invalid operator: $contains. Expected one of {'$not', '$gte', '$or', '$lt', '$nin', '$and', '$eq', '$exists', '$between', '$ne', '$like', '$in', '$gt', '$lte', '$ilike'}
+================================================================================
+TESTING REGION FILTERING IN RAG QUERIES
+================================================================================
+
+1️⃣  TEST 1: Western Region providers WITH region filter
+--------------------------------------------------------------------------------
+✅ Success: False
+📚 Sources used: []
+🔍 Response preview: I'm experiencing technical difficulties accessing our knowledge base. Please try again or contact support for immediate assistance....
+✅ SUCCESS: WA (Upper West) NOT in Western Region results!
+
+
+2️⃣  TEST 2: WA providers WITH Upper West Region filter
+--------------------------------------------------------------------------------
+✅ Success: False
+📚 Sources used: []
+🔍 Response preview: I'm experiencing technical difficulties accessing our knowledge base. Please try again or contact support for immediate assistance....
+
+
+3️⃣  TEST 3: Community 6 WITH Greater Accra filter
+--------------------------------------------------------------------------------
+✅ Success: False
+📚 Sources used: []
+🔍 Response preview: I'm experiencing technical difficulties accessing our knowledge base. Please try again or contact support for immediate assistance....
+
+
+4️⃣  TEST 4: Tema Community 5 WITH Greater Accra filter
+--------------------------------------------------------------------------------
+✅ Success: False
+📚 Sources used: []
+🔍 Response preview: I'm experiencing technical difficulties accessing our knowledge base. Please try again or contact support for immediate assistance....
+
+================================================================================
+TESTING COMPLETE
+================================================================================

@@ -1,0 +1,217 @@
+{
+  "name": "EventFlow - Deadline Alert (Critical)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eventflow/deadline-alert",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "eventflow-deadline-alert"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "task_id",
+              "name": "task_id",
+              "value": "={{ $json.body.task_id }}",
+              "type": "string"
+            },
+            {
+              "id": "task_title",
+              "name": "task_title",
+              "value": "={{ $json.body.task_title }}",
+              "type": "string"
+            },
+            {
+              "id": "task_priority",
+              "name": "task_priority",
+              "value": "={{ $json.body.task_priority }}",
+              "type": "string"
+            },
+            {
+              "id": "task_deadline",
+              "name": "task_deadline",
+              "value": "={{ $json.body.task_deadline }}",
+              "type": "string"
+            },
+            {
+              "id": "hours_remaining",
+              "name": "hours_remaining",
+              "value": "={{ $json.body.hours_remaining }}",
+              "type": "number"
+            },
+            {
+              "id": "person_name",
+              "name": "person_name",
+              "value": "={{ $json.body.responsible_person.name }}",
+              "type": "string"
+            },
+            {
+              "id": "person_phone",
+              "name": "person_phone",
+              "value": "={{ $json.body.responsible_person.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "person_email",
+              "name": "person_email",
+              "value": "={{ $json.body.responsible_person.email }}",
+              "type": "string"
+            },
+            {
+              "id": "event_name",
+              "name": "event_name",
+              "value": "={{ $json.body.event_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Extract Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"from\": \"EventFlow <urgent@ailabsafrica.com>\",\n  \"to\": [\"{{ $json.person_email }}\"],\n  \"subject\": \"🚨 URGENT: Task Deadline in {{ $json.hours_remaining }} hours\",\n  \"html\": \"<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'><div style='background: #DC2626; color: white; padding: 20px; border-radius: 8px 8px 0 0;'><h2 style='margin: 0;'>🚨 URGENT DEADLINE ALERT</h2></div><div style='padding: 20px; background: #FEF2F2; border: 2px solid #DC2626; border-top: none; border-radius: 0 0 8px 8px;'><p>Hello {{ $json.person_name }},</p><p style='font-size: 18px; font-weight: bold; color: #DC2626;'>This task is due in {{ $json.hours_remaining }} hours!</p><div style='background: white; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #DC2626;'><h3 style='margin-top: 0; color: #333;'>{{ $json.task_title }}</h3><p><strong>Event:</strong> {{ $json.event_name }}</p><p><strong>Priority:</strong> <span style='color: #DC2626; text-transform: uppercase;'>{{ $json.task_priority }}</span></p><p><strong>Deadline:</strong> {{ $json.task_deadline }}</p></div><p><strong>⏰ Please take immediate action!</strong></p><p>Log in to EventFlow now to update this task or report any blockers.</p><p style='color: #666; font-size: 14px; margin-top: 30px;'>If you need assistance, contact the event organizer immediately.</p></div></div>\"\n}",
+        "options": {}
+      },
+      "name": "Send Urgent Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twilio.com/2010-04-01/Accounts/{{ $env.TWILIO_ACCOUNT_SID }}/Messages.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "basicAuth",
+        "sendBody": true,
+        "specifyBody": "urlEncoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "To",
+              "value": "={{ $json.person_phone }}"
+            },
+            {
+              "name": "From",
+              "value": "={{ $env.TWILIO_PHONE_NUMBER }}"
+            },
+            {
+              "name": "Body",
+              "value": "=🚨 URGENT EventFlow Alert: {{ $json.task_title }} is due in {{ $json.hours_remaining }} hours! Event: {{ $json.event_name }}. Please take immediate action!"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Send Urgent SMS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Urgent deadline alert sent successfully\",\n  \"task_id\": \"{{ $json.task_id }}\",\n  \"hours_remaining\": {{ $json.hours_remaining }},\n  \"channels\": [\"email\", \"sms\"],\n  \"timestamp\": \"{{ $now }}\"\n}",
+        "options": {}
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        900,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Data": {
+      "main": [
+        [
+          {
+            "node": "Send Urgent Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Urgent SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Urgent Email": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Urgent SMS": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["eventflow", "notifications", "deadline-alert", "urgent"],
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

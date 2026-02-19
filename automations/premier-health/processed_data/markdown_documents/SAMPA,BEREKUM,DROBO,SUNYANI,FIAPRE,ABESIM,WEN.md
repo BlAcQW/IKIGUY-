@@ -1,0 +1,23 @@
+# Healthcare Providers in SAMPA,BEREKUM,DROBO,SUNYANI,FIAPRE,ABESIM,WEN
+
+This document lists all Premier Health Insurance network providers in SAMPA,BEREKUM,DROBO,SUNYANI,FIAPRE,ABESIM,WEN, Ghana.
+
+## MEDCOURT PHARMACY
+**Specialties**: Pharmacy
+**Specialty Codes**: PHARMACY
+**Phone**: 0249192030
+**Location**: SAMPA,BEREKUM,DROBO,SUNYANI,FIAPRE,ABESIM,WEN
+CHI,TECHIMAN
+**Region**: SAMPA,BEREKUM,DROBO,SUNYANI,FIAPRE,ABESIM,WEN
+
+---
+
+## MEDCOURT PHARMACY
+**Specialties**: Pharmacy
+**Specialty Codes**: PHARMACY
+**Phone**: 0249192030
+**Location**: SAMPA,BEREKUM,DROBO,SUNYANI,FIAPRE,ABESIM,WEN
+CHI,TECHIMAN
+**Region**: SAMPA,BEREKUM,DROBO,SUNYANI,FIAPRE,ABESIM,WEN
+
+---

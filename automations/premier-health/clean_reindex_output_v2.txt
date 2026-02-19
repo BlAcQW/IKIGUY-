@@ -1,0 +1,534 @@
+🚀 COMPLETE CLEANUP AND REINDEX
+================================================================================
+Collection: helpdesk_premier_health_production
+Company: premier_health
+CSV Directory: /opt/kasaai/apps/automations/premier-health/regional_cities/enriched
+================================================================================
+
+🗑️  STEP 1: Deleting all existing data
+================================================================================
+✅ Deleted 184 documents from kb_documents
+✅ Deleted 382 embeddings from langchain_pg_embedding
+================================================================================
+
+📂 STEP 2: Reading original CSV files
+================================================================================
+Found 6 CSV files
+
+📄 Processing: ashanti_region_kumasi_enriched.csv
+   ✅ Extracted cities from ashanti_region_kumasi_enriched.csv
+
+📄 Processing: all_northern_regions_enriched.csv
+   ✅ Extracted cities from all_northern_regions_enriched.csv
+
+📄 Processing: bono_regions_enriched.csv
+   ✅ Extracted cities from bono_regions_enriched.csv
+
+📄 Processing: eastern_and_volta_regions_enriched.csv
+   ✅ Extracted cities from eastern_and_volta_regions_enriched.csv
+
+📄 Processing: central_and_western_region_enriched.csv
+   ✅ Extracted cities from central_and_western_region_enriched.csv
+
+📄 Processing: greater_accra_region_enriched.csv
+   ✅ Extracted cities from greater_accra_region_enriched.csv
+================================================================================
+📊 Total cities extracted: 97
+
+📤 STEP 3: Uploading and indexing documents
+================================================================================
+
+[1/97] BOMSO / KNUST / EJISU
+   Content length: 3127 chars
+   Providers: 13
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[2/97] ASOKWA
+   Content length: 1677 chars
+   Providers: 7
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[3/97] BANTAMA
+   Content length: 1882 chars
+   Providers: 8
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[4/97] ABREPO
+   Content length: 1085 chars
+   Providers: 4
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[5/97] TAFO / BREMANG
+   Content length: 2173 chars
+   Providers: 9
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[6/97] MAMPONTENG
+   Content length: 927 chars
+   Providers: 3
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[7/97] ABUAKWA / TANOSO
+   Content length: 1351 chars
+   Providers: 5
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[8/97] SANTASI / PATASE
+   Content length: 2596 chars
+   Providers: 11
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[9/97] SUAME
+   Content length: 1207 chars
+   Providers: 5
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[10/97] ADUM
+   Content length: 1162 chars
+   Providers: 5
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[11/97] AHODWO / AHINSAN
+   Content length: 2620 chars
+   Providers: 12
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[12/97] MAMPONG / AGONA / WIAMOASE
+   Content length: 1962 chars
+   Providers: 8
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[13/97] OBUASI / DUNKWA
+   Content length: 1131 chars
+   Providers: 4
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[14/97] KONONGO / AGOGO
+   Content length: 677 chars
+   Providers: 2
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[15/97] ACCRA CENTRAL / TUDU / MAKOLA
+   Content length: 3126 chars
+   Providers: 13
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[16/97] ADABRAKA
+   Content length: 1627 chars
+   Providers: 7
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[17/97] AIRPORT RESIDENTIAL AREA / 37 AREA
+   Content length: 3000 chars
+   Providers: 11
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[18/97] ASYLUM DOWN
+   Content length: 2040 chars
+   Providers: 8
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[19/97] LEGON & NORTH LEGON
+   Content length: 1963 chars
+   Providers: 8
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[20/97] MADINA / ADENTA / DODOWA
+   Content length: 5020 chars
+   Providers: 22
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[21/97] DZORWULU / ABELENKPE
+   Content length: 2300 chars
+   Providers: 9
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[22/97] CIRCLE / KANESHIE / NORTH KANESHIE / INDUSTRIAL AREA
+   Content length: 3704 chars
+   Providers: 13
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[23/97] KOKOMLEMLE / MAAMOBI / NIMA
+   Content length: 821 chars
+   Providers: 2
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[24/97] LAPAZ / NYAMEKYE / DARKUMAN / ODORKOR
+   Content length: 2947 chars
+   Providers: 11
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[25/97] TESANO
+   Content length: 435 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[26/97] LATEBIOKOSHIE / MATAHEKO
+   Content length: 1267 chars
+   Providers: 4
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[27/97] DANSOMAN / MAMPROBI / KORLE-BU
+   Content length: 4218 chars
+   Providers: 18
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[28/97] OSU
+   Content length: 4005 chars
+   Providers: 19
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[29/97] LABONE / LA / TSE ADDO / CANTONMENTS
+   Content length: 3304 chars
+   Providers: 12
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[30/97] TANTRA HILL / OFANKOR
+   Content length: 1375 chars
+   Providers: 5
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[31/97] SPINTEX ROAD / BAATSONA
+   Content length: 3487 chars
+   Providers: 15
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[32/97] DOME / HAATSO / ASHONGMAN / KWABENYA
+   Content length: 2766 chars
+   Providers: 10
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[33/97] TESHIE & NUNGUA
+   Content length: 2384 chars
+   Providers: 10
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[34/97] ACHIMOTA & NEW ACHIMOTA
+   Content length: 1875 chars
+   Providers: 7
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[35/97] EAST LEGON / ADJRINGANOR
+   Content length: 4666 chars
+   Providers: 20
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[36/97] RIDGE
+   Content length: 1242 chars
+   Providers: 5
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[37/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,22
+   Content length: 680 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[38/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,23
+   Content length: 706 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[39/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,24
+   Content length: 665 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[40/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,25
+   Content length: 658 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[41/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,26
+   Content length: 634 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[42/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,27
+   Content length: 634 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[43/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,28
+   Content length: 635 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[44/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,29
+   Content length: 641 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[45/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,30
+   Content length: 632 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[46/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,31
+   Content length: 678 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[47/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,32
+   Content length: 653 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[48/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,33
+   Content length: 697 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[49/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,34
+   Content length: 665 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[50/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,35
+   Content length: 634 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[51/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,36
+   Content length: 634 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[52/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,37
+   Content length: 724 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[53/97] SAKUMONO ESTATE / LASHIBI / COMM. 18,19,38
+   Content length: 661 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[54/97] ASHAIMAN / COMMUNITY 27
+   Content length: 547 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[55/97] ASHAIMAN / COMMUNITY 28
+   Content length: 585 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[56/97] ASHAIMAN / COMMUNITY 29
+   Content length: 544 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[57/97] ASHAIMAN / COMMUNITY 30
+   Content length: 523 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[58/97] ASHAIMAN / COMMUNITY 31
+   Content length: 576 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[59/97] ASHAIMAN / COMMUNITY 32
+   Content length: 551 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[60/97] ASHAIMAN / COMMUNITY 33
+   Content length: 579 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[61/97] ASHAIMAN / COMMUNITY 34
+   Content length: 582 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[62/97] ASHAIMAN / COMMUNITY 35
+   Content length: 601 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[63/97] ASHAIMAN / COMMUNITY 36
+   Content length: 556 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[64/97] ASHAIMAN / COMMUNITY 37
+   Content length: 595 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[65/97] ASHAIMAN / COMMUNITY 38
+   Content length: 635 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[66/97] ASHAIMAN / COMMUNITY 39
+   Content length: 540 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[67/97] ASHAIMAN / COMMUNITY 40
+   Content length: 563 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[68/97] ASHAIMAN / COMMUNITY 41
+   Content length: 574 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[69/97] COMM. 22 / MICHEL CAMP / AFIENYA ROAD
+   Content length: 3248 chars
+   Providers: 12
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[70/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 13
+   Content length: 659 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[71/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 14
+   Content length: 641 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[72/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 15
+   Content length: 621 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[73/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 16
+   Content length: 658 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[74/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 17
+   Content length: 664 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[75/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 18
+   Content length: 669 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[76/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 19
+   Content length: 647 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[77/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 20
+   Content length: 604 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[78/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 21
+   Content length: 665 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[79/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 22
+   Content length: 599 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[80/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 23
+   Content length: 667 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[81/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 24
+   Content length: 644 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[82/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 25
+   Content length: 659 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[83/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 26
+   Content length: 655 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[84/97] TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 27
+   Content length: 623 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[85/97] TEMA COMMUNITY 3
+   Content length: 501 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[86/97] TEMA COMMUNITY 4
+   Content length: 580 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[87/97] TEMA COMMUNITY 5
+   Content length: 527 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[88/97] TEMA COMMUNITY 6
+   Content length: 498 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[89/97] TEMA COMMUNITY 7
+   Content length: 528 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[90/97] TEMA COMMUNITY 8
+   Content length: 512 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[91/97] TEMA COMMUNITY 9
+   Content length: 542 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[92/97] TEMA COMMUNITY 2 / 5
+   Content length: 553 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[93/97] TEMA COMMUNITY 2 / 6
+   Content length: 554 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[94/97] TEMA COMMUNITY 2 / 7
+   Content length: 539 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[95/97] TEMA COMMUNITY 2 / 8
+   Content length: 504 chars
+   Providers: 1
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[96/97] AMANSAMAN / POKUASE
+   Content length: 1130 chars
+   Providers: 4
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+[97/97] WEIJA / KASOA / GBAWE
+   Content length: 3870 chars
+   Providers: 17
+   ❌ Error: DocumentManagementService.create_document() got an unexpected keyword argument 'document_id'
+
+================================================================================
+📊 UPLOAD SUMMARY
+================================================================================
+Successfully indexed: 0
+Failed: 97
+Success rate: 0.0%
+================================================================================
+
+✅ COMPLETE! Database has been cleaned and reindexed.

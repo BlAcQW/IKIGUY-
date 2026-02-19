@@ -1,0 +1,715 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Base body styles */
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better heading defaults */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-gray-900 tracking-tight;
+  }
+
+  h1 { @apply text-3xl; }
+  h2 { @apply text-2xl; }
+  h3 { @apply text-xl; }
+  h4 { @apply text-lg; }
+
+  /* Muted text helper */
+  .text-muted {
+    @apply text-gray-500;
+  }
+}
+
+@layer components {
+  /* ========================================
+     Modal System - Proper Stacking
+     ======================================== */
+
+  .modal-backdrop {
+    @apply fixed inset-0 bg-gray-900/50 z-50;
+    @apply overflow-y-auto;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    overscroll-behavior: contain;
+  }
+
+  .modal-backdrop-nested {
+    @apply fixed inset-0 bg-gray-900/50 z-[60];
+    @apply overflow-y-auto;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    overscroll-behavior: contain;
+  }
+
+  /* Body scroll lock when modal is open */
+  body.modal-open {
+    @apply overflow-hidden;
+  }
+
+  .modal-content {
+    @apply bg-white rounded-2xl w-full;
+    @apply max-h-[90vh] overflow-hidden flex flex-col;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    animation: modal-enter 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .modal-content-sm { @apply max-w-md; }
+  .modal-content-md { @apply max-w-lg; }
+  .modal-content-lg { @apply max-w-3xl; }
+  .modal-content-xl { @apply max-w-4xl; }
+
+  .modal-header {
+    @apply px-6 py-4 border-b border-gray-100;
+    @apply flex items-center justify-between;
+    @apply bg-white flex-shrink-0;
+  }
+
+  .modal-body {
+    @apply flex-1 overflow-y-auto px-6 py-4;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modal-footer {
+    @apply px-6 py-4 bg-gradient-to-t from-gray-50 to-white border-t border-gray-200;
+    @apply flex items-center justify-end gap-2 flex-shrink-0;
+  }
+
+  /* ========================================
+     Card Components - Modern Depth
+     ======================================== */
+
+  .card {
+    @apply bg-white rounded-xl border border-gray-100/80 p-5;
+    @apply transition-all duration-200 ease-out;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  }
+
+  .card-hover {
+    @apply cursor-pointer;
+    @apply hover:border-gray-200/80 hover:-translate-y-0.5;
+  }
+
+  .card-hover:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  }
+
+  .card-interactive {
+    @apply bg-white rounded-xl border border-gray-100/80 p-5;
+    @apply transition-all duration-200 ease-out cursor-pointer;
+    @apply hover:border-gray-200/80 hover:-translate-y-0.5;
+    @apply active:translate-y-0 active:scale-[0.99];
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  }
+
+  .card-interactive:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  }
+
+  .card-interactive:active {
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+
+  .card-compact {
+    @apply bg-white rounded-xl border border-gray-100/80 p-4;
+    @apply transition-all duration-200 ease-out;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  }
+
+  .card-elevated {
+    @apply bg-white rounded-xl border border-gray-100/80 p-5;
+    @apply transition-all duration-200 ease-out;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  }
+
+  /* ========================================
+     Button System - Compact & Modern
+     ======================================== */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply font-medium rounded-lg text-sm;
+    @apply transition-all duration-200 ease-out;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
+    @apply active:scale-[0.98];
+  }
+
+  .btn-primary {
+    @apply btn px-4 py-2;
+    @apply bg-gradient-to-r from-indigo-600 to-purple-600 text-white;
+    @apply hover:from-indigo-700 hover:to-purple-700;
+    @apply shadow-md shadow-indigo-500/30 hover:shadow-lg hover:shadow-indigo-500/40;
+    @apply focus-visible:ring-indigo-500;
+  }
+
+  .btn-secondary {
+    @apply btn px-4 py-2 bg-white text-gray-700 border border-gray-300;
+    @apply hover:bg-gray-50 hover:border-gray-400;
+    @apply focus-visible:ring-gray-400;
+    @apply active:bg-gray-100;
+  }
+
+  .btn-ghost {
+    @apply btn px-4 py-2 text-gray-600 bg-transparent;
+    @apply hover:bg-gray-100 hover:text-gray-900;
+    @apply focus-visible:ring-gray-400;
+  }
+
+  .btn-ghost-purple {
+    @apply btn px-4 py-2 text-purple-600 bg-transparent;
+    @apply hover:bg-purple-50 hover:text-purple-700;
+    @apply focus-visible:ring-purple-500;
+  }
+
+  .btn-danger {
+    @apply btn px-4 py-2 bg-red-600 text-white;
+    @apply hover:bg-red-700 hover:shadow-sm;
+    @apply focus-visible:ring-red-500;
+    @apply active:bg-red-800;
+  }
+
+  .btn-success {
+    @apply btn px-4 py-2 bg-green-600 text-white;
+    @apply hover:bg-green-700 hover:shadow-sm;
+    @apply focus-visible:ring-green-500;
+    @apply active:bg-green-800;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs rounded-md;
+  }
+
+  .btn-lg {
+    @apply px-5 py-2.5 text-base;
+  }
+
+  .btn-icon {
+    @apply btn p-2 text-gray-500;
+    @apply hover:bg-gray-100 hover:text-gray-700;
+    @apply rounded-lg;
+  }
+
+  .btn-icon-sm {
+    @apply btn p-1.5 text-gray-500;
+    @apply hover:bg-gray-100 hover:text-gray-700;
+    @apply rounded-md;
+  }
+
+  /* ========================================
+     Input System - Compact & Modern
+     ======================================== */
+
+  .input {
+    @apply w-full px-3 py-2 min-h-[44px] text-base;
+    @apply bg-white border border-gray-300 rounded-lg;
+    @apply text-gray-900 placeholder-gray-400;
+    @apply transition-all duration-150;
+    @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent;
+    @apply disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed;
+  }
+
+  .input-error {
+    @apply border-red-300 focus:ring-2 focus:ring-red-500 focus:border-transparent;
+  }
+
+  .input-success {
+    @apply border-green-300 focus:ring-2 focus:ring-green-500 focus:border-transparent;
+  }
+
+  .label {
+    @apply block text-xs font-semibold text-gray-700 mb-1.5;
+  }
+
+  .label-sm {
+    @apply block text-xs font-medium text-gray-600 mb-1;
+  }
+
+  .helper-text {
+    @apply text-xs text-gray-500 mt-1;
+  }
+
+  .error-text {
+    @apply text-xs text-red-600 mt-1;
+  }
+
+  /* ========================================
+     Tab System - Modern
+     ======================================== */
+
+  .tabs {
+    @apply flex gap-1 p-1 bg-gray-100 rounded-lg;
+  }
+
+  .tab {
+    @apply flex items-center gap-2 px-3 py-1.5;
+    @apply text-sm font-medium text-gray-600;
+    @apply rounded-md cursor-pointer;
+    @apply transition-all duration-150;
+    @apply hover:text-gray-900;
+  }
+
+  .tab-active {
+    @apply bg-white text-gray-900 shadow-sm;
+  }
+
+  /* ========================================
+     List Items
+     ======================================== */
+
+  .list-item {
+    @apply flex items-center justify-between p-3;
+    @apply bg-gray-50/50 rounded-lg border border-gray-100;
+    @apply transition-all duration-150;
+    @apply hover:bg-gray-100/80 hover:border-gray-200;
+  }
+
+  .list-item-interactive {
+    @apply list-item cursor-pointer;
+    @apply active:scale-[0.99];
+  }
+
+  /* ========================================
+     Badge Styles
+     ======================================== */
+
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-purple {
+    @apply badge bg-purple-100 text-purple-700;
+  }
+
+  .badge-green {
+    @apply badge bg-green-100 text-green-700;
+  }
+
+  .badge-red {
+    @apply badge bg-red-100 text-red-700;
+  }
+
+  .badge-yellow {
+    @apply badge bg-yellow-100 text-yellow-700;
+  }
+
+  .badge-gray {
+    @apply badge bg-gray-100 text-gray-700;
+  }
+
+  .badge-blue {
+    @apply badge bg-blue-100 text-blue-700;
+  }
+
+  /* ========================================
+     Layout Components
+     ======================================== */
+
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6;
+  }
+
+  .section {
+    @apply py-6 md:py-8;
+  }
+
+  .divider {
+    @apply border-t border-gray-100 my-4;
+  }
+
+  /* ========================================
+     Stats / Metric Cards
+     ======================================== */
+
+  .stat-card {
+    @apply card p-4;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold text-gray-900;
+  }
+
+  .stat-label {
+    @apply text-xs font-medium text-gray-500 uppercase tracking-wide;
+  }
+
+  /* ========================================
+     Table Styles
+     ======================================== */
+
+  .table-header {
+    @apply bg-gray-50/80 border-b border-gray-100;
+  }
+
+  .table-cell {
+    @apply px-4 py-3 text-sm;
+  }
+
+  .table-row {
+    @apply border-b border-gray-50 hover:bg-gray-50/50 transition-colors;
+  }
+}
+
+@layer utilities {
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* Custom styles for react-phone-number-input */
+.phone-input-custom .PhoneInputInput {
+  @apply px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none w-full bg-white;
+}
+
+.phone-input-custom .PhoneInputCountry {
+  @apply mr-2;
+}
+
+.phone-input-custom .PhoneInputCountrySelect {
+  @apply border-0 bg-transparent cursor-pointer;
+}
+
+.phone-input-custom .PhoneInputCountryIcon {
+  @apply mr-2;
+}
+
+.phone-input-custom {
+  @apply flex items-center;
+}
+
+/* Mobile touch optimization - removes 300ms tap delay */
+button,
+a,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+.cursor-pointer {
+  touch-action: manipulation;
+}
+
+/* Ensure minimum touch target size (44px) */
+button,
+a,
+[role="button"] {
+  min-height: 44px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400;
+}
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  @apply outline-none ring-2 ring-purple-500 ring-offset-2;
+}
+
+/* Selection color */
+::selection {
+  @apply bg-purple-100 text-purple-900;
+}
+
+/* ========================================
+   Mobile PWA & Safe Area Styles
+   ======================================== */
+
+/* Safe area handling for notched phones */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-area-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Mobile viewport height fix (100vh issues on iOS) */
+:root {
+  --vh: 1vh;
+}
+
+.full-height {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.min-full-height {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* ========================================
+   Enhanced Mobile Animations
+   ======================================== */
+
+/* Slide up from bottom (for bottom sheets) */
+@keyframes slideUpFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up-from-bottom {
+  animation: slideUpFromBottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Slide in from right (for page transitions) */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Bounce for success states */
+@keyframes bounce-success {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-bounce-success {
+  animation: bounce-success 0.4s ease-in-out;
+}
+
+/* Skeleton loading shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  @apply bg-gray-200 rounded;
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Pulse animation for loading states */
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Pop-in animation for elements appearing */
+@keyframes popIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop-in {
+  animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ========================================
+   Micro-interactions
+   ======================================== */
+
+/* Button press feedback */
+.btn-press:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease-out;
+}
+
+/* Card tap feedback */
+.card-tap:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease-out;
+}
+
+/* Smooth color transitions for interactive elements */
+.interactive {
+  @apply transition-all duration-150 ease-out;
+}
+
+/* ========================================
+   Pull-to-refresh indicator
+   ======================================== */
+
+.pull-indicator {
+  @apply flex items-center justify-center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pull-indicator.pulling {
+  transform: translateY(0);
+}
+
+.pull-indicator.refreshing {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   iOS-style Backdrop Blur
+   ======================================== */
+
+.backdrop-blur-ios {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* ========================================
+   Offline indicator styles
+   ======================================== */
+
+.offline-indicator {
+  @apply fixed top-0 left-0 right-0 bg-yellow-500 text-yellow-900 text-center py-2 px-4 text-sm font-medium z-50;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.offline-indicator.visible {
+  transform: translateY(0);
+}
+
+/* ========================================
+   PWA Install Prompt
+   ======================================== */
+
+.install-prompt {
+  @apply fixed bottom-20 left-4 right-4 bg-white rounded-xl shadow-2xl p-4 z-40;
+  transform: translateY(150%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.install-prompt.visible {
+  transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+  .install-prompt {
+    @apply left-auto right-4 bottom-4 max-w-sm;
+  }
+}

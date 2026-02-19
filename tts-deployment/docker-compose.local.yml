@@ -1,0 +1,523 @@
+version: '3.8'
+services:
+  melotts:
+    build: ./docker/melotts
+    container_name: melotts
+    ports:
+    - 8001:8001
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - CUDA_VISIBLE_DEVICES=0
+    - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+    - melotts_models:/app/MeloTTS/pretrained_models
+    - melotts_outputs:/app/outputs
+    restart: unless-stopped
+    networks:
+    - tts_network
+  openvoice:
+    build: ./docker/openvoice
+    container_name: openvoice
+    ports:
+    - 8003:8003
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - CUDA_VISIBLE_DEVICES=0
+    - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+    - openvoice_checkpoints:/app/OpenVoice/checkpoints
+    - openvoice_outputs:/app/outputs
+    restart: unless-stopped
+    networks:
+    - tts_network
+  coqui:
+    build: ./docker/coqui
+    container_name: coqui
+    ports:
+    - 8005:8005
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - CUDA_VISIBLE_DEVICES=0
+    - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+    - coqui_models:/app/models
+    - coqui_outputs:/app/outputs
+    - /opt/kasaai/apps/voice-lab/models:/opt/kasaai/apps/voice-lab/models:ro
+    restart: unless-stopped
+    networks:
+    - tts_network
+  coqui-ui:
+    build: ./docker/coqui-ui
+    container_name: coqui-ui
+    ports:
+    - 8015:8015
+    environment:
+    - COQUI_API_URL=http://coqui:8005
+    depends_on:
+    - coqui
+    restart: unless-stopped
+    networks:
+    - tts_network
+  kokoro-ui:
+    build: ./docker/kokoro-ui
+    container_name: kokoro-ui
+    ports:
+    - 8021:8020
+    environment:
+    - KOKORO_API_URL=http://kokoro:8010
+    depends_on:
+    - kokoro
+    restart: unless-stopped
+    networks:
+    - tts_network
+  openvoice-ui:
+    build: ./docker/openvoice-ui
+    container_name: openvoice-ui
+    ports:
+    - 8013:8013
+    environment:
+    - OPENVOICE_API_URL=http://openvoice:8003
+    depends_on:
+    - openvoice
+    restart: unless-stopped
+    networks:
+    - tts_network
+  melotts-ui:
+    build: ./docker/melotts-ui
+    container_name: melotts-ui
+    ports:
+    - 8011:8011
+    environment:
+    - MELOTTS_API_URL=http://melotts:8001
+    depends_on:
+    - melotts
+    restart: unless-stopped
+    networks:
+    - tts_network
+  chatterbox:
+    build:
+      context: .
+      dockerfile: ./docker/chatterbox/Dockerfile
+    container_name: chatterbox
+    ports:
+    - 8004:8004
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - CUDA_VISIBLE_DEVICES=0
+    - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+    - chatterbox_outputs:/app/outputs
+    restart: unless-stopped
+    networks:
+    - tts_network
+  kokoro:
+    build: ./docker/kokoro
+    container_name: kokoro
+    ports:
+    - 8010:8010
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - CUDA_VISIBLE_DEVICES=0
+    - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+    - kokoro_models:/app/models
+    - kokoro_outputs:/app/outputs
+    restart: unless-stopped
+    networks:
+    - tts_network
+  moshi:
+    build: ./docker/moshi
+    container_name: moshi
+    ports:
+    - 8011:8008
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - CUDA_VISIBLE_DEVICES=0
+    - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+    - moshi_cache:/app/cache
+    restart: unless-stopped
+    networks:
+    - tts_network
+  # f5tts: DISABLED - Using RunPod GPU pod instead
+  # F5-TTS runs on RunPod and is accessible via SSH tunnel on port 8002
+  # Public URL: https://f5tts-ui.ailabsafrica.com
+  # See TTS_GRADIO_UI_IMPLEMENTATION_PLAN.md for management instructions
+  # f5tts:
+  #   build: ./docker/f5tts
+  #   container_name: f5tts
+  #   ports:
+  #   - 8006:8006
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #         - driver: nvidia
+  #           count: 1
+  #           capabilities:
+  #           - gpu
+  #   environment:
+  #   - CUDA_VISIBLE_DEVICES=0
+  #   - NVIDIA_VISIBLE_DEVICES=all
+  #   volumes:
+  #   - f5tts_models:/app/F5-TTS/ckpts
+  #   - f5tts_outputs:/app/outputs
+  #   restart: unless-stopped
+  #   networks:
+  #   - tts_network
+  crawl4ai:
+    build: ./docker/crawl4ai
+    container_name: crawl4ai
+    ports:
+    - 8009:11235
+    environment:
+    - LOG_LEVEL=info
+    volumes:
+    - crawl4ai_cache:/app/cache
+    restart: unless-stopped
+    networks:
+    - tts_network
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+    - 11434:11434
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - CUDA_VISIBLE_DEVICES=0
+    - NVIDIA_VISIBLE_DEVICES=all
+    - OLLAMA_HOST=0.0.0.0:11434
+    volumes:
+    - ollama_models:/root/.ollama
+    - /opt/kasaai/models/ollama:/opt/kasaai/models/ollama
+    restart: unless-stopped
+    networks:
+    - tts_network
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: openwebui
+    depends_on:
+    - ollama
+    ports:
+    - 8007:8080
+    environment:
+    - WEBUI_NAME=KasaAI AI Lab
+    - WEBUI_URL=https://openwebui.ailabsafrica.com
+    - ENABLE_SIGNUP=true
+    - DEFAULT_USER_ROLE=user
+    - ENABLE_COMMUNITY_SHARING=false
+    - OLLAMA_BASE_URL=http://ollama:11434
+    - OPENAI_API_BASE_URL=https://api.ailabsafrica.com/v1
+    - OPENAI_API_KEY=optional
+    volumes:
+    - openwebui_data:/app/backend/data
+    restart: unless-stopped
+    networks:
+    - tts_network
+  supabase-db:
+    image: supabase/postgres:15.6.1.117
+    container_name: supabase-db
+    command:
+    - postgres
+    - -c
+    - config_file=/etc/postgresql/postgresql.conf
+    - -c
+    - log_min_messages=warning
+    environment:
+      POSTGRES_PASSWORD: ${SUPABASE_DB_PASSWORD:-supabase_admin_password}
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PORT: 5432
+    ports:
+    - 5433:5432
+    volumes:
+    - supabase_db_data:/var/lib/postgresql/data
+    - ./docker/supabase/init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    networks:
+    - tts_network
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U postgres
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  supabase-studio:
+    image: supabase/studio:latest
+    container_name: supabase-studio
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    environment:
+      SUPABASE_URL: http://supabase-kong:8000
+      SUPABASE_PUBLIC_URL: https://supabase.ailabsafrica.com
+      STUDIO_PG_META_URL: http://supabase-meta:8080
+      POSTGRES_PASSWORD: ${SUPABASE_DB_PASSWORD:-supabase_admin_password}
+    ports:
+    - 8012:3000
+    restart: unless-stopped
+    networks:
+    - tts_network
+  supabase-auth:
+    image: supabase/gotrue:v2.143.0
+    container_name: supabase-auth
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    environment:
+      GOTRUE_API_HOST: 0.0.0.0
+      GOTRUE_API_PORT: 9999
+      API_EXTERNAL_URL: https://supabase-api.ailabsafrica.com
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${SUPABASE_DB_PASSWORD_ENCODED:-supabase_admin_password}@supabase-db:5432/postgres
+      GOTRUE_SITE_URL: https://supabase.ailabsafrica.com
+      GOTRUE_URI_ALLOW_LIST: '*'
+      GOTRUE_DISABLE_SIGNUP: 'false'
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      GOTRUE_JWT_EXP: 3600
+      GOTRUE_JWT_SECRET: ${SUPABASE_JWT_SECRET:-your-super-secret-jwt-token-with-at-least-32-characters}
+      GOTRUE_EXTERNAL_EMAIL_ENABLED: 'true'
+      GOTRUE_SMTP_HOST: mail.ailabsafrica.com
+      GOTRUE_SMTP_PORT: '587'
+      GOTRUE_SMTP_USER: noreply@ailabsafrica.com
+      GOTRUE_SMTP_PASS: noreply_secure_2025
+      GOTRUE_SMTP_ADMIN_EMAIL: noreply@ailabsafrica.com
+      GOTRUE_MAILER_AUTOCONFIRM: 'false'
+      GOTRUE_SMTP_SENDER_NAME: AI Labs Africa
+      GOTRUE_MAILER_SUBJECTS_CONFIRMATION: Confirm Your Email - AI Labs Africa
+      GOTRUE_MAILER_SUBJECTS_RECOVERY: Reset Your Password - AI Labs Africa
+      GOTRUE_MAILER_SUBJECTS_INVITE: You have been invited - AI Labs Africa
+      GOTRUE_MAILER_SUBJECTS_MAGIC_LINK: Your Magic Link - AI Labs Africa
+    ports:
+    - 9999:9999
+    restart: unless-stopped
+    networks:
+    - tts_network
+  supabase-rest:
+    image: postgrest/postgrest:v12.0.2
+    container_name: supabase-rest
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${SUPABASE_DB_PASSWORD_ENCODED:-supabase_admin_password}@supabase-db:5432/postgres
+      PGRST_DB_SCHEMAS: public,storage,graphql_public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${SUPABASE_JWT_SECRET:-your-super-secret-jwt-token-with-at-least-32-characters}
+      PGRST_DB_USE_LEGACY_GUCS: 'false'
+      PGRST_APP_SETTINGS_JWT_SECRET: ${SUPABASE_JWT_SECRET:-your-super-secret-jwt-token-with-at-least-32-characters}
+      PGRST_APP_SETTINGS_JWT_EXP: 3600
+    ports:
+    - 3000:3000
+    restart: unless-stopped
+    networks:
+    - tts_network
+  supabase-realtime:
+    image: supabase/realtime:v2.27.5
+    container_name: supabase-realtime
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    environment:
+    - APP_NAME=supabase-realtime
+    - DB_HOST=supabase-db
+    - DB_PORT=5432
+    - DB_USER=supabase_admin
+    - DB_PASSWORD=${SUPABASE_DB_PASSWORD:-supabase_admin_password}
+    - DB_NAME=postgres
+    - DB_SSL=false
+    - PORT=4000
+    - JWT_SECRET=${SUPABASE_JWT_SECRET:-your-super-secret-jwt-token-with-at-least-32-characters}
+    - SECRET_KEY_BASE=${SECRET_KEY_BASE:-your-secret-key-base-at-least-32-characters}
+    - REPLICATION_MODE=RLS
+    - REPLICATION_POLL_INTERVAL=100
+    - SECURE_CHANNELS=true
+    - SLOT_NAME=supabase_realtime_rls
+    - TEMPORARY_SLOT=true
+    - FLY_APP_NAME=supabase-realtime
+    - RELEASE_NAME=supabase-realtime
+    ports:
+    - 4000:4000
+    restart: unless-stopped
+    networks:
+    - tts_network
+  supabase-storage:
+    image: supabase/storage-api:v0.46.4
+    container_name: supabase-storage
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    environment:
+      ANON_KEY: ${SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvY2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODI5MjI4MDAsImV4cCI6MTg0MDY4OTIwMH0.example}
+      SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvY2FsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4MjkyMjgwMCwiZXhwIjoxODQwNjg5MjAwfQ.example}
+      POSTGREST_URL: http://supabase-rest:3000
+      PGRST_JWT_SECRET: ${SUPABASE_JWT_SECRET:-your-super-secret-jwt-token-with-at-least-32-characters}
+      DATABASE_URL: postgres://supabase_storage_admin:${SUPABASE_DB_PASSWORD_ENCODED:-supabase_admin_password}@supabase-db:5432/postgres
+      FILE_SIZE_LIMIT: 52428800
+      STORAGE_BACKEND: file
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: stub
+      REGION: local
+      GLOBAL_S3_BUCKET: stub
+    ports:
+    - 5000:5000
+    volumes:
+    - supabase_storage_data:/var/lib/storage
+    restart: unless-stopped
+    networks:
+    - tts_network
+  supabase-meta:
+    image: supabase/postgres-meta:v0.80.0
+    container_name: supabase-meta
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    environment:
+      PG_META_PORT: 8080
+      PG_META_DB_HOST: supabase-db
+      PG_META_DB_PORT: 5432
+      PG_META_DB_NAME: postgres
+      PG_META_DB_USER: supabase_admin
+      PG_META_DB_PASSWORD: ${SUPABASE_DB_PASSWORD:-supabase_admin_password}
+    ports:
+    - 8090:8080
+    restart: unless-stopped
+    networks:
+    - tts_network
+  supabase-kong:
+    image: kong:2.8.1
+    container_name: supabase-kong
+    depends_on:
+    - supabase-auth
+    - supabase-rest
+    - supabase-realtime
+    - supabase-storage
+    environment:
+      KONG_DATABASE: 'off'
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/kong.yml
+      KONG_DNS_ORDER: LAST,A,CNAME
+      KONG_PLUGINS: request-transformer,cors,key-auth,acl
+      KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
+      KONG_NGINX_PROXY_PROXY_BUFFERS: 64 160k
+    ports:
+    - 8013:8000
+    - 8443:8443
+    volumes:
+    - ./docker/supabase/kong.yml:/usr/local/kong/kong.yml:ro
+    restart: unless-stopped
+    networks:
+    - tts_network
+  flowise:
+    image: flowiseai/flowise:latest
+    container_name: flowise
+    depends_on:
+    - ollama
+    ports:
+    - 3001:3000
+    environment:
+    - PORT=3000
+    - FLOWISE_USERNAME=${FLOWISE_USERNAME:-admin}
+    - FLOWISE_PASSWORD=${FLOWISE_PASSWORD:-admin123}
+    - PASSPHRASE=${FLOWISE_PASSPHRASE:-mypassphrase}
+    - DATABASE_TYPE=sqlite
+    - DATABASE_PATH=/root/.flowise
+    - APIKEY_PATH=/root/.flowise
+    - SECRETKEY_PATH=/root/.flowise
+    - LOG_LEVEL=info
+    - DEBUG=false
+    - CORS_ORIGINS=*
+    - IFRAME_ORIGINS=*
+    - FLOWISE_SECRETKEY_OVERWRITE=${FLOWISE_SECRETKEY:-flowise-secret-key-32-characters}
+    - OLLAMA_BASE_URL=http://ollama:11434
+    - OPENAI_API_BASE_URL=https://api.ailabsafrica.com/v1
+    - OPENAI_API_KEY=${OPENAI_API_KEY:-optional}
+    volumes:
+    - flowise_data:/root/.flowise
+    restart: unless-stopped
+    networks:
+    - tts_network
+    healthcheck:
+      test:
+      - CMD
+      - wget
+      - --no-verbose
+      - --tries=1
+      - --spider
+      - http://localhost:3000
+      interval: 30s
+      timeout: 10s
+      retries: 3
+networks:
+  tts_network:
+    driver: bridge
+volumes:
+  melotts_models: null
+  melotts_outputs: null
+  openvoice_checkpoints: null
+  openvoice_outputs: null
+  coqui_models: null
+  coqui_outputs: null
+  chatterbox_outputs: null
+  kokoro_models: null
+  kokoro_outputs: null
+  moshi_cache: null
+  # f5tts_models: null  # DISABLED - Using RunPod instead
+  # f5tts_outputs: null  # DISABLED - Using RunPod instead
+  crawl4ai_cache: null
+  ollama_models: null
+  openwebui_data: null
+  supabase_db_data: null
+  supabase_storage_data: null
+  flowise_data: null

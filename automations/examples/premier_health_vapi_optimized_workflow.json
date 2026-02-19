@@ -1,0 +1,432 @@
+{
+  "name": "Premier Health Vapi Agent Setup - Optimized for Location Services",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Premier Health Voice Agent Setup",
+        "formDescription": "Setup your Premier Health voice assistant with location services, Freshdesk escalation, and communication tools",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Server URL",
+              "fieldType": "text",
+              "requiredField": true,
+              "placeholder": "https://api.ailabsafrica.com"
+            },
+            {
+              "fieldLabel": "Organization Name",
+              "fieldType": "text",
+              "requiredField": true,
+              "placeholder": "Premier Health Ghana"
+            },
+            {
+              "fieldLabel": "Service Area",
+              "fieldType": "text",
+              "requiredField": true,
+              "placeholder": "Greater Accra"
+            },
+            {
+              "fieldLabel": "Support Email",
+              "fieldType": "email",
+              "requiredField": true,
+              "placeholder": "support@premierhealth.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [280, 460],
+      "id": "form-trigger-setup",
+      "name": "Setup Configuration Form",
+      "webhookId": "premier-health-setup-form"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/assistant",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"Premier Health Location Assistant - {{ $('Setup Configuration Form').item.json['Organization Name'] }}\",\n  \"voice\": {\n    \"model\": \"eleven_flash_v2_5\",\n    \"voiceId\": \"bIHbv24MWmeRgasZH58o\",\n    \"autoMode\": true,\n    \"provider\": \"11labs\",\n    \"stability\": 0.5,\n    \"similarityBoost\": 0.75,\n    \"useSpeakerBoost\": true,\n    \"optimizeStreamingLatency\": 3,\n    \"inputPunctuationBoundaries\": [\".\", \"!\", \"?\", \";\", \",\"]\n  },\n  \"model\": {\n    \"model\": \"gpt-4o-mini\",\n    \"toolIds\": [],\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a helpful healthcare location assistant for {{ $('Setup Configuration Form').item.json['Organization Name'] }} serving the {{ $('Setup Configuration Form').item.json['Service Area'] }} area. You help customers find healthcare providers including doctors, hospitals, clinics, and pharmacies.\\n\\nYour capabilities include:\\n- Searching for healthcare providers by location, specialty, or provider type\\n- Finding emergency healthcare providers\\n- Getting detailed provider information\\n- Sending provider information via email or SMS\\n- Escalating complex queries to customer support\\n\\nThe current date and time is: {{ new Date().toISOString() }}.\\n\\nWhen helping customers:\\n1. Always ask clarifying questions about their location preferences\\n2. Confirm the type of healthcare service they need\\n3. Offer to send information via email or SMS\\n4. For urgent/emergency situations, prioritize emergency provider search\\n5. If you cannot find what they're looking for, offer to escalate to customer support\\n\\nKey service areas: {{ $('Setup Configuration Form').item.json['Service Area'] }} and surrounding regions.\\n\\nAlways be empathetic and understanding, as customers may be dealing with health concerns.\"\n      }\n    ],\n    \"provider\": \"openai\",\n    \"maxTokens\": 200\n  },\n  \"firstMessage\": \"Hello! I'm your Premier Health location assistant. I can help you find doctors, hospitals, clinics, and pharmacies in the {{ $('Setup Configuration Form').item.json['Service Area'] }} area. How may I assist you today?\",\n  \"voicemailMessage\": \"Thank you for calling Premier Health. Please call back during our service hours or visit our website for assistance.\",\n  \"endCallFunctionEnabled\": true,\n  \"endCallMessage\": \"Thank you for calling Premier Health. Have a great day and stay healthy!\",\n  \"transcriber\": {\n    \"model\": \"nova-3-general\",\n    \"language\": \"en\",\n    \"numerals\": true,\n    \"provider\": \"deepgram\"\n  },\n  \"serverMessages\": [\n    \"end-of-call-report\",\n    \"function-call\",\n    \"tool-calls\"\n  ],\n  \"dialKeypadFunctionEnabled\": true,\n  \"analysisPlan\": {\n    \"minMessagesThreshold\": 2,\n    \"summaryPlan\": {\n      \"messages\": [\n        {\n          \"content\": \"Create a detailed summary of this healthcare location assistance call. Include: customer intent, location searched, providers found, actions taken, and overall satisfaction. Extract any contact information (email, phone) provided by the caller.\",\n          \"role\": \"system\"\n        },\n        {\n          \"content\": \"Here is the transcript:\\n\\n\\n\\n. Here is the ended reason of the call:\\n\\n\\n\\n\",\n          \"role\": \"user\"\n        }\n      ],\n      \"timeoutSeconds\": 25\n    },\n    \"structuredDataPlan\": {\n      \"enabled\": true,\n      \"schema\": {\n        \"type\": \"object\",\n        \"required\": [\"score\", \"result\", \"customer_intent\", \"location_searched\", \"providers_found\", \"actions_taken\"],\n        \"properties\": {\n          \"score\": {\n            \"description\": \"Rate the call effectiveness from 1-10\",\n            \"type\": \"number\"\n          },\n          \"result\": {\n            \"description\": \"Brief outcome of the call\",\n            \"type\": \"string\"\n          },\n          \"customer_intent\": {\n            \"description\": \"What healthcare service the customer was looking for\",\n            \"type\": \"string\"\n          },\n          \"location_searched\": {\n            \"description\": \"Geographic area or location customer was interested in\",\n            \"type\": \"string\"\n          },\n          \"providers_found\": {\n            \"description\": \"Number of relevant healthcare providers found\",\n            \"type\": \"number\"\n          },\n          \"actions_taken\": {\n            \"description\": \"Actions performed during the call (search, email, escalation, etc.)\",\n            \"type\": \"string\"\n          },\n          \"customer_email\": {\n            \"description\": \"Email address provided by customer\",\n            \"type\": \"string\"\n          },\n          \"customer_phone\": {\n            \"description\": \"Phone number of the caller\",\n            \"type\": \"string\"\n          },\n          \"escalated_to_support\": {\n            \"description\": \"Whether the call was escalated to human support\",\n            \"type\": \"boolean\"\n          }\n        }\n      },\n      \"messages\": [\n        {\n          \"content\": \"Extract structured data from this healthcare assistance call. Follow the schema exactly and provide accurate information.\",\n          \"role\": \"system\"\n        },\n        {\n          \"content\": \"Here is the transcript:\\n\\n\\n\\n. Here is the ended reason of the call:\\n\\n\\n\\n\",\n          \"role\": \"user\"\n        }\n      ],\n      \"timeoutSeconds\": 30\n    },\n    \"successEvaluationPlan\": {\n      \"rubric\": \"PassFail\",\n      \"messages\": [\n        {\n          \"content\": \"Evaluate if this healthcare assistance call was successful. Consider: Did we help the customer find what they needed? Was the interaction helpful and professional? Return true for successful calls, false only if the customer was frustrated or we failed to provide assistance.\",\n          \"role\": \"system\"\n        },\n        {\n          \"content\": \"Here is the transcript:\\n\\n\\n\\n. Here is the ended reason:\\n\\n\\n\\n\",\n          \"role\": \"user\"\n        }\n      ],\n      \"timeoutSeconds\": 15\n    }\n  },\n  \"voicemailDetection\": {\n    \"provider\": \"vapi\",\n    \"backoffPlan\": {\n      \"maxRetries\": 3,\n      \"startAtSeconds\": 3,\n      \"frequencySeconds\": 5\n    }\n  },\n  \"backgroundDenoisingEnabled\": true,\n  \"artifactPlan\": {\n    \"recordingFormat\": \"mp3\"\n  },\n  \"messagePlan\": {\n    \"idleMessages\": [\n      \"I'm here to help you find healthcare providers. What can I assist you with?\",\n      \"Is there a specific type of healthcare service you're looking for?\",\n      \"Would you like me to search for providers in a particular area?\",\n      \"I can help you find doctors, hospitals, clinics, or pharmacies. What do you need?\"\n    ]\n  },\n  \"startSpeakingPlan\": {\n    \"smartEndpointingPlan\": {\n      \"provider\": \"vapi\"\n    }\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [520, 460],
+      "id": "create-vapi-assistant",
+      "name": "Create Vapi Assistant",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"search_healthcare_providers\",\n    \"description\": \"Search for healthcare providers including doctors, hospitals, clinics, and pharmacies by location, specialty, or provider type.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"query\": {\n          \"description\": \"Search query describing what the customer is looking for (e.g., 'cardiologist', 'emergency hospital', 'pharmacy near me')\",\n          \"type\": \"string\"\n        },\n        \"location\": {\n          \"description\": \"Geographic location or area where to search for providers\",\n          \"type\": \"string\"\n        },\n        \"specialty\": {\n          \"description\": \"Medical specialty if looking for specific type of doctor\",\n          \"type\": \"string\"\n        },\n        \"provider_type\": {\n          \"description\": \"Type of healthcare provider (doctor, hospital, clinic, pharmacy, etc.)\",\n          \"type\": \"string\"\n        },\n        \"max_results\": {\n          \"description\": \"Maximum number of results to return (default: 5)\",\n          \"type\": \"number\",\n          \"default\": 5\n        }\n      },\n      \"required\": [\"query\"]\n    }\n  },\n  \"messages\": [],\n  \"server\": {\n    \"url\": \"{{ $('Setup Configuration Form').item.json['Server URL'] }}/premier-health/vapi-webhook\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 300],
+      "id": "create-search-tool",
+      "name": "Create Healthcare Search Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"get_emergency_providers\",\n    \"description\": \"Find emergency healthcare providers for urgent medical situations.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"location\": {\n          \"description\": \"Location where emergency care is needed\",\n          \"type\": \"string\"\n        },\n        \"max_results\": {\n          \"description\": \"Maximum number of emergency providers to return (default: 5)\",\n          \"type\": \"number\",\n          \"default\": 5\n        }\n      },\n      \"required\": [\"location\"]\n    }\n  },\n  \"messages\": [],\n  \"server\": {\n    \"url\": \"{{ $('Setup Configuration Form').item.json['Server URL'] }}/premier-health/vapi-webhook\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 460],
+      "id": "create-emergency-tool",
+      "name": "Create Emergency Provider Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"send_provider_info_email\",\n    \"description\": \"Send healthcare provider information to the customer via email.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"email\": {\n          \"description\": \"Customer's email address\",\n          \"type\": \"string\"\n        },\n        \"customer_name\": {\n          \"description\": \"Customer's name for personalization\",\n          \"type\": \"string\",\n          \"default\": \"Customer\"\n        },\n        \"search_query\": {\n          \"description\": \"The search that was performed\",\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"email\"]\n    }\n  },\n  \"messages\": [],\n  \"server\": {\n    \"url\": \"{{ $('Setup Configuration Form').item.json['Server URL'] }}/premier-health/vapi-webhook\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 620],
+      "id": "create-email-tool",
+      "name": "Create Email Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"send_provider_info_sms\",\n    \"description\": \"Send healthcare provider information to the customer via SMS text message.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"phone\": {\n          \"description\": \"Customer's phone number for SMS\",\n          \"type\": \"string\"\n        },\n        \"search_query\": {\n          \"description\": \"The search that was performed\",\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"phone\"]\n    }\n  },\n  \"messages\": [],\n  \"server\": {\n    \"url\": \"{{ $('Setup Configuration Form').item.json['Server URL'] }}/premier-health/vapi-webhook\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1000, 300],
+      "id": "create-sms-tool",
+      "name": "Create SMS Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"escalate_to_support\",\n    \"description\": \"Escalate the customer's query to human customer support when the automated system cannot help or when specifically requested.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"customer_name\": {\n          \"description\": \"Customer's name\",\n          \"type\": \"string\"\n        },\n        \"customer_email\": {\n          \"description\": \"Customer's email address\",\n          \"type\": \"string\"\n        },\n        \"customer_phone\": {\n          \"description\": \"Customer's phone number\",\n          \"type\": \"string\"\n        },\n        \"search_query\": {\n          \"description\": \"What the customer was searching for\",\n          \"type\": \"string\"\n        },\n        \"location_searched\": {\n          \"description\": \"Location/area that was searched\",\n          \"type\": \"string\"\n        },\n        \"issue_description\": {\n          \"description\": \"Description of the issue or why escalation is needed\",\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"customer_name\", \"search_query\", \"location_searched\"]\n    }\n  },\n  \"messages\": [],\n  \"server\": {\n    \"url\": \"{{ $('Setup Configuration Form').item.json['Server URL'] }}/premier-health/vapi-webhook\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1000, 460],
+      "id": "create-escalation-tool",
+      "name": "Create Support Escalation Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Update the assistant with the tool IDs\nconst items = $input.all();\n\n// Extract tool IDs from all the created tools\nconst toolIds = [];\n\n// Get tool IDs from each tool creation response\nfor (let i = 2; i < items.length; i++) {\n  const item = items[i];\n  if (item.json && item.json.id) {\n    toolIds.push(item.json.id);\n  }\n}\n\n// Get the assistant ID from the first response\nconst assistantId = items[1].json?.id;\n\nconsole.log('Tool IDs collected:', toolIds);\nconsole.log('Assistant ID:', assistantId);\n\nreturn [{\n  json: {\n    assistant_id: assistantId,\n    tool_ids: toolIds,\n    server_url: items[0].json['Server URL'],\n    organization_name: items[0].json['Organization Name'],\n    service_area: items[0].json['Service Area'],\n    support_email: items[0].json['Support Email']\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1240, 460],
+      "id": "collect-tool-ids",
+      "name": "Collect Tool IDs"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.vapi.ai/assistant/{{ $json.assistant_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": {\n    \"toolIds\": {{ JSON.stringify($json.tool_ids) }}\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1480, 460],
+      "id": "update-assistant-tools",
+      "name": "Update Assistant with Tools",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/phone-number",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"provider\": \"vapi\",\n  \"assistantId\": \"{{ $('Collect Tool IDs').item.json.assistant_id }}\",\n  \"name\": \"{{ $('Collect Tool IDs').item.json.organization_name }} - {{ $('Collect Tool IDs').item.json.service_area }} Location Service\",\n  \"serverUrl\": \"{{ $('Collect Tool IDs').item.json.server_url }}/premier-health/vapi-webhook\",\n  \"serverUrlSecret\": \"premier-health-webhook-secret\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1720, 460],
+      "id": "create-phone-number",
+      "name": "Create Vapi Phone Number",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1960, 460],
+      "id": "wait-activation",
+      "name": "Wait for Phone Activation"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare final configuration summary\nconst items = $input.all();\nconst config = items[0].json;\nconst assistantResponse = items[1].json;\nconst phoneResponse = items[2].json;\n\nconst summary = {\n  success: true,\n  setup_completed_at: new Date().toISOString(),\n  configuration: {\n    organization_name: config.organization_name,\n    service_area: config.service_area,\n    support_email: config.support_email,\n    server_url: config.server_url\n  },\n  vapi_resources: {\n    assistant_id: config.assistant_id,\n    assistant_name: assistantResponse?.name || 'Premier Health Location Assistant',\n    phone_number: phoneResponse?.number || 'Phone number pending activation',\n    phone_number_id: phoneResponse?.id,\n    tools_count: config.tool_ids?.length || 0,\n    tool_ids: config.tool_ids\n  },\n  capabilities: [\n    'Healthcare provider search by location and specialty',\n    'Emergency provider lookup',\n    'Provider information via email',\n    'Provider information via SMS',\n    'Freshdesk support escalation',\n    'Call analytics and reporting'\n  ],\n  webhook_endpoint: `${config.server_url}/premier-health/vapi-webhook`,\n  next_steps: [\n    'Test the voice assistant by calling the provided phone number',\n    'Configure Freshdesk credentials in the backend',\n    'Set up monitoring and analytics dashboards',\n    'Train staff on escalation procedures'\n  ]\n};\n\nconsole.log('Premier Health Voice Assistant Setup Complete:', JSON.stringify(summary, null, 2));\n\nreturn [{ json: summary }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2200, 460],
+      "id": "final-summary",
+      "name": "Generate Setup Summary"
+    }
+  ],
+  "connections": {
+    "Setup Configuration Form": {
+      "main": [
+        [
+          {
+            "node": "Create Vapi Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Vapi Assistant": {
+      "main": [
+        [
+          {
+            "node": "Create Healthcare Search Tool",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Emergency Provider Tool",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Email Tool",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create SMS Tool",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Support Escalation Tool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Healthcare Search Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Emergency Provider Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Email Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create SMS Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Support Escalation Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Tool IDs": {
+      "main": [
+        [
+          {
+            "node": "Update Assistant with Tools",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Assistant with Tools": {
+      "main": [
+        [
+          {
+            "node": "Create Vapi Phone Number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Vapi Phone Number": {
+      "main": [
+        [
+          {
+            "node": "Wait for Phone Activation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Phone Activation": {
+      "main": [
+        [
+          {
+            "node": "Generate Setup Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-09-20T17:25:00.000Z",
+      "updatedAt": "2025-09-20T17:25:00.000Z",
+      "id": "premier-health",
+      "name": "Premier Health"
+    },
+    {
+      "createdAt": "2025-09-20T17:25:00.000Z",
+      "updatedAt": "2025-09-20T17:25:00.000Z",
+      "id": "vapi-integration",
+      "name": "Vapi Integration"
+    },
+    {
+      "createdAt": "2025-09-20T17:25:00.000Z",
+      "updatedAt": "2025-09-20T17:25:00.000Z",
+      "id": "healthcare-location",
+      "name": "Healthcare Location Service"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-20T17:25:00.000Z",
+  "versionId": "1"
+}

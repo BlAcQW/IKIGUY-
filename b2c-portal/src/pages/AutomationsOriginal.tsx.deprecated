@@ -1,0 +1,386 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import {
+  Zap,
+  Search,
+  Filter,
+  Plus,
+  ArrowRight,
+  Building2,
+  Factory,
+  Heart,
+  CreditCard,
+  ShoppingBag,
+  Car,
+  Hotel,
+  Shield,
+  Home,
+  GraduationCap,
+  Briefcase,
+  Phone,
+  Zap as Lightning,
+  Package,
+  Landmark,
+  Settings,
+  Laptop
+} from 'lucide-react';
+import { getTemplatesByIndustry } from '@/config/automation-templates';
+
+const industryIcons = {
+  healthcare: Heart,
+  financial: CreditCard,
+  retail: ShoppingBag,
+  manufacturing: Factory,
+  telecom: Phone,
+  insurance: Shield,
+  real_estate: Home,
+  education: GraduationCap,
+  professional_services: Briefcase,
+  automotive: Car,
+  hospitality: Hotel,
+  utilities: Lightning,
+  logistics: Package,
+  government: Landmark,
+  workflow: Settings,
+  technology: Laptop
+};
+
+interface Industry {
+  id: string;
+  name: string;
+  description: string;
+  templateCount: number;
+  popular: boolean;
+}
+
+interface AutomationTemplate {
+  id: string;
+  name: string;
+  description: string;
+  industry: string;
+  complexity: 'Simple' | 'Medium' | 'Advanced';
+  estimatedTime: string;
+  integrations: string[];
+}
+
+const industries: Industry[] = [
+  {
+    id: 'healthcare',
+    name: 'Healthcare',
+    description: 'Patient management, appointment scheduling, medical records, prescription automation',
+    templateCount: getTemplatesByIndustry('healthcare').length,
+    popular: true
+  },
+  {
+    id: 'financial',
+    name: 'Financial Services',
+    description: 'Payment reminders, fraud detection, loan processing, compliance automation',
+    templateCount: getTemplatesByIndustry('financial').length,
+    popular: true
+  },
+  {
+    id: 'retail',
+    name: 'Retail & E-commerce',
+    description: 'Order tracking, cart recovery, inventory management, customer engagement',
+    templateCount: getTemplatesByIndustry('retail').length,
+    popular: true
+  },
+  {
+    id: 'manufacturing',
+    name: 'Manufacturing',
+    description: 'Production workflow, quality control, supply chain automation, compliance tracking',
+    templateCount: getTemplatesByIndustry('manufacturing').length,
+    popular: false
+  },
+  {
+    id: 'telecom',
+    name: 'Telecommunications',
+    description: 'Service provisioning, network monitoring, customer support, billing automation',
+    templateCount: getTemplatesByIndustry('telecom').length,
+    popular: false
+  },
+  {
+    id: 'insurance',
+    name: 'Insurance',
+    description: 'Claims processing, policy management, fraud detection, renewal automation, underwriting, compliance',
+    templateCount: getTemplatesByIndustry('insurance').length,
+    popular: true
+  },
+  {
+    id: 'real_estate',
+    name: 'Real Estate',
+    description: 'Property management, tenant services, lead tracking, maintenance coordination',
+    templateCount: getTemplatesByIndustry('real_estate').length,
+    popular: false
+  },
+  {
+    id: 'education',
+    name: 'Education',
+    description: 'Student enrollment, academic support, parent communication, event coordination',
+    templateCount: getTemplatesByIndustry('education').length,
+    popular: false
+  },
+  {
+    id: 'automotive',
+    name: 'Automotive',
+    description: 'Vehicle service reminders, warranty management, inventory tracking, customer service',
+    templateCount: getTemplatesByIndustry('automotive').length,
+    popular: true
+  },
+  {
+    id: 'government',
+    name: 'Government Services',
+    description: 'Permit processing, citizen services, compliance monitoring, public communications',
+    templateCount: getTemplatesByIndustry('government').length,
+    popular: false
+  },
+  {
+    id: 'logistics',
+    name: 'Logistics & Supply Chain',
+    description: 'Shipment tracking, inventory optimization, delivery management, supplier coordination',
+    templateCount: getTemplatesByIndustry('logistics').length,
+    popular: true
+  },
+  {
+    id: 'utilities',
+    name: 'Utilities & Energy',
+    description: 'Service outage management, automated billing, meter reading, customer notifications',
+    templateCount: getTemplatesByIndustry('utilities').length,
+    popular: false
+  },
+  {
+    id: 'professional_services',
+    name: 'Professional Services',
+    description: 'Client onboarding, project management, invoicing automation, time tracking',
+    templateCount: getTemplatesByIndustry('professional_services').length,
+    popular: false
+  },
+  {
+    id: 'hospitality',
+    name: 'Hospitality & Travel',
+    description: 'Guest booking management, loyalty programs, service automation, customer engagement',
+    templateCount: getTemplatesByIndustry('hospitality').length,
+    popular: true
+  },
+  {
+    id: 'workflow',
+    name: 'Generic Workflows',
+    description: 'Cross-industry workflow automation, document management, approval processes, compliance',
+    templateCount: getTemplatesByIndustry('workflow').length,
+    popular: true
+  },
+  {
+    id: 'technology',
+    name: 'Technology',
+    description: 'Product launches, software onboarding, feature announcements, user engagement, developer outreach',
+    templateCount: getTemplatesByIndustry('technology').length,
+    popular: true
+  }
+];
+
+const Automations: React.FC = () => {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
+  const [filteredIndustries, setFilteredIndustries] = useState<Industry[]>(industries);
+  const [showPopularOnly, setShowPopularOnly] = useState(false);
+
+  useEffect(() => {
+    let filtered = industries;
+
+    if (searchTerm) {
+      filtered = filtered.filter(industry =>
+        industry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        industry.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (showPopularOnly) {
+      filtered = filtered.filter(industry => industry.popular);
+    }
+
+    setFilteredIndustries(filtered);
+  }, [searchTerm, showPopularOnly]);
+
+  const handleIndustrySelect = (industry: Industry) => {
+    navigate(`/automations/industry/${industry.id}`);
+  };
+
+  const handleCreateCustom = () => {
+    navigate('/automations/custom');
+  };
+
+  return (
+    <div className="flex min-h-screen bg-background">
+      <DashboardSidebar />
+      
+      <div className="flex-1 overflow-auto">
+        <div className="container mx-auto p-6 space-y-8">
+          {/* Header */}
+          <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <Zap className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold">Automations</h1>
+            <p className="text-muted-foreground">
+              Streamline your business processes with intelligent automation workflows
+            </p>
+          </div>
+        </div>
+
+        {/* Search and Filters */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search industries..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant={showPopularOnly ? "default" : "outline"}
+              size="sm"
+              onClick={() => setShowPopularOnly(!showPopularOnly)}
+            >
+              <Filter className="h-4 w-4 mr-2" />
+              Popular
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Plus className="h-5 w-5" />
+            Quick Start
+          </CardTitle>
+          <CardDescription>
+            Get started with automation templates or create a custom workflow
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Button
+              variant="outline"
+              className="h-auto p-4 justify-start"
+              onClick={() => navigate('/automations/templates')}
+            >
+              <div className="text-left">
+                <div className="font-semibold">Browse All Templates</div>
+                <div className="text-sm text-muted-foreground">
+                  Explore 142+ pre-built automation templates
+                </div>
+              </div>
+              <ArrowRight className="h-4 w-4 ml-auto" />
+            </Button>
+            
+            <Button
+              variant="outline"
+              className="h-auto p-4 justify-start"
+              onClick={handleCreateCustom}
+            >
+              <div className="text-left">
+                <div className="font-semibold">Create Custom Automation</div>
+                <div className="text-sm text-muted-foreground">
+                  Build your own workflow from scratch
+                </div>
+              </div>
+              <ArrowRight className="h-4 w-4 ml-auto" />
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Industry Selection */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold">Choose Your Industry</h2>
+          <Badge variant="secondary" className="text-sm">
+            {filteredIndustries.length} industries available
+          </Badge>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredIndustries.map((industry) => {
+            const IconComponent = industryIcons[industry.id as keyof typeof industryIcons];
+            
+            return (
+              <Card
+                key={industry.id}
+                className="cursor-pointer hover:shadow-lg transition-all duration-200 group hover:border-primary/50"
+                onClick={() => handleIndustrySelect(industry)}
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                        <IconComponent className="h-5 w-5 text-primary" />
+                      </div>
+                      {industry.popular && (
+                        <Badge variant="default" className="text-xs">
+                          Popular
+                        </Badge>
+                      )}
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                    {industry.name}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="mb-3">
+                    {industry.description}
+                  </CardDescription>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">
+                      {industry.templateCount} templates
+                    </span>
+                    <Button size="sm" variant="ghost" className="group-hover:bg-primary/10">
+                      Explore
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Empty State */}
+      {filteredIndustries.length === 0 && (
+        <Card className="text-center py-12">
+          <CardContent>
+            <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No industries found</h3>
+            <p className="text-muted-foreground mb-4">
+              Try adjusting your search criteria or browse all available templates.
+            </p>
+            <Button onClick={() => {
+              setSearchTerm('');
+              setShowPopularOnly(false);
+            }}>
+              Clear Filters
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Automations;

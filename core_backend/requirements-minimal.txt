@@ -1,0 +1,85 @@
+# Minimal requirements for Core Backend - Python 3.11 compatible
+# Core dependencies only - excludes problematic ML packages
+
+# FastAPI and ASGI server
+fastapi>=0.116.1
+uvicorn[standard]>=0.35.0
+
+# HTTP client for API calls
+httpx>=0.28.1
+
+# Database
+pymongo>=4.14.1
+mongomock>=4.3.0
+
+# Configuration and validation
+pydantic[email]>=2.11.7
+pydantic-settings>=2.10.1
+email-validator>=2.3.0
+python-dotenv>=1.0.0
+
+# Security and cryptography
+cryptography>=45.0.6
+pyjwt>=2.10.1
+python-jose[cryptography]>=3.5.0
+passlib[bcrypt]>=1.7.4
+
+# Logging and monitoring
+structlog>=25.4.0
+
+# Development and testing
+pytest>=8.4.1
+pytest-asyncio>=1.1.0
+pytest-cov>=6.2.1
+
+# Code formatting and linting
+black>=25.1.0
+isort>=6.0.1
+flake8>=7.3.0
+
+# Type checking
+mypy>=1.17.1
+
+# Additional utilities
+python-multipart>=0.0.20
+redis>=6.4.0
+
+# Rate limiting
+slowapi>=0.1.9
+
+# Background tasks and scheduling
+celery>=5.5.3
+apscheduler>=3.11.0
+
+# Email support
+aiosmtplib>=4.0.2
+jinja2>=3.1.6
+
+# File handling
+aiofiles>=24.1.0
+
+# Date/time handling
+python-dateutil>=2.9.0.post0
+
+# JSON handling
+orjson>=3.11.3
+
+# Webhook handling
+aiohttp>=3.12.15
+
+# WebSocket support
+websockets>=15.0.1
+
+# OpenAI Integration
+openai>=1.0.0
+
+# Supabase for knowledge base and vector storage
+# supabase>=2.0.0  # Removed - using MongoDB for authentication
+
+# Basic ML dependencies (without numba/librosa)
+numpy>=2.3.2
+requests>=2.31.0
+tqdm>=4.65.0
+
+# Shared libraries
+-e ../../shared

@@ -1,0 +1,73 @@
+# Fix for Python 3.12 distutils issue
+setuptools>=68.0.0
+wheel>=0.41.0
+
+# FastAPI and ASGI server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# HTTP client for API calls
+httpx==0.25.2
+
+# Database
+pymongo==4.6.1
+
+# Configuration and validation
+pydantic[email]==2.5.0
+pydantic-settings==2.1.0
+email-validator==2.2.0
+
+# Security and cryptography
+cryptography==42.0.8
+pyjwt==2.8.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Logging and monitoring
+structlog==23.2.0
+
+# Development and testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+mongomock==4.1.2
+
+# Code formatting and linting
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+
+# Type checking
+mypy==1.7.1
+
+# Additional utilities
+python-multipart==0.0.6
+redis==5.0.1
+
+# API documentation
+# fastapi-openapi==0.1.0  # Removed - not available
+
+# Rate limiting
+slowapi==0.1.9
+
+# Background tasks
+celery==5.3.4
+
+# Email support
+aiosmtplib==3.0.1
+jinja2==3.1.2
+
+# File handling
+aiofiles==23.2.1
+
+# Date/time handling
+python-dateutil==2.8.2
+
+# JSON handling
+orjson==3.9.10
+
+# Webhook handling
+aiohttp==3.9.1
+
+# Shared libraries
+-e ../../../shared

@@ -1,0 +1,464 @@
+"""
+TTS Health Notifier Service
+
+Monitors TTS provider health and sends email notifications when services go down or recover.
+Integrates with HealthMonitorService to receive real-time alerts.
+
+Usage:
+    from apps.shared.services.tts_health_notifier import TTSHealthNotifier
+
+    notifier = TTSHealthNotifier()
+    await notifier.initialize(health_monitor)
+"""
+
+import logging
+import asyncio
+from typing import Dict, List, Optional, Any
+from datetime import datetime, timedelta
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+logger = logging.getLogger(__name__)
+
+
+class TTSHealthNotifier:
+    """
+    Service for sending email notifications about TTS provider health issues.
+    """
+
+    def __init__(
+        self,
+        admin_email: str = "admin@ailabsafrica.com",
+        from_email: str = "tts-monitor@ailabsafrica.com",
+        smtp_host: str = "localhost",
+        smtp_port: int = 587,
+        smtp_username: Optional[str] = None,
+        smtp_password: Optional[str] = None,
+        use_tls: bool = True,
+        enable_notifications: bool = True,
+        cooldown_minutes: int = 30,  # Prevent spam by limiting notifications
+    ):
+        """
+        Initialize TTS health notifier.
+
+        Args:
+            admin_email: Admin email address to receive notifications
+            from_email: From email address
+            smtp_host: SMTP server host
+            smtp_port: SMTP server port
+            smtp_username: SMTP username (optional)
+            smtp_password: SMTP password (optional)
+            use_tls: Use TLS for SMTP
+            enable_notifications: Enable/disable email notifications
+            cooldown_minutes: Minutes to wait before sending another alert for same provider
+        """
+        self.admin_email = admin_email
+        self.from_email = from_email
+        self.smtp_host = smtp_host
+        self.smtp_port = smtp_port
+        self.smtp_username = smtp_username
+        self.smtp_password = smtp_password
+        self.use_tls = use_tls
+        self.enable_notifications = enable_notifications
+        self.cooldown_minutes = cooldown_minutes
+
+        # Track last notification times to prevent spam
+        self._last_notifications: Dict[str, datetime] = {}
+
+        logger.info(
+            f"TTSHealthNotifier initialized (admin: {admin_email}, "
+            f"notifications: {enable_notifications})"
+        )
+
+    async def initialize(self, health_monitor) -> None:
+        """
+        Initialize notifier with health monitor.
+
+        Args:
+            health_monitor: HealthMonitorService instance
+        """
+        # Register callback with health monitor
+        health_monitor.register_alert_callback(self.on_health_alert)
+        logger.info("Registered health alert callback with monitor")
+
+    async def on_health_alert(self, provider: Any, result: Any) -> None:
+        """
+        Callback for health monitor alerts.
+
+        Args:
+            provider: AIProvider instance
+            result: HealthCheckResult instance
+        """
+        if not self.enable_notifications:
+            return
+
+        try:
+            # Check cooldown period
+            if not self._should_send_notification(provider.id):
+                logger.debug(f"Skipping notification for {provider.id} (in cooldown)")
+                return
+
+            # Determine alert type
+            is_down = not result.healthy
+
+            if is_down:
+                await self.send_provider_down_alert(provider, result)
+            else:
+                # Check if this is a recovery (was previously down)
+                if provider.id in self._last_notifications:
+                    await self.send_provider_recovered_alert(provider, result)
+
+        except Exception as e:
+            logger.error(f"Failed to send health notification: {e}")
+
+    def _should_send_notification(self, provider_id: str) -> bool:
+        """
+        Check if enough time has passed since last notification.
+
+        Args:
+            provider_id: Provider identifier
+
+        Returns:
+            True if notification should be sent
+        """
+        if provider_id not in self._last_notifications:
+            return True
+
+        last_time = self._last_notifications[provider_id]
+        cooldown_delta = timedelta(minutes=self.cooldown_minutes)
+
+        return datetime.now() - last_time >= cooldown_delta
+
+    async def send_provider_down_alert(self, provider: Any, result: Any) -> None:
+        """
+        Send email alert when a provider goes down.
+
+        Args:
+            provider: Provider that went down
+            result: Health check result
+        """
+        subject = f"🔴 TTS Alert: {provider.name} is DOWN"
+
+        body = f"""
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; }}
+                .alert-box {{
+                    background-color: #ffebee;
+                    border: 2px solid #f44336;
+                    padding: 20px;
+                    border-radius: 5px;
+                    margin: 20px 0;
+                }}
+                .provider-info {{
+                    background-color: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    margin: 10px 0;
+                }}
+                .timestamp {{ color: #666; font-size: 14px; }}
+                h2 {{ color: #d32f2f; }}
+                .error-msg {{
+                    background-color: #fff3cd;
+                    padding: 10px;
+                    border-left: 4px solid #ffc107;
+                    margin: 10px 0;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="alert-box">
+                <h2>⚠️ TTS Provider Health Alert</h2>
+
+                <div class="provider-info">
+                    <strong>Provider:</strong> {provider.name} ({provider.id})<br>
+                    <strong>Endpoint:</strong> {provider.endpoint}<br>
+                    <strong>Status:</strong> <span style="color: red;">OFFLINE/DEGRADED</span><br>
+                    <strong>Time:</strong> {result.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}<br>
+                </div>
+
+                {f'<div class="error-msg"><strong>Error:</strong> {result.error}</div>' if result.error else ''}
+
+                <h3>Service Impact:</h3>
+                <ul>
+                    <li>Text-to-Speech synthesis using {provider.name} will fail</li>
+                    <li>Users will be automatically redirected to alternative providers</li>
+                    <li>Voice cloning features may be affected if this was a primary provider</li>
+                </ul>
+
+                <h3>Recommended Actions:</h3>
+                <ol>
+                    <li>Check the service logs for {provider.id}</li>
+                    <li>Verify the endpoint is accessible: {provider.endpoint}/health</li>
+                    <li>Check GPU memory and resources if this is a GPU-based service</li>
+                    <li>Restart the service if necessary</li>
+                </ol>
+
+                <p class="timestamp">
+                    <em>This notification was sent because the health check for {provider.name} failed.
+                    The service will be automatically monitored and you'll receive a recovery notification
+                    when it comes back online.</em>
+                </p>
+            </div>
+
+            <p style="color: #999; font-size: 12px;">
+                KasaAI TTS Health Monitor |
+                Next notification for this service: After {self.cooldown_minutes} minutes
+            </p>
+        </body>
+        </html>
+        """
+
+        await self._send_email(subject, body, is_html=True)
+        self._last_notifications[provider.id] = datetime.now()
+        logger.warning(f"Sent provider down alert for {provider.name} to {self.admin_email}")
+
+    async def send_provider_recovered_alert(self, provider: Any, result: Any) -> None:
+        """
+        Send email alert when a provider recovers.
+
+        Args:
+            provider: Provider that recovered
+            result: Health check result
+        """
+        subject = f"✅ TTS Recovery: {provider.name} is ONLINE"
+
+        # Calculate downtime
+        if provider.id in self._last_notifications:
+            downtime = datetime.now() - self._last_notifications[provider.id]
+            downtime_str = f"{downtime.total_seconds() / 60:.1f} minutes"
+        else:
+            downtime_str = "Unknown"
+
+        body = f"""
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; }}
+                .success-box {{
+                    background-color: #e8f5e9;
+                    border: 2px solid #4caf50;
+                    padding: 20px;
+                    border-radius: 5px;
+                    margin: 20px 0;
+                }}
+                .provider-info {{
+                    background-color: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    margin: 10px 0;
+                }}
+                .timestamp {{ color: #666; font-size: 14px; }}
+                h2 {{ color: #2e7d32; }}
+                .metrics {{
+                    background-color: #e3f2fd;
+                    padding: 10px;
+                    border-left: 4px solid #2196f3;
+                    margin: 10px 0;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="success-box">
+                <h2>✅ TTS Provider Recovered</h2>
+
+                <div class="provider-info">
+                    <strong>Provider:</strong> {provider.name} ({provider.id})<br>
+                    <strong>Endpoint:</strong> {provider.endpoint}<br>
+                    <strong>Status:</strong> <span style="color: green;">ONLINE</span><br>
+                    <strong>Recovery Time:</strong> {result.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}<br>
+                    <strong>Downtime:</strong> {downtime_str}<br>
+                </div>
+
+                <div class="metrics">
+                    <strong>Response Time:</strong> {result.response_time_ms:.2f}ms<br>
+                    <strong>Health Check:</strong> Passed ✓
+                </div>
+
+                <h3>Service Status:</h3>
+                <ul>
+                    <li>✅ Service is now fully operational</li>
+                    <li>✅ All TTS features using {provider.name} are available</li>
+                    <li>✅ Normal performance metrics observed</li>
+                </ul>
+
+                <p class="timestamp">
+                    <em>This recovery notification confirms that {provider.name} has passed health checks
+                    and is ready to process requests.</em>
+                </p>
+            </div>
+
+            <p style="color: #999; font-size: 12px;">
+                KasaAI TTS Health Monitor |
+                Service monitoring continues every 60 seconds
+            </p>
+        </body>
+        </html>
+        """
+
+        await self._send_email(subject, body, is_html=True)
+        # Remove from last notifications on recovery
+        if provider.id in self._last_notifications:
+            del self._last_notifications[provider.id]
+        logger.info(f"Sent provider recovery alert for {provider.name} to {self.admin_email}")
+
+    async def _send_email(self, subject: str, body: str, is_html: bool = True) -> None:
+        """
+        Send an email using SMTP.
+
+        Args:
+            subject: Email subject
+            body: Email body
+            is_html: Whether body is HTML
+        """
+        try:
+            # Create message
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = subject
+            msg['From'] = self.from_email
+            msg['To'] = self.admin_email
+
+            # Add body
+            if is_html:
+                part = MIMEText(body, 'html')
+            else:
+                part = MIMEText(body, 'plain')
+            msg.attach(part)
+
+            # Send via SMTP
+            await asyncio.get_event_loop().run_in_executor(
+                None,
+                self._send_smtp_email,
+                msg.as_string()
+            )
+
+        except Exception as e:
+            logger.error(f"Failed to send email: {e}")
+            # Try using the existing email service as fallback
+            await self._send_via_email_service(subject, body, is_html)
+
+    def _send_smtp_email(self, message: str) -> None:
+        """
+        Send email via SMTP (synchronous).
+
+        Args:
+            message: Email message as string
+        """
+        try:
+            with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
+                if self.use_tls:
+                    server.starttls()
+                if self.smtp_username and self.smtp_password:
+                    server.login(self.smtp_username, self.smtp_password)
+                server.sendmail(self.from_email, [self.admin_email], message)
+        except Exception as e:
+            logger.error(f"SMTP send failed: {e}")
+            raise
+
+    async def _send_via_email_service(self, subject: str, body: str, is_html: bool) -> None:
+        """
+        Fallback: Send email via the existing EmailService.
+
+        Args:
+            subject: Email subject
+            body: Email body
+            is_html: Whether body is HTML
+        """
+        try:
+            from apps.core_backend.backend.services.email_service import (
+                EmailService,
+                EmailMessage
+            )
+
+            email_service = EmailService({
+                "smtp_enabled": True,
+                "smtp_host": self.smtp_host,
+                "smtp_port": self.smtp_port,
+                "smtp_username": self.smtp_username,
+                "smtp_password": self.smtp_password,
+                "smtp_use_tls": self.use_tls
+            })
+
+            email = EmailMessage(
+                to_addresses=[self.admin_email],
+                from_address=self.from_email,
+                subject=subject,
+                body=body,
+                body_type="html" if is_html else "text",
+                priority="high"
+            )
+
+            result = await email_service.send_email("smtp", email)
+            if not result.get("success"):
+                logger.error(f"Email service send failed: {result.get('error')}")
+
+        except Exception as e:
+            logger.error(f"Failed to send via email service: {e}")
+
+    async def send_test_notification(self) -> None:
+        """
+        Send a test notification to verify email configuration.
+        """
+        subject = "🧪 TTS Health Monitor Test Notification"
+
+        body = f"""
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; }}
+                .info-box {{
+                    background-color: #e1f5fe;
+                    border: 2px solid #03a9f4;
+                    padding: 20px;
+                    border-radius: 5px;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="info-box">
+                <h2>TTS Health Monitor Test</h2>
+                <p>This is a test notification to confirm that the TTS health monitoring
+                email system is configured correctly.</p>
+
+                <p><strong>Configuration:</strong></p>
+                <ul>
+                    <li>Admin Email: {self.admin_email}</li>
+                    <li>From Email: {self.from_email}</li>
+                    <li>SMTP Host: {self.smtp_host}:{self.smtp_port}</li>
+                    <li>Notifications Enabled: {self.enable_notifications}</li>
+                    <li>Cooldown Period: {self.cooldown_minutes} minutes</li>
+                </ul>
+
+                <p><strong>Test Time:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}</p>
+
+                <p>If you received this email, the notification system is working correctly!</p>
+            </div>
+        </body>
+        </html>
+        """
+
+        await self._send_email(subject, body, is_html=True)
+        logger.info(f"Sent test notification to {self.admin_email}")
+
+
+# ============================================================================
+# Example Usage
+# ============================================================================
+
+if __name__ == "__main__":
+    async def test_notifier():
+        """Test the TTS health notifier."""
+
+        # Create notifier
+        notifier = TTSHealthNotifier(
+            admin_email="admin@ailabsafrica.com",
+            enable_notifications=True
+        )
+
+        # Send test notification
+        await notifier.send_test_notification()
+        print(f"Test notification sent to {notifier.admin_email}")
+
+    asyncio.run(test_notifier())

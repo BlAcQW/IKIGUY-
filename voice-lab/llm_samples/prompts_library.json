@@ -1,0 +1,284 @@
+{
+  "version": "1.0.0",
+  "created": "2025-10-27",
+  "description": "Curated sample prompts for LLM Lab with cultural and multilingual examples",
+  "categories": [
+    {
+      "id": "getting_started",
+      "name": "Getting Started",
+      "description": "Simple prompts to get familiar with LLM capabilities",
+      "difficulty": "beginner",
+      "prompt_count": 5
+    },
+    {
+      "id": "ghanaian_cultural",
+      "name": "Ghanaian Cultural Context",
+      "description": "Prompts exploring Ghanaian culture, traditions, and local knowledge",
+      "difficulty": "intermediate",
+      "prompt_count": 5
+    },
+    {
+      "id": "multilingual",
+      "name": "Multilingual & Translation",
+      "description": "Prompts involving multiple languages, especially Ghanaian languages",
+      "difficulty": "intermediate",
+      "prompt_count": 5
+    },
+    {
+      "id": "advanced",
+      "name": "Advanced Use Cases",
+      "description": "Complex prompts for coding, reasoning, and problem-solving",
+      "difficulty": "advanced",
+      "prompt_count": 5
+    }
+  ],
+  "prompts": [
+    {
+      "id": "hello_world",
+      "title": "Hello World - Basic Conversation",
+      "category": "getting_started",
+      "difficulty": "beginner",
+      "prompt": "Hello! Can you introduce yourself and explain what you can help me with?",
+      "description": "A simple greeting to test basic conversational capabilities",
+      "expected_keywords": ["hello", "help", "assist", "language model", "ai"],
+      "recommended_models": ["llama_32_3b", "kasaai_llama_twi"],
+      "expected_response_length": "short",
+      "estimated_tokens": 150
+    },
+    {
+      "id": "text_summarization",
+      "title": "Text Summarization",
+      "category": "getting_started",
+      "difficulty": "beginner",
+      "prompt": "Summarize the following text in 2-3 sentences:\n\nGhana is a country in West Africa known for its rich history, diverse culture, and natural resources. It was the first sub-Saharan African nation to gain independence from colonial rule in 1957. Today, Ghana is recognized for its stable democracy, growing economy, and warm hospitality. The country is famous for its cocoa production, gold mining, and vibrant festivals.",
+      "description": "Tests the model's ability to extract key information and summarize",
+      "expected_keywords": ["ghana", "west africa", "independence", "democracy", "cocoa", "gold"],
+      "recommended_models": ["llama_32_3b"],
+      "expected_response_length": "short",
+      "estimated_tokens": 200
+    },
+    {
+      "id": "question_answering",
+      "title": "Question Answering",
+      "category": "getting_started",
+      "difficulty": "beginner",
+      "prompt": "What is the capital city of Ghana and what are three interesting facts about it?",
+      "description": "Tests factual knowledge and ability to provide structured information",
+      "expected_keywords": ["accra", "capital", "ghana", "city", "coast"],
+      "recommended_models": ["llama_32_3b", "kasaai_llama_twi"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 180
+    },
+    {
+      "id": "creative_writing",
+      "title": "Creative Writing - Short Story",
+      "category": "getting_started",
+      "difficulty": "beginner",
+      "prompt": "Write a short story (3-4 sentences) about a young entrepreneur starting a tech business in Accra.",
+      "description": "Tests creative writing and narrative generation",
+      "expected_keywords": ["accra", "entrepreneur", "tech", "business", "story"],
+      "recommended_models": ["llama_32_3b"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 250
+    },
+    {
+      "id": "code_explanation",
+      "title": "Code Explanation",
+      "category": "getting_started",
+      "difficulty": "beginner",
+      "prompt": "Explain what this Python code does:\n\ndef greet(name):\n    return f'Akwaaba, {name}!'\n\nprint(greet('Kwame'))",
+      "description": "Tests ability to understand and explain simple code",
+      "expected_keywords": ["function", "return", "greet", "akwaaba", "print", "kwame"],
+      "recommended_models": ["llama_32_3b"],
+      "expected_response_length": "short",
+      "estimated_tokens": 180
+    },
+    {
+      "id": "akan_proverb",
+      "title": "Akan Proverb Explanation",
+      "category": "ghanaian_cultural",
+      "difficulty": "intermediate",
+      "prompt": "Explain the meaning and context of this Akan proverb: 'Se wo were fi na wosankofa a yenkyi.' (It is not wrong to go back for that which you have forgotten.)",
+      "description": "Tests cultural knowledge and ability to explain traditional wisdom",
+      "expected_keywords": ["sankofa", "akan", "proverb", "tradition", "wisdom", "past", "learn"],
+      "recommended_models": ["kasaai_llama_twi", "llama_32_3b"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 300
+    },
+    {
+      "id": "jollof_recipe",
+      "title": "Ghanaian Jollof Rice Recipe",
+      "category": "ghanaian_cultural",
+      "difficulty": "intermediate",
+      "prompt": "Provide a detailed recipe for authentic Ghanaian Jollof rice, including ingredients and cooking steps.",
+      "description": "Tests knowledge of Ghanaian cuisine and ability to give structured instructions",
+      "expected_keywords": ["rice", "tomato", "onion", "pepper", "chicken", "cook", "ingredients", "ghana"],
+      "recommended_models": ["llama_32_3b", "kasaai_llama_twi"],
+      "expected_response_length": "long",
+      "estimated_tokens": 400
+    },
+    {
+      "id": "anansi_story",
+      "title": "Anansi Traditional Story",
+      "category": "ghanaian_cultural",
+      "difficulty": "intermediate",
+      "prompt": "Tell a traditional Ghanaian Anansi the Spider story with a moral lesson.",
+      "description": "Tests knowledge of Ghanaian folklore and storytelling",
+      "expected_keywords": ["anansi", "spider", "kwaku", "clever", "wisdom", "moral", "story", "ghana"],
+      "recommended_models": ["kasaai_llama_twi", "llama_32_3b"],
+      "expected_response_length": "long",
+      "estimated_tokens": 450
+    },
+    {
+      "id": "cultural_advice",
+      "title": "Cultural Etiquette Advice",
+      "category": "ghanaian_cultural",
+      "difficulty": "intermediate",
+      "prompt": "I'm visiting Ghana for the first time. What are 5 important cultural etiquettes I should know when meeting elders and attending social gatherings?",
+      "description": "Tests knowledge of Ghanaian social customs and respect protocols",
+      "expected_keywords": ["respect", "elder", "greeting", "left hand", "traditional", "courtesy", "ghana"],
+      "recommended_models": ["kasaai_llama_twi", "llama_32_3b"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 350
+    },
+    {
+      "id": "local_business",
+      "title": "Local Business Ideas",
+      "category": "ghanaian_cultural",
+      "difficulty": "intermediate",
+      "prompt": "Suggest 3 innovative business ideas that could work well in Ghana's current economy, considering local needs and resources.",
+      "description": "Tests understanding of Ghanaian economy and entrepreneurship",
+      "expected_keywords": ["business", "ghana", "economy", "mobile", "agriculture", "technology", "market"],
+      "recommended_models": ["llama_32_3b", "kasaai_llama_twi"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 350
+    },
+    {
+      "id": "english_to_twi",
+      "title": "English to Twi Translation",
+      "category": "multilingual",
+      "difficulty": "intermediate",
+      "prompt": "Translate the following sentences from English to Twi:\n1. Good morning, how are you?\n2. I am going to the market.\n3. Thank you very much.",
+      "description": "Tests translation capabilities from English to Twi",
+      "expected_keywords": ["twi", "translation", "maakye", "ete sen", "dwaamu", "medaase"],
+      "recommended_models": ["kasaai_llama_twi"],
+      "expected_response_length": "short",
+      "estimated_tokens": 200
+    },
+    {
+      "id": "code_switching",
+      "title": "Code-Switching Example",
+      "category": "multilingual",
+      "difficulty": "intermediate",
+      "prompt": "Write a short dialogue (4-6 lines) between two friends in Accra who naturally code-switch between English and Twi while discussing weekend plans.",
+      "description": "Tests understanding of natural bilingual communication in Ghana",
+      "expected_keywords": ["twi", "english", "conversation", "weekend", "accra", "code-switch"],
+      "recommended_models": ["kasaai_llama_twi"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 300
+    },
+    {
+      "id": "twi_proverb_translation",
+      "title": "Twi Proverb Translation & Explanation",
+      "category": "multilingual",
+      "difficulty": "intermediate",
+      "prompt": "Translate this Twi proverb to English and explain its meaning: 'Obi nkyere akwadaa Nyame.' (literal: No one teaches a child about God)",
+      "description": "Tests bilingual understanding and cultural interpretation",
+      "expected_keywords": ["proverb", "god", "child", "natural", "instinct", "wisdom", "akan"],
+      "recommended_models": ["kasaai_llama_twi"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 250
+    },
+    {
+      "id": "mixed_language_qa",
+      "title": "Mixed Language Q&A",
+      "category": "multilingual",
+      "difficulty": "intermediate",
+      "prompt": "Me pε sε me sua English. Can you give me 3 simple English phrases and their Twi translations that I can use every day?",
+      "description": "Tests ability to handle mixed language input and provide practical translations",
+      "expected_keywords": ["english", "twi", "phrases", "translation", "learn", "daily"],
+      "recommended_models": ["kasaai_llama_twi"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 280
+    },
+    {
+      "id": "language_learning",
+      "title": "Language Learning Tips",
+      "category": "multilingual",
+      "difficulty": "intermediate",
+      "prompt": "What are the best strategies for learning Twi as a second language? Include tips for pronunciation and common mistakes to avoid.",
+      "description": "Tests pedagogical knowledge about Twi language learning",
+      "expected_keywords": ["twi", "learn", "pronunciation", "tones", "practice", "language", "tips"],
+      "recommended_models": ["kasaai_llama_twi", "llama_32_3b"],
+      "expected_response_length": "long",
+      "estimated_tokens": 400
+    },
+    {
+      "id": "python_code_generation",
+      "title": "Python Code Generation",
+      "category": "advanced",
+      "difficulty": "advanced",
+      "prompt": "Write a Python function that takes a list of numbers and returns a dictionary containing the sum, average, minimum, and maximum values. Include error handling for empty lists.",
+      "description": "Tests code generation with specific requirements and edge cases",
+      "expected_keywords": ["python", "function", "list", "sum", "average", "min", "max", "error", "dict"],
+      "recommended_models": ["llama_32_3b"],
+      "expected_response_length": "medium",
+      "estimated_tokens": 350
+    },
+    {
+      "id": "multi_step_reasoning",
+      "title": "Multi-Step Reasoning Problem",
+      "category": "advanced",
+      "difficulty": "advanced",
+      "prompt": "A farmer has 100 cedis. He wants to buy chickens at 5 cedis each and goats at 15 cedis each. He must buy at least 10 animals total and spend all 100 cedis. How many of each animal can he buy? Show your reasoning step by step.",
+      "description": "Tests logical reasoning and mathematical problem-solving",
+      "expected_keywords": ["cedis", "chicken", "goat", "calculate", "equation", "solution", "animals"],
+      "recommended_models": ["llama_32_3b"],
+      "expected_response_length": "long",
+      "estimated_tokens": 400
+    },
+    {
+      "id": "data_analysis",
+      "title": "Data Analysis & Insights",
+      "category": "advanced",
+      "difficulty": "advanced",
+      "prompt": "Given this data about mobile money transactions in Ghana:\n- January: 500 million cedis\n- February: 520 million cedis\n- March: 480 million cedis\n- April: 550 million cedis\nAnalyze the trends, calculate the growth rate, and provide 3 insights about the data.",
+      "description": "Tests data analysis and insight generation capabilities",
+      "expected_keywords": ["trend", "growth", "analysis", "mobile money", "increase", "percentage", "insight"],
+      "recommended_models": ["llama_32_3b"],
+      "expected_response_length": "long",
+      "estimated_tokens": 450
+    },
+    {
+      "id": "complex_problem_solving",
+      "title": "Complex Problem Solving",
+      "category": "advanced",
+      "difficulty": "advanced",
+      "prompt": "A startup in Ghana wants to expand from Accra to 5 other regions. They have 200,000 cedis budget and need to: (1) hire 2 staff per region at 3,000 cedis/month each, (2) rent office space at 5,000 cedis/month per region, and (3) allocate marketing budget. Calculate the monthly costs and recommend how to allocate the remaining budget for marketing across 6 months.",
+      "description": "Tests business planning and resource allocation reasoning",
+      "expected_keywords": ["budget", "staff", "rent", "marketing", "calculate", "allocation", "startup", "regions"],
+      "recommended_models": ["llama_32_3b"],
+      "expected_response_length": "long",
+      "estimated_tokens": 500
+    },
+    {
+      "id": "api_design",
+      "title": "API Design & Documentation",
+      "category": "advanced",
+      "difficulty": "advanced",
+      "prompt": "Design a RESTful API for a mobile money service in Ghana. Include endpoints for: checking balance, sending money, and transaction history. Provide the endpoint URLs, HTTP methods, request/response formats, and error codes.",
+      "description": "Tests software architecture and API design knowledge",
+      "expected_keywords": ["api", "rest", "endpoint", "post", "get", "json", "mobile money", "balance", "transaction"],
+      "recommended_models": ["llama_32_3b"],
+      "expected_response_length": "long",
+      "estimated_tokens": 500
+    }
+  ],
+  "metadata": {
+    "total_prompts": 20,
+    "categories_count": 4,
+    "difficulty_levels": ["beginner", "intermediate", "advanced"],
+    "languages": ["English", "Twi", "Mixed"],
+    "recommended_for": "LLM Lab testing, developer examples, cultural demonstrations"
+  }
+}

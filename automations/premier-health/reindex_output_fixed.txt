@@ -1,0 +1,73 @@
+2025-10-21 14:31:52,664 - INFO - ================================================================================
+2025-10-21 14:31:52,664 - INFO - 🚀 PREMIER HEALTH RE-INDEXING WITH CORRECT EMBEDDINGS
+2025-10-21 14:31:52,664 - INFO - ================================================================================
+2025-10-21 14:31:52,664 - INFO - Collection: helpdesk_premier_health_production
+2025-10-21 14:31:52,664 - INFO - Embedding Model: text-embedding-004 (CORRECT)
+2025-10-21 14:31:52,664 - INFO - Old Model: embedding-001 (WRONG - being replaced)
+2025-10-21 14:31:52,664 - INFO - ================================================================================
+2025-10-21 14:31:52,664 - INFO - 📥 Fetching all documents from database...
+2025-10-21 14:31:52,671 - INFO -    Fetched page 1: 100 documents
+2025-10-21 14:31:52,676 - INFO -    Fetched page 2: 100 documents
+2025-10-21 14:31:52,677 - INFO -    Fetched page 3: 18 documents
+2025-10-21 14:31:52,677 - INFO - ✅ Total documents fetched: 218
+2025-10-21 14:31:52,677 - INFO - 💾 Creating backup of old embeddings...
+2025-10-21 14:31:52,683 - INFO -    Found 3155 embeddings to backup
+2025-10-21 14:31:52,726 - INFO - ✅ Backup created: langchain_pg_embedding_backup_20251021_143152
+2025-10-21 14:31:52,726 - INFO - 🗑️  Deleting old embeddings (embedding-001)...
+2025-10-21 14:31:52,749 - INFO - ✅ Deleted 3155 old embeddings
+2025-10-21 14:31:52,749 - INFO - 🔄 Re-indexing documents with text-embedding-004...
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1761049912.811681 2142167 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1761049912.814056 2142167 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+2025-10-21 14:31:52,814 - INFO - ✅ Using text-embedding-004 model
+2025-10-21 14:31:52,834 - INFO -    Prepared 417 chunks from 218 documents
+2025-10-21 14:31:52,834 - INFO -    Indexing batch 1/9 (50 chunks)...
+2025-10-21 14:31:53,747 - INFO -    Indexing batch 2/9 (50 chunks)...
+2025-10-21 14:31:54,600 - INFO -    Indexing batch 3/9 (50 chunks)...
+2025-10-21 14:31:55,476 - INFO -    Indexing batch 4/9 (50 chunks)...
+2025-10-21 14:31:56,333 - INFO -    Indexing batch 5/9 (50 chunks)...
+2025-10-21 14:31:57,212 - INFO -    Indexing batch 6/9 (50 chunks)...
+2025-10-21 14:31:58,155 - INFO -    Indexing batch 7/9 (50 chunks)...
+2025-10-21 14:31:58,911 - INFO -    Indexing batch 8/9 (50 chunks)...
+2025-10-21 14:32:00,092 - INFO -    Indexing batch 9/9 (17 chunks)...
+2025-10-21 14:32:00,464 - INFO - ✅ Successfully re-indexed 417 chunks
+2025-10-21 14:32:00,464 - INFO - 🔍 Verifying re-indexing...
+2025-10-21 14:32:00,471 - ERROR - ❌ Verification failed: column reference "cmetadata" is ambiguous
+LINE 2:             SELECT COUNT(DISTINCT cmetadata->>'title')
+                                          ^
+
+2025-10-21 14:32:00,471 - INFO - 🧪 Testing sample queries...
+E0000 00:00:1761049920.472366 2142167 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+E0000 00:00:1761049920.473188 2142167 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+2025-10-21 14:32:00,482 - INFO - 
+   Query: 'healthcare providers in KOKOMLEMLE'
+2025-10-21 14:32:00,749 - INFO -       1. Healthcare Providers in 4 (score: 0.1812)
+2025-10-21 14:32:00,749 - INFO -       2. Healthcare Providers in KOKOMLEMLE (score: 0.1941)
+2025-10-21 14:32:00,749 - INFO -       3. Healthcare Providers in 12 (score: 0.1985)
+2025-10-21 14:32:00,749 - INFO - 
+   Query: 'healthcare providers in MAKOLA'
+2025-10-21 14:32:00,996 - INFO -       1. Healthcare Providers in 4 (score: 0.1869)
+2025-10-21 14:32:00,996 - INFO -       2. Healthcare Providers in 12 (score: 0.2067)
+2025-10-21 14:32:00,996 - INFO -       3. Healthcare Providers in COMMUNITY 26 (score: 0.2370)
+2025-10-21 14:32:00,996 - INFO - 
+   Query: 'healthcare providers in NIMA'
+2025-10-21 14:32:01,243 - INFO -       1. Healthcare Providers in 4 (score: 0.1684)
+2025-10-21 14:32:01,243 - INFO -       2. Healthcare Providers in 12 (score: 0.1909)
+2025-10-21 14:32:01,243 - INFO -       3. Healthcare Providers in COMMUNITY 26 (score: 0.2688)
+2025-10-21 14:32:01,243 - INFO - 
+   Query: 'healthcare providers in MAAMOBI'
+2025-10-21 14:32:01,492 - INFO -       1. Healthcare Providers in 4 (score: 0.1946)
+2025-10-21 14:32:01,492 - INFO -       2. Healthcare Providers in 12 (score: 0.2141)
+2025-10-21 14:32:01,492 - INFO -       3. Healthcare Providers in COMMUNITY 26 (score: 0.2475)
+2025-10-21 14:32:01,492 - INFO - 
+================================================================================
+2025-10-21 14:32:01,493 - INFO - 📊 RE-INDEXING SUMMARY
+2025-10-21 14:32:01,493 - INFO - ================================================================================
+2025-10-21 14:32:01,493 - INFO - Documents processed:     218
+2025-10-21 14:32:01,493 - INFO - Old embeddings deleted:  3155
+2025-10-21 14:32:01,493 - INFO - New embeddings created:  0
+2025-10-21 14:32:01,493 - INFO - Unique documents:        0
+2025-10-21 14:32:01,493 - INFO - Backup table:            langchain_pg_embedding_backup_20251021_143152
+2025-10-21 14:32:01,493 - INFO - ================================================================================
+2025-10-21 14:32:01,493 - INFO - ✅ RE-INDEXING COMPLETE!
+2025-10-21 14:32:01,493 - INFO - ================================================================================

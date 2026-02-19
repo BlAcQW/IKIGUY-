@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Import Assistant</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Test Import Assistant</h1>
+    <p>Testing import of assistant: <strong>b601e2aa-c4e4-4d93-ae52-2389bb0d1042</strong></p>
+    
+    <div id="result"></div>
+    
+    <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://ljzbzjgvwzivpmlmuxhx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqemJ6amd2d3ppdnBtbG11eGh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ4NzQ0NzAsImV4cCI6MjA1MDQ1MDQ3MH0.Ej8Ej8Ej8Ej8Ej8Ej8Ej8Ej8Ej8Ej8Ej8Ej8Ej8Ej8';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function testImport() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing import...</p>';
+
+            try {
+                // Test the import function
+                const { data, error } = await supabase.functions.invoke('fetch-assistant-details', {
+                    body: {
+                        assistant_id: 'b601e2aa-c4e4-4d93-ae52-2389bb0d1042',
+                        custom_url: 'https://example.com/test-demo'
+                    }
+                });
+
+                if (error) {
+                    resultDiv.innerHTML = `
+                        <h3>❌ Import Failed</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p><strong>Status:</strong> ${error.status || 'Unknown'}</p>
+                        <pre>${JSON.stringify(error, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h3>✅ Import Successful</h3>
+                        <p><strong>Assistant ID:</strong> ${data.assistant?.id || 'N/A'}</p>
+                        <p><strong>Name:</strong> ${data.assistant?.name || 'N/A'}</p>
+                        <p><strong>Model:</strong> ${data.assistant?.model || 'N/A'}</p>
+                        <p><strong>Voice:</strong> ${data.assistant?.voice || 'N/A'}</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (err) {
+                resultDiv.innerHTML = `
+                    <h3>💥 Exception</h3>
+                    <p><strong>Error:</strong> ${err.message}</p>
+                    <pre>${JSON.stringify(err, null, 2)}</pre>
+                `;
+            }
+        }
+
+        // Run the test when page loads
+        testImport();
+    </script>
+</body>
+</html>

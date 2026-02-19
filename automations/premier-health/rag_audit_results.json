@@ -1,0 +1,1518 @@
+{
+  "working": [],
+  "broken": [],
+  "suspicious": [
+    {
+      "city": "10",
+      "doc_id": "c4eba25d-d670-4749-9890-89438de82459",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "13",
+      "doc_id": "8d5ea6b4-5983-43d8-8024-d40e8c4119be",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "14",
+      "doc_id": "648d02dd-a1bf-4bc4-8d06-e722fcb9fb34",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "15",
+      "doc_id": "2df0fc70-7f59-464e-a285-4c3ed7481083",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "16",
+      "doc_id": "e6267bdb-15f0-4bf2-9aef-4e351c664691",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "17",
+      "doc_id": "c4088c54-9cf0-4240-9944-2d34f9791657",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "18",
+      "doc_id": "c0a62474-9d4b-4b65-a63b-5555723c8946",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "19",
+      "doc_id": "06667f3b-77bb-4302-a6fe-082b1e826c08",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "20",
+      "doc_id": "b421898a-8a04-4cb7-b995-863f1fa961e7",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "21",
+      "doc_id": "1f2942d9-7c5a-43f6-a5e0-e438c9de640a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "22",
+      "doc_id": "a2d38b29-2b04-44a7-8412-4b8c80da0117",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "23",
+      "doc_id": "85a691d9-124a-4043-92c4-8fcd6a6ec1d4",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "24",
+      "doc_id": "8ac43f1a-38ba-4b77-8eb9-8ca3797f4e84",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "25",
+      "doc_id": "a589822a-36fa-4c33-a25c-5dcdd14903fa",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "26",
+      "doc_id": "39572d45-ba88-47eb-acf9-6a4d81680b1e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "27",
+      "doc_id": "7d3e7848-1e1b-4aab-b66f-84375cac6b3d",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "37 AREA",
+      "doc_id": "01bfa064-56dc-45b4-91ac-0350e85b5b45",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "5",
+      "doc_id": "15a1990c-ab00-475b-84ea-6ca70677e8cd",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "6",
+      "doc_id": "fae9da14-98ad-47f6-8489-c07ba3eb35ad",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "7",
+      "doc_id": "beff81ad-71b1-49f6-8616-e1aabd76be04",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "8",
+      "doc_id": "ab846d74-c33b-4d6d-a48c-b3347da09d74",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "9",
+      "doc_id": "551cf991-a539-44c5-927c-9e296428b44b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ABELENKPE",
+      "doc_id": "5d0dc20b-c299-4cde-8dca-fad222b2955b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ABREPO",
+      "doc_id": "a13f0d41-9a8f-48de-8339-bf0d2d2f4293",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ABUAKWA",
+      "doc_id": "2366c1e5-e9c5-4be9-9346-3a8605a825fd",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ACCRA CENTRAL",
+      "doc_id": "205295c5-5b81-4f40-9b79-2c89d88b3737",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ACHIMOTA",
+      "doc_id": "7f5efb80-e920-4890-817a-f50b73b53ce4",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ADABRAKA",
+      "doc_id": "c0e15a28-1c28-4353-a673-eacb3961667a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ADENTA",
+      "doc_id": "69c201b5-7048-46b3-bf9c-f03195afc0a8",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ADJRINGANOR",
+      "doc_id": "b0c24830-b809-4aba-9dc5-9819fbccc54f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ADUM",
+      "doc_id": "3e665c0e-1341-4312-9ee2-46fd17c22659",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AFIENYA ROAD",
+      "doc_id": "5e4d0a8b-82a7-4819-8376-e01f13c1c091",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AGOGO",
+      "doc_id": "163124b5-1f5f-43b3-9e3a-3587d62193f0",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AGONA",
+      "doc_id": "8123d621-023a-46bc-b1d5-0bece9597d1a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AHINSAN",
+      "doc_id": "79cdc71d-5291-4355-bcc7-0209ab9e4de6",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AHODWO",
+      "doc_id": "80fbcd5a-0b20-40ab-818b-b1b7eb4c6a8c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AIRPORT RESIDENTIAL AREA",
+      "doc_id": "1ee7f99d-da5b-4a42-821a-ea4ce19adc02",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AJUMAKO",
+      "doc_id": "a9c7e872-7898-4bd6-b84d-b5cb53cc3114",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AKOSOMBO",
+      "doc_id": "e7b367e6-44d2-45ea-8f4d-d775f8ef697c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AKWATIA",
+      "doc_id": "d22c295c-339f-4d3e-b38a-1de71dc1cbd3",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "AMANSAMAN",
+      "doc_id": "069b0bf5-d1f2-4ec6-bceb-9d30f0182cec",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ANYINAM",
+      "doc_id": "420d2aa6-4959-48c5-bdd7-5f5834b2a851",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASAMANKESE",
+      "doc_id": "9444b2f5-5336-4556-9aa6-2eb7195c7d9f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASANKRAGWA",
+      "doc_id": "e7491f0d-d6aa-4399-921e-cb6beff921dc",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASHAIMAN",
+      "doc_id": "517aeb46-3eff-485d-9c2e-aabd896bfcf9",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASHONGMAN",
+      "doc_id": "3fec9502-1192-4bc2-b512-f2c981d4e036",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASIAKWA",
+      "doc_id": "9659f601-6cdf-485e-a277-ab2506213c6e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASIKUMA",
+      "doc_id": "7821986b-1014-4052-ac37-6b6e78970a2a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASOKWA",
+      "doc_id": "4dfc0ab6-4e41-45cc-b289-9b209574ec42",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASSIN",
+      "doc_id": "2749d2ce-08a5-4f6f-9376-6f0473a9a976",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ASYLUM DOWN",
+      "doc_id": "6d8c2c3b-1986-4bb3-a22c-c73a8415efba",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BAATSONA",
+      "doc_id": "20efa713-c002-41dc-a4bb-1712686ec78c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BANTAMA",
+      "doc_id": "6341f716-7ced-4506-9564-55ebe350f0aa",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BAWKU",
+      "doc_id": "096d48b2-b809-4f0d-a5fe-a371b5d3046e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BEGORO",
+      "doc_id": "6b4014a6-389e-4e4b-9b03-9ab5691ec7e3",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BEREKUM",
+      "doc_id": "718b320a-44e9-4297-8019-6cd3628c38a9",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BOGOSO",
+      "doc_id": "876a4cdb-4511-43bc-8bde-2c2f219a4622",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BOLGATANGA",
+      "doc_id": "6fe23616-5e27-4a27-8f3c-9c127e083e86",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BOMSO",
+      "doc_id": "be95b63a-b07c-4f64-82ca-e3005727e30a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "BREMANG",
+      "doc_id": "40add201-a6a0-4c45-8781-2fb1bd4ff74e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "CANTONMENTS",
+      "doc_id": "5028ebf0-7e87-49de-b375-419eb30e6801",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "CAPE COAST",
+      "doc_id": "e0e9b806-4e16-4a5d-85bb-09d7c82f0cdd",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "CIRCLE",
+      "doc_id": "d57f7e70-1da0-4d38-94e0-ccb2d1fd6bac",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,22",
+      "doc_id": "b5b6c079-525c-49ba-9de9-55898e15f9cf",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,23",
+      "doc_id": "647466db-5c43-4535-a898-b05b6195124d",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,24",
+      "doc_id": "cbe299ca-0872-41f2-ac74-37ff371e847b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,25",
+      "doc_id": "06ed50c7-0c9d-47b5-8fdd-ef1931ceeee4",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,26",
+      "doc_id": "f802d579-2112-4ef7-9eb6-f6c0ffc4563e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,27",
+      "doc_id": "37c6c894-f489-48af-9b70-da6a8c56d89c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,28",
+      "doc_id": "74604823-0099-4c88-a37b-3ff238e3f55d",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,29",
+      "doc_id": "bff625fb-18dc-431f-9dae-9fcc53a8e8d5",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,30",
+      "doc_id": "b9097248-d888-478a-912a-51489c9e4cf1",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,31",
+      "doc_id": "a92d1a44-70fe-4e08-9cfe-50f96825a73e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,32",
+      "doc_id": "b80beeb1-ff5e-46c2-9214-9053ebcd00fc",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,33",
+      "doc_id": "b75caf1a-2617-4742-a3a0-685480688687",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,34",
+      "doc_id": "577c3f92-98d6-4142-90a7-db28851a7ef5",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,35",
+      "doc_id": "d6433a45-ee40-4722-b3ae-adfdc35e52b3",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,36",
+      "doc_id": "f84233a4-9723-43ba-8d8e-c19afa197908",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,37",
+      "doc_id": "0c4bfc3f-d63a-41ba-aa25-4ed1764eb9d0",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 18,19,38",
+      "doc_id": "da7356dc-b3f6-4033-9bc9-713aaf27b9ff",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMM. 22",
+      "doc_id": "1886f618-5f2f-4a9b-b461-715590cb5a68",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 27",
+      "doc_id": "ba3d8411-5936-4ddb-bafa-1aab5b1eeaea",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 28",
+      "doc_id": "07dfe89e-9a9d-4d84-af66-f22d063d2a5a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 29",
+      "doc_id": "9262ea6b-20ad-4574-8e27-d5bbbe274fab",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 30",
+      "doc_id": "0489f046-583a-43e7-997e-1870257545ce",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 31",
+      "doc_id": "6aba17dd-79cb-4caf-9984-fd1891862411",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 32",
+      "doc_id": "51347dd1-e771-431f-b261-fc0bbe531a88",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 33",
+      "doc_id": "c40439ac-e45d-40dd-b511-ea7fc4e4aa63",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 34",
+      "doc_id": "45cd1383-a2c4-4894-a061-ade35fe0bbe6",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 35",
+      "doc_id": "12b52176-6759-40b5-a1ae-b816cc84c2cc",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 36",
+      "doc_id": "f4eee3dd-6b69-4288-8c97-5150d6e8eb3a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 37",
+      "doc_id": "8ef8d4d7-cc4f-4cb1-8712-fb9d204634d0",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 38",
+      "doc_id": "65f00e7f-1c89-435a-a8c7-d462a038e310",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 39",
+      "doc_id": "80fa9d7b-367e-4308-98ed-9a82265dee56",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 40",
+      "doc_id": "ef212d46-29fd-43ca-94da-44476724f561",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "COMMUNITY 41",
+      "doc_id": "91508809-9a36-4c89-b155-74b16f939fa3",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "DANSOMAN",
+      "doc_id": "cc038d66-cca2-4e77-a911-fadfebf67c10",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "DARKUMAN",
+      "doc_id": "c96bb670-06d4-4e13-8eca-2901367bc07c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "DODOWA",
+      "doc_id": "6d2eed95-a11c-4890-aea2-78e4e6ba06ce",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "DOME",
+      "doc_id": "0dfa525d-a802-4525-b3f1-392027394455",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "DORMAA",
+      "doc_id": "18063ba7-b6be-461d-905c-fffae50e0c4b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "DROBO",
+      "doc_id": "217097e0-da94-4f69-865a-cd39f0f31071",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "DUNKWA",
+      "doc_id": "9bbf17d4-b871-43fa-b280-df8d5307d265",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "DZORWULU",
+      "doc_id": "0cbe0904-8af6-42c1-91af-f7f1daae1a00",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "EAST LEGON",
+      "doc_id": "e59a9521-7167-4902-85e5-a662f59edb32",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "EJISU",
+      "doc_id": "f23047c6-620b-4eb1-a8f3-f3f240354118",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ELMINA",
+      "doc_id": "0301698e-adb6-4780-b3fb-629a6b7dfaca",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ENCHI",
+      "doc_id": "975f7fd6-4249-4abc-856c-f6e7ba24b9ce",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ENYIRESI",
+      "doc_id": "e4a46432-ba15-48f1-8372-45d6f6e0c14e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "GBAWE",
+      "doc_id": "a7161278-66f0-4fcd-8769-09f7cf644dcc",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "GOASO",
+      "doc_id": "9a145a26-2ab4-4baa-ab72-f310ee72b21c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "HAATSO",
+      "doc_id": "a35772fe-e049-44d0-b5d1-517fcfba1b16",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "HO",
+      "doc_id": "0cb97318-e545-4479-b909-76778a3fe4d4",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "HOHOE",
+      "doc_id": "5cec35d9-4d9f-4538-9c63-4e2d0736d22f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "HWIDIEM",
+      "doc_id": "57bab3b0-b784-4f6b-94a2-5888a8d42eee",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "INCHABAN",
+      "doc_id": "12fdc385-55a5-4412-a037-0dc7acdad5fe",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "INDUSTRIAL AREA",
+      "doc_id": "d4d21043-121e-4075-bf54-c74e5d078244",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KADE",
+      "doc_id": "79d7f272-838a-468a-b54f-9ef75f183788",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KANESHIE",
+      "doc_id": "2e5b6ae6-5df7-4a9b-a0ce-3a56a0de6116",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KASOA",
+      "doc_id": "1d84c2b9-73aa-4fdf-a6cb-3fc63f33aed9",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KENYASE",
+      "doc_id": "c2773cb2-196e-4031-a7af-5850ade9d457",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KIBI",
+      "doc_id": "16dd15ac-3a38-4efb-9cd3-66181327853d",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KINTAMPO, DUAYAW NKWANTA",
+      "doc_id": "b9d1e3a0-9b31-42ab-a05c-6d904e251018",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KNUST",
+      "doc_id": "c6fb2e4e-fcd7-4950-9769-d3dd0c13e5fd",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KOFORIDUA",
+      "doc_id": "000c47fb-e9df-4520-a38e-5832d1379f3c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KOKOMLEMLE",
+      "doc_id": "939e1fbb-c927-4621-8e18-7d24acc69341",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KONONGO",
+      "doc_id": "ce0d449f-bcc8-4860-a36a-803389e9babe",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KORLE-BU",
+      "doc_id": "404b0858-555d-4570-8a7b-2f301d7ffd7d",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "KWABENYA",
+      "doc_id": "9ae3f41e-cb75-4db0-9d52-b89ceec2c447",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "LA",
+      "doc_id": "4dbc310e-dbd7-40e5-8a9a-9b791bfc2a4e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "LABONE",
+      "doc_id": "cbea4425-ac55-4e84-9e73-1910e9bbd4d1",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "LAPAZ",
+      "doc_id": "d94f67b4-8b77-4dba-bde8-c6d3edab20f6",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "LASHIBI",
+      "doc_id": "1ce30105-4df3-435e-b707-9b47e25c5027",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "LATEBIOKOSHIE",
+      "doc_id": "a36694dc-ab33-49e1-9d48-8ed607de3811",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "LAWRA",
+      "doc_id": "c0fcf2f2-ae17-4b51-aa65-fad860074174",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "LEGON",
+      "doc_id": "1709c9d4-c09c-4d8c-9820-c39ef3a70757",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MAAMOBI",
+      "doc_id": "3fbb9eda-02c5-4829-9edd-8a638e670ed6",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MADINA",
+      "doc_id": "a9c2a36b-ec12-40c8-9caf-def026131330",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MAKOLA",
+      "doc_id": "eb6fbd04-254d-47b0-a758-ad30af5b2133",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MAMFE AKUAPEM",
+      "doc_id": "cc8759d2-7fad-458b-9ce2-6d357388fb07",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MAMPONG",
+      "doc_id": "8b2babe8-d32b-4273-8b0a-6103abd2b056",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MAMPONG",
+      "doc_id": "f645d370-b438-424f-9f18-b10b70debafc",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MAMPONTENG",
+      "doc_id": "e14d3b64-e07b-4c0a-9206-2134572a1815",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MAMPROBI",
+      "doc_id": "d8effbe0-1315-42da-a8a5-dbc5d95a6c77",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MANKESSIM",
+      "doc_id": "777c0f0c-79d9-44ae-931d-32718d4fb384",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MATAHEKO",
+      "doc_id": "4e71534d-d6fa-4bd0-a241-dcaca16e4881",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "MICHEL CAMP",
+      "doc_id": "f7be3ea5-dcae-447d-9492-13af6b27f60d",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NAVRONGO",
+      "doc_id": "88932fe1-3410-4b2b-85ff-799262eee612",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NEW ABIREM",
+      "doc_id": "ea8ee21c-587a-49d4-a3c5-3246f6bb9ad4",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NEW ACHIMOTA",
+      "doc_id": "a283ae61-5d84-4fa7-bf4e-834f1f7ec80c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NIMA",
+      "doc_id": "79a98bee-ee17-48c1-8dff-4f9b9bf34a8a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NKAWKAW",
+      "doc_id": "ef140953-87fd-4c3d-b1e7-f76ba699b5f0",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NKORANZA",
+      "doc_id": "66c08c38-f169-4f7e-93c4-7ffe0b048a34",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NORTH KANESHIE",
+      "doc_id": "3210050d-2f81-4a09-96cc-44aea30f4b5b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NORTH LEGON",
+      "doc_id": "2065573a-ee09-4ce4-823b-5f9bf646676f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NSAWAM",
+      "doc_id": "033deb56-7644-4218-9fb7-a60bffdd5b6c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NUNGUA",
+      "doc_id": "c11080c4-34e9-4fbc-baae-ce1ead698102",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "NYAMEKYE",
+      "doc_id": "6cd62190-f359-451e-8777-5b95584342ff",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "OBUASI",
+      "doc_id": "345f31dc-c5f1-469a-9381-b3e4bc95a004",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ODA",
+      "doc_id": "6c769676-02e2-4bd2-9a7d-c11f8b9c103a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ODORKOR",
+      "doc_id": "44f02119-1726-4331-b82b-362d33d8871f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "ODUMASE KROBO",
+      "doc_id": "30e6e509-22ab-4759-983a-0b519811d642",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "OFANKOR",
+      "doc_id": "d49b1f3d-0680-4916-a992-57f5e2e31aa1",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "OSIEM",
+      "doc_id": "4be170e1-484e-4fd8-863c-db8a0a40d1b4",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "OSINO",
+      "doc_id": "79297530-0a63-4c83-a18c-6270f42a5729",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "OSU",
+      "doc_id": "5926bec9-6dbb-46b6-9c5a-a5e1ab994572",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "OTHERS",
+      "doc_id": "c9d88acc-b9fe-46e1-8098-28c8227875a3",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "PATASE",
+      "doc_id": "3b084ea9-b744-429d-a05b-e86aa4b44a19",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "POKUASE",
+      "doc_id": "07ec8638-a8de-4af1-afe0-7252a91a83f1",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "RIDGE",
+      "doc_id": "08a1cc28-652a-4a9c-8348-129bbded3aac",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SAKUMONO ESTATE",
+      "doc_id": "c3e7a883-3adc-4e1a-bb35-d61e581b2056",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SAMPA",
+      "doc_id": "35ea1aa9-edf1-4ae3-abc2-b04a73574054",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SAMREBOI",
+      "doc_id": "4a9ec20e-50dd-4d1b-a0a1-03554d3390be",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SANTASI",
+      "doc_id": "f9246ec0-07b6-49fc-ac6a-e18058840758",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEFWI ANHWIASO",
+      "doc_id": "2e5e17b0-9cce-4c45-899f-6cabb0675c2e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEFWI ASAFO",
+      "doc_id": "e5fe33b0-1f4d-42e6-a1e7-8bd252996152",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEFWI ASAWINSO",
+      "doc_id": "cc330f66-fd05-4d98-a8ad-40840acdfddf",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEFWI BEKWAI",
+      "doc_id": "d64e9ba4-6358-4d8a-9dfa-5c37326dc884",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEFWI BIBIANI",
+      "doc_id": "d01203d2-3250-4cbf-866a-df1274b73170",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEFWI BODI",
+      "doc_id": "e460d3ad-af49-4b69-9f26-ba091b868457",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEFWI ESSAM",
+      "doc_id": "cc81e7ae-2407-4ab9-9947-5998b123be14",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEFWI WIAWSO",
+      "doc_id": "0389c1c5-69be-4fa6-9958-86a3f6151b10",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SEKONDI",
+      "doc_id": "f3af78a9-6456-4e87-8096-6c78d879f14b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SOMANYA",
+      "doc_id": "ac6b766f-e9da-408a-8e5e-2526905ff328",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SPINTEX ROAD",
+      "doc_id": "57d32460-e819-4d6b-a41e-c93e6a44049e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SUAMAN DADIESO",
+      "doc_id": "0872e0e3-50a5-418c-aaaf-686d5b3a88bd",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SUAME",
+      "doc_id": "5703e4fa-093d-42c7-8cc0-661a76447a9b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SUHUM",
+      "doc_id": "7f5c3b6d-21db-4617-8c9b-dcd3454938ff",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SUNYANI",
+      "doc_id": "0228a11a-e4b1-4d80-8a88-8535bd41c7df",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "SWEDRU",
+      "doc_id": "cf22d3d9-d31b-4e35-b68e-60a0c1d93f8e",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TAFO",
+      "doc_id": "5e9888e1-37f0-4518-b3bb-2a1b6c33f344",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TAFO",
+      "doc_id": "bcaf1ef6-f7db-49cb-964e-a13cc878ace1",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TAKORADI",
+      "doc_id": "ceebba5b-f5e0-4997-ac18-ada062b9e68f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TAMALE",
+      "doc_id": "bbb87a65-b24a-4f77-9556-a65e1aa7c0ee",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TANOSO",
+      "doc_id": "856d4b47-5a4c-42c5-99d4-458932f1a111",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TANTRA HILL",
+      "doc_id": "f40ac581-3fda-4a57-acca-b28e9415076f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TARKWA",
+      "doc_id": "34c65854-833d-4d90-94d2-679515732de8",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TECHIMAN",
+      "doc_id": "98d6e7c6-a4ce-4fc9-b243-bb91b1c98b5b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TEMA COMMUNITY 2",
+      "doc_id": "8e8e723f-e1fc-4d71-aaa0-2119fd234746",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TEMA COMMUNITY 3",
+      "doc_id": "aafdccc6-a63b-42f3-b563-37bef9799c60",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TEMA COMMUNITY 4",
+      "doc_id": "fbd8cdff-6be9-4bc5-81d1-e8695245f72c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TEMA COMMUNITY 5",
+      "doc_id": "67887092-e549-4e98-94e4-5afa1788a67b",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TEMA COMMUNITY 6",
+      "doc_id": "3c331dd8-a2b4-4c12-b747-c0e942ae6a0c",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TEMA COMMUNITY 7",
+      "doc_id": "2dfd70ee-316f-410d-877d-2b946ce5e139",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TEMA COMMUNITY 8",
+      "doc_id": "52e54755-bfb3-4acd-b0ff-2aaea317f70f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TEMA COMMUNITY 9",
+      "doc_id": "efea78e5-e930-433c-b627-9f56bd3f0ef6",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TESANO",
+      "doc_id": "d77b5590-9cbb-4d80-afa5-6438fe2d1a6a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TESHIE",
+      "doc_id": "e6eadf3f-0a38-44e6-b17b-28d4b975db99",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TSE ADDO",
+      "doc_id": "34088304-4e25-4d8e-a5a8-e44f299f759a",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "TUDU",
+      "doc_id": "4279f644-0234-418a-b013-ab0be6a77526",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "WA",
+      "doc_id": "beb4a0e1-038c-4969-8cf2-98c8b57033f0",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "WASSA AKROPONG",
+      "doc_id": "d0de4de6-a1a7-488b-ac85-86af3068848f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "WEIJA",
+      "doc_id": "8eadffb0-f761-4fdf-857f-8b51c05cb1b4",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "WENCHI",
+      "doc_id": "790faa5e-7a26-4a1e-b457-70eb2028fb9f",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "WIAMOASE",
+      "doc_id": "38e9a629-70ed-4002-84b3-0bceaa77b9e0",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    },
+    {
+      "city": "WINNEBA",
+      "doc_id": "9911a573-19b2-468a-92e9-740f0cc42919",
+      "reason": "City not mentioned or low confidence",
+      "confidence": null,
+      "sources": []
+    }
+  ]
+}

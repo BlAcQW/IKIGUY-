@@ -1,0 +1,208 @@
+{
+  "package_type": "essential",
+  "created": "2025-09-05T21:09:36.359785",
+  "files_included": 18,
+  "total_size_mb": 5.7,
+  "categories": [
+    "notebooks",
+    "scripts",
+    "metadata"
+  ],
+  "original_manifest": {
+    "created": "2025-09-05T21:09:36.322226",
+    "total_files": 31,
+    "total_size_mb": 5.706110954284668,
+    "categories": {
+      "notebooks": {
+        "description": "Jupyter notebooks for voice processing pipeline",
+        "files": [
+          {
+            "path": "notebooks/005_phase3_tts_development.ipynb",
+            "size_mb": 0.05,
+            "relative_path": "005_phase3_tts_development.ipynb"
+          },
+          {
+            "path": "notebooks/002_phase1_data_processing_enhanced.ipynb",
+            "size_mb": 0.05,
+            "relative_path": "002_phase1_data_processing_enhanced.ipynb"
+          },
+          {
+            "path": "notebooks/004_phase2_asr_development.ipynb",
+            "size_mb": 0.05,
+            "relative_path": "004_phase2_asr_development.ipynb"
+          },
+          {
+            "path": "notebooks/001_phase1_data_acquisition.ipynb",
+            "size_mb": 0.06,
+            "relative_path": "001_phase1_data_acquisition.ipynb"
+          },
+          {
+            "path": "notebooks/003_use_enhanced_processor.ipynb",
+            "size_mb": 0.01,
+            "relative_path": "003_use_enhanced_processor.ipynb"
+          },
+          {
+            "path": "notebooks/reference_phase1_data_processing_original.ipynb",
+            "size_mb": 0.03,
+            "relative_path": "reference_phase1_data_processing_original.ipynb"
+          },
+          {
+            "path": "notebooks/000_enhanced_twi_processor.py",
+            "size_mb": 0.02,
+            "relative_path": "000_enhanced_twi_processor.py"
+          },
+          {
+            "path": "notebooks/COLAB_EXECUTION_GUIDE.md",
+            "size_mb": 0.01,
+            "relative_path": "COLAB_EXECUTION_GUIDE.md"
+          },
+          {
+            "path": "notebooks/PHASE1_COMPLETION_SUMMARY.md",
+            "size_mb": 0.0,
+            "relative_path": "PHASE1_COMPLETION_SUMMARY.md"
+          }
+        ],
+        "count": 9,
+        "size_mb": 0.2767496109008789
+      },
+      "scripts": {
+        "description": "Python scripts and utilities",
+        "files": [
+          {
+            "path": "000_enhanced_twi_processor.py",
+            "size_mb": 0.02,
+            "relative_path": "000_enhanced_twi_processor.py"
+          },
+          {
+            "path": "comprehensive_audio_pipeline.py",
+            "size_mb": 0.01,
+            "relative_path": "comprehensive_audio_pipeline.py"
+          },
+          {
+            "path": "upload_to_drive.py",
+            "size_mb": 0.01,
+            "relative_path": "upload_to_drive.py"
+          },
+          {
+            "path": "check_local_files.py",
+            "size_mb": 0.01,
+            "relative_path": "check_local_files.py"
+          },
+          {
+            "path": "create_upload_package.py",
+            "size_mb": 0.01,
+            "relative_path": "create_upload_package.py"
+          }
+        ],
+        "count": 5,
+        "size_mb": 0.056609153747558594
+      },
+      "processed_data": {
+        "description": "Processed audio and text data",
+        "files": [
+          {
+            "path": "data/processed/common_voice_twi_final/download_summary.json",
+            "size_mb": 0.0,
+            "relative_path": "common_voice_twi_final/download_summary.json"
+          },
+          {
+            "path": "data/processed/common_voice_twi_manual/download_metadata.json",
+            "size_mb": 0.0,
+            "relative_path": "common_voice_twi_manual/download_metadata.json"
+          }
+        ],
+        "count": 2,
+        "size_mb": 0.002201080322265625
+      },
+      "metadata": {
+        "description": "Dataset metadata and summaries",
+        "files": [
+          {
+            "path": "data/metadata/missing_datasets_manifest.json",
+            "size_mb": 0.0,
+            "relative_path": "missing_datasets_manifest.json"
+          },
+          {
+            "path": "data/metadata/processing_manifest.json",
+            "size_mb": 0.0,
+            "relative_path": "processing_manifest.json"
+          },
+          {
+            "path": "data/metadata/financial_inclusion_analysis.json",
+            "size_mb": 0.0,
+            "relative_path": "financial_inclusion_analysis.json"
+          },
+          {
+            "path": "data/metadata/financial_inclusion_deep_analysis.json",
+            "size_mb": 5.36,
+            "relative_path": "financial_inclusion_deep_analysis.json"
+          }
+        ],
+        "count": 4,
+        "size_mb": 5.363588333129883
+      },
+      "raw_summaries": {
+        "description": "Raw dataset summaries (excluding large audio files)",
+        "files": [
+          {
+            "path": "data/raw/notebook_dataset_testing_summary.json",
+            "size_mb": 0.0,
+            "relative_path": "notebook_dataset_testing_summary.json"
+          },
+          {
+            "path": "data/raw/afrispeech/working_datasets.json",
+            "size_mb": 0.0,
+            "relative_path": "afrispeech/working_datasets.json"
+          },
+          {
+            "path": "data/raw/common_voice_twi/common_voice_twi_summary.json",
+            "size_mb": 0.0,
+            "relative_path": "common_voice_twi/common_voice_twi_summary.json"
+          },
+          {
+            "path": "data/raw/common_voice_twi/final_twi_summary.json",
+            "size_mb": 0.0,
+            "relative_path": "common_voice_twi/final_twi_summary.json"
+          },
+          {
+            "path": "data/raw/lingua_libre/test_results.json",
+            "size_mb": 0.0,
+            "relative_path": "lingua_libre/test_results.json"
+          },
+          {
+            "path": "data/raw/twi_speech_text_parallel/michsethowusu_specific_test.json",
+            "size_mb": 0.0,
+            "relative_path": "twi_speech_text_parallel/michsethowusu_specific_test.json"
+          },
+          {
+            "path": "data/raw/twi_speech_text_parallel/michsethowusu_twi-emotions-corpus/dataset_dict.json",
+            "size_mb": 0.0,
+            "relative_path": "twi_speech_text_parallel/michsethowusu_twi-emotions-corpus/dataset_dict.json"
+          },
+          {
+            "path": "data/raw/twi_speech_text_parallel/michsethowusu_twi-emotions-corpus/train/dataset_info.json",
+            "size_mb": 0.0,
+            "relative_path": "twi_speech_text_parallel/michsethowusu_twi-emotions-corpus/train/dataset_info.json"
+          },
+          {
+            "path": "data/raw/twi_speech_text_parallel/michsethowusu_twi-emotions-corpus/train/state.json",
+            "size_mb": 0.0,
+            "relative_path": "twi_speech_text_parallel/michsethowusu_twi-emotions-corpus/train/state.json"
+          },
+          {
+            "path": "data/raw/african_whisper/requirements.txt",
+            "size_mb": 0.0,
+            "relative_path": "african_whisper/requirements.txt"
+          },
+          {
+            "path": "data/raw/african_whisper/src/deployment/requirements.txt",
+            "size_mb": 0.0,
+            "relative_path": "african_whisper/src/deployment/requirements.txt"
+          }
+        ],
+        "count": 11,
+        "size_mb": 0.006962776184082031
+      }
+    }
+  }
+}

@@ -1,0 +1,1798 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1761062779.784741 2974685 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Using collection: helpdesk_premier_health_production
+GEMINI_API_KEY configured: ✅ Yes
+POSTGRES_PASSWORD configured: ✅ Yes
+
+🔧 INDEXING ALL DOCUMENTS WITH REGION METADATA
+================================================================================
+✅ Collection UUID: 88d1a09c-1e47-4cf7-870f-71a7a10d9ca5
+📚 Collection Name: helpdesk_premier_health_production
+
+📊 Found 216 documents to index
+================================================================================
+
+[1/216] Healthcare Providers in TAMALE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 7985 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 54e192b7-5e08-4e...
+   ✅ Successfully indexed
+
+[2/216] Healthcare Providers in WA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2455 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 61bdd024-77b3-40...
+   ✅ Successfully indexed
+
+[3/216] Healthcare Providers in LAWRA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 818 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 7a864093-06a8-44...
+   ✅ Successfully indexed
+
+[4/216] Healthcare Providers in BOLGATANGA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1549 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e0df146b-2e50-4c...
+   ✅ Successfully indexed
+
+[5/216] Healthcare Providers in BAWKU
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 728 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 3f77e506-3c37-4f...
+   ✅ Successfully indexed
+
+[6/216] Healthcare Providers in NAVRONGO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 609 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 2108813a-4732-4f...
+   ✅ Successfully indexed
+
+[7/216] Healthcare Providers in BOMSO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2227 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: bf562be1-938f-47...
+   ✅ Successfully indexed
+
+[8/216] Healthcare Providers in KNUST
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2227 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 68e268cc-5f95-41...
+   ✅ Successfully indexed
+
+[9/216] Healthcare Providers in EJISU
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2227 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: cc174fe4-431e-43...
+   ✅ Successfully indexed
+
+[10/216] Healthcare Providers in ASOKWA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1278 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 13bc9206-d683-45...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 10/216)...
+
+[11/216] Healthcare Providers in BANTAMA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1435 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 900ad426-828f-4c...
+   ✅ Successfully indexed
+
+[12/216] Healthcare Providers in ABREPO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 800 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1c2a4a82-41e2-40...
+   ✅ Successfully indexed
+
+[13/216] Healthcare Providers in TAFO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1656 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 583a6a07-01c4-4f...
+   ✅ Successfully indexed
+
+[14/216] Healthcare Providers in BREMANG
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1595 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: f3ae1222-1cae-45...
+   ✅ Successfully indexed
+
+[15/216] Healthcare Providers in MAMPONTENG
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 693 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 3246eb73-1091-4d...
+   ✅ Successfully indexed
+
+[16/216] Healthcare Providers in ABUAKWA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 940 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 6652a347-5c03-4f...
+   ✅ Successfully indexed
+
+[17/216] Healthcare Providers in TANOSO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 937 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: c37799f1-889c-4b...
+   ✅ Successfully indexed
+
+[18/216] Healthcare Providers in SANTASI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1971 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e9ce1f25-da59-42...
+   ✅ Successfully indexed
+
+[19/216] Healthcare Providers in PATASE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1968 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 650095ff-febe-41...
+   ✅ Successfully indexed
+
+[20/216] Healthcare Providers in SUAME
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 937 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4875cc8a-ef12-4d...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 20/216)...
+
+[21/216] Healthcare Providers in ADUM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 847 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0ed59a42-b7f6-4f...
+   ✅ Successfully indexed
+
+[22/216] Healthcare Providers in AHODWO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1861 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 7faacf8e-b7ea-47...
+   ✅ Successfully indexed
+
+[23/216] Healthcare Providers in AHINSAN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1864 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: cc41b16a-75f1-4f...
+   ✅ Successfully indexed
+
+[24/216] Healthcare Providers in MAMPONG
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1287 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: bbe51a1e-2fae-40...
+   ✅ Successfully indexed
+
+[25/216] Healthcare Providers in AGONA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1344 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0aefe857-bfae-4f...
+   ✅ Successfully indexed
+
+[26/216] Healthcare Providers in WIAMOASE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1290 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0d32928c-d393-44...
+   ✅ Successfully indexed
+
+[27/216] Healthcare Providers in OBUASI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 806 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5ee87481-5b1b-45...
+   ✅ Successfully indexed
+
+[28/216] Healthcare Providers in DUNKWA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 806 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 691eb4a3-bf21-46...
+   ✅ Successfully indexed
+
+[29/216] Healthcare Providers in KONONGO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 419 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 504a8a22-55c8-4a...
+   ✅ Successfully indexed
+
+[30/216] Healthcare Providers in AGOGO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 413 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 02e0edc5-e85e-4c...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 30/216)...
+
+[31/216] Healthcare Providers in NKORANZA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 689 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: fb49c969-c676-40...
+   ✅ Successfully indexed
+
+[32/216] Healthcare Providers in DROBO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 334 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1c1cad37-f560-45...
+   ✅ Successfully indexed
+
+[33/216] Healthcare Providers in DORMAA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 676 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 27c3f59f-f1e1-44...
+   ✅ Successfully indexed
+
+[34/216] Healthcare Providers in SUNYANI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 5859 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ee41ff4e-8ab1-43...
+   ✅ Successfully indexed
+
+[35/216] Healthcare Providers in GOASO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1207 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 070c888a-0cdc-48...
+   ✅ Successfully indexed
+
+[36/216] Healthcare Providers in HWIDIEM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 527 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9bf3fb91-7efd-43...
+   ✅ Successfully indexed
+
+[37/216] Healthcare Providers in KENYASE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1159 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: b8878faa-09e3-48...
+   ✅ Successfully indexed
+
+[38/216] Healthcare Providers in TECHIMAN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1629 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 2d1d326d-1663-46...
+   ✅ Successfully indexed
+
+[39/216] Healthcare Providers in WENCHI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 504 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1a81e3f0-18e4-40...
+   ✅ Successfully indexed
+
+[40/216] Healthcare Providers in BEREKUM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 691 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1508c294-916c-45...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 40/216)...
+
+[41/216] Healthcare Providers in SAMPA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 322 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: a104c45e-6ea2-48...
+   ✅ Successfully indexed
+
+[42/216] Healthcare Providers in KINTAMPO, DUAYAW NKWANTA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1083 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ffe64afc-ec35-46...
+   ✅ Successfully indexed
+
+[43/216] Healthcare Providers in OTHERS
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1029 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 8ec52a90-77e6-47...
+   ✅ Successfully indexed
+
+[44/216] Healthcare Providers in CAPE COAST
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1803 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 67ae15a8-1806-48...
+   ✅ Successfully indexed
+
+[45/216] Healthcare Providers in ELMINA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 425 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 95a57ed9-9bb2-48...
+   ✅ Successfully indexed
+
+[46/216] Healthcare Providers in ASSIN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1053 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 027255af-a333-42...
+   ✅ Successfully indexed
+
+[47/216] Healthcare Providers in SWEDRU
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1056 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 57060843-9dba-47...
+   ✅ Successfully indexed
+
+[48/216] Healthcare Providers in WINNEBA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 521 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e63737fc-d28f-42...
+   ✅ Successfully indexed
+
+[49/216] Healthcare Providers in MANKESSIM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 288 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 6fae7a8a-4d56-42...
+   ✅ Successfully indexed
+
+[50/216] Healthcare Providers in ASIKUMA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 640 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 760803c6-2fa1-44...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 50/216)...
+
+[51/216] Healthcare Providers in AJUMAKO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 640 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 15d19b8f-f4fa-4f...
+   ✅ Successfully indexed
+
+[52/216] Healthcare Providers in TAKORADI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 5896 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: dbe0969d-5756-4b...
+   ✅ Successfully indexed
+
+[53/216] Healthcare Providers in SEKONDI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 497 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4836fbba-bd66-4b...
+   ✅ Successfully indexed
+
+[54/216] Healthcare Providers in INCHABAN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 337 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 2ecdc7fc-650f-44...
+   ✅ Successfully indexed
+
+[55/216] Healthcare Providers in TARKWA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2057 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 03140ea1-31c3-4a...
+   ✅ Successfully indexed
+
+[56/216] Healthcare Providers in BOGOSO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 304 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: b8ca5806-a10b-4c...
+   ✅ Successfully indexed
+
+[57/216] Healthcare Providers in WASSA AKROPONG
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 339 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0ab50055-56ef-4b...
+   ✅ Successfully indexed
+
+[58/216] Healthcare Providers in ASANKRAGWA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 345 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: c38c5087-503f-46...
+   ✅ Successfully indexed
+
+[59/216] Healthcare Providers in SAMREBOI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 353 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 04e5ea88-4fb9-43...
+   ✅ Successfully indexed
+
+[60/216] Healthcare Providers in ENCHI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 559 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 35649444-45e0-48...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 60/216)...
+
+[61/216] Healthcare Providers in SUAMAN DADIESO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 336 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: df00e8ee-9b1a-4a...
+   ✅ Successfully indexed
+
+[62/216] Healthcare Providers in SEFWI BIBIANI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 610 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: eb1048f3-1a9d-45...
+   ✅ Successfully indexed
+
+[63/216] Healthcare Providers in SEFWI ANHWIASO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 342 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: a8a5d725-5766-43...
+   ✅ Successfully indexed
+
+[64/216] Healthcare Providers in SEFWI BEKWAI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 346 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 69124426-67f6-43...
+   ✅ Successfully indexed
+
+[65/216] Healthcare Providers in SEFWI WIAWSO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 511 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 26027df1-695b-40...
+   ✅ Successfully indexed
+
+[66/216] Healthcare Providers in SEFWI ASAFO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 365 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9ae6a75d-ba34-44...
+   ✅ Successfully indexed
+
+[67/216] Healthcare Providers in SEFWI ASAWINSO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 477 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 6c689c3d-ce56-4b...
+   ✅ Successfully indexed
+
+[68/216] Healthcare Providers in SEFWI BODI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 338 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9491ba71-590b-46...
+   ✅ Successfully indexed
+
+[69/216] Healthcare Providers in SEFWI ESSAM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 344 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0035ece6-f75f-4b...
+   ✅ Successfully indexed
+
+[70/216] Healthcare Providers in MAMPONG
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 310 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 937d2f72-27c1-4c...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 70/216)...
+
+[71/216] Healthcare Providers in KOFORIDUA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 3368 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 13467c8f-27fe-44...
+   ✅ Successfully indexed
+
+[72/216] Healthcare Providers in MAMFE AKUAPEM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 368 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: fbf69def-61aa-42...
+   ✅ Successfully indexed
+
+[73/216] Healthcare Providers in TAFO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 623 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5db3cb5d-3649-4e...
+   ✅ Successfully indexed
+
+[74/216] Healthcare Providers in NSAWAM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 980 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 25b46b34-2450-41...
+   ✅ Successfully indexed
+
+[75/216] Healthcare Providers in SUHUM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 435 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 8ea9796f-0e9e-48...
+   ✅ Successfully indexed
+
+[76/216] Healthcare Providers in ASAMANKESE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 475 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 50f5f479-5c5d-40...
+   ✅ Successfully indexed
+
+[77/216] Healthcare Providers in ASIAKWA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1164 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1639b450-5b3d-4a...
+   ✅ Successfully indexed
+
+[78/216] Healthcare Providers in OSINO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1158 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: b291456c-6352-49...
+   ✅ Successfully indexed
+
+[79/216] Healthcare Providers in ANYINAM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1164 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 3eaddb47-f3e9-44...
+   ✅ Successfully indexed
+
+[80/216] Healthcare Providers in ENYIRESI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1167 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 188e586b-4d57-47...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 80/216)...
+
+[81/216] Healthcare Providers in KIBI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1155 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 62865759-ee00-44...
+   ✅ Successfully indexed
+
+[82/216] Healthcare Providers in AKOSOMBO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 472 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: af63d231-bf20-4a...
+   ✅ Successfully indexed
+
+[83/216] Healthcare Providers in SOMANYA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 693 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e0ec206a-8afa-4c...
+   ✅ Successfully indexed
+
+[84/216] Healthcare Providers in ODUMASE KROBO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 711 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 3bf0ad5e-4b78-49...
+   ✅ Successfully indexed
+
+[85/216] Healthcare Providers in ODA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 770 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 6641fdbd-7c2d-4f...
+   ✅ Successfully indexed
+
+[86/216] Healthcare Providers in AKWATIA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 293 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: fea7894c-5e8c-4c...
+   ✅ Successfully indexed
+
+[87/216] Healthcare Providers in KADE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 272 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 30ad120f-514f-47...
+   ✅ Successfully indexed
+
+[88/216] Healthcare Providers in BEGORO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 648 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 07ab3c30-34c1-40...
+   ✅ Successfully indexed
+
+[89/216] Healthcare Providers in OSIEM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 680 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0515b7b6-ee92-4a...
+   ✅ Successfully indexed
+
+[90/216] Healthcare Providers in NKAWKAW
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1325 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 7f4e17c8-03db-49...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 90/216)...
+
+[91/216] Healthcare Providers in NEW ABIREM
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 484 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: b38adf27-de55-40...
+   ✅ Successfully indexed
+
+[92/216] Healthcare Providers in HO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1795 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 45d881f1-f2cd-4c...
+   ✅ Successfully indexed
+
+[93/216] Healthcare Providers in HOHOE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 657 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 976903f1-d89f-48...
+   ✅ Successfully indexed
+
+[94/216] Healthcare Providers in ACCRA CENTRAL
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2210 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 66b53246-7321-46...
+   ✅ Successfully indexed
+
+[95/216] Healthcare Providers in TUDU
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2183 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4b5c289e-e9c5-49...
+   ✅ Successfully indexed
+
+[96/216] Healthcare Providers in MAKOLA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2189 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: c9d414cf-eeeb-45...
+   ✅ Successfully indexed
+
+[97/216] Healthcare Providers in ADABRAKA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1263 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 238efc8a-a5f9-48...
+   ✅ Successfully indexed
+
+[98/216] Healthcare Providers in AIRPORT RESIDENTIAL AREA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2154 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 25d8ec71-f8f1-47...
+   ✅ Successfully indexed
+
+[99/216] Healthcare Providers in 37 AREA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2103 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 288359dd-5cb0-40...
+   ✅ Successfully indexed
+
+[100/216] Healthcare Providers in ASYLUM DOWN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1615 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 55757ede-0b42-45...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 100/216)...
+
+[101/216] Healthcare Providers in LEGON
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1424 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 8a7f5cbf-23da-46...
+   ✅ Successfully indexed
+
+[102/216] Healthcare Providers in NORTH LEGON
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1442 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 7b6efb9b-3642-48...
+   ✅ Successfully indexed
+
+[103/216] Healthcare Providers in MADINA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 3709 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4a0c9afe-4f07-4a...
+   ✅ Successfully indexed
+
+[104/216] Healthcare Providers in ADENTA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 3709 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: cade63f7-639c-4b...
+   ✅ Successfully indexed
+
+[105/216] Healthcare Providers in DODOWA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 3709 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0310c260-e9a3-40...
+   ✅ Successfully indexed
+
+[106/216] Healthcare Providers in DZORWULU
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1712 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9d7f62f0-6d81-42...
+   ✅ Successfully indexed
+
+[107/216] Healthcare Providers in ABELENKPE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1715 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: f3db8a68-36ca-42...
+   ✅ Successfully indexed
+
+[108/216] Healthcare Providers in CIRCLE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2376 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 17f5501a-385c-4d...
+   ✅ Successfully indexed
+
+[109/216] Healthcare Providers in KANESHIE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2382 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: f43ff479-f829-4b...
+   ✅ Successfully indexed
+
+[110/216] Healthcare Providers in NORTH KANESHIE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2400 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: f92a53d0-e3f8-47...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 110/216)...
+
+[111/216] Healthcare Providers in INDUSTRIAL AREA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2403 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 6578312d-7378-42...
+   ✅ Successfully indexed
+
+[112/216] Healthcare Providers in KOKOMLEMLE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 519 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: b2582a29-d1bf-4e...
+   ✅ Successfully indexed
+
+[113/216] Healthcare Providers in MAAMOBI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 510 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: a0fadd04-3d77-43...
+   ✅ Successfully indexed
+
+[114/216] Healthcare Providers in NIMA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 501 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9cc95f32-687c-4b...
+   ✅ Successfully indexed
+
+[115/216] Healthcare Providers in LAPAZ
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2002 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 3bce4a42-cbd4-49...
+   ✅ Successfully indexed
+
+[116/216] Healthcare Providers in NYAMEKYE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2011 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5f4b3b75-6353-4e...
+   ✅ Successfully indexed
+
+[117/216] Healthcare Providers in DARKUMAN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2011 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 712d5b53-e7cf-48...
+   ✅ Successfully indexed
+
+[118/216] Healthcare Providers in ODORKOR
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2008 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5386bd66-8a60-49...
+   ✅ Successfully indexed
+
+[119/216] Healthcare Providers in TESANO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 279 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: cdf69161-e407-40...
+   ✅ Successfully indexed
+
+[120/216] Healthcare Providers in LATEBIOKOSHIE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 892 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4a5de16d-3b0c-46...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 120/216)...
+
+[121/216] Healthcare Providers in MATAHEKO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 877 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 322084fd-2d1e-4e...
+   ✅ Successfully indexed
+
+[122/216] Healthcare Providers in DANSOMAN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2985 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 14d88c20-ea8a-46...
+   ✅ Successfully indexed
+
+[123/216] Healthcare Providers in MAMPROBI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2985 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ebe4c2da-39ca-41...
+   ✅ Successfully indexed
+
+[124/216] Healthcare Providers in KORLE-BU
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2985 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 16178909-c475-4e...
+   ✅ Successfully indexed
+
+[125/216] Healthcare Providers in OSU
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 3321 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 3456f628-63ca-49...
+   ✅ Successfully indexed
+
+[126/216] Healthcare Providers in LABONE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2311 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: d07a3ef6-45e2-4a...
+   ✅ Successfully indexed
+
+[127/216] Healthcare Providers in LA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2299 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: b7608d97-98f7-4c...
+   ✅ Successfully indexed
+
+[128/216] Healthcare Providers in TSE ADDO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2317 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0bb5ee3e-c9a8-47...
+   ✅ Successfully indexed
+
+[129/216] Healthcare Providers in CANTONMENTS
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2326 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 49021948-7da5-44...
+   ✅ Successfully indexed
+
+[130/216] Healthcare Providers in TANTRA HILL
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 974 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 83363183-9338-47...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 130/216)...
+
+[131/216] Healthcare Providers in OFANKOR
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 962 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1bcfb551-bcf4-4f...
+   ✅ Successfully indexed
+
+[132/216] Healthcare Providers in SPINTEX ROAD
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2570 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: d7abd769-439f-4f...
+   ✅ Successfully indexed
+
+[133/216] Healthcare Providers in BAATSONA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2558 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 963463b9-c558-48...
+   ✅ Successfully indexed
+
+[134/216] Healthcare Providers in DOME
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1896 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: d12de15d-2e0f-42...
+   ✅ Successfully indexed
+
+[135/216] Healthcare Providers in HAATSO
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1902 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 24a70d7a-7de9-43...
+   ✅ Successfully indexed
+
+[136/216] Healthcare Providers in ASHONGMAN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1911 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 6a519b12-bdbd-47...
+   ✅ Successfully indexed
+
+[137/216] Healthcare Providers in KWABENYA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1908 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 25448b2e-4f22-41...
+   ✅ Successfully indexed
+
+[138/216] Healthcare Providers in TESHIE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1814 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 16bd893d-1402-45...
+   ✅ Successfully indexed
+
+[139/216] Healthcare Providers in NUNGUA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1814 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 57d4e44b-fe21-4b...
+   ✅ Successfully indexed
+
+[140/216] Healthcare Providers in ACHIMOTA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1346 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5c20eb66-d25c-4f...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 140/216)...
+
+[141/216] Healthcare Providers in NEW ACHIMOTA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 1358 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 39ce495f-10ca-4a...
+   ✅ Successfully indexed
+
+[142/216] Healthcare Providers in EAST LEGON
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 3478 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4cfec4af-4e9b-4a...
+   ✅ Successfully indexed
+
+[143/216] Healthcare Providers in ADJRINGANOR
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 3481 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: dea4cab3-10d4-4d...
+   ✅ Successfully indexed
+
+[144/216] Healthcare Providers in RIDGE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 964 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 8c8075d2-168f-45...
+   ✅ Successfully indexed
+
+[145/216] Healthcare Providers in SAKUMONO ESTATE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2957 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4084deb7-929f-49...
+   ✅ Successfully indexed
+
+[146/216] Healthcare Providers in LASHIBI
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2933 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 635f24b8-a4f9-42...
+   ✅ Successfully indexed
+
+[147/216] Healthcare Providers in COMM. 18,19,22
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 368 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 3c214b3c-8758-4b...
+   ✅ Successfully indexed
+
+[148/216] Healthcare Providers in COMM. 18,19,23
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 394 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5e197db6-9104-45...
+   ✅ Successfully indexed
+
+[149/216] Healthcare Providers in COMM. 18,19,24
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 353 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: aa52954f-317c-44...
+   ✅ Successfully indexed
+
+[150/216] Healthcare Providers in COMM. 18,19,25
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 346 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ce56ac2e-d084-48...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 150/216)...
+
+[151/216] Healthcare Providers in COMM. 18,19,26
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 325 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: fac03fcc-e3e0-43...
+   ✅ Successfully indexed
+
+[152/216] Healthcare Providers in COMM. 18,19,27
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 322 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: f8fff625-9ffa-46...
+   ✅ Successfully indexed
+
+[153/216] Healthcare Providers in COMM. 18,19,28
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 323 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0bbe6597-689d-43...
+   ✅ Successfully indexed
+
+[154/216] Healthcare Providers in COMM. 18,19,29
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 329 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ca6b4cd9-9b26-47...
+   ✅ Successfully indexed
+
+[155/216] Healthcare Providers in COMM. 18,19,30
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 320 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1cc531b1-68a0-4b...
+   ✅ Successfully indexed
+
+[156/216] Healthcare Providers in COMM. 18,19,31
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 366 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 07a2c95b-463a-48...
+   ✅ Successfully indexed
+
+[157/216] Healthcare Providers in COMM. 18,19,32
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 341 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: f366f6ca-0ef6-43...
+   ✅ Successfully indexed
+
+[158/216] Healthcare Providers in COMM. 18,19,33
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 385 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: da792c61-fc67-4c...
+   ✅ Successfully indexed
+
+[159/216] Healthcare Providers in COMM. 18,19,34
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 353 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1595cb60-08d6-42...
+   ✅ Successfully indexed
+
+[160/216] Healthcare Providers in COMM. 18,19,35
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 322 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 673de03d-3ffb-4a...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 160/216)...
+
+[161/216] Healthcare Providers in COMM. 18,19,36
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 322 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: fc05ddf8-65f1-42...
+   ✅ Successfully indexed
+
+[162/216] Healthcare Providers in COMM. 18,19,37
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 412 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9101e799-d8f7-47...
+   ✅ Successfully indexed
+
+[163/216] Healthcare Providers in COMM. 18,19,38
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 349 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: cd4f820d-518e-43...
+   ✅ Successfully indexed
+
+[164/216] Healthcare Providers in ASHAIMAN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2683 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 7ce04515-1c92-4a...
+   ✅ Successfully indexed
+
+[165/216] Healthcare Providers in COMMUNITY 27
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 324 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 7c7e904d-f9d2-45...
+   ✅ Successfully indexed
+
+[166/216] Healthcare Providers in COMMUNITY 28
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 362 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e866eb20-7b9a-48...
+   ✅ Successfully indexed
+
+[167/216] Healthcare Providers in COMMUNITY 29
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 324 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: d7f781d0-3cf0-4a...
+   ✅ Successfully indexed
+
+[168/216] Healthcare Providers in COMMUNITY 30
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 303 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ca430f71-e51d-46...
+   ✅ Successfully indexed
+
+[169/216] Healthcare Providers in COMMUNITY 31
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 353 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ad09badd-7e10-41...
+   ✅ Successfully indexed
+
+[170/216] Healthcare Providers in COMMUNITY 32
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 328 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 0e3100e8-f270-4b...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 170/216)...
+
+[171/216] Healthcare Providers in COMMUNITY 33
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 356 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 823475be-6370-4c...
+   ✅ Successfully indexed
+
+[172/216] Healthcare Providers in COMMUNITY 34
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 359 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e8a13905-ce2c-40...
+   ✅ Successfully indexed
+
+[173/216] Healthcare Providers in COMMUNITY 35
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 378 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 06e7205d-d06e-49...
+   ✅ Successfully indexed
+
+[174/216] Healthcare Providers in COMMUNITY 36
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 333 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: c7cbdb21-ea22-47...
+   ✅ Successfully indexed
+
+[175/216] Healthcare Providers in COMMUNITY 37
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 372 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 182971b8-daac-47...
+   ✅ Successfully indexed
+
+[176/216] Healthcare Providers in COMMUNITY 38
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 412 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ac95c75f-cc3f-48...
+   ✅ Successfully indexed
+
+[177/216] Healthcare Providers in COMMUNITY 39
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 320 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: b4a06e3a-573f-45...
+   ✅ Successfully indexed
+
+[178/216] Healthcare Providers in COMMUNITY 40
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 340 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4bb6ef66-6b32-4e...
+   ✅ Successfully indexed
+
+[179/216] Healthcare Providers in COMMUNITY 41
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 351 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: fb5ea5f0-4a6f-43...
+   ✅ Successfully indexed
+
+[180/216] Healthcare Providers in COMM. 22
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2251 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: aba19922-ed51-4f...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 180/216)...
+
+[181/216] Healthcare Providers in MICHEL CAMP
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2260 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ac45d62b-d7e1-40...
+   ✅ Successfully indexed
+
+[182/216] Healthcare Providers in AFIENYA ROAD
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2263 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5db17452-2bba-4a...
+   ✅ Successfully indexed
+
+[183/216] Healthcare Providers in TEMA COMMUNITY 4
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2924 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: a59a6566-e052-48...
+   ✅ Successfully indexed
+
+[184/216] Healthcare Providers in 5
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2832 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: cb571cd6-c75d-40...
+   ✅ Successfully indexed
+
+[185/216] Healthcare Providers in 6
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2833 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e1b5a9bc-9e88-49...
+   ✅ Successfully indexed
+
+[186/216] Healthcare Providers in 9
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2667 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1d67bffc-ac1d-41...
+   ✅ Successfully indexed
+
+[187/216] Healthcare Providers in 10
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2670 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: bc7537a3-4478-44...
+   ✅ Successfully indexed
+
+[188/216] Healthcare Providers in 13
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 331 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 065952e5-8982-4e...
+   ✅ Successfully indexed
+
+[189/216] Healthcare Providers in 14
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 313 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 8aab4e0f-164d-40...
+   ✅ Successfully indexed
+
+[190/216] Healthcare Providers in 15
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 299 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9b990a39-424f-49...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 190/216)...
+
+[191/216] Healthcare Providers in 16
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 330 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: db9c0797-e461-40...
+   ✅ Successfully indexed
+
+[192/216] Healthcare Providers in 17
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 336 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 3de0dc00-1e0a-46...
+   ✅ Successfully indexed
+
+[193/216] Healthcare Providers in 18
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 341 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 85555601-dcd4-45...
+   ✅ Successfully indexed
+
+[194/216] Healthcare Providers in 19
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 319 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 7c73f065-0d2d-43...
+   ✅ Successfully indexed
+
+[195/216] Healthcare Providers in 20
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 276 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 1d1d6277-bda5-49...
+   ✅ Successfully indexed
+
+[196/216] Healthcare Providers in 21
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 337 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: fe8d5554-1cd8-4b...
+   ✅ Successfully indexed
+
+[197/216] Healthcare Providers in 22
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 274 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5e967911-983c-43...
+   ✅ Successfully indexed
+
+[198/216] Healthcare Providers in 23
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 339 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 186269ce-071a-47...
+   ✅ Successfully indexed
+
+[199/216] Healthcare Providers in 24
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 316 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: b24e9e97-3718-41...
+   ✅ Successfully indexed
+
+[200/216] Healthcare Providers in 25
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 334 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: ebdcfbd4-f937-4c...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 200/216)...
+
+[201/216] Healthcare Providers in 26
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 327 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 49d87580-8acf-49...
+   ✅ Successfully indexed
+
+[202/216] Healthcare Providers in 27
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 298 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e960cb94-4418-48...
+   ✅ Successfully indexed
+
+[203/216] Healthcare Providers in TEMA COMMUNITY 3
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 325 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: e8976747-eea7-43...
+   ✅ Successfully indexed
+
+[204/216] Healthcare Providers in TEMA COMMUNITY 5
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 351 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4696df77-49ae-42...
+   ✅ Successfully indexed
+
+[205/216] Healthcare Providers in TEMA COMMUNITY 6
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 322 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 725cf84c-b70d-43...
+   ✅ Successfully indexed
+
+[206/216] Healthcare Providers in TEMA COMMUNITY 7
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 352 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 87e26595-45a0-4d...
+   ✅ Successfully indexed
+
+[207/216] Healthcare Providers in TEMA COMMUNITY 8
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 336 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9bd3ed14-6db3-40...
+   ✅ Successfully indexed
+
+[208/216] Healthcare Providers in TEMA COMMUNITY 9
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 366 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 5c5429a2-e3de-4d...
+   ✅ Successfully indexed
+
+[209/216] Healthcare Providers in TEMA COMMUNITY 2
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 793 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 888fc8c4-9218-45...
+   ✅ Successfully indexed
+
+[210/216] Healthcare Providers in 7
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 298 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 52dcb277-428b-4b...
+   ✅ Successfully indexed
+
+   ⏸️  Pausing for 1 second (processed 210/216)...
+
+[211/216] Healthcare Providers in 8
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 266 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 2fd4e451-0eda-4a...
+   ✅ Successfully indexed
+
+[212/216] Healthcare Providers in AMANSAMAN
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 783 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 9b7ce8ea-4518-4a...
+   ✅ Successfully indexed
+
+[213/216] Healthcare Providers in POKUASE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 777 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: efcf93bb-1395-4d...
+   ✅ Successfully indexed
+
+[214/216] Healthcare Providers in WEIJA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2877 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 37face9a-31f0-45...
+   ✅ Successfully indexed
+
+[215/216] Healthcare Providers in KASOA
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2877 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: bb9bc0bd-b7a1-4a...
+   ✅ Successfully indexed
+
+[216/216] Healthcare Providers in GBAWE
+   Region: UNKNOWN
+   City: UNKNOWN
+   Content: 2877 chars
+   🔄 Generating embedding...
+   ✅ Embedding ID: 4a0afa29-26b8-45...
+   ✅ Successfully indexed
+
+================================================================================
+📊 INDEXING SUMMARY
+================================================================================
+Total documents: 216
+✅ Successfully indexed: 216
+❌ Failed: 0
+📈 Success rate: 100.0%
+================================================================================
+
+✅ NEXT STEPS:
+1. Verify region tags are properly set
+2. Update RAG service to use region filtering
+3. Clear cache and restart backend
+4. Test region-based queries

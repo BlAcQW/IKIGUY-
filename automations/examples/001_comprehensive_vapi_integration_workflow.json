@@ -1,0 +1,421 @@
+{
+  "name": "001 Comprehensive Vapi Integration - Custom Tools",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Comprehensive Integration Setup",
+        "formDescription": "Setup Vapi assistant with HubSpot, Email, Tavily, Supabase, and Calendar integrations using custom tools",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Server URL",
+              "fieldType": "text",
+              "requiredField": true,
+              "placeholder": "https://api.ailabsafrica.com"
+            },
+            {
+              "fieldLabel": "Organization Name",
+              "fieldType": "text",
+              "requiredField": true,
+              "placeholder": "AI Labs Africa"
+            },
+            {
+              "fieldLabel": "Contact Email",
+              "fieldType": "email",
+              "requiredField": true,
+              "placeholder": "ailabsafrica@gmail.com"
+            },
+            {
+              "fieldLabel": "Client ID",
+              "fieldType": "text",
+              "requiredField": true,
+              "placeholder": "vapi-integration-test"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [280, 400],
+      "id": "integration-setup-form",
+      "name": "Integration Setup Form",
+      "webhookId": "comprehensive-integration-setup"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/assistant",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"Comprehensive Business Assistant - {{ $('Integration Setup Form').item.json['Organization Name'] }}\",\n  \"voice\": {\n    \"model\": \"eleven_flash_v2_5\",\n    \"voiceId\": \"bIHbv24MWmeRgasZH58o\",\n    \"autoMode\": true,\n    \"provider\": \"11labs\",\n    \"stability\": 0.5,\n    \"similarityBoost\": 0.75,\n    \"useSpeakerBoost\": true,\n    \"optimizeStreamingLatency\": 3\n  },\n  \"model\": {\n    \"model\": \"gpt-4o-mini\",\n    \"toolIds\": [],\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a comprehensive business assistant for {{ $('Integration Setup Form').item.json['Organization Name'] }} with the following capabilities:\\n\\n🔧 **Customer Management**: Save customer information to HubSpot CRM\\n📧 **Email Communications**: Send emails and notifications\\n🔍 **Web Research**: Search for current information using Tavily\\n💾 **Data Storage**: Save information to Supabase database\\n📅 **Appointment Scheduling**: Book calendar appointments\\n\\nWhen customers call, follow this process:\\n1. **Greet warmly** and introduce your capabilities\\n2. **Collect contact information** (name, email, phone) if needed\\n3. **Understand their needs** and which services they require\\n4. **Execute the appropriate tools** based on their request\\n5. **Confirm actions taken** and offer additional assistance\\n\\nAvailable functions:\\n- save_customer_to_hubspot: Add/update customer in CRM\\n- send_notification_email: Send emails to specified recipients\\n- search_web_information: Research topics using web search\\n- save_call_data: Store call information in database\\n- schedule_appointment: Book calendar meetings\\n\\nAlways be professional, helpful, and confirm successful completion of requested actions.\"\n      }\n    ],\n    \"provider\": \"openai\",\n    \"maxTokens\": 300\n  },\n  \"firstMessage\": \"Hello! I'm your comprehensive business assistant. I can help you with customer management, email communications, research, data storage, and scheduling. How may I assist you today?\",\n  \"endCallMessage\": \"Thank you for calling {{ $('Integration Setup Form').item.json['Organization Name'] }}! Have a wonderful day!\",\n  \"transcriber\": {\n    \"model\": \"nova-3-general\",\n    \"language\": \"en\",\n    \"numerals\": true,\n    \"provider\": \"deepgram\"\n  },\n  \"serverMessages\": [\n    \"end-of-call-report\",\n    \"function-call\",\n    \"tool-calls\"\n  ],\n  \"analysisPlan\": {\n    \"summaryPlan\": {\n      \"messages\": [\n        {\n          \"content\": \"Create a comprehensive summary of this business assistance call including: customer information collected, services requested, tools used (HubSpot, email, search, database, calendar), outcomes achieved, and customer satisfaction.\",\n          \"role\": \"system\"\n        }\n      ],\n      \"timeoutSeconds\": 25\n    },\n    \"structuredDataPlan\": {\n      \"enabled\": true,\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"customer_name\": {\"type\": \"string\"},\n          \"customer_email\": {\"type\": \"string\"},\n          \"customer_phone\": {\"type\": \"string\"},\n          \"hubspot_contact_saved\": {\"type\": \"boolean\"},\n          \"email_sent\": {\"type\": \"boolean\"},\n          \"web_search_performed\": {\"type\": \"boolean\"},\n          \"data_saved_to_database\": {\"type\": \"boolean\"},\n          \"appointment_scheduled\": {\"type\": \"boolean\"},\n          \"customer_satisfaction\": {\"type\": \"string\", \"enum\": [\"high\", \"medium\", \"low\"]},\n          \"follow_up_required\": {\"type\": \"boolean\"}\n        }\n      }\n    }\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [520, 400],
+      "id": "create-comprehensive-assistant",
+      "name": "Create Comprehensive Assistant",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"save_customer_to_hubspot\",\n    \"description\": \"Save or update customer contact information in HubSpot CRM system.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"firstName\": {\n          \"description\": \"Customer's first name\",\n          \"type\": \"string\"\n        },\n        \"lastName\": {\n          \"description\": \"Customer's last name\",\n          \"type\": \"string\"\n        },\n        \"email\": {\n          \"description\": \"Customer's email address\",\n          \"type\": \"string\"\n        },\n        \"phone\": {\n          \"description\": \"Customer's phone number\",\n          \"type\": \"string\"\n        },\n        \"company\": {\n          \"description\": \"Customer's company or organization\",\n          \"type\": \"string\"\n        },\n        \"notes\": {\n          \"description\": \"Additional notes about the customer or interaction\",\n          \"type\": \"string\"\n        },\n        \"leadSource\": {\n          \"description\": \"How the customer found us (voice call, website, referral, etc.)\",\n          \"type\": \"string\",\n          \"default\": \"voice_assistant\"\n        }\n      },\n      \"required\": [\"firstName\", \"email\"]\n    }\n  },\n  \"server\": {\n    \"url\": \"{{ $('Integration Setup Form').item.json['Server URL'] }}/custom-tools/execute/hubspot_integration\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 200],
+      "id": "create-hubspot-integration-tool",
+      "name": "Create HubSpot Integration Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"send_notification_email\",\n    \"description\": \"Send email notifications to specified recipients using Resend service.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"to_email\": {\n          \"description\": \"Recipient email address\",\n          \"type\": \"string\",\n          \"default\": \"{{ $('Integration Setup Form').item.json['Contact Email'] }}\"\n        },\n        \"subject\": {\n          \"description\": \"Email subject line\",\n          \"type\": \"string\"\n        },\n        \"message\": {\n          \"description\": \"Main email content/message\",\n          \"type\": \"string\"\n        },\n        \"customer_name\": {\n          \"description\": \"Customer name for email personalization\",\n          \"type\": \"string\"\n        },\n        \"call_summary\": {\n          \"description\": \"Summary of the call for record keeping\",\n          \"type\": \"string\"\n        },\n        \"priority\": {\n          \"description\": \"Email priority level\",\n          \"type\": \"string\",\n          \"enum\": [\"low\", \"normal\", \"high\"],\n          \"default\": \"normal\"\n        }\n      },\n      \"required\": [\"subject\", \"message\"]\n    }\n  },\n  \"server\": {\n    \"url\": \"{{ $('Integration Setup Form').item.json['Server URL'] }}/custom-tools/execute/email_notification\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 320],
+      "id": "create-email-notification-tool",
+      "name": "Create Email Notification Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"search_web_information\",\n    \"description\": \"Search the web for current information about companies, topics, products, or any research needs using Tavily AI.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"query\": {\n          \"description\": \"Search query - what to research on the web\",\n          \"type\": \"string\"\n        },\n        \"search_depth\": {\n          \"description\": \"Depth of search results\",\n          \"type\": \"string\",\n          \"enum\": [\"basic\", \"advanced\"],\n          \"default\": \"basic\"\n        },\n        \"max_results\": {\n          \"description\": \"Maximum number of search results to return\",\n          \"type\": \"number\",\n          \"default\": 5\n        },\n        \"include_domains\": {\n          \"description\": \"Specific domains to focus search on (optional)\",\n          \"type\": \"string\"\n        },\n        \"exclude_domains\": {\n          \"description\": \"Domains to exclude from search (optional)\",\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"query\"]\n    }\n  },\n  \"server\": {\n    \"url\": \"{{ $('Integration Setup Form').item.json['Server URL'] }}/custom-tools/execute/web_search\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 440],
+      "id": "create-web-search-tool",
+      "name": "Create Web Search Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"save_call_data\",\n    \"description\": \"Save call information, customer data, and interaction details to Supabase database for record keeping and analysis.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"customer_name\": {\n          \"description\": \"Customer's full name\",\n          \"type\": \"string\"\n        },\n        \"customer_email\": {\n          \"description\": \"Customer's email address\",\n          \"type\": \"string\"\n        },\n        \"customer_phone\": {\n          \"description\": \"Customer's phone number\",\n          \"type\": \"string\"\n        },\n        \"call_purpose\": {\n          \"description\": \"Main purpose or reason for the call\",\n          \"type\": \"string\"\n        },\n        \"services_used\": {\n          \"description\": \"Which services/tools were used during the call\",\n          \"type\": \"string\"\n        },\n        \"call_outcome\": {\n          \"description\": \"Result or outcome of the call\",\n          \"type\": \"string\"\n        },\n        \"next_action\": {\n          \"description\": \"Any follow-up action required\",\n          \"type\": \"string\"\n        },\n        \"call_rating\": {\n          \"description\": \"Customer satisfaction rating (1-10)\",\n          \"type\": \"number\"\n        }\n      },\n      \"required\": [\"customer_name\", \"call_purpose\"]\n    }\n  },\n  \"server\": {\n    \"url\": \"{{ $('Integration Setup Form').item.json['Server URL'] }}/custom-tools/execute/database_storage\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 560],
+      "id": "create-database-storage-tool",
+      "name": "Create Database Storage Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/tool",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"schedule_appointment\",\n    \"description\": \"Schedule calendar appointments and meetings using Calendly integration.\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"customer_name\": {\n          \"description\": \"Customer's full name for the appointment\",\n          \"type\": \"string\"\n        },\n        \"customer_email\": {\n          \"description\": \"Customer's email for calendar invitation\",\n          \"type\": \"string\"\n        },\n        \"appointment_date\": {\n          \"description\": \"Preferred date for appointment (YYYY-MM-DD format)\",\n          \"type\": \"string\"\n        },\n        \"appointment_time\": {\n          \"description\": \"Preferred time for appointment (HH:MM 24-hour format)\",\n          \"type\": \"string\"\n        },\n        \"duration_minutes\": {\n          \"description\": \"Duration of appointment in minutes\",\n          \"type\": \"number\",\n          \"default\": 30\n        },\n        \"meeting_type\": {\n          \"description\": \"Type of meeting or appointment\",\n          \"type\": \"string\",\n          \"enum\": [\"consultation\", \"demo\", \"support\", \"sales\", \"follow_up\"],\n          \"default\": \"consultation\"\n        },\n        \"timezone\": {\n          \"description\": \"Customer's timezone\",\n          \"type\": \"string\",\n          \"default\": \"UTC\"\n        },\n        \"notes\": {\n          \"description\": \"Additional notes about the appointment\",\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\"customer_name\", \"customer_email\", \"appointment_date\", \"appointment_time\"]\n    }\n  },\n  \"server\": {\n    \"url\": \"{{ $('Integration Setup Form').item.json['Server URL'] }}/custom-tools/execute/calendar_scheduling\",\n    \"headers\": {}\n  },\n  \"async\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1000, 400],
+      "id": "create-calendar-scheduling-tool",
+      "name": "Create Calendar Scheduling Tool",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Collect all tool IDs and prepare for assistant update\nconst items = $input.all();\nconst toolIds = [];\nconst toolDetails = {};\n\n// Extract tool IDs from all tool creation responses\nfor (let i = 2; i < items.length; i++) {\n  const item = items[i];\n  if (item.json && item.json.id) {\n    toolIds.push(item.json.id);\n    \n    // Store tool details for reference\n    const toolName = item.json.function?.name || `tool_${i-1}`;\n    toolDetails[toolName] = {\n      id: item.json.id,\n      name: toolName,\n      description: item.json.function?.description || 'Custom tool'\n    };\n  }\n}\n\n// Get setup data\nconst setupData = items[0].json;\nconst assistantData = items[1].json;\n\nconsole.log('All tool IDs collected:', toolIds);\nconsole.log('Tool details:', toolDetails);\n\nreturn [{\n  json: {\n    assistant_id: assistantData?.id,\n    tool_ids: toolIds,\n    tool_count: toolIds.length,\n    tools_created: toolDetails,\n    setup_config: {\n      server_url: setupData['Server URL'],\n      organization_name: setupData['Organization Name'],\n      contact_email: setupData['Contact Email'],\n      client_id: setupData['Client ID']\n    },\n    integration_endpoints: {\n      hubspot: `${setupData['Server URL']}/custom-tools/execute/hubspot_integration`,\n      email: `${setupData['Server URL']}/custom-tools/execute/email_notification`,\n      search: `${setupData['Server URL']}/custom-tools/execute/web_search`,\n      database: `${setupData['Server URL']}/custom-tools/execute/database_storage`,\n      calendar: `${setupData['Server URL']}/custom-tools/execute/calendar_scheduling`\n    }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1240, 400],
+      "id": "collect-integration-tools",
+      "name": "Collect Integration Tool IDs"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.vapi.ai/assistant/{{ $json.assistant_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": {\n    \"toolIds\": {{ JSON.stringify($json.tool_ids) }}\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1480, 400],
+      "id": "update-assistant-with-tools",
+      "name": "Update Assistant with Integration Tools",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/phone-number",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"provider\": \"vapi\",\n  \"assistantId\": \"{{ $('Collect Integration Tool IDs').item.json.assistant_id }}\",\n  \"name\": \"Integration Test Line - {{ $('Collect Integration Tool IDs').item.json.setup_config.organization_name }}\",\n  \"serverUrl\": \"{{ $('Collect Integration Tool IDs').item.json.setup_config.server_url }}/custom-tools/vapi-webhook\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1720, 400],
+      "id": "create-integration-phone-number",
+      "name": "Create Integration Phone Number",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth-header",
+          "name": "Vapi AI Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "seconds"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1960, 400],
+      "id": "wait-for-activation",
+      "name": "Wait for Phone Activation"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate comprehensive setup summary and test instructions\nconst items = $input.all();\nconst config = items[0].json;\nconst phoneResponse = items[1].json;\n\nconst setupSummary = {\n  setup_status: \"completed\",\n  setup_completed_at: new Date().toISOString(),\n  assistant_configuration: {\n    assistant_id: config.assistant_id,\n    phone_number: phoneResponse?.number || 'Phone activation pending',\n    phone_number_id: phoneResponse?.id,\n    tools_integrated: config.tool_count,\n    organization: config.setup_config.organization_name\n  },\n  integration_tools: [\n    {\n      name: \"HubSpot CRM Integration\",\n      function_name: \"save_customer_to_hubspot\",\n      endpoint: config.integration_endpoints.hubspot,\n      description: \"Saves customer contact information to HubSpot CRM\",\n      test_command: \"Please save my contact information to HubSpot. My name is John Doe, email john@example.com, phone +1234567890, company ABC Corp.\"\n    },\n    {\n      name: \"Email Notification System\",\n      function_name: \"send_notification_email\",\n      endpoint: config.integration_endpoints.email,\n      description: \"Sends emails using Resend service\",\n      test_command: `Send an email to ${config.setup_config.contact_email} with subject 'Test Call Summary' and message about this integration test.`\n    },\n    {\n      name: \"Web Search (Tavily)\",\n      function_name: \"search_web_information\",\n      endpoint: config.integration_endpoints.search,\n      description: \"Searches the web for current information\",\n      test_command: \"Search for information about AI Labs Africa and their latest projects.\"\n    },\n    {\n      name: \"Database Storage (Supabase)\",\n      function_name: \"save_call_data\",\n      endpoint: config.integration_endpoints.database,\n      description: \"Saves call data to Supabase database\",\n      test_command: \"Save this call data to the database - customer John Doe called for integration testing.\"\n    },\n    {\n      name: \"Calendar Scheduling (Calendly)\",\n      function_name: \"schedule_appointment\",\n      endpoint: config.integration_endpoints.calendar,\n      description: \"Schedules appointments via calendar integration\",\n      test_command: \"Schedule a 30-minute consultation meeting for tomorrow at 2 PM with John Doe, email john@example.com.\"\n    }\n  ],\n  comprehensive_test_script: {\n    introduction: \"Hi! I'd like to test all your integration capabilities in sequence.\",\n    test_sequence: [\n      \"First, please save my contact: John Doe, john@example.com, +1234567890, ABC Corporation\",\n      \"Next, search for information about AI Labs Africa on the web\",\n      \"Then send an email to ailabsafrica@gmail.com summarizing this integration test call\",\n      \"Save this call data to your database for record keeping\",\n      \"Finally, schedule a 30-minute follow-up meeting for tomorrow at 2 PM\"\n    ],\n    expected_outcomes: [\n      \"✅ Contact saved to HubSpot CRM with lead status\",\n      \"✅ Web search results about AI Labs Africa provided\",\n      \"✅ Email notification sent successfully\",\n      \"✅ Call data saved to Supabase database\",\n      \"✅ Calendar appointment scheduled with confirmation\"\n    ]\n  },\n  api_endpoints: {\n    main_webhook: `${config.setup_config.server_url}/custom-tools/vapi-webhook`,\n    custom_tools_base: `${config.setup_config.server_url}/custom-tools/execute/`,\n    health_check: `${config.setup_config.server_url}/custom-tools/health`\n  },\n  environment_requirements: {\n    api_keys_needed: [\n      \"VAPI_API_KEY\",\n      \"HUBSPOT_ACCESS_TOKEN\", \n      \"RESEND_API\",\n      \"TAVILY_API_KEY\",\n      \"DEMO_SUPABASE_URL\",\n      \"DEMO_SUPABASE_KEY\",\n      \"CALENDLY_API_KEY\"\n    ],\n    backend_status: \"Should be running on https://api.ailabsafrica.com\"\n  },\n  next_steps: [\n    \"Test each integration tool by calling the phone number\",\n    \"Verify HubSpot contact creation in CRM dashboard\",\n    \"Check email delivery to ailabsafrica@gmail.com\", \n    \"Confirm data storage in Supabase tables\",\n    \"Validate calendar appointment creation\",\n    \"Monitor logs for any integration errors\",\n    \"Set up monitoring and analytics dashboards\"\n  ]\n};\n\nconsole.log('Comprehensive Integration Setup Complete!', JSON.stringify(setupSummary, null, 2));\n\nreturn [{ json: setupSummary }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2200, 400],
+      "id": "generate-comprehensive-summary",
+      "name": "Generate Comprehensive Setup Summary"
+    }
+  ],
+  "connections": {
+    "Integration Setup Form": {
+      "main": [
+        [
+          {
+            "node": "Create Comprehensive Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Comprehensive Assistant": {
+      "main": [
+        [
+          {
+            "node": "Create HubSpot Integration Tool",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Email Notification Tool",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Web Search Tool",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Database Storage Tool",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Calendar Scheduling Tool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create HubSpot Integration Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Integration Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Email Notification Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Integration Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Web Search Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Integration Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Database Storage Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Integration Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Calendar Scheduling Tool": {
+      "main": [
+        [
+          {
+            "node": "Collect Integration Tool IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Integration Tool IDs": {
+      "main": [
+        [
+          {
+            "node": "Update Assistant with Integration Tools",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Assistant with Integration Tools": {
+      "main": [
+        [
+          {
+            "node": "Create Integration Phone Number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Integration Phone Number": {
+      "main": [
+        [
+          {
+            "node": "Wait for Phone Activation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Phone Activation": {
+      "main": [
+        [
+          {
+            "node": "Generate Comprehensive Setup Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "id": "vapi-comprehensive-v001",
+      "name": "Vapi Comprehensive v001"
+    },
+    {
+      "id": "integration-testing",
+      "name": "Integration Testing"
+    },
+    {
+      "id": "custom-tools",
+      "name": "Custom Tools"
+    }
+  ]
+}

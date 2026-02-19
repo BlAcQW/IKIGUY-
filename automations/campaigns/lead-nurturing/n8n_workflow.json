@@ -1,0 +1,995 @@
+{
+  "name": "Enhanced Lead Nurturing Campaign with VAPI + AI Scoring",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-nurturing-trigger",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Lead Nurturing Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "webhookId": "lead-nurturing-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "lead_id",
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}",
+              "type": "string"
+            },
+            {
+              "id": "lead_name",
+              "name": "lead_name",
+              "value": "={{ $json.lead_name }}",
+              "type": "string"
+            },
+            {
+              "id": "lead_email",
+              "name": "lead_email",
+              "value": "={{ $json.lead_email }}",
+              "type": "string"
+            },
+            {
+              "id": "lead_phone",
+              "name": "lead_phone",
+              "value": "={{ $json.lead_phone }}",
+              "type": "string"
+            },
+            {
+              "id": "lead_source",
+              "name": "lead_source",
+              "value": "={{ $json.lead_source }}",
+              "type": "string"
+            },
+            {
+              "id": "company_name",
+              "name": "company_name",
+              "value": "={{ $json.company_name }}",
+              "type": "string"
+            },
+            {
+              "id": "campaign_type",
+              "name": "campaign_type",
+              "value": "lead_nurturing",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-lead-data",
+      "name": "Set Lead Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/lead-nurturing/score-behavior",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}"
+            },
+            {
+              "name": "include_website_activity",
+              "value": true
+            },
+            {
+              "name": "include_email_engagement",
+              "value": true
+            },
+            {
+              "name": "include_social_signals",
+              "value": true
+            },
+            {
+              "name": "time_period_days",
+              "value": 30
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "score-lead-behavior",
+      "name": "Score Lead Behavior",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/lead-nurturing/assess-qualification",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}"
+            },
+            {
+              "name": "lead_source",
+              "value": "={{ $json.lead_source }}"
+            },
+            {
+              "name": "company_name",
+              "value": "={{ $json.company_name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "assess-qualification",
+      "name": "Assess Lead Qualification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 400]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "merge-lead-data",
+      "name": "Merge Lead Analysis",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "high_score_lead",
+              "leftValue": "={{ $json.lead_score }}",
+              "rightValue": 75,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "qualified_lead",
+              "leftValue": "={{ $json.qualification_status }}",
+              "rightValue": "qualified",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "route-by-quality",
+      "name": "Route by Lead Quality",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 42cf1e7c-2ef9-4bd7-ba30-52f2813605a2"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "assistantId",
+              "value": "asst_lead_nurturing_enhanced"
+            },
+            {
+              "name": "customer",
+              "value": {
+                "number": "={{ $json.lead_phone }}",
+                "name": "={{ $json.lead_name }}"
+              }
+            },
+            {
+              "name": "assistantOverrides",
+              "value": {
+                "variableValues": {
+                  "lead_id": "={{ $json.lead_id }}",
+                  "lead_name": "={{ $json.lead_name }}",
+                  "company_name": "={{ $json.company_name }}",
+                  "lead_source": "={{ $json.lead_source }}",
+                  "lead_score": "={{ $json.lead_score }}",
+                  "qualification_status": "={{ $json.qualification_status }}",
+                  "pain_points": "={{ $json.identified_pain_points || 'business efficiency' }}"
+                }
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "initiate-priority-call",
+      "name": "Initiate Priority VAPI Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.sendgrid.v3.mail.send",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.SENDGRID_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "personalizations",
+              "value": [
+                {
+                  "to": [
+                    {
+                      "email": "={{ $json.lead_email }}",
+                      "name": "={{ $json.lead_name }}"
+                    }
+                  ],
+                  "dynamic_template_data": {
+                    "lead_name": "={{ $json.lead_name }}",
+                    "company_name": "={{ $json.company_name }}",
+                    "lead_source": "={{ $json.lead_source }}",
+                    "personalized_content": "={{ $json.recommended_content }}"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "value": {
+                "email": "nurturing@company.com",
+                "name": "Sales Development Team"
+              }
+            },
+            {
+              "name": "template_id",
+              "value": "d-lead-nurturing-initial"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-nurture-email",
+      "name": "Send Nurture Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Wait for call completion and extract results\nconst callId = $input.first().json.id;\nconst maxWaitTime = 600000; // 10 minutes\nconst checkInterval = 15000; // 15 seconds\nlet totalWaitTime = 0;\n\nwhile (totalWaitTime < maxWaitTime) {\n  await new Promise(resolve => setTimeout(resolve, checkInterval));\n  totalWaitTime += checkInterval;\n  \n  // Check call status\n  const response = await $http.request({\n    method: 'GET',\n    url: `https://api.vapi.ai/call/${callId}`,\n    headers: {\n      'Authorization': 'Bearer 42cf1e7c-2ef9-4bd7-ba30-52f2813605a2'\n    }\n  });\n  \n  if (response.status === 'ended') {\n    return [{\n      json: {\n        call_id: callId,\n        call_duration: response.duration,\n        call_outcome: response.analysis?.structuredData?.call_outcome || 'unknown',\n        lead_qualification_score: response.analysis?.structuredData?.lead_qualification_score || 0,\n        buying_signals: response.analysis?.structuredData?.buying_signals_identified || [],\n        pain_points: response.analysis?.structuredData?.pain_points_discovered || [],\n        decision_timeline: response.analysis?.structuredData?.decision_timeline || 'unclear',\n        conversion_probability: response.analysis?.structuredData?.conversion_probability || 0,\n        next_action: response.analysis?.structuredData?.next_action_required || 'follow_up',\n        call_summary: response.analysis?.summary || 'No summary available',\n        transcript: response.transcript || ''\n      }\n    }];\n  }\n}\n\n// Timeout reached\nreturn [{\n  json: {\n    call_id: callId,\n    call_outcome: 'timeout',\n    error: 'Call monitoring timed out after 10 minutes'\n  }\n}];"
+      },
+      "id": "monitor-call-completion",
+      "name": "Monitor Call Completion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1400, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "qualified_outcome",
+              "leftValue": "={{ $json.call_outcome }}",
+              "rightValue": "qualified_lead",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "demo_scheduled",
+              "leftValue": "={{ $json.call_outcome }}",
+              "rightValue": "demo_scheduled",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "high_conversion_probability",
+              "leftValue": "={{ $json.conversion_probability }}",
+              "rightValue": 70,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "route-call-outcome",
+      "name": "Route Call Outcome",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1600, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/lead-nurturing/escalate-to-sales",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}"
+            },
+            {
+              "name": "qualification_summary",
+              "value": "={{ $json.call_summary }}"
+            },
+            {
+              "name": "deal_size_estimate",
+              "value": "={{ $json.estimated_deal_size || 25000 }}"
+            },
+            {
+              "name": "close_probability",
+              "value": "={{ $json.conversion_probability }}"
+            },
+            {
+              "name": "recommended_next_steps",
+              "value": "={{ $json.next_action }}"
+            },
+            {
+              "name": "urgency_level",
+              "value": "high"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "escalate-to-sales",
+      "name": "Escalate to Sales Team",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1800, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/lead-nurturing/schedule-follow-up",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}"
+            },
+            {
+              "name": "follow_up_type",
+              "value": "discovery_call"
+            },
+            {
+              "name": "duration_minutes",
+              "value": 45
+            },
+            {
+              "name": "meeting_objectives",
+              "value": "Deep dive into requirements and present solution"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "schedule-follow-up",
+      "name": "Schedule Follow-up",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1800, 300]
+    },
+    {
+      "parameters": {
+        "resource": "contact",
+        "operation": "upsert",
+        "email": "={{ $json.lead_email }}",
+        "updateFields": {
+          "firstname": "={{ $json.lead_name.split(' ')[0] }}",
+          "lastname": "={{ $json.lead_name.split(' ').slice(1).join(' ') }}",
+          "phone": "={{ $json.lead_phone }}",
+          "company": "={{ $json.company_name }}",
+          "lifecyclestage": "={{ $json.call_outcome === 'qualified_lead' ? 'salesqualifiedlead' : 'marketingqualifiedlead' }}",
+          "leadsource": "={{ $json.lead_source }}",
+          "lead_score": "={{ $json.lead_qualification_score }}",
+          "notes_last_contacted": "={{ $json.call_summary }}",
+          "last_contact_date": "={{ $now.toISOString() }}",
+          "conversion_probability": "={{ $json.conversion_probability }}",
+          "decision_timeline": "={{ $json.decision_timeline }}",
+          "pain_points": "={{ Array.isArray($json.pain_points) ? $json.pain_points.join(', ') : $json.pain_points }}"
+        }
+      },
+      "id": "update-crm-lead",
+      "name": "Update HubSpot CRM Lead",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [2000, 200]
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "create",
+        "dealname": "={{ $json.company_name || $json.lead_name }} - {{ $json.lead_source }} Opportunity",
+        "additionalFields": {
+          "amount": "={{ $json.estimated_deal_size || 25000 }}",
+          "dealstage": "={{ $json.call_outcome === 'qualified_lead' ? 'qualifiedtobuy' : 'appointmentscheduled' }}",
+          "closedate": "={{ $json.close_date || new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0] }}",
+          "dealtype": "newbusiness",
+          "description": "={{ $json.call_summary || 'Deal created from lead nurturing campaign' }}",
+          "pipeline": "default",
+          "lead_source": "={{ $json.lead_source }}",
+          "hs_analytics_source": "AUTOMATION"
+        },
+        "associatedContactIds": "={{ $json.contact_id || $json.hubspot_contact_id }}",
+        "associatedCompanyIds": "={{ $json.company_id }}"
+      },
+      "id": "create-hubspot-deal",
+      "name": "Create HubSpot Deal",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [2000, 400]
+    },
+    {
+      "parameters": {
+        "resource": "ticket",
+        "operation": "create",
+        "subject": "={{ 'Follow-up Required: ' + ($json.company_name || $json.lead_name) + ' - ' + $json.lead_source }}",
+        "additionalFields": {
+          "content": "={{ 'Lead from ' + $json.lead_source + ' campaign requires follow-up.\\n\\nCall Summary: ' + ($json.call_summary || 'No summary available') + '\\n\\nConversion Probability: ' + $json.conversion_probability + '%\\n\\nPain Points: ' + (Array.isArray($json.pain_points) ? $json.pain_points.join(', ') : $json.pain_points || 'None identified') + '\\n\\nDecision Timeline: ' + ($json.decision_timeline || 'Unknown') }}",
+          "hs_pipeline": "0",
+          "hs_pipeline_stage": "1",
+          "hs_ticket_priority": "={{ $json.conversion_probability >= 70 ? 'HIGH' : $json.conversion_probability >= 40 ? 'MEDIUM' : 'LOW' }}",
+          "hs_ticket_category": "SALES_INQUIRY",
+          "source_type": "AUTOMATION",
+          "created_date": "={{ $now.toISOString() }}"
+        },
+        "associatedContactIds": "={{ $json.contact_id || $json.hubspot_contact_id }}",
+        "associatedCompanyIds": "={{ $json.company_id }}"
+      },
+      "id": "create-support-ticket",
+      "name": "Create HubSpot Support Ticket",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [2200, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/analytics/lead-nurturing/track-campaign",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}"
+            },
+            {
+              "name": "campaign_type",
+              "value": "lead_nurturing"
+            },
+            {
+              "name": "call_id",
+              "value": "={{ $json.call_id }}"
+            },
+            {
+              "name": "call_outcome",
+              "value": "={{ $json.call_outcome }}"
+            },
+            {
+              "name": "lead_score",
+              "value": "={{ $json.lead_qualification_score }}"
+            },
+            {
+              "name": "conversion_probability",
+              "value": "={{ $json.conversion_probability }}"
+            },
+            {
+              "name": "call_duration",
+              "value": "={{ $json.call_duration }}"
+            },
+            {
+              "name": "buying_signals",
+              "value": "={{ $json.buying_signals }}"
+            },
+            {
+              "name": "pain_points",
+              "value": "={{ $json.pain_points }}"
+            },
+            {
+              "name": "decision_timeline",
+              "value": "={{ $json.decision_timeline }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now.toISOString() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "track-campaign-analytics",
+      "name": "Track Campaign Analytics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "send_content",
+              "leftValue": "={{ $json.next_action }}",
+              "rightValue": "send_content",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "qualified_lead",
+              "leftValue": "={{ $json.call_outcome }}",
+              "rightValue": "qualified_lead",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "check-content-trigger",
+      "name": "Check Content Trigger",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2400, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/lead-nurturing/send-content",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}"
+            },
+            {
+              "name": "content_type",
+              "value": "case_study"
+            },
+            {
+              "name": "industry_specific",
+              "value": true
+            },
+            {
+              "name": "delivery_method",
+              "value": "email"
+            },
+            {
+              "name": "personalized_message",
+              "value": "Based on our conversation, I thought you'd find this case study relevant to your challenges with {{ $json.pain_points[0] }}."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-lead-content",
+      "name": "Send Lead Content",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2600, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"lead_id\": \"{{ $json.lead_id }}\",\n  \"call_outcome\": \"{{ $json.call_outcome }}\",\n  \"lead_score\": {{ $json.lead_qualification_score }},\n  \"conversion_probability\": {{ $json.conversion_probability }},\n  \"next_action\": \"{{ $json.next_action }}\",\n  \"decision_timeline\": \"{{ $json.decision_timeline }}\",\n  \"escalated_to_sales\": {{ $json.call_outcome === 'qualified_lead' || $json.conversion_probability >= 70 }},\n  \"timestamp\": \"{{ $now.toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "webhook-response",
+      "name": "Campaign Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [2600, 400]
+    }
+  ],
+  "connections": {
+    "Lead Nurturing Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Score Lead Behavior",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Assess Lead Qualification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score Lead Behavior": {
+      "main": [
+        [
+          {
+            "node": "Merge Lead Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assess Lead Qualification": {
+      "main": [
+        [
+          {
+            "node": "Merge Lead Analysis",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Lead Analysis": {
+      "main": [
+        [
+          {
+            "node": "Route by Lead Quality",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Lead Quality": {
+      "main": [
+        [
+          {
+            "node": "Initiate Priority VAPI Call",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Nurture Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initiate Priority VAPI Call": {
+      "main": [
+        [
+          {
+            "node": "Monitor Call Completion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Nurture Email": {
+      "main": [
+        [
+          {
+            "node": "Campaign Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monitor Call Completion": {
+      "main": [
+        [
+          {
+            "node": "Route Call Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Call Outcome": {
+      "main": [
+        [
+          {
+            "node": "Escalate to Sales Team",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Schedule Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escalate to Sales Team": {
+      "main": [
+        [
+          {
+            "node": "Update HubSpot CRM Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Follow-up": {
+      "main": [
+        [
+          {
+            "node": "Update HubSpot CRM Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update HubSpot CRM Lead": {
+      "main": [
+        [
+          {
+            "node": "Create HubSpot Deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create HubSpot Deal": {
+      "main": [
+        [
+          {
+            "node": "Track Campaign Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track Campaign Analytics": {
+      "main": [
+        [
+          {
+            "node": "Check Content Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Content Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Lead Content",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Campaign Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Lead Content": {
+      "main": [
+        [
+          {
+            "node": "Campaign Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "lead_nurturing",
+      "name": "Lead Nurturing"
+    },
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "vapi",
+      "name": "VAPI Integration"
+    },
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "sales",
+      "name": "Sales Automation"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-16T12:00:00.000Z",
+  "versionId": "1"
+}

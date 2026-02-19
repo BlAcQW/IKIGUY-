@@ -1,0 +1,44 @@
+{
+  "connection_status": "✅ SUCCESSFUL",
+  "connection_type": "Google Drive Service Account",
+  "service_account_email": "voice-lab-drive-access@voice-lab-471218.iam.gserviceaccount.com",
+  "google_drive_account": "alfred.anyan@gmail.com",
+  "last_connected": "2025-09-05",
+  "voice_lab_folder_id": "1dgXUHlzhOo0KjXkaSxeDE7q2PtDY1Gwm",
+  "raw_folder_id": "1ganuFian7gQdxdwkSQzOJegNuYwI0WRx",
+  "folder_structure": {
+    "voice-lab-data": {
+      "raw": {
+        "bibletts": "✅ Large TGZ archives + extracted folders (~30GB)",
+        "financial_inclusion": "✅ Multiple dataset subfolders",
+        "common_voice": "❓ Empty or not visible",
+        "afrispeech": "✅ Present",
+        "african_whisper": "✅ Present", 
+        "jw300": "✅ Present",
+        "twi_speech_text_parallel": "✅ Present"
+      },
+      "processed": "📁 Available",
+      "synthetic": "📁 Available", 
+      "metadata": "📁 Available"
+    }
+  },
+  "datasets_confirmed": [
+    "BibleTTS (Akuapem Twi) - ~15.8GB archive + extracted",
+    "BibleTTS (Asante Twi) - ~14.8GB archive + extracted", 
+    "Financial Inclusion Speech Dataset - Multiple language subfolders",
+    "AfriSpeech-200",
+    "African Whisper Framework",
+    "JW300 Corpus",
+    "Twi Speech-Text Parallel datasets"
+  ],
+  "access_url": "https://drive.google.com/drive/folders/1dgXUHlzhOo0KjXkaSxeDE7q2PtDY1Gwm",
+  "estimated_total_size": "30+ GB",
+  "status_notes": [
+    "✅ Service account connection working perfectly",
+    "✅ All major dataset folders present", 
+    "✅ BibleTTS datasets are substantial (30GB+ combined)",
+    "✅ Financial inclusion data organized in subfolders",
+    "⚠️ Common Voice folder appears empty (may need re-download)",
+    "✅ Ready for Phase 2: Data Processing"
+  ]
+}

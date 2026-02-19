@@ -1,0 +1,485 @@
+/**
+ * KasaAI Documentation - Custom Styles
+ * Twilio-inspired colorful, friendly design with modern aesthetics
+ */
+
+/* ============================================================================
+   LIGHT MODE - Vibrant & Friendly
+   ============================================================================ */
+:root {
+  /* Primary Colors - Indigo (Modern & Professional) */
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
+
+  /* Accent Colors - Vibrant & Colorful */
+  --kasaai-teal: #14b8a6;
+  --kasaai-purple: #a855f7;
+  --kasaai-pink: #ec4899;
+  --kasaai-orange: #f97316;
+  --kasaai-blue: #3b82f6;
+  --kasaai-green: #10b981;
+
+  /* Text Colors */
+  --ifm-color-content: #1f2937;
+  --ifm-color-content-secondary: #6b7280;
+  --ifm-heading-color: #111827;
+
+  /* Background */
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f9fafb;
+
+  /* Typography */
+  --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', 'Consolas', Monaco, 'Courier New', monospace;
+  --ifm-code-font-size: 90%;
+  --ifm-font-size-base: 16px;
+  --ifm-line-height-base: 1.7;
+
+  /* Spacing */
+  --ifm-spacing-horizontal: 1.5rem;
+  --ifm-spacing-vertical: 1.5rem;
+
+  /* Borders & Radius */
+  --ifm-global-radius: 0.75rem;
+  --ifm-code-border-radius: 0.5rem;
+
+  /* Code blocks */
+  --docusaurus-highlighted-code-line-bg: rgba(99, 102, 241, 0.1);
+
+  /* Shadows - Modern & Soft */
+  --ifm-global-shadow-lw: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --ifm-global-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --ifm-global-shadow-tl: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* ============================================================================
+   DARK MODE - Sleek & Modern
+   ============================================================================ */
+[data-theme='dark'] {
+  /* Primary Colors - Brighter for dark mode */
+  --ifm-color-primary: #818cf8;
+  --ifm-color-primary-dark: #6366f1;
+  --ifm-color-primary-darker: #4f46e5;
+  --ifm-color-primary-darkest: #4338ca;
+  --ifm-color-primary-light: #a5b4fc;
+  --ifm-color-primary-lighter: #c7d2fe;
+  --ifm-color-primary-lightest: #e0e7ff;
+
+  /* Accent Colors - Brighter for dark mode */
+  --kasaai-teal: #2dd4bf;
+  --kasaai-purple: #c084fc;
+  --kasaai-pink: #f472b6;
+  --kasaai-orange: #fb923c;
+  --kasaai-blue: #60a5fa;
+  --kasaai-green: #34d399;
+
+  /* Text Colors */
+  --ifm-color-content: #e5e7eb;
+  --ifm-color-content-secondary: #9ca3af;
+  --ifm-heading-color: #f9fafb;
+
+  /* Background */
+  --ifm-background-color: #0f172a;
+  --ifm-background-surface-color: #1e293b;
+
+  /* Code blocks */
+  --docusaurus-highlighted-code-line-bg: rgba(129, 140, 248, 0.15);
+}
+
+/* ============================================================================
+   TYPOGRAPHY ENHANCEMENTS
+   ============================================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Lead paragraphs */
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 2rem;
+}
+
+/* ============================================================================
+   CODE BLOCKS - Enhanced with Colors
+   ============================================================================ */
+code {
+  background-color: rgba(99, 102, 241, 0.1);
+  color: var(--ifm-color-primary-darker);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.375rem;
+  font-size: 0.875em;
+}
+
+[data-theme='dark'] code {
+  background-color: rgba(129, 140, 248, 0.2);
+  color: var(--ifm-color-primary-lighter);
+}
+
+/* Code block titles */
+.prism-code {
+  border-radius: var(--ifm-code-border-radius);
+  box-shadow: var(--ifm-global-shadow-md);
+}
+
+/* ============================================================================
+   ADMONITIONS - Colorful & Friendly
+   ============================================================================ */
+.admonition {
+  border-left: 4px solid;
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--ifm-global-shadow-lw);
+  margin: 1.5rem 0;
+}
+
+.admonition-heading {
+  font-weight: 600;
+}
+
+.admonition-note {
+  border-left-color: var(--kasaai-blue);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.admonition-tip {
+  border-left-color: var(--kasaai-green);
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.admonition-warning {
+  border-left-color: var(--kasaai-orange);
+  background-color: rgba(249, 115, 22, 0.1);
+}
+
+.admonition-danger {
+  border-left-color: var(--kasaai-pink);
+  background-color: rgba(236, 72, 153, 0.1);
+}
+
+.admonition-info {
+  border-left-color: var(--kasaai-teal);
+  background-color: rgba(20, 184, 166, 0.1);
+}
+
+/* ============================================================================
+   BADGES & LABELS - Colorful
+   ============================================================================ */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0 0.25rem;
+}
+
+.badge--primary {
+  background-color: rgba(99, 102, 241, 0.1);
+  color: var(--ifm-color-primary);
+}
+
+.badge--success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--kasaai-green);
+}
+
+.badge--warning {
+  background-color: rgba(249, 115, 22, 0.1);
+  color: var(--kasaai-orange);
+}
+
+.badge--danger {
+  background-color: rgba(236, 72, 153, 0.1);
+  color: var(--kasaai-pink);
+}
+
+/* HTTP Method Badges */
+.method-badge {
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.method-get {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--kasaai-green);
+}
+
+.method-post {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--kasaai-blue);
+}
+
+.method-put {
+  background-color: rgba(249, 115, 22, 0.15);
+  color: var(--kasaai-orange);
+}
+
+.method-patch {
+  background-color: rgba(168, 85, 247, 0.15);
+  color: var(--kasaai-purple);
+}
+
+.method-delete {
+  background-color: rgba(236, 72, 153, 0.15);
+  color: var(--kasaai-pink);
+}
+
+/* ============================================================================
+   CARDS & PANELS - Modern & Elevated
+   ============================================================================ */
+.card {
+  background-color: var(--ifm-background-surface-color);
+  border-radius: var(--ifm-global-radius);
+  padding: 1.5rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--ifm-global-shadow-md);
+  transform: translateY(-2px);
+}
+
+.card--feature {
+  border-top: 3px solid var(--ifm-color-primary);
+}
+
+/* ============================================================================
+   BUTTONS - Vibrant & Interactive
+   ============================================================================ */
+.button {
+  border-radius: var(--ifm-global-radius);
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.button:hover {
+  box-shadow: var(--ifm-global-shadow-md);
+  transform: translateY(-1px);
+}
+
+.button--primary {
+  background: linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-dark) 100%);
+}
+
+.button--secondary {
+  border: 2px solid var(--ifm-color-primary);
+  background-color: transparent;
+}
+
+.button--lg {
+  padding: 0.875rem 2rem;
+  font-size: 1.125rem;
+}
+
+/* ============================================================================
+   NAVBAR - Modern & Clean
+   ============================================================================ */
+.navbar {
+  box-shadow: var(--ifm-global-shadow-lw);
+  backdrop-filter: blur(8px);
+}
+
+.navbar__logo {
+  height: 2rem;
+}
+
+.navbar__item {
+  font-weight: 500;
+}
+
+/* ============================================================================
+   SIDEBAR - Clean & Organized
+   ============================================================================ */
+.menu__link {
+  border-radius: 0.5rem;
+  transition: all 0.15s ease;
+}
+
+.menu__link:hover {
+  background-color: rgba(99, 102, 241, 0.08);
+}
+
+.menu__link--active {
+  background-color: rgba(99, 102, 241, 0.12);
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+/* ============================================================================
+   FOOTER - Professional
+   ============================================================================ */
+.footer {
+  background: linear-gradient(180deg, var(--ifm-background-surface-color) 0%, var(--ifm-background-color) 100%);
+  padding: 3rem 0;
+}
+
+.footer__title {
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-primary);
+}
+
+/* ============================================================================
+   TABLES - Clean & Readable
+   ============================================================================ */
+table {
+  border-radius: var(--ifm-global-radius);
+  overflow: hidden;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+th {
+  background-color: rgba(99, 102, 241, 0.08);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+tr:hover {
+  background-color: rgba(99, 102, 241, 0.03);
+}
+
+/* ============================================================================
+   CUSTOM COMPONENTS
+   ============================================================================ */
+
+/* API Endpoint Card */
+.api-endpoint {
+  background-color: var(--ifm-background-surface-color);
+  border-radius: var(--ifm-global-radius);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid var(--ifm-color-primary);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.api-endpoint__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.api-endpoint__path {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* Parameter Table */
+.param-table {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.param-required {
+  color: var(--kasaai-pink);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.param-optional {
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.75rem;
+}
+
+/* Try It Out Panel */
+.try-it-out {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+  border-radius: var(--ifm-global-radius);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+/* Success/Error States */
+.status-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-left: 4px solid var(--kasaai-green);
+  padding: 1rem;
+  border-radius: var(--ifm-global-radius);
+}
+
+.status-error {
+  background-color: rgba(236, 72, 153, 0.1);
+  border-left: 4px solid var(--kasaai-pink);
+  padding: 1rem;
+  border-radius: var(--ifm-global-radius);
+}
+
+/* ============================================================================
+   ANIMATIONS & TRANSITIONS
+   ============================================================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+/* ============================================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================================ */
+@media (max-width: 996px) {
+  :root {
+    --ifm-font-size-base: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+@media print {
+  .navbar,
+  .footer,
+  .pagination-nav {
+    display: none;
+  }
+}

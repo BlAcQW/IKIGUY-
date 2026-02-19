@@ -1,0 +1,687 @@
+import React, { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { 
+  Phone, 
+  MessageSquare, 
+  ShoppingCart, 
+  Heart, 
+  Building, 
+  GraduationCap, 
+  Car, 
+  Home,
+  Star,
+  Users,
+  Target,
+  Zap,
+  Clock,
+  CheckCircle,
+  ArrowRight,
+  Info,
+  Search,
+  Calendar,
+  ClipboardList,
+  Shield,
+  Settings
+} from 'lucide-react';
+import TemplateConfiguration from './TemplateConfiguration';
+
+export interface VoiceTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  icon: string; // Changed from React.ReactNode to string
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  estimatedTime: string;
+  features: string[];
+  systemPrompt: string;
+  sampleQuestions: string[];
+  useCases: string[];
+  tags: string[];
+  popularity: number;
+  // Integration configuration fields
+  integrations?: {
+    calendar?: {
+      type: 'google' | 'outlook' | 'calendly' | 'custom';
+      calendarId?: string;
+      apiKey?: string;
+    };
+    email?: {
+      provider: 'gmail' | 'outlook' | 'sendgrid' | 'mailgun' | 'custom';
+      emailAddress?: string;
+      apiKey?: string;
+      templates?: {
+        confirmation?: string;
+        reminder?: string;
+        cancellation?: string;
+      };
+    };
+    whatsapp?: {
+      enabled: boolean;
+      phoneNumber?: string;
+      apiKey?: string;
+      provider?: 'twilio' | 'whatsapp-business' | 'custom';
+    };
+    sheets?: {
+      enabled: boolean;
+      spreadsheetId?: string;
+      apiKey?: string;
+      sheets?: {
+        appointments?: string;
+        contacts?: string;
+        analytics?: string;
+      };
+    };
+    crm?: {
+      enabled: boolean;
+      provider: 'salesforce' | 'hubspot' | 'pipedrive' | 'custom';
+      apiKey?: string;
+      baseUrl?: string;
+    };
+    database?: {
+      enabled: boolean;
+      type: 'supabase' | 'firebase' | 'mongodb' | 'postgresql' | 'custom';
+      connectionString?: string;
+      tables?: {
+        appointments?: string;
+        contacts?: string;
+        interactions?: string;
+      };
+    };
+  };
+}
+
+// Helper function to render icons
+const renderIcon = (iconName: string, className: string = "h-6 w-6") => {
+  // Handle case where iconName might be an object (from localStorage serialization)
+  if (typeof iconName !== 'string') {
+    return <MessageSquare className={className} />;
+  }
+  
+  // Normalize the icon name
+  const normalizedIconName = iconName.trim();
+  
+  switch (normalizedIconName) {
+    case 'MessageSquare':
+      return <MessageSquare className={className} />;
+    case 'Phone':
+      return <Phone className={className} />;
+    case 'Calendar':
+      return <Calendar className={className} />;
+    case 'ClipboardList':
+      return <ClipboardList className={className} />;
+    case 'ShoppingCart':
+      return <ShoppingCart className={className} />;
+    case 'Heart':
+      return <Heart className={className} />;
+    case 'Building':
+      return <Building className={className} />;
+    case 'GraduationCap':
+      return <GraduationCap className={className} />;
+    case 'Car':
+      return <Car className={className} />;
+    case 'Home':
+      return <Home className={className} />;
+    case 'Users':
+      return <Users className={className} />;
+    case 'Shield':
+      return <Shield className={className} />;
+    case 'Star':
+      return <Star className={className} />;
+    case 'Settings':
+      return <Settings className={className} />;
+    default:
+      return <MessageSquare className={className} />;
+  }
+};
+
+const templates: VoiceTemplate[] = [
+  {
+    id: 'customer-support',
+    name: 'Customer Support Agent',
+    description: 'Handle customer inquiries, troubleshoot issues, and provide product support',
+    category: 'Customer Service',
+    icon: 'MessageSquare',
+    difficulty: 'Beginner',
+    estimatedTime: '15-30 minutes',
+    features: ['Issue Resolution', 'Product Information', 'Ticket Creation', 'FAQ Handling'],
+    systemPrompt: `You are a helpful customer support agent for {company_name}. Your role is to:
+- Greet customers warmly and identify their needs
+- Provide accurate product information and troubleshooting steps
+- Create support tickets when issues cannot be resolved immediately
+- Escalate complex issues to human agents when necessary
+- Maintain a professional and empathetic tone throughout the conversation
+
+Always ask for clarification if the customer's request is unclear and confirm solutions before ending the call.`,
+    sampleQuestions: [
+      'How do I reset my password?',
+      'What are your return policies?',
+      'I need help with my order',
+      'Can you explain your warranty coverage?'
+    ],
+    useCases: ['E-commerce Support', 'SaaS Customer Service', 'Product Support', 'Technical Help'],
+    tags: ['support', 'customer-service', 'help-desk', 'troubleshooting'],
+    popularity: 95
+  },
+  {
+    id: 'sales-cold-call',
+    name: 'Sales Cold Call Agent',
+    description: 'Generate leads, qualify prospects, and schedule sales meetings',
+    category: 'Sales',
+    icon: 'Phone',
+    difficulty: 'Intermediate',
+    estimatedTime: '20-45 minutes',
+    features: ['Lead Qualification', 'Objection Handling', 'Meeting Scheduling', 'Follow-up Coordination'],
+    systemPrompt: `You are a professional sales development representative for {company_name}. Your goal is to:
+- Introduce yourself and your company professionally
+- Qualify prospects based on budget, authority, need, and timeline (BANT)
+- Handle common objections with confidence and empathy
+- Schedule qualified meetings with the sales team
+- Maintain a positive, consultative approach
+
+Focus on understanding the prospect's challenges and how your solution can help. Always ask permission before scheduling meetings.`,
+    sampleQuestions: [
+      'Who is responsible for making purchasing decisions?',
+      'What challenges are you currently facing?',
+      'What is your timeline for implementing a solution?',
+      'Would you be interested in a brief demo?'
+    ],
+    useCases: ['B2B Sales', 'Lead Generation', 'Market Research', 'Appointment Setting'],
+    tags: ['sales', 'cold-calling', 'lead-generation', 'b2b'],
+    popularity: 88
+  },
+  {
+    id: 'appointment-scheduler',
+    name: 'Appointment Scheduler',
+    description: 'Schedule appointments, manage calendars, and send confirmations',
+    category: 'Scheduling',
+    icon: 'Calendar',
+    difficulty: 'Beginner',
+    estimatedTime: '10-20 minutes',
+    features: ['Calendar Management', 'Availability Checking', 'Confirmation Emails', 'Reminder Notifications'],
+    systemPrompt: `You are an appointment scheduling assistant for {business_name}. Your responsibilities include:
+- Greet callers warmly and identify their scheduling needs
+- Check available time slots and suggest optimal times
+- Confirm appointment details (date, time, duration, location)
+- Send confirmation emails or SMS reminders
+- Handle rescheduling and cancellation requests professionally
+
+Always confirm the caller's name, contact information, and specific requirements before scheduling.`,
+    sampleQuestions: [
+      'What type of appointment do you need?',
+      'What is your preferred date and time?',
+      'How long should I schedule for this appointment?',
+      'Would you like a reminder sent to your phone or email?'
+    ],
+    useCases: ['Medical Offices', 'Salons', 'Consulting Services', 'Real Estate'],
+    tags: ['scheduling', 'appointments', 'calendar', 'booking'],
+    popularity: 92
+  },
+  {
+    id: 'survey-collector',
+    name: 'Survey Collector',
+    description: 'Conduct surveys, collect feedback, and gather market research data',
+    category: 'Research',
+    icon: 'ClipboardList',
+    difficulty: 'Beginner',
+    estimatedTime: '15-25 minutes',
+    features: ['Question Administration', 'Response Validation', 'Data Collection', 'Follow-up Questions'],
+    systemPrompt: `You are a professional survey interviewer for {organization_name}. Your role is to:
+- Introduce the survey purpose and estimated duration
+- Ask questions clearly and record responses accurately
+- Handle "don't know" or "prefer not to answer" responses professionally
+- Ensure respondent comfort and willingness to continue
+- Thank participants for their time and input
+
+Maintain a neutral, professional tone and avoid leading questions. Respect respondent privacy and time.`,
+    sampleQuestions: [
+      'How satisfied are you with our service?',
+      'What improvements would you suggest?',
+      'How likely are you to recommend us to others?',
+      'What factors influenced your decision?'
+    ],
+    useCases: ['Customer Feedback', 'Market Research', 'Product Testing', 'Satisfaction Surveys'],
+    tags: ['survey', 'research', 'feedback', 'data-collection'],
+    popularity: 75
+  },
+  {
+    id: 'insurance-agent',
+    name: 'Insurance Agent',
+    description: 'Provide insurance quotes, explain coverage options, and process applications',
+    category: 'Insurance',
+    icon: 'Shield',
+    difficulty: 'Advanced',
+    estimatedTime: '30-60 minutes',
+    features: ['Quote Generation', 'Coverage Explanation', 'Application Processing', 'Policy Comparison'],
+    systemPrompt: `You are a licensed insurance agent for {insurance_company}. Your responsibilities include:
+- Gather necessary information for accurate quotes
+- Explain different coverage options and their benefits
+- Help clients understand policy terms and conditions
+- Process applications and collect required documentation
+- Provide clear explanations of deductibles, premiums, and coverage limits
+
+Always ensure clients understand what they're purchasing and answer all questions thoroughly.`,
+    sampleQuestions: [
+      'What type of insurance coverage are you looking for?',
+      'What is the value of the property/vehicle you want to insure?',
+      'Do you have any previous claims history?',
+      'What is your preferred deductible amount?'
+    ],
+    useCases: ['Auto Insurance', 'Home Insurance', 'Life Insurance', 'Business Insurance'],
+    tags: ['insurance', 'quotes', 'coverage', 'policies'],
+    popularity: 82
+  },
+  {
+    id: 'real-estate-agent',
+    name: 'Real Estate Agent',
+    description: 'Show properties, answer questions, and assist with real estate transactions',
+    category: 'Real Estate',
+    icon: 'Home',
+    difficulty: 'Intermediate',
+    estimatedTime: '25-45 minutes',
+    features: ['Property Information', 'Viewing Scheduling', 'Market Analysis', 'Client Qualification'],
+    systemPrompt: `You are a professional real estate agent for {real_estate_company}. Your role is to:
+- Provide detailed property information and answer questions
+- Schedule property viewings and coordinate with clients
+- Explain market conditions and property values
+- Qualify buyers and understand their requirements
+- Guide clients through the buying/selling process
+
+Always provide accurate information and maintain professional relationships with clients.`,
+    sampleQuestions: [
+      'What is your budget range for purchasing?',
+      'What features are most important to you?',
+      'When are you looking to move?',
+      'Would you like to schedule a property viewing?'
+    ],
+    useCases: ['Property Sales', 'Rental Assistance', 'Market Analysis', 'Client Consultation'],
+    tags: ['real-estate', 'property', 'viewings', 'market-analysis'],
+    popularity: 78
+  },
+  {
+    id: 'healthcare-assistant',
+    name: 'Healthcare Assistant',
+    description: 'Schedule medical appointments, provide health information, and assist with patient care',
+    category: 'Healthcare',
+    icon: 'Heart',
+    difficulty: 'Advanced',
+    estimatedTime: '20-40 minutes',
+    features: ['Appointment Scheduling', 'Health Information', 'Insurance Verification', 'Patient Education'],
+    systemPrompt: `You are a healthcare assistant for {medical_practice}. Your responsibilities include:
+- Schedule medical appointments and verify insurance coverage
+- Provide general health information and educational resources
+- Assist with prescription refills and medical records
+- Maintain patient confidentiality and privacy
+- Direct urgent medical issues to appropriate healthcare providers
+
+Always prioritize patient safety and maintain strict confidentiality standards.`,
+    sampleQuestions: [
+      'What type of appointment do you need?',
+      'Do you have insurance coverage?',
+      'What are your current symptoms?',
+      'When was your last visit?'
+    ],
+    useCases: ['Medical Offices', 'Dental Practices', 'Specialty Clinics', 'Telemedicine'],
+    tags: ['healthcare', 'medical', 'appointments', 'patient-care'],
+    popularity: 85
+  },
+  {
+    id: 'banking-assistant',
+    name: 'Banking Assistant',
+    description: 'Handle account inquiries, process transactions, and provide financial guidance',
+    category: 'Banking',
+    icon: 'Building',
+    difficulty: 'Advanced',
+    estimatedTime: '15-35 minutes',
+    features: ['Account Information', 'Transaction Processing', 'Financial Advice', 'Security Verification'],
+    systemPrompt: `You are a banking assistant for {bank_name}. Your role is to:
+- Provide account information and transaction history
+- Assist with basic banking transactions and inquiries
+- Offer financial guidance and product recommendations
+- Verify customer identity and maintain security protocols
+- Direct complex issues to appropriate banking specialists
+
+Always prioritize security and verify customer identity before providing account information.`,
+    sampleQuestions: [
+      'What is my current account balance?',
+      'Can you help me with a transaction?',
+      'What are your current interest rates?',
+      'How do I set up online banking?'
+    ],
+    useCases: ['Account Management', 'Transaction Processing', 'Financial Planning', 'Product Sales'],
+    tags: ['banking', 'finance', 'transactions', 'security'],
+    popularity: 90
+  }
+];
+
+const categories = [
+  { id: 'all', name: 'All Templates', icon: 'Star' },
+  { id: 'customer-service', name: 'Customer Service', icon: 'MessageSquare' },
+  { id: 'sales', name: 'Sales', icon: 'Phone' },
+  { id: 'scheduling', name: 'Scheduling', icon: 'Calendar' },
+  { id: 'research', name: 'Research', icon: 'ClipboardList' },
+  { id: 'insurance', name: 'Insurance', icon: 'Shield' },
+  { id: 'real-estate', name: 'Real Estate', icon: 'Home' },
+  { id: 'healthcare', name: 'Healthcare', icon: 'Heart' },
+  { id: 'banking', name: 'Banking', icon: 'Building' }
+];
+
+interface VoiceAgentTemplatesProps {
+  onTemplateSelect: (template: VoiceTemplate) => void;
+  selectedTemplate?: VoiceTemplate | null;
+}
+
+const VoiceAgentTemplates: React.FC<VoiceAgentTemplatesProps> = ({ 
+  onTemplateSelect, 
+  selectedTemplate 
+}) => {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedTemplateForPreview, setSelectedTemplateForPreview] = useState<VoiceTemplate | null>(null);
+  const [showConfiguration, setShowConfiguration] = useState(false);
+  const [templateToConfigure, setTemplateToConfigure] = useState<VoiceTemplate | null>(null);
+
+  const filteredTemplates = selectedCategory === 'all' 
+    ? templates 
+    : templates.filter(template => template.category.toLowerCase() === selectedCategory);
+
+  const sortedTemplates = [...filteredTemplates].sort((a, b) => b.popularity - a.popularity);
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Beginner': return 'bg-green-100 text-green-800';
+      case 'Intermediate': return 'bg-yellow-100 text-yellow-800';
+      case 'Advanced': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const handleConfigureTemplate = (template: VoiceTemplate) => {
+    setTemplateToConfigure(template);
+    setShowConfiguration(true);
+  };
+
+  const handleConfigurationComplete = (configuredTemplate: VoiceTemplate) => {
+    onTemplateSelect(configuredTemplate);
+    setShowConfiguration(false);
+    setTemplateToConfigure(null);
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="text-center space-y-2">
+        <h2 className="text-3xl font-bold">Voice Agent Templates</h2>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          Choose from our pre-built templates to quickly create professional voice agents. 
+          Each template includes optimized prompts, sample questions, and best practices.
+        </p>
+      </div>
+
+      {/* Category Filter */}
+      <div className="flex flex-wrap gap-2 justify-center">
+        {categories.map((category) => (
+          <Button
+            key={category.id}
+            variant={selectedCategory === category.id ? "default" : "outline"}
+            size="sm"
+            onClick={() => setSelectedCategory(category.id)}
+            className="flex items-center gap-2"
+          >
+            {renderIcon(category.icon, "h-4 w-4")}
+            {category.name}
+          </Button>
+        ))}
+      </div>
+
+      {/* Templates Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sortedTemplates.map((template) => (
+          <Card 
+            key={template.id} 
+            className={`cursor-pointer transition-all hover:shadow-lg ${
+              selectedTemplate?.id === template.id ? 'ring-2 ring-primary' : ''
+            }`}
+            onClick={() => onTemplateSelect(template)}
+          >
+            <CardHeader className="pb-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    {renderIcon(template.icon)}
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">{template.name}</CardTitle>
+                    <CardDescription className="text-sm">
+                      {template.category}
+                    </CardDescription>
+                  </div>
+                </div>
+                <Badge className={getDifficultyColor(template.difficulty)}>
+                  {template.difficulty}
+                </Badge>
+              </div>
+            </CardHeader>
+            
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                {template.description}
+              </p>
+              
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <Clock className="h-3 w-3" />
+                {template.estimatedTime}
+              </div>
+              
+              <div className="flex flex-wrap gap-1">
+                {template.tags.slice(0, 3).map((tag) => (
+                  <Badge key={tag} variant="secondary" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+                {template.tags.length > 3 && (
+                  <Badge variant="secondary" className="text-xs">
+                    +{template.tags.length - 3}
+                  </Badge>
+                )}
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                  {template.popularity}% popular
+                </div>
+                
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleConfigureTemplate(template);
+                    }}
+                    className="flex items-center gap-1"
+                  >
+                    <Settings className="h-3 w-3" />
+                    Configure
+                  </Button>
+                  
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedTemplateForPreview(template);
+                        }}
+                      >
+                        <Info className="h-3 w-3 mr-1" />
+                        Preview
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          {renderIcon(template.icon)}
+                          {template.name}
+                        </DialogTitle>
+                        <DialogDescription>
+                          {template.description}
+                        </DialogDescription>
+                      </DialogHeader>
+                      
+                      <Tabs defaultValue="overview" className="w-full">
+                        <TabsList className="grid w-full grid-cols-4">
+                          <TabsTrigger value="overview">Overview</TabsTrigger>
+                          <TabsTrigger value="prompt">System Prompt</TabsTrigger>
+                          <TabsTrigger value="questions">Sample Questions</TabsTrigger>
+                          <TabsTrigger value="use-cases">Use Cases</TabsTrigger>
+                        </TabsList>
+                        
+                        <TabsContent value="overview" className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <h4 className="font-semibold mb-2">Features</h4>
+                              <ul className="space-y-1">
+                                {template.features.map((feature, index) => (
+                                  <li key={index} className="flex items-center gap-2 text-sm">
+                                    <CheckCircle className="h-3 w-3 text-green-500" />
+                                    {feature}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold mb-2">Details</h4>
+                              <div className="space-y-2 text-sm">
+                                <div className="flex justify-between">
+                                  <span>Difficulty:</span>
+                                  <Badge className={getDifficultyColor(template.difficulty)}>
+                                    {template.difficulty}
+                                  </Badge>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Setup Time:</span>
+                                  <span>{template.estimatedTime}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Popularity:</span>
+                                  <span>{template.popularity}%</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </TabsContent>
+                        
+                        <TabsContent value="prompt" className="space-y-4">
+                          <div>
+                            <h4 className="font-semibold mb-2">System Prompt</h4>
+                            <div className="bg-muted p-4 rounded-lg">
+                              <pre className="text-sm whitespace-pre-wrap">{template.systemPrompt}</pre>
+                            </div>
+                          </div>
+                        </TabsContent>
+                        
+                        <TabsContent value="questions" className="space-y-4">
+                          <div>
+                            <h4 className="font-semibold mb-2">Sample Questions</h4>
+                            <ul className="space-y-2">
+                              {template.sampleQuestions.map((question, index) => (
+                                <li key={index} className="flex items-start gap-2 text-sm">
+                                  <span className="text-primary font-medium">{index + 1}.</span>
+                                  <span>{question}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </TabsContent>
+                        
+                        <TabsContent value="use-cases" className="space-y-4">
+                          <div>
+                            <h4 className="font-semibold mb-2">Common Use Cases</h4>
+                            <div className="grid grid-cols-2 gap-2">
+                              {template.useCases.map((useCase, index) => (
+                                <div key={index} className="flex items-center gap-2 text-sm">
+                                  <Target className="h-3 w-3 text-primary" />
+                                  {useCase}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </TabsContent>
+                      </Tabs>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+      {/* Selected Template Summary */}
+      {selectedTemplate && (
+        <Card className="bg-primary/5 border-primary/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-green-500" />
+              Template Selected
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  {renderIcon(selectedTemplate.icon)}
+                </div>
+                <div>
+                  <h3 className="font-semibold">{selectedTemplate.name}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {selectedTemplate.description}
+                  </p>
+                </div>
+              </div>
+              <Button 
+                variant="outline" 
+                onClick={() => onTemplateSelect(selectedTemplate)}
+              >
+                <ArrowRight className="h-4 w-4 mr-2" />
+                Use This Template
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* No Templates Found */}
+      {sortedTemplates.length === 0 && (
+        <div className="text-center py-12">
+          <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
+            <Search className="h-8 w-8 text-muted-foreground" />
+          </div>
+          <h3 className="text-lg font-semibold mb-2">No templates found</h3>
+          <p className="text-muted-foreground">
+            Try selecting a different category or check back later for new templates.
+          </p>
+        </div>
+      )}
+
+      {/* Template Configuration Dialog */}
+      {templateToConfigure && (
+        <TemplateConfiguration
+          template={templateToConfigure}
+          onConfigurationComplete={handleConfigurationComplete}
+          onClose={() => {
+            setShowConfiguration(false);
+            setTemplateToConfigure(null);
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default VoiceAgentTemplates;

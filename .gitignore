@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+eggs/
+*.whl
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env
+
+# Testing & Coverage
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Claude
+.claude/
+
+# Large archive files
+test.tar.gz
+test.zip
+*.tar.gz
+*.zip
+
+# Voice Lab - Large datasets
+voice-lab/data/cmu_wilderness/
+voice-lab/data/processed/
+
+# TTS Deployment - Build artifacts
+tts-deployment/chatterbox/
+tts-deployment/docker/styletts2-ui-tts-webui/
+
+# Uploads & storage
+*/storage/materials/
+apps/erp/backend/uploads/uploads/
+
+# Node modules (if any)
+node_modules/
+.next/
+
+# Logs
+*.log
+
+# Database
+*.sqlite3
+*.db
+
+# Media files that shouldn't be tracked
+*.mp3
+*.wav
+*.flac
+*.ogg
+
+# Large model files
+*.safetensors

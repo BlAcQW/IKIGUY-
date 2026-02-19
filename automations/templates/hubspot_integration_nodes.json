@@ -1,0 +1,173 @@
+{
+  "hubspot_nodes": {
+    "create_contact": {
+      "parameters": {
+        "resource": "contact",
+        "operation": "create",
+        "email": "={{ $json.email || $json.lead_email || $json.customer_email }}",
+        "additionalFields": {
+          "firstname": "={{ $json.first_name || $json.lead_name?.split(' ')[0] || $json.customer_name?.split(' ')[0] }}",
+          "lastname": "={{ $json.last_name || $json.lead_name?.split(' ').slice(1).join(' ') || $json.customer_name?.split(' ').slice(1).join(' ') }}",
+          "phone": "={{ $json.phone || $json.lead_phone || $json.customer_phone }}",
+          "company": "={{ $json.company || $json.organization }}",
+          "jobtitle": "={{ $json.job_title || $json.position }}",
+          "website": "={{ $json.website }}",
+          "lifecyclestage": "lead",
+          "leadsource": "={{ $json.lead_source || $json.source || 'automation' }}",
+          "notes_last_contacted": "={{ $json.notes || 'Contact created via automation' }}",
+          "lead_score": "={{ $json.lead_score || $json.qualification_score || 0 }}"
+        }
+      },
+      "id": "hubspot-create-contact",
+      "name": "Create HubSpot Contact",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2
+    },
+    "update_contact": {
+      "parameters": {
+        "resource": "contact",
+        "operation": "update",
+        "contactId": "={{ $json.contact_id || $json.hubspot_contact_id }}",
+        "updateFields": {
+          "lifecyclestage": "={{ $json.lifecycle_stage || $json.status }}",
+          "lead_score": "={{ $json.lead_score || $json.qualification_score }}",
+          "notes_last_contacted": "={{ $json.interaction_summary || $json.call_summary || $json.notes }}",
+          "last_contact_date": "={{ $now.toISOString() }}",
+          "lead_status": "={{ $json.lead_status || $json.status }}",
+          "conversion_probability": "={{ $json.conversion_probability }}",
+          "decision_timeline": "={{ $json.decision_timeline }}",
+          "pain_points": "={{ Array.isArray($json.pain_points) ? $json.pain_points.join(', ') : $json.pain_points }}"
+        }
+      },
+      "id": "hubspot-update-contact",
+      "name": "Update HubSpot Contact",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2
+    },
+    "create_deal": {
+      "parameters": {
+        "resource": "deal",
+        "operation": "create",
+        "dealname": "={{ $json.deal_name || $json.opportunity_name || 'New Opportunity' }}",
+        "additionalFields": {
+          "amount": "={{ $json.deal_value || $json.amount || $json.opportunity_value }}",
+          "dealstage": "={{ $json.deal_stage || 'appointmentscheduled' }}",
+          "closedate": "={{ $json.close_date || $json.expected_close_date }}",
+          "dealtype": "{{ $json.deal_type || 'newbusiness' }}",
+          "description": "={{ $json.deal_description || $json.notes || 'Deal created via automation' }}",
+          "pipeline": "={{ $json.pipeline || 'default' }}",
+          "lead_source": "={{ $json.lead_source || $json.source || 'automation' }}"
+        },
+        "associatedContactIds": "={{ $json.contact_id || $json.hubspot_contact_id }}",
+        "associatedCompanyIds": "={{ $json.company_id || $json.hubspot_company_id }}"
+      },
+      "id": "hubspot-create-deal",
+      "name": "Create HubSpot Deal",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2
+    },
+    "create_ticket": {
+      "parameters": {
+        "resource": "ticket",
+        "operation": "create",
+        "subject": "={{ $json.ticket_subject || $json.issue_title || 'Support Request' }}",
+        "additionalFields": {
+          "content": "={{ $json.ticket_description || $json.issue_description || $json.message }}",
+          "hs_pipeline": "{{ $json.ticket_pipeline || '0' }}",
+          "hs_pipeline_stage": "{{ $json.ticket_stage || '1' }}",
+          "hs_ticket_priority": "{{ $json.priority || 'MEDIUM' }}",
+          "hs_ticket_category": "{{ $json.category || 'GENERAL_INQUIRY' }}",
+          "source_type": "{{ $json.source || 'AUTOMATION' }}",
+          "created_date": "={{ $now.toISOString() }}"
+        },
+        "associatedContactIds": "={{ $json.contact_id || $json.hubspot_contact_id }}",
+        "associatedCompanyIds": "={{ $json.company_id || $json.hubspot_company_id }}"
+      },
+      "id": "hubspot-create-ticket",
+      "name": "Create HubSpot Ticket",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2
+    },
+    "search_contacts": {
+      "parameters": {
+        "resource": "contact",
+        "operation": "search",
+        "filterGroups": {
+          "filterGroups": [
+            {
+              "filters": [
+                {
+                  "propertyName": "email",
+                  "operator": "EQ",
+                  "value": "={{ $json.email || $json.lead_email || $json.customer_email }}"
+                }
+              ]
+            }
+          ]
+        },
+        "additionalFields": {
+          "properties": [
+            "email",
+            "firstname",
+            "lastname",
+            "phone",
+            "company",
+            "lifecyclestage",
+            "lead_score",
+            "notes_last_contacted"
+          ]
+        }
+      },
+      "id": "hubspot-search-contacts",
+      "name": "Search HubSpot Contacts",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2
+    },
+    "upsert_contact": {
+      "parameters": {
+        "resource": "contact",
+        "operation": "upsert",
+        "email": "={{ $json.email || $json.lead_email || $json.customer_email }}",
+        "updateFields": {
+          "firstname": "={{ $json.first_name || $json.lead_name?.split(' ')[0] || $json.customer_name?.split(' ')[0] }}",
+          "lastname": "={{ $json.last_name || $json.lead_name?.split(' ').slice(1).join(' ') || $json.customer_name?.split(' ').slice(1).join(' ') }}",
+          "phone": "={{ $json.phone || $json.lead_phone || $json.customer_phone }}",
+          "company": "={{ $json.company || $json.organization }}",
+          "jobtitle": "={{ $json.job_title || $json.position }}",
+          "lifecyclestage": "={{ $json.lifecycle_stage || 'lead' }}",
+          "leadsource": "={{ $json.lead_source || $json.source || 'automation' }}",
+          "lead_score": "={{ $json.lead_score || $json.qualification_score || 0 }}",
+          "notes_last_contacted": "={{ $json.interaction_summary || $json.notes || 'Updated via automation' }}",
+          "last_contact_date": "={{ $now.toISOString() }}"
+        }
+      },
+      "id": "hubspot-upsert-contact",
+      "name": "Upsert HubSpot Contact",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2
+    }
+  },
+  "helpdesk_workflows": {
+    "ticket_creation_flow": [
+      "hubspot-search-contacts",
+      "hubspot-upsert-contact",
+      "hubspot-create-ticket"
+    ],
+    "lead_nurturing_flow": [
+      "hubspot-search-contacts",
+      "hubspot-upsert-contact",
+      "hubspot-create-deal"
+    ],
+    "customer_support_flow": [
+      "hubspot-search-contacts",
+      "hubspot-update-contact",
+      "hubspot-create-ticket"
+    ]
+  },
+  "common_expressions": {
+    "lead_qualification_score": "={{ Math.round(($json.engagement_score || 0) * 0.3 + ($json.demographic_score || 0) * 0.3 + ($json.behavioral_score || 0) * 0.4) }}",
+    "lifecycle_progression": "={{ $json.call_outcome === 'qualified_lead' ? 'salesqualifiedlead' : $json.call_outcome === 'interested' ? 'marketingqualifiedlead' : 'lead' }}",
+    "ticket_priority": "={{ $json.urgency === 'high' || $json.severity === 'critical' ? 'HIGH' : $json.urgency === 'medium' ? 'MEDIUM' : 'LOW' }}",
+    "ticket_category": "={{ $json.issue_type === 'technical' ? 'TECHNICAL_SUPPORT' : $json.issue_type === 'billing' ? 'BILLING_INQUIRY' : 'GENERAL_INQUIRY' }}"
+  }
+}

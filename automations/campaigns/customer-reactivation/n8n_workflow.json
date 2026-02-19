@@ -1,0 +1,973 @@
+{
+  "name": "Enhanced Customer Reactivation Campaign with VAPI + Analytics",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "customer-reactivation-trigger",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Customer Reactivation Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "webhookId": "customer-reactivation-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "customer_id",
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}",
+              "type": "string"
+            },
+            {
+              "id": "campaign_type",
+              "name": "campaign_type",
+              "value": "customer_reactivation",
+              "type": "string"
+            },
+            {
+              "id": "priority",
+              "name": "priority",
+              "value": "={{ $json.priority || 'medium' }}",
+              "type": "string"
+            },
+            {
+              "id": "last_activity_date",
+              "name": "last_activity_date",
+              "value": "={{ $json.last_activity_date }}",
+              "type": "string"
+            },
+            {
+              "id": "customer_value_tier",
+              "name": "customer_value_tier",
+              "value": "={{ $json.customer_value_tier || 'standard' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-initial-data",
+      "name": "Set Initial Campaign Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/reactivation/analyze-customer",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}"
+            },
+            {
+              "name": "include_purchase_history",
+              "value": true
+            },
+            {
+              "name": "analyze_engagement_patterns",
+              "value": true
+            },
+            {
+              "name": "time_period_months",
+              "value": 12
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "analyze-customer-behavior",
+      "name": "Analyze Customer Behavior",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/reactivation/identify-churn-reasons",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}"
+            },
+            {
+              "name": "include_support_history",
+              "value": true
+            },
+            {
+              "name": "analyze_competitor_activity",
+              "value": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "identify-churn-reasons",
+      "name": "Identify Churn Reasons",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 400]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "merge-analysis-data",
+      "name": "Merge Analysis Data",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "high_value_customer",
+              "leftValue": "={{ $json.customer_value_tier }}",
+              "rightValue": "high_value",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "recent_activity",
+              "leftValue": "={{ Math.floor((Date.now() - new Date($json.last_activity_date).getTime()) / (1000 * 60 * 60 * 24)) }}",
+              "rightValue": 90,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "route-by-priority",
+      "name": "Route by Priority",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/reactivation/generate-personalized-offer",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}"
+            },
+            {
+              "name": "customer_value_tier",
+              "value": "={{ $json.customer_value_tier }}"
+            },
+            {
+              "name": "churn_reason",
+              "value": "={{ $json.primary_churn_reason }}"
+            },
+            {
+              "name": "preferred_offer_type",
+              "value": "discount"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "generate-premium-offer",
+      "name": "Generate Premium Offer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/reactivation/generate-personalized-offer",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}"
+            },
+            {
+              "name": "customer_value_tier",
+              "value": "={{ $json.customer_value_tier }}"
+            },
+            {
+              "name": "churn_reason",
+              "value": "={{ $json.primary_churn_reason }}"
+            },
+            {
+              "name": "preferred_offer_type",
+              "value": "free_trial"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "generate-standard-offer",
+      "name": "Generate Standard Offer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 42cf1e7c-2ef9-4bd7-ba30-52f2813605a2"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "assistantId",
+              "value": "asst_customer_reactivation_enhanced"
+            },
+            {
+              "name": "customer",
+              "value": {
+                "number": "={{ $json.phone_number }}",
+                "name": "={{ $json.customer_name }}"
+              }
+            },
+            {
+              "name": "assistantOverrides",
+              "value": {
+                "variableValues": {
+                  "customer_id": "={{ $json.customer_id }}",
+                  "customer_name": "={{ $json.customer_name }}",
+                  "last_activity_date": "={{ $json.last_activity_date }}",
+                  "churn_reasons": "={{ $json.primary_churn_reason }}",
+                  "personalized_offer": "={{ $json.offer_details }}",
+                  "customer_value_tier": "={{ $json.customer_value_tier }}"
+                }
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "initiate-vapi-call",
+      "name": "Initiate VAPI Reactivation Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1400, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Wait for call completion and extract results\nconst callId = $input.first().json.id;\nconst maxWaitTime = 300000; // 5 minutes\nconst checkInterval = 10000; // 10 seconds\nlet totalWaitTime = 0;\n\nwhile (totalWaitTime < maxWaitTime) {\n  await new Promise(resolve => setTimeout(resolve, checkInterval));\n  totalWaitTime += checkInterval;\n  \n  // Check call status\n  const response = await $http.request({\n    method: 'GET',\n    url: `https://api.vapi.ai/call/${callId}`,\n    headers: {\n      'Authorization': 'Bearer 42cf1e7c-2ef9-4bd7-ba30-52f2813605a2'\n    }\n  });\n  \n  if (response.status === 'ended') {\n    return [{\n      json: {\n        call_id: callId,\n        call_duration: response.duration,\n        call_outcome: response.analysis?.structuredData?.call_outcome || 'unknown',\n        customer_interest_level: response.analysis?.structuredData?.customer_interest_level || 'unknown',\n        reactivation_likelihood: response.analysis?.structuredData?.reactivation_likelihood || 0,\n        objections_raised: response.analysis?.structuredData?.objections_raised || [],\n        next_action_required: response.analysis?.structuredData?.next_action_required || 'none',\n        call_summary: response.analysis?.summary || 'No summary available',\n        transcript: response.transcript || ''\n      }\n    }];\n  }\n}\n\n// Timeout reached\nreturn [{\n  json: {\n    call_id: callId,\n    call_outcome: 'timeout',\n    error: 'Call monitoring timed out after 5 minutes'\n  }\n}];"
+      },
+      "id": "monitor-call-completion",
+      "name": "Monitor Call Completion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1600, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "immediate_reactivation",
+              "leftValue": "={{ $json.call_outcome }}",
+              "rightValue": "immediate_reactivation",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "follow_up_scheduled",
+              "leftValue": "={{ $json.call_outcome }}",
+              "rightValue": "follow_up_scheduled",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "route-call-outcome",
+      "name": "Route Call Outcome",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1800, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/reactivation/process-reactivation",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}"
+            },
+            {
+              "name": "reactivation_type",
+              "value": "account_restoration"
+            },
+            {
+              "name": "offer_code",
+              "value": "={{ $json.offer_code }}"
+            },
+            {
+              "name": "immediate_access",
+              "value": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "process-immediate-reactivation",
+      "name": "Process Immediate Reactivation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/campaigns/reactivation/schedule-follow-up",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}"
+            },
+            {
+              "name": "follow_up_type",
+              "value": "phone_call"
+            },
+            {
+              "name": "days_from_now",
+              "value": 7
+            },
+            {
+              "name": "notes",
+              "value": "={{ $json.call_summary }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "schedule-follow-up",
+      "name": "Schedule Follow-up",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ailabs-888099064326049059.myfreshworks.com/crm/sales/api/contacts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Token token={{ $env.FRESHDESK_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "contact",
+              "value": {
+                "email": "={{ $json.customer_email }}",
+                "custom_fields": {
+                  "cf_reactivation_campaign_id": "={{ $json.campaign_id }}",
+                  "cf_call_outcome": "={{ $json.call_outcome }}",
+                  "cf_interest_level": "={{ $json.customer_interest_level }}",
+                  "cf_reactivation_likelihood": "={{ $json.reactivation_likelihood }}",
+                  "cf_last_contact_date": "={{ $now.toISOString() }}"
+                }
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "update-crm-contact",
+      "name": "Update CRM Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ailabsafrica.com/analytics/reactivation/track-campaign",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.KASAAI_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "campaign_id",
+              "value": "={{ $json.campaign_id }}"
+            },
+            {
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}"
+            },
+            {
+              "name": "call_id",
+              "value": "={{ $json.call_id }}"
+            },
+            {
+              "name": "call_outcome",
+              "value": "={{ $json.call_outcome }}"
+            },
+            {
+              "name": "customer_interest_level",
+              "value": "={{ $json.customer_interest_level }}"
+            },
+            {
+              "name": "reactivation_likelihood",
+              "value": "={{ $json.reactivation_likelihood }}"
+            },
+            {
+              "name": "call_duration",
+              "value": "={{ $json.call_duration }}"
+            },
+            {
+              "name": "churn_reasons",
+              "value": "={{ $json.churn_reasons }}"
+            },
+            {
+              "name": "offers_presented",
+              "value": "={{ $json.offers_presented }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now.toISOString() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "track-campaign-analytics",
+      "name": "Track Campaign Analytics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2400, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "high_interest",
+              "leftValue": "={{ $json.customer_interest_level }}",
+              "rightValue": "high",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "immediate_reactivation",
+              "leftValue": "={{ $json.call_outcome }}",
+              "rightValue": "immediate_reactivation",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "check-email-trigger",
+      "name": "Check Email Trigger",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2600, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.sendgrid.v3.mail.send",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.SENDGRID_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "personalizations",
+              "value": [
+                {
+                  "to": [
+                    {
+                      "email": "={{ $json.customer_email }}",
+                      "name": "={{ $json.customer_name }}"
+                    }
+                  ],
+                  "dynamic_template_data": {
+                    "customer_name": "={{ $json.customer_name }}",
+                    "offer_details": "={{ $json.offer_details }}",
+                    "call_outcome": "={{ $json.call_outcome }}",
+                    "next_steps": "={{ $json.next_action_required }}"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "from",
+              "value": {
+                "email": "reactivation@company.com",
+                "name": "Customer Success Team"
+              }
+            },
+            {
+              "name": "template_id",
+              "value": "d-customer-reactivation-followup"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-follow-up-email",
+      "name": "Send Follow-up Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2800, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"campaign_id\": \"{{ $json.campaign_id }}\",\n  \"customer_id\": \"{{ $json.customer_id }}\",\n  \"call_outcome\": \"{{ $json.call_outcome }}\",\n  \"customer_interest_level\": \"{{ $json.customer_interest_level }}\",\n  \"reactivation_likelihood\": {{ $json.reactivation_likelihood }},\n  \"next_action\": \"{{ $json.next_action_required }}\",\n  \"timestamp\": \"{{ $now.toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "webhook-response",
+      "name": "Campaign Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [2800, 400]
+    }
+  ],
+  "connections": {
+    "Customer Reactivation Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Initial Campaign Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Initial Campaign Data": {
+      "main": [
+        [
+          {
+            "node": "Analyze Customer Behavior",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Identify Churn Reasons",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Customer Behavior": {
+      "main": [
+        [
+          {
+            "node": "Merge Analysis Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Identify Churn Reasons": {
+      "main": [
+        [
+          {
+            "node": "Merge Analysis Data",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Analysis Data": {
+      "main": [
+        [
+          {
+            "node": "Route by Priority",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Priority": {
+      "main": [
+        [
+          {
+            "node": "Generate Premium Offer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate Standard Offer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Premium Offer": {
+      "main": [
+        [
+          {
+            "node": "Initiate VAPI Reactivation Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Standard Offer": {
+      "main": [
+        [
+          {
+            "node": "Initiate VAPI Reactivation Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initiate VAPI Reactivation Call": {
+      "main": [
+        [
+          {
+            "node": "Monitor Call Completion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monitor Call Completion": {
+      "main": [
+        [
+          {
+            "node": "Route Call Outcome",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Call Outcome": {
+      "main": [
+        [
+          {
+            "node": "Process Immediate Reactivation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Schedule Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Immediate Reactivation": {
+      "main": [
+        [
+          {
+            "node": "Update CRM Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Follow-up": {
+      "main": [
+        [
+          {
+            "node": "Update CRM Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update CRM Contact": {
+      "main": [
+        [
+          {
+            "node": "Track Campaign Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track Campaign Analytics": {
+      "main": [
+        [
+          {
+            "node": "Check Email Trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Email Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Follow-up Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Campaign Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Follow-up Email": {
+      "main": [
+        [
+          {
+            "node": "Campaign Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "reactivation",
+      "name": "Customer Reactivation"
+    },
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "vapi",
+      "name": "VAPI Integration"
+    },
+    {
+      "createdAt": "2025-01-16T12:00:00.000Z",
+      "updatedAt": "2025-01-16T12:00:00.000Z",
+      "id": "analytics",
+      "name": "Analytics"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-16T12:00:00.000Z",
+  "versionId": "1"
+}

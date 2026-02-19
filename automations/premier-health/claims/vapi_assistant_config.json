@@ -1,0 +1,197 @@
+{
+  "name": "Insurance Claims Assistant",
+  "model": {
+    "provider": "openai",
+    "model": "gpt-4",
+    "temperature": 0.7,
+    "maxTokens": 500,
+    "systemPrompt": "You are a professional insurance claims assistant for Premier Health Insurance. Your role is to help customers with filing claims, checking claim status, and answering questions about their coverage.\n\nKey responsibilities:\n1. Collect complete claim information (name, policy number, claim type, description, amount)\n2. Verify customer identity using policy details\n3. Provide claim status updates\n4. Schedule callbacks for complex issues\n5. Answer coverage questions\n6. Guide customers through required documentation\n\nAlways:\n- Be empathetic and professional\n- Speak clearly and at a moderate pace\n- Confirm important details\n- Offer to repeat information\n- Provide claim reference numbers\n- Set clear expectations about processing times\n\nNever:\n- Make promises about claim approval\n- Share other customers' information\n- Provide medical or legal advice\n- Discuss specific coverage amounts without verification\n\nFor urgent medical situations, immediately advise calling 911."
+  },
+  "voice": {
+    "provider": "11labs",
+    "voiceId": "rachel",
+    "stability": 0.5,
+    "similarityBoost": 0.75,
+    "style": 0.5,
+    "useSpeakerBoost": true
+  },
+  "firstMessage": "Hello, and thank you for calling Premier Health Insurance claims department. I'm your automated claims assistant. I can help you file a new claim, check the status of an existing claim, or answer questions about your coverage. How may I assist you today?",
+  "endCallMessage": "Thank you for calling Premier Health Insurance. Your claim reference number has been sent to your phone via SMS. Have a great day!",
+  "endCallFunctionEnabled": true,
+  "dialKeypadFunctionEnabled": true,
+  "fillersEnabled": true,
+  "fillers": [
+    "One moment please...",
+    "Let me check that for you...",
+    "I'm looking up your information now..."
+  ],
+  "serverUrl": "https://your-n8n-instance.com/webhook/vapi-function-calls",
+  "serverUrlSecret": "your-webhook-secret",
+  "functions": [
+    {
+      "name": "checkClaimStatus",
+      "description": "Check the status of an existing insurance claim",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "claimId": {
+            "type": "string",
+            "description": "The claim ID to check status for"
+          },
+          "policyNumber": {
+            "type": "string",
+            "description": "Customer's policy number for verification"
+          }
+        },
+        "required": ["claimId"]
+      }
+    },
+    {
+      "name": "fileNewClaim",
+      "description": "File a new insurance claim",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "customerName": {
+            "type": "string",
+            "description": "Full name of the customer"
+          },
+          "policyNumber": {
+            "type": "string",
+            "description": "Insurance policy number"
+          },
+          "claimType": {
+            "type": "string",
+            "enum": ["auto", "home", "health", "life", "property"],
+            "description": "Type of insurance claim"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the claim"
+          },
+          "dateOfIncident": {
+            "type": "string",
+            "description": "Date when the incident occurred"
+          },
+          "estimatedAmount": {
+            "type": "number",
+            "description": "Estimated claim amount in dollars"
+          },
+          "urgent": {
+            "type": "boolean",
+            "description": "Whether this is an urgent claim"
+          }
+        },
+        "required": ["customerName", "policyNumber", "claimType", "description", "dateOfIncident"]
+      }
+    },
+    {
+      "name": "scheduleCallback",
+      "description": "Schedule a callback from a claims specialist",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "claimId": {
+            "type": "string",
+            "description": "Related claim ID if applicable"
+          },
+          "customerPhone": {
+            "type": "string",
+            "description": "Phone number for callback"
+          },
+          "preferredTime": {
+            "type": "string",
+            "description": "Preferred time for callback"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for requesting callback"
+          }
+        },
+        "required": ["customerPhone", "preferredTime", "reason"]
+      }
+    },
+    {
+      "name": "getRequiredDocuments",
+      "description": "Get list of required documents for a claim type",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "claimType": {
+            "type": "string",
+            "enum": ["auto", "home", "health", "life", "property"],
+            "description": "Type of insurance claim"
+          }
+        },
+        "required": ["claimType"]
+      }
+    },
+    {
+      "name": "updateClaimInformation",
+      "description": "Update information for an existing claim",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "claimId": {
+            "type": "string",
+            "description": "The claim ID to update"
+          },
+          "updateType": {
+            "type": "string",
+            "enum": ["add_document", "update_amount", "add_note", "change_contact"],
+            "description": "Type of update to make"
+          },
+          "updateData": {
+            "type": "string",
+            "description": "The update information"
+          }
+        },
+        "required": ["claimId", "updateType", "updateData"]
+      }
+    }
+  ],
+  "voicemailDetection": {
+    "enabled": true,
+    "provider": "twilio",
+    "voicemailDetectionTypes": ["machine_end_beep", "machine_end_silence"],
+    "machineDetectionTimeout": 30,
+    "machineDetectionSpeechThreshold": 3000,
+    "machineDetectionSpeechEndThreshold": 2000,
+    "machineDetectionSilenceTimeout": 5000
+  },
+  "callSettings": {
+    "maxDuration": 1800,
+    "idleTimeout": 30,
+    "warmTransferEnabled": true,
+    "recordingEnabled": true,
+    "transcriptionEnabled": true
+  },
+  "analyticsSettings": {
+    "trackSentiment": true,
+    "trackKeywords": ["claim", "urgent", "emergency", "cancel", "complaint"],
+    "trackInterruptions": true,
+    "trackSilences": true
+  },
+  "customParameters": {
+    "companyName": "Premier Health Insurance",
+    "supportEmail": "claims@premierhealth.com",
+    "supportPhone": "1-800-PREMIER",
+    "businessHours": "Monday-Friday 8AM-8PM EST",
+    "averageProcessingTime": "3-5 business days",
+    "urgentProcessingTime": "24 hours"
+  },
+  "interruptionSettings": {
+    "threshold": 100,
+    "enabled": true
+  },
+  "silenceSettings": {
+    "timeoutMs": 10000,
+    "enabled": true
+  },
+  "responseDelaySeconds": 0.4,
+  "llmRequestDelaySeconds": 0.1,
+  "numWordsToInterruptAssistant": 2,
+  "backgroundSound": "office",
+  "backgroundDenoisingEnabled": true,
+  "modelOutputInMessagesEnabled": true
+}

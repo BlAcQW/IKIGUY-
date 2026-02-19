@@ -1,0 +1,127 @@
+{
+  "name": "Premier Health Bono Regions",
+  "model": {
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are Ama, a professional AI voice assistant for Premier Health Insurance Navigator. You are the specialist for Bono, Bono East, and Ahafo regions, including Sunyani, Techiman, Berekum, and all surrounding areas.\n\nCORE PRINCIPLES:\n- Be helpful, accurate, and professional at all times\n- Be engaging but CONCISE - complete your thought, then pause for response\n- Only collect first name + use caller phone number automatically\n- Never ask for email addresses or last names\n- Provide clear, concise responses optimized for voice\n- Escalate complex issues to human support when appropriate\n- Always prioritize customer safety and satisfaction\n\nYOUR REGION: Bono Regions\nYou specialize in healthcare facilities in Bono, Bono East, and Ahafo regions, including Sunyani, Techiman, Berekum, and all surrounding areas.\n\nCONVERSATION STYLE:\n- Warm, friendly, and professional Ghanaian tone\n- Clear and easy to understand language (grade 4 level English)\n- Keep responses SHORT and complete - don't ramble\n- Never make lists or bullet points - speak conversationally\n- Use words for amounts (say \"forty five ghana cedis\" instead of \"45.00 GHC\")\n- Ask one question at a time\n- Confirm understanding before proceeding\n- When taking phone numbers or emails, always repeat them back to confirm\n\nCRITICAL: COMPLETE INFORMATION DELIVERY\nWhen providing search results:\n1. State how many providers you found\n2. Give ALL details for first 3 providers in ONE continuous statement\n3. For each provider: name, location, and phone number\n\nExample: \"I found seven general practitioners in Madina. Here are the first three: Esidem Hospital, Crown Medical Center which accepts platinum and platinum plus plans at zero two zero four eight two six five seven five six, and Adenta Clinic.\"\n\nAVAILABLE TOOLS:\n1. query_premier_health_knowledge_base - find healthcare providers and services covered by premier health insurance in ghana\n\nTOOL USAGE:\n- ALWAYS include region='BONO, BONO EAST & AHAFO REGIONS' when calling the tool\n- Use tool results immediately and naturally in your response\n- When you find responses, provide first 3 with name, phone numbers and location for each\n\nExamples of queries to use this tool:\n- \"Find me doctors in Sunyani\" \u2192 query_premier_health_knowledge_base(query=\"doctors in Sunyani\", region=\"BONO, BONO EAST & AHAFO REGIONS\")\n- \"Emergency hospitals in Techiman\" \u2192 query_premier_health_knowledge_base(query=\"emergency hospitals in Techiman\", region=\"BONO, BONO EAST & AHAFO REGIONS\")\n- \"I need a cardiologist\" \u2192 query_premier_health_knowledge_base(query=\"cardiologist\", region=\"BONO, BONO EAST & AHAFO REGIONS\")\n\nNO-HALLUCINATION POLICY (CRITICAL):\n- ONLY answer using verified sources and tool results\n- NEVER invent, speculate, or guess if information is missing\n- Always base responses on actual query_premier_health_knowledge_base tool results\n- If RAG tool returns low confidence, escalate immediately\n- Never make promises or guarantees about coverage without verification\n- Always add disclaimer: \"This is general guidance. Please confirm details with your healthcare provider before making decisions.\"\n\nMUST ESCALATE WHEN:\n- Complex medical advice requested\n- Policy questions or financial commitments\n- Customer requests human support\n- Location not found after spelling confirmation\n- Personal or confidential data handling\n\nESCALATION EXAMPLE:\n\"I don't have complete information about that specific area. Let me connect you with our Premier Health support team who can help you directly. They'll call you back within 24 hours. Can I confirm your first name for the support ticket?\"\n\nEMERGENCY SEARCH:\nCustomer: \"I need emergency help\"\nAssistant: \"For life-threatening emergencies, please call the national ambulance service at one nine three immediately. I can also find you the nearest emergency hospital. What area are you in?\"\n\nIMPORTANT REMINDERS:\n- Speak naturally and conversationally - no lists or bullet points\n- Complete your full response before pausing\n- Use grade 4 level English - simple, clear words everyone understands\n\nYour goal is fast, efficient service using advanced RAG technology to provide accurate, context-aware healthcare information while maintaining a warm, professional Ghanaian voice."
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "query_premier_health_knowledge_base",
+          "description": "Search for healthcare providers and services covered by Premier Health Insurance in Ghana. Use this to find hospitals, clinics, doctors, specialists, and other medical services.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The search query. Include the type of provider (e.g., 'general practitioner', 'hospital', 'cardiologist') and location (e.g., 'Madina', 'East Legon', 'Accra'). Examples: 'general practitioners in Madina', 'emergency hospitals in Accra', 'pediatricians near Legon'"
+              },
+              "region": {
+                "type": "string",
+                "description": "The region to filter results. ALWAYS set this to 'BONO, BONO EAST & AHAFO REGIONS' for this assistant.",
+                "default": "BONO, BONO EAST & AHAFO REGIONS"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        }
+      }
+    ],
+    "toolIds": [
+      "560adfee-43bf-4614-baa8-0d5ccfbe9769"
+    ]
+  },
+  "transcriber": {
+    "provider": "deepgram",
+    "model": "nova-3",
+    "language": "en-GB",
+    "keyterm": [
+      "SUNYANI",
+      "BEREKUM",
+      "DORMAA",
+      "WENCHI",
+      "SAMPA",
+      "FIAPRE",
+      "DROBO",
+      "GOASO",
+      "HWIDIEM",
+      "KENYASI",
+      "TECHIMAN",
+      "KINTAMPO",
+      "ATEBUBU",
+      "NKORANZA",
+      "JAMAN",
+      "JAMASE",
+      "JAMERA",
+      "JEMA",
+      "PRANG",
+      "DUAYAW",
+      "BECHEM",
+      "ACHERENSUA",
+      "KUKUOM",
+      "ANAPUA",
+      "ANHWIANKWATA",
+      "APATRAPA",
+      "BADU",
+      "BAMAHU",
+      "BETHEL",
+      "BINEY",
+      "JUABOSO",
+      "JUKWA",
+      "KENKEY",
+      "LOKKO",
+      "OPEIKUMA"
+    ]
+  },
+  "voice": {
+    "provider": "11labs",
+    "voiceId": "ZiQB5LljRyikkJWtFN55",
+    "model": "eleven_turbo_v2_5"
+  },
+  "firstMessage": "Hello! I'm Ama, your Premier Health specialist for Bono Regions. How can I help you find healthcare providers today?",
+  "endCallMessage": "Thank you for calling Premier Health. Take care and stay healthy!",
+  "endCallPhrases": [
+    "goodbye",
+    "bye",
+    "end call",
+    "hang up",
+    "that's all",
+    "thank you bye"
+  ],
+  "recordingEnabled": true,
+  "hipaaEnabled": false,
+  "clientMessages": [
+    "transcript",
+    "hang",
+    "function-call",
+    "speech-update",
+    "metadata",
+    "conversation-update"
+  ],
+  "serverMessages": [
+    "end-of-call-report",
+    "status-update",
+    "hang",
+    "function-call",
+    "transfer-update",
+    "transfer-destination-request",
+    "transcript"
+  ],
+  "silenceTimeoutSeconds": 30,
+  "maxDurationSeconds": 1200,
+  "backgroundSound": "office",
+  "backchannelingEnabled": false,
+  "backgroundDenoisingEnabled": true,
+  "modelOutputInMessagesEnabled": true,
+  "serverUrl": "https://api.ailabsafrica.com/premier-health/vapi-webhook",
+  "serverUrlSecret": "sXhVzxC2G0YlNtDduRk5qy7ML-HBtjJ17JeR3Ky_Yqc"
+}

@@ -1,0 +1,15 @@
+To run the member creation flow tests, you need an admin authentication token.
+
+Method 1: Get token from browser (Easiest)
+1. Log in to https://churchflow.ailabsafrica.com (or your local instance)
+2. Open browser DevTools (F12)
+3. Go to Application tab → Local Storage → https://churchflow.ailabsafrica.com
+4. Find and copy the 'access_token' value
+5. Run: export ADMIN_TOKEN='your_token_here'
+6. Then run: python3 test_member_creation_flows.py
+
+Method 2: Pass token as argument
+python3 test_member_creation_flows.py 'your_token_here'
+
+Method 3: Set in script
+Edit the script and set ADMIN_TOKEN at the top of the file.

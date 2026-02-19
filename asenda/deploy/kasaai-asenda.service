@@ -1,0 +1,26 @@
+[Unit]
+Description=Asenda.ai - Voice AI & Automation Website
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/kasaai/apps/asenda
+Environment=NODE_ENV=production
+Environment=PORT=30050
+Environment=HOSTNAME=0.0.0.0
+ExecStart=/home/dev/.nvm/versions/node/v22.20.0/bin/node /opt/kasaai/apps/asenda/.next/standalone/server.js
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=kasaai-asenda
+
+# Process limits
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,1240 @@
+🔍 COMPREHENSIVE RAG DATABASE AUDIT
+================================================================================
+
+1️⃣  Fetching all city documents from database...
+   ✅ Found 321 city documents in database
+
+2️⃣  Testing RAG queries for each city...
+   (This will take a few minutes...)
+
+   [1/321] Testing AMASAMAN... ❌ BROKEN
+   [2/321] Testing NAVRONGO... ✅
+   [3/321] Testing BAWKU... ✅
+   [4/321] Testing BOLGATANGA... ✅
+   [5/321] Testing LAWRA... ✅
+   [6/321] Testing WA... ✅
+   [7/321] Testing TAMALE... ✅
+   [8/321] Testing DUAYAW NKWANTA... ✅
+   [9/321] Testing KINTAMPO... ✅
+   [10/321] Testing SAMPA... ✅
+   [11/321] Testing BEREKUM... ✅
+   [12/321] Testing WENCHI... ❌ BROKEN
+   [13/321] Testing TECHIMAN... ✅
+   [14/321] Testing BECHEM... ✅
+   [15/321] Testing KENYASE... ❌ BROKEN
+   [16/321] Testing HWIDIEM... ✅
+   [17/321] Testing GOASO... ✅
+   [18/321] Testing SUNYANI... ✅
+   [19/321] Testing DORMAA... ✅
+   [20/321] Testing DROBO... ✅
+   [21/321] Testing NKORANZA... ✅
+   [22/321] Testing AJUMAKO... ❌ BROKEN
+   [23/321] Testing ASIKUMA... ❌ BROKEN
+   [24/321] Testing HOHOE... ✅
+   [25/321] Testing HO... ✅
+   [26/321] Testing NEW ABIREM... ✅
+   [27/321] Testing NKAWKAW... ✅
+   [28/321] Testing OSIEM... ✅
+   [29/321] Testing BEGORO... ✅
+   [30/321] Testing KADE... ✅
+   [31/321] Testing AKWATIA... ❌ BROKEN
+   [32/321] Testing ODA... ✅
+   [33/321] Testing ODUMASE KROBO... ✅
+   [34/321] Testing SOMANYA... ✅
+   [35/321] Testing AKOSOMBO... ❌ BROKEN
+   [36/321] Testing KIBI... ✅
+   [37/321] Testing ENYIRESI... ✅
+   [38/321] Testing ANYINAM... ✅
+   [39/321] Testing OSINO... ✅
+   [40/321] Testing ASIAKWA... ✅
+   [41/321] Testing ASAMANKESE... ✅
+   [42/321] Testing SUHUM... ❌ BROKEN
+   [43/321] Testing NSAWAM... ✅
+   [44/321] Testing MAMFE AKUAPEM... ⚠️  SUSPICIOUS
+   [45/321] Testing KOFORIDUA... ✅
+   [46/321] Testing SEFWI ESSAM... ✅
+   [47/321] Testing SEFWI AKONTOMBRA... ✅
+   [48/321] Testing SEFWI BODI... ✅
+   [49/321] Testing SEFWI ASAWINSO... ❌ BROKEN
+   [50/321] Testing SEFWI ASAFO... ✅
+   [51/321] Testing SEFWI WIAWSO... ✅
+   [52/321] Testing SEFWI BEKWAI... ❌ BROKEN
+   [53/321] Testing SEFWI ANHWIASO... ❌ BROKEN
+   [54/321] Testing SEFWI BIBIANI... ✅
+   [55/321] Testing SUAMAN DADIESO... ✅
+   [56/321] Testing ENCHI... ✅
+   [57/321] Testing SAMREBOI... ✅
+   [58/321] Testing ASANKRAGWA... ❌ BROKEN
+   [59/321] Testing WASSA AKROPONG... ✅
+   [60/321] Testing BOGOSO... ❌ BROKEN
+   [61/321] Testing TARKWA... ✅
+   [62/321] Testing INCHABAN... ✅
+   [63/321] Testing SEKONDI... ✅
+   [64/321] Testing TAKORADI... ✅
+   [65/321] Testing DUNKWA-ON-OFFIN... ⚠️  SUSPICIOUS
+   [66/321] Testing ASIKUMA/AJUMAKO... ❌ BROKEN
+   [67/321] Testing MANKESSIM... ❌ BROKEN
+   [68/321] Testing WINNEBA... ✅
+   [69/321] Testing SWEDRU... ✅
+   [70/321] Testing ASSIN... ❌ BROKEN
+   [71/321] Testing ELMINA... ✅
+   [72/321] Testing CAPE COAST... ✅
+   [73/321] Testing TEMA COMMUNITY 5... ✅
+   [74/321] Testing TEMA COMMUNITY 4... ✅
+   [75/321] Testing TEMA COMMUNITY 12... ❌ BROKEN
+   [76/321] Testing TEMA COMMUNITY 10... ✅
+   [77/321] Testing ASHAIMAN... ✅
+   [78/321] Testing ACCRA CENTRAL... ❌ BROKEN
+   [79/321] Testing GBAWE... ✅
+   [80/321] Testing KASOA... ✅
+   [81/321] Testing WEIJA... ✅
+   [82/321] Testing POKUASE... ✅
+   [83/321] Testing TEMA COMMUNITY 2 / 8... ✅
+   [84/321] Testing TEMA COMMUNITY 2 / 7... ✅
+   [85/321] Testing TEMA COMMUNITY 2 / 6... ✅
+   [86/321] Testing TEMA COMMUNITY 2 / 5... ✅
+   [87/321] Testing TEMA COMMUNITY 9... ❌ BROKEN
+   [88/321] Testing TEMA COMMUNITY 8... ✅
+   [89/321] Testing TEMA COMMUNITY 7... ✅
+   [90/321] Testing TEMA COMMUNITY 6... ✅
+   [91/321] Testing TEMA COMMUNITY 5... ✅
+   [92/321] Testing TEMA COMMUNITY 4... ✅
+   [93/321] Testing TEMA COMMUNITY 3... ✅
+   [94/321] Testing TEMA COMMUNITY 2... ✅
+   [95/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 27... ✅
+   [96/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 26... ❌ BROKEN
+   [97/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 25... ❌ BROKEN
+   [98/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 24... ⚠️  SUSPICIOUS
+   [99/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 23... ❌ BROKEN
+   [100/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 22... ❌ BROKEN
+   [101/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 21... ❌ BROKEN
+   [102/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 20... ❌ BROKEN
+   [103/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 19... ✅
+   [104/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 18... ❌ BROKEN
+   [105/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 17... ❌ BROKEN
+   [106/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 16... ❌ BROKEN
+   [107/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 15... ✅
+   [108/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 14... ❌ BROKEN
+   [109/321] Testing TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 13... ❌ BROKEN
+   [110/321] Testing TEMA COMMUNITY 12... ❌ BROKEN
+   [111/321] Testing TEMA COMMUNITY 10... ✅
+   [112/321] Testing TEMA COMMUNITY 9... ❌ BROKEN
+   [113/321] Testing TEMA COMMUNITY 6... ✅
+   [114/321] Testing TEMA COMMUNITY 5... ✅
+   [115/321] Testing TEMA COMMUNITY 4... ✅
+   [116/321] Testing AFIENYA ROAD... ✅
+   [117/321] Testing MICHEL CAMP... ✅
+   [118/321] Testing COMMUNITY 22... ⚠️  SUSPICIOUS
+   [119/321] Testing ASHAIMAN / COMMUNITY 41... ❌ BROKEN
+   [120/321] Testing ASHAIMAN / COMMUNITY 40... ❌ BROKEN
+   [121/321] Testing ASHAIMAN / COMMUNITY 39... ❌ BROKEN
+   [122/321] Testing ASHAIMAN / COMMUNITY 38... ❌ BROKEN
+   [123/321] Testing ASHAIMAN / COMMUNITY 37... ❌ BROKEN
+   [124/321] Testing ASHAIMAN / COMMUNITY 36... ❌ BROKEN
+   [125/321] Testing ASHAIMAN / COMMUNITY 35... ❌ BROKEN
+   [126/321] Testing ASHAIMAN / COMMUNITY 34... ❌ BROKEN
+   [127/321] Testing ASHAIMAN / COMMUNITY 33... ❌ BROKEN
+   [128/321] Testing ASHAIMAN / COMMUNITY 32... ❌ BROKEN
+   [129/321] Testing ASHAIMAN / COMMUNITY 31... ❌ BROKEN
+   [130/321] Testing ASHAIMAN / COMMUNITY 30... ❌ BROKEN
+   [131/321] Testing ASHAIMAN / COMMUNITY 29... ❌ BROKEN
+   [132/321] Testing ASHAIMAN / COMMUNITY 28... ❌ BROKEN
+   [133/321] Testing ASHAIMAN / COMMUNITY 27... ❌ BROKEN
+   [134/321] Testing COMMUNITY 26... ⚠️  SUSPICIOUS
+   [135/321] Testing ASHAIMAN... ✅
+   [136/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,38... ⚠️  SUSPICIOUS
+   [137/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,37... ⚠️  SUSPICIOUS
+   [138/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,36... ⚠️  SUSPICIOUS
+   [139/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,35... ⚠️  SUSPICIOUS
+   [140/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,34... ⚠️  SUSPICIOUS
+   [141/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,33... ⚠️  SUSPICIOUS
+   [142/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,32... ⚠️  SUSPICIOUS
+   [143/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,31... ⚠️  SUSPICIOUS
+   [144/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,30... ⚠️  SUSPICIOUS
+   [145/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,29... ⚠️  SUSPICIOUS
+   [146/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,28... ⚠️  SUSPICIOUS
+   [147/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,27... ⚠️  SUSPICIOUS
+   [148/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,26... ⚠️  SUSPICIOUS
+   [149/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,25... ⚠️  SUSPICIOUS
+   [150/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,24... ⚠️  SUSPICIOUS
+   [151/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,23... ⚠️  SUSPICIOUS
+   [152/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,22... ⚠️  SUSPICIOUS
+   [153/321] Testing SAKUMONO ESTATE / LASHIBI / COMM. 18,19,21... ⚠️  SUSPICIOUS
+   [154/321] Testing RIDGE... ⚠️  SUSPICIOUS
+   [155/321] Testing EAST LEGON / ADJRINGANOR... ⚠️  SUSPICIOUS
+   [156/321] Testing ACHIMOTA & NEW ACHIMOTA... ⚠️  SUSPICIOUS
+   [157/321] Testing TESHIE & NUNGUA... ⚠️  SUSPICIOUS
+   [158/321] Testing DOME / HAATSO / ASHONGMAN / KWABENYA... ⚠️  SUSPICIOUS
+   [159/321] Testing SPINTEX ROAD / BAATSONA... ⚠️  SUSPICIOUS
+   [160/321] Testing TANTRA HILL / OFANKOR... ⚠️  SUSPICIOUS
+   [161/321] Testing LABONE / LA / TSE ADDO / CANTONMENTS... ⚠️  SUSPICIOUS
+   [162/321] Testing OSU... ⚠️  SUSPICIOUS
+   [163/321] Testing KORLE-BU... ⚠️  SUSPICIOUS
+   [164/321] Testing MAMPROBI... ⚠️  SUSPICIOUS
+   [165/321] Testing DANSOMAN... ⚠️  SUSPICIOUS
+   [166/321] Testing LATEBIOKOSHIE / MATAHEKO... ⚠️  SUSPICIOUS
+   [167/321] Testing TESANO... ⚠️  SUSPICIOUS
+   [168/321] Testing NIMA... ⚠️  SUSPICIOUS
+   [169/321] Testing MAAMOBI... ⚠️  SUSPICIOUS
+   [170/321] Testing KOKOMLEMLE... ⚠️  SUSPICIOUS
+   [171/321] Testing INDUSTRIAL AREA... ⚠️  SUSPICIOUS
+   [172/321] Testing NORTH KANESHIE... ⚠️  SUSPICIOUS
+   [173/321] Testing KANESHIE... ⚠️  SUSPICIOUS
+   [174/321] Testing CIRCLE... ⚠️  SUSPICIOUS
+   [175/321] Testing DZORWULU / ABELENKPE... ⚠️  SUSPICIOUS
+   [176/321] Testing DODOWA... ⚠️  SUSPICIOUS
+   [177/321] Testing ADENTA... ⚠️  SUSPICIOUS
+   [178/321] Testing MADINA... ⚠️  SUSPICIOUS
+   [179/321] Testing NORTH LEGON... ⚠️  SUSPICIOUS
+   [180/321] Testing LEGON... ⚠️  SUSPICIOUS
+   [181/321] Testing 37 AREA... ⚠️  SUSPICIOUS
+   [182/321] Testing AIRPORT RESIDENTIAL AREA... ✅
+   [183/321] Testing MAKOLA... ❌ BROKEN
+   [184/321] Testing TUDU... ✅
+   [185/321] Testing ACCRA CENTRAL... ❌ BROKEN
+   [186/321] Testing AGOGO... ✅
+   [187/321] Testing KONONGO... ✅
+   [188/321] Testing DUNKWA... ✅
+   [189/321] Testing OBUASI... ✅
+   [190/321] Testing WIAMOASE... ✅
+   [191/321] Testing AGONA... ✅
+   [192/321] Testing MAMPONG... ✅
+   [193/321] Testing AHINSAN... ✅
+   [194/321] Testing AHODWO... ✅
+   [195/321] Testing ADUM... ✅
+   [196/321] Testing SUAME... ✅
+   [197/321] Testing PATASE... ⚠️  SUSPICIOUS
+   [198/321] Testing SANTASI... ⚠️  SUSPICIOUS
+   [199/321] Testing TANOSO... ⚠️  SUSPICIOUS
+   [200/321] Testing ABUAKWA... ⚠️  SUSPICIOUS
+   [201/321] Testing MAMPONTENG... ⚠️  SUSPICIOUS
+   [202/321] Testing BREMANG... ⚠️  SUSPICIOUS
+   [203/321] Testing TAFO... ⚠️  SUSPICIOUS
+   [204/321] Testing ABREPO... ⚠️  SUSPICIOUS
+   [205/321] Testing BANTAMA... ⚠️  SUSPICIOUS
+   [206/321] Testing ASOKWA... ⚠️  SUSPICIOUS
+   [207/321] Testing EJISU... ⚠️  SUSPICIOUS
+   [208/321] Testing KNUST... ⚠️  SUSPICIOUS
+   [209/321] Testing BOMSO... ⚠️  SUSPICIOUS
+   [210/321] Testing Winneba... ⚠️  SUSPICIOUS
+   [211/321] Testing Wenchi... ⚠️  SUSPICIOUS
+   [212/321] Testing Weija  Kasoa  Gbawe... ⚠️  SUSPICIOUS
+   [213/321] Testing Wassa Akropong... ⚠️  SUSPICIOUS
+   [214/321] Testing Wa... ⚠️  SUSPICIOUS
+   [215/321] Testing Teshie  Nungua... ⚠️  SUSPICIOUS
+   [216/321] Testing Tesano... ⚠️  SUSPICIOUS
+   [217/321] Testing Tema Community 4  5  6  9  10  12... ⚠️  SUSPICIOUS
+   [218/321] Testing Tema Community 2  4... ⚠️  SUSPICIOUS
+   [219/321] Testing Tema Community 2... ⚠️  SUSPICIOUS
+   [220/321] Testing Techiman... ⚠️  SUSPICIOUS
+   [221/321] Testing Tarkwa... ⚠️  SUSPICIOUS
+   [222/321] Testing Tantra Hill  Ofankor... ⚠️  SUSPICIOUS
+   [223/321] Testing Tamale... ⚠️  SUSPICIOUS
+   [224/321] Testing Takoradi... ⚠️  SUSPICIOUS
+   [225/321] Testing Tafo... ⚠️  SUSPICIOUS
+   [226/321] Testing Sunyani... ⚠️  SUSPICIOUS
+   [227/321] Testing Suhum... ⚠️  SUSPICIOUS
+   [228/321] Testing Suame... ⚠️  SUSPICIOUS
+   [229/321] Testing Suaman Dadieso... ⚠️  SUSPICIOUS
+   [230/321] Testing Spintex Road  Baatsona... ✅
+   [231/321] Testing Somanyaodumase Krobo... ✅
+   [232/321] Testing Sekondi... ✅
+   [233/321] Testing Sefwi Wiawso... ✅
+   [234/321] Testing Sefwi Juaboso... ✅
+   [235/321] Testing Sefwi Essam... ✅
+   [236/321] Testing Sefwi Bodi... ✅
+   [237/321] Testing Sefwi Bibiani... ✅
+   [238/321] Testing Sefwi Bekwai... ❌ BROKEN
+   [239/321] Testing Sefwi Asawinso... ❌ BROKEN
+   [240/321] Testing Sefwi Asafo... ✅
+   [241/321] Testing Sefwi Anhwiaso... ❌ BROKEN
+   [242/321] Testing Samreboi... ✅
+   [243/321] Testing Sampa... ✅
+   [244/321] Testing Sakumono Estate  Lashibi  Comm 181921... ⚠️  SUSPICIOUS
+   [245/321] Testing Ridge... ❌ BROKEN
+   [246/321] Testing Osu... ✅
+   [247/321] Testing Oda... ✅
+   [248/321] Testing Obuasi  Dunkwa... ⚠️  SUSPICIOUS
+   [249/321] Testing Nsawam... ✅
+   [250/321] Testing Nkoranza... ✅
+   [251/321] Testing Nkawkaw... ✅
+   [252/321] Testing New Abirem... ✅
+   [253/321] Testing Navrongo... ✅
+   [254/321] Testing Mankessim... ❌ BROKEN
+   [255/321] Testing Mamponteng... ✅
+   [256/321] Testing Mampong  Agona  Wiamoase... ✅
+   [257/321] Testing Mampong... ✅
+   [258/321] Testing Mamfe- Akuapem... ✅
+   [259/321] Testing Madina  Adenta  Dodowa... ✅
+   [260/321] Testing Legon  North Legon... ⚠️  SUSPICIOUS
+   [261/321] Testing Lawra... ✅
+   [262/321] Testing Latebiokoshie  Mataheko... ⚠️  SUSPICIOUS
+   [263/321] Testing Lapaz  Nyamekye  Darkuman  Odorkor... ✅
+   [264/321] Testing Labone  La  Tse Addo  Cantonments... ✅
+   [265/321] Testing Konongo  Agogo... ❌ BROKEN
+   [266/321] Testing Kokomlemle  Maamobi  Nima... ⚠️  SUSPICIOUS
+   [267/321] Testing Koforidua... ✅
+   [268/321] Testing Kintampo Duayaw Nkwanta  Others... ✅
+   [269/321] Testing Kenyase... ❌ BROKEN
+   [270/321] Testing Kade... ✅
+   [271/321] Testing Inchaban... ✅
+   [272/321] Testing Hwidiem... ✅
+   [273/321] Testing Hohoe... ✅
+   [274/321] Testing Ho... ✅
+   [275/321] Testing Goaso... ✅
+   [276/321] Testing Enchi... ✅
+   [277/321] Testing Elmina... ✅
+   [278/321] Testing East Legon  Adjringanor... ✅
+   [279/321] Testing Dzorwulu  Abelenkpe... ✅
+   [280/321] Testing Drobo... ✅
+   [281/321] Testing Dormaa... ✅
+   [282/321] Testing Dome  Haatso  Ashongman  Kwabenya... ⚠️  SUSPICIOUS
+   [283/321] Testing Dansoman  Mamprobi  Korle-Bu... ✅
+   [284/321] Testing Comm 22  Michel Camp  Afienya Road... ⚠️  SUSPICIOUS
+   [285/321] Testing Circle  Kaneshie  North Kaneshie  Industrial Area... ✅
+   [286/321] Testing Cape Coast  Environs... ⚠️  SUSPICIOUS
+   [287/321] Testing Bomso  Knust  Ejisu... ✅
+   [288/321] Testing Bolgatanga... ✅
+   [289/321] Testing Bogoso... ❌ BROKEN
+   [290/321] Testing Berekum... ✅
+   [291/321] Testing Begoroosiem... ✅
+   [292/321] Testing Bechem... ✅
+   [293/321] Testing Bawku... ✅
+   [294/321] Testing Bantama... ✅
+   [295/321] Testing Asylum Down... ✅
+   [296/321] Testing Assinswedru... ❌ BROKEN
+   [297/321] Testing Asokwa... ✅
+   [298/321] Testing Asikuma Ajumako... ❌ BROKEN
+   [299/321] Testing Asiakwa  Osino  Anyinam  Enyiresi  Kibi... ❌ BROKEN
+   [300/321] Testing Ashaiman  Community 26... ✅
+   [301/321] Testing Asankragwa... ❌ BROKEN
+   [302/321] Testing Asamankese... ✅
+   [303/321] Testing Akwatia... ❌ BROKEN
+   [304/321] Testing Akosombo... ❌ BROKEN
+   [305/321] Testing Airport Residential Area  37 Area... ✅
+   [306/321] Testing Ahodwo  Ahinsan... ⚠️  SUSPICIOUS
+   [307/321] Testing Adum... ✅
+   [308/321] Testing Adabraka... ❌ BROKEN
+   [309/321] Testing Achimota  New Achimota... ✅
+   [310/321] Testing Accra Central  Tudu  Makola... ✅
+   [311/321] Testing Abrepo... ✅
+   [312/321] Testing MADINA / ADENTA / DODOWA... ✅
+   [313/321] Testing LEGON & NORTH LEGON... ⚠️  SUSPICIOUS
+   [314/321] Testing LAPAZ / NYAMEKYE / DARKUMAN / ODORKOR... ✅
+   [315/321] Testing KOKOMLEMLE / MAAMOBI / NIMA... ❌ BROKEN
+   [316/321] Testing DZORWULU & ABELENKPE... ✅
+   [317/321] Testing CIRCLE / KANESHIE / NORTH KANESHIE / INDUSTRIAL AREA... ✅
+   [318/321] Testing ASYLUM DOWN... ✅
+   [319/321] Testing AIRPORT RESIDENTIAL AREA / 37 AREA... ✅
+   [320/321] Testing ADABRAKA... ❌ BROKEN
+   [321/321] Testing ACCRA CENTRAL / TUDU / MAKOLA... ✅
+
+================================================================================
+📊 AUDIT RESULTS
+================================================================================
+
+✅ WORKING CITIES: 161/321
+❌ BROKEN CITIES: 66/321
+⚠️  SUSPICIOUS CITIES: 94/321
+
+================================================================================
+❌ BROKEN CITIES (Not retrievable via RAG)
+================================================================================
+
+🔴 AMASAMAN
+   Document ID: 6a0db52c-cc2a-46ac-8d94-3dc2c8762bf8
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 WENCHI
+   Document ID: acd231e3-c6f0-40de-b6c4-cac2d4b039a0
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 KENYASE
+   Document ID: ad5258e9-0de3-431a-93d8-e2f726573b23
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in Ashaiman  Community 26']
+   Response preview: ...
+
+🔴 AJUMAKO
+   Document ID: fe41c0ec-8070-41d7-ac35-9f8b86fd81f4
+   Confidence: 0.905
+   Sources returned: ['Healthcare Providers in ABUAKWATANOSO', 'Sry Providers - Premier Health Network']
+   Response preview: ...
+
+🔴 ASIKUMA
+   Document ID: 2d8d8475-ef6a-437b-9dc4-b74f2874dbe2
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ASOKWA', 'Healthcare Providers in ASOKWA']
+   Response preview: ...
+
+🔴 AKWATIA
+   Document ID: 81348c14-0079-4d7e-84ad-545148d19613
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ABUAKWATANOSO']
+   Response preview: ...
+
+🔴 AKOSOMBO
+   Document ID: 6b191ca3-902b-476c-9064-5d51f7d715a7
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ABUAKWATANOSO', 'Premier Health Provider Network']
+   Response preview: ...
+
+🔴 SUHUM
+   Document ID: fdd037f8-634f-46f9-b219-f7ac24fb0968
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 SEFWI ASAWINSO
+   Document ID: 0535a69b-f076-4230-ba7f-30d99d798563
+   Confidence: 0.9279999999999999
+   Sources returned: ['Healthcare Providers in ASIAKWA', 'Sry Providers - Premier Health Network']
+   Response preview: ...
+
+🔴 SEFWI BEKWAI
+   Document ID: 7fd9783d-0f48-4ccc-afca-fa4e096980ff
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in TAFO']
+   Response preview: ...
+
+🔴 SEFWI ANHWIASO
+   Document ID: fa2631cd-0d92-43a4-8eb4-00e1c7c34dbd
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in SEFWI ANHWIASO', 'Sry Providers - Premier Health Network']
+   Response preview: ...
+
+🔴 ASANKRAGWA
+   Document ID: 8fa62aa2-1d26-4997-b7ed-311ad0b2fa43
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ASOKWA', 'Healthcare Providers in ASOKWA']
+   Response preview: ...
+
+🔴 BOGOSO
+   Document ID: a213332d-e944-4140-81d3-fd056b33cb1d
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in BOMSO', 'Healthcare Providers in BOLGATANGA']
+   Response preview: ...
+
+🔴 ASIKUMA/AJUMAKO
+   Document ID: 4cf54e14-c454-45d2-b83f-9abf14576633
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ASOKWA', 'Healthcare Providers in ASOKWA']
+   Response preview: ...
+
+🔴 MANKESSIM
+   Document ID: 7037fbc7-1264-437d-a140-0a5db5ae449f
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 ASSIN
+   Document ID: e1daf59a-c540-4022-b974-25c4a1d886f2
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 12
+   Document ID: c7568d1e-8a3c-4a09-8cde-60341bfc8456
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 ACCRA CENTRAL
+   Document ID: 27292770-5dfc-48c6-b427-d99ccbde8ee7
+   Confidence: 0.95
+   Sources returned: ['Premier Health Provider Network', 'Healthcare Providers in CIRCLE / KANESHIE / NORTH KANESHIE / INDUSTRIAL AREA']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 9
+   Document ID: 0819d36d-d8f9-4205-88ad-4e835118246b
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 26
+   Document ID: 9ca750d7-f6a9-425d-a5b7-563cbb463139
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 25
+   Document ID: 00cd8529-321e-4936-92d7-5046d10ac86c
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 23
+   Document ID: 80bb42fd-59c1-4cde-ab44-a6cdc9aa0255
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 22
+   Document ID: 65f6b2a1-6a39-4c7d-b39b-b769e0be934d
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 21
+   Document ID: 042f0f7c-db25-4210-a1ba-8588e8a78450
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 20
+   Document ID: 092e4693-fb2c-4390-9892-79c18b9812ef
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 18
+   Document ID: 88d3240d-7df5-45da-b5df-19a74f027314
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 17
+   Document ID: 1ec0208e-2ffb-4c5d-bf78-6b0bb5564adf
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 16
+   Document ID: a4eb376d-000c-4d53-9ffd-6db7b399fd5b
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 14
+   Document ID: d9712809-b3a8-46c5-9a42-44d16aa02f59
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 13
+   Document ID: d756a7d6-8e17-42c2-a676-5859f1c15b24
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 12
+   Document ID: 8baffe93-6690-4da3-a29f-00896fd09eb2
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 TEMA COMMUNITY 9
+   Document ID: 66e957b9-1aab-47d1-a743-8649bf48f832
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 41
+   Document ID: 65855aaa-cbc4-4e51-8273-bba3323f3ab2
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 40
+   Document ID: 64490533-3248-40c5-891f-6529e9a38308
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 39
+   Document ID: c2be959d-448b-4121-8c2a-a1664d09607d
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 38
+   Document ID: 24324782-14b3-4e6d-8f3a-116e466f381b
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 37
+   Document ID: 39163689-bca3-49f0-a8e8-80691b6e5d56
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 36
+   Document ID: 8973985d-c002-473e-a00a-10cc0ffed0e7
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 35
+   Document ID: 059af9f0-db43-4308-b6cd-4e4251c3c9de
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 34
+   Document ID: a09cf298-6ddf-49e0-9d9c-f7b282e74ab4
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 33
+   Document ID: 3c285045-fea8-45a1-8ee7-610cf1f0e394
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 32
+   Document ID: dba0967e-06d2-46ac-b511-78a4d1646eab
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 31
+   Document ID: 7bc6b364-9e5f-4818-b434-3c163cc9eaa8
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 30
+   Document ID: 3b31ef71-7498-4a9f-9413-407f2b84b8c5
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 29
+   Document ID: 8bf1dd5d-ed77-4202-be86-4219fd98a2ce
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 28
+   Document ID: 86112f92-9cd8-4311-a898-5fb527c2b615
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 ASHAIMAN / COMMUNITY 27
+   Document ID: 11aeb894-f3b0-4ba3-b0c9-ac8de703fcb3
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ASHAIMAN']
+   Response preview: ...
+
+🔴 MAKOLA
+   Document ID: 13072552-fe42-4e79-845c-f3902cae749b
+   Confidence: 0.908
+   Sources returned: ['Healthcare Providers in MATAHEKO', 'Healthcare Providers in LATEBIOKOSHIE']
+   Response preview: ...
+
+🔴 ACCRA CENTRAL
+   Document ID: 90ebbddd-102e-49e6-9bf9-d4d3a244b98f
+   Confidence: 0.95
+   Sources returned: ['Premier Health Provider Network', 'Healthcare Providers in CIRCLE / KANESHIE / NORTH KANESHIE / INDUSTRIAL AREA']
+   Response preview: ...
+
+🔴 Sefwi Bekwai
+   Document ID: e8336c20-05dc-4eec-afda-191dbf7f913c
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in TAFO']
+   Response preview: ...
+
+🔴 Sefwi Asawinso
+   Document ID: be84dff2-db24-4add-8421-f1c5a908892e
+   Confidence: 0.9279999999999999
+   Sources returned: ['Healthcare Providers in ASIAKWA', 'Sry Providers - Premier Health Network']
+   Response preview: ...
+
+🔴 Sefwi Anhwiaso
+   Document ID: f99440a6-f31b-4538-8ff9-62ba164ffa91
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in SEFWI ANHWIASO', 'Sry Providers - Premier Health Network']
+   Response preview: ...
+
+🔴 Ridge
+   Document ID: c0d21a09-9aff-458a-b36a-df10d8a598f8
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 Mankessim
+   Document ID: f2163ff3-ac14-4347-88ad-f77ad1c41dea
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 Konongo  Agogo
+   Document ID: 106e0b04-f2c2-4604-9556-7efebcbd2fd9
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AGONA', 'Healthcare Providers in COMMUNITY 26']
+   Response preview: ...
+
+🔴 Kenyase
+   Document ID: 8f71655c-4e1b-48eb-8102-5273cdf6506f
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in Ashaiman  Community 26']
+   Response preview: ...
+
+🔴 Bogoso
+   Document ID: be0b5df3-7337-415f-8923-98d4891280a6
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in BOMSO', 'Healthcare Providers in BOLGATANGA']
+   Response preview: ...
+
+🔴 Assinswedru
+   Document ID: 5ca38e99-f193-4822-b2f5-69bec1d519c5
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+   Response preview: ...
+
+🔴 Asikuma Ajumako
+   Document ID: 8923dbdb-0f14-4576-981a-0133291decdb
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Premier Health Provider Network']
+   Response preview: ...
+
+🔴 Asiakwa  Osino  Anyinam  Enyiresi  Kibi
+   Document ID: 85158d09-ec75-4d29-9487-9f6635f5cbdc
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ASIAKWA', 'Healthcare Providers in ASOKWA']
+   Response preview: ...
+
+🔴 Asankragwa
+   Document ID: 721b24b6-6449-49c1-beb8-b5bcba546aca
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ASOKWA', 'Healthcare Providers in ASOKWA']
+   Response preview: ...
+
+🔴 Akwatia
+   Document ID: 8fa22037-ba4b-43c7-93ed-d0d55770f755
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in Ashaiman  Community 26', 'Healthcare Providers in ABUAKWATANOSO']
+   Response preview: ...
+
+🔴 Akosombo
+   Document ID: 12969bbe-885b-47a6-b618-bda5f0b73caa
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ABUAKWATANOSO', 'Premier Health Provider Network']
+   Response preview: ...
+
+🔴 Adabraka
+   Document ID: 9a939ac2-ba3a-4aee-8e31-6cb950c0c187
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ADABRAKA', 'Healthcare Providers in ABUAKWATANOSO']
+   Response preview: ...
+
+🔴 KOKOMLEMLE / MAAMOBI / NIMA
+   Document ID: providers_area_kokomlemle_/_maamobi_/_nima
+   Confidence: 0.95
+   Sources returned: ['Sry Providers - Premier Health Network', 'Healthcare Providers in COMMUNITY 26']
+   Response preview: ...
+
+🔴 ADABRAKA
+   Document ID: providers_area_adabraka
+   Confidence: 0.95
+   Sources returned: ['Healthcare Providers in ADABRAKA', 'Healthcare Providers in ABUAKWATANOSO']
+   Response preview: ...
+
+================================================================================
+⚠️  SUSPICIOUS CITIES (Low confidence or city not mentioned)
+================================================================================
+
+🟡 MAMFE AKUAPEM
+   Document ID: f108af02-4175-40fd-861e-0b6ab127e61a
+   Confidence: 0.95
+   Sources: ['Premier Health Provider Network', 'Obs Providers - Premier Health Network']
+
+🟡 DUNKWA-ON-OFFIN
+   Document ID: d35b12b5-ebeb-4e4c-816f-2dd177595063
+   Confidence: 0.95
+   Sources: ['Sry Providers - Premier Health Network', 'Healthcare Providers in DUNKWA']
+
+🟡 TEMA COMMUNITY 4 / 5 / 6 / 9 / 10 / 24
+   Document ID: a1a53d38-5188-4361-ab38-6629b3b6a043
+   Confidence: 0.95
+   Sources: ['Sry Providers - Premier Health Network', 'Healthcare Providers in TEMA COMMUNITY 4']
+
+🟡 COMMUNITY 22
+   Document ID: f3cadef5-8d23-4ffc-a5e0-67b4863ecd2a
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in AIRPORT', 'Healthcare Providers in AMANSAMAN']
+
+🟡 COMMUNITY 26
+   Document ID: cff313df-e0df-425d-a492-b3d96207561b
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in AMANSAMAN', 'Healthcare Providers in AIRPORT']
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,38
+   Document ID: 8e589bec-ec8f-4c8d-b0ef-b4273e9daa7c
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in SAKUMONO ESTATE', 'Healthcare Providers in SAKUMONO ESTATE']
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,37
+   Document ID: c1916076-7ea7-4d0f-9f8c-c1bde2015089
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in SAKUMONO ESTATE', 'Healthcare Providers in SAKUMONO ESTATE']
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,36
+   Document ID: d0c21dd7-99d1-4fcc-bf80-178fea37eb5b
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in SAKUMONO ESTATE', 'Healthcare Providers in SAKUMONO ESTATE']
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,35
+   Document ID: 780e6f47-c637-4e6e-a31a-8fdb4991410d
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in SAKUMONO ESTATE', 'Healthcare Providers in SAKUMONO ESTATE']
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,34
+   Document ID: c819ab96-ac85-46db-931b-732692bc0dd5
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in SAKUMONO ESTATE', 'Healthcare Providers in SAKUMONO ESTATE']
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,33
+   Document ID: 882fe943-ac5a-48b5-8bc7-f40125eb1694
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in SAKUMONO ESTATE', 'Healthcare Providers in SAKUMONO ESTATE']
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,32
+   Document ID: f7aedad9-8768-4ab5-99c7-9f658de25e86
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,31
+   Document ID: 03afe8c9-e013-4a4b-9527-2bf833e90640
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,30
+   Document ID: e64771d6-1595-465e-bce9-2a978f546d65
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,29
+   Document ID: 6c1ab588-aa01-4f47-94fa-ea28eb12de9c
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,28
+   Document ID: 7698e9f0-2868-4bc4-8ee1-f74c97209c57
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,27
+   Document ID: 29038fff-8992-4b9a-a70c-0dfceb1a054e
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,26
+   Document ID: 391191a7-4b93-4ab5-ae65-c51f20d83602
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,25
+   Document ID: 43d95c56-3d62-4603-930a-b33376395ca6
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,24
+   Document ID: 62a049f8-7e76-47db-b4e1-c289bf60db03
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,23
+   Document ID: 6e19c56b-8735-4735-bed4-a83cf204971d
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,22
+   Document ID: be1b1887-9907-4be6-8ec3-62d1204292e9
+   Confidence: None
+   Sources: []
+
+🟡 SAKUMONO ESTATE / LASHIBI / COMM. 18,19,21
+   Document ID: 82cc218c-0d93-4ee0-a7c0-66fe6da808ab
+   Confidence: None
+   Sources: []
+
+🟡 RIDGE
+   Document ID: 36789f94-a803-4560-a286-1dbe89ff251c
+   Confidence: None
+   Sources: []
+
+🟡 EAST LEGON / ADJRINGANOR
+   Document ID: 7ba32a0c-8b2b-4f44-99d2-8fef604ed464
+   Confidence: None
+   Sources: []
+
+🟡 ACHIMOTA & NEW ACHIMOTA
+   Document ID: ed9e4a13-e4cc-4fbb-bfe5-24a110c74e1e
+   Confidence: None
+   Sources: []
+
+🟡 TESHIE & NUNGUA
+   Document ID: 3932b788-edc2-485e-a78c-fb9f7ea5b615
+   Confidence: None
+   Sources: []
+
+🟡 DOME / HAATSO / ASHONGMAN / KWABENYA
+   Document ID: fa7dbbff-f6ef-4c8a-bd70-294830b469bd
+   Confidence: None
+   Sources: []
+
+🟡 SPINTEX ROAD / BAATSONA
+   Document ID: 9420b987-4c52-4652-a5cb-93f1ff10d98d
+   Confidence: None
+   Sources: []
+
+🟡 TANTRA HILL / OFANKOR
+   Document ID: b189f352-b733-4d1c-bc95-b0d1959c7b42
+   Confidence: None
+   Sources: []
+
+🟡 LABONE / LA / TSE ADDO / CANTONMENTS
+   Document ID: 49b93d7c-a8a5-4cc0-abe2-21479ab27c0d
+   Confidence: None
+   Sources: []
+
+🟡 OSU
+   Document ID: 505d3f2e-da22-4222-abf8-694653ab0d78
+   Confidence: None
+   Sources: []
+
+🟡 KORLE-BU
+   Document ID: 11c3edfd-ccf3-4cb8-8c7e-30bb86156162
+   Confidence: None
+   Sources: []
+
+🟡 MAMPROBI
+   Document ID: fb6bf288-856e-438f-9e9f-64cac443ebb4
+   Confidence: None
+   Sources: []
+
+🟡 DANSOMAN
+   Document ID: cea84938-0d4d-4d20-9c02-18ec2fc1e5b5
+   Confidence: None
+   Sources: []
+
+🟡 LATEBIOKOSHIE / MATAHEKO
+   Document ID: cf0a00ce-6774-45c6-a592-e351c02e782f
+   Confidence: None
+   Sources: []
+
+🟡 TESANO
+   Document ID: 99133ca8-6a3b-40c3-bc49-0587ff8e976f
+   Confidence: None
+   Sources: []
+
+🟡 NIMA
+   Document ID: bc220837-6898-4474-99f2-bce41bfa3110
+   Confidence: None
+   Sources: []
+
+🟡 MAAMOBI
+   Document ID: 8bcbf6d3-9da3-4a28-8c3a-02cbd7b5a5da
+   Confidence: None
+   Sources: []
+
+🟡 KOKOMLEMLE
+   Document ID: 85b81669-443c-4ed4-b8cf-3fd8445a7cda
+   Confidence: None
+   Sources: []
+
+🟡 INDUSTRIAL AREA
+   Document ID: a944a468-a22a-41a6-9ebf-3dff1dd7c054
+   Confidence: None
+   Sources: []
+
+🟡 NORTH KANESHIE
+   Document ID: bfdbf95f-af52-43d3-91a3-ac4afda5079a
+   Confidence: None
+   Sources: []
+
+🟡 KANESHIE
+   Document ID: af0dd482-7bbc-45b9-876a-51ffbbbd28ba
+   Confidence: None
+   Sources: []
+
+🟡 CIRCLE
+   Document ID: 8ce3bafc-ad53-4e63-865a-495998c8251a
+   Confidence: None
+   Sources: []
+
+🟡 DZORWULU / ABELENKPE
+   Document ID: ed4fc24d-2ea3-4582-b1e3-36c0ca936f7c
+   Confidence: None
+   Sources: []
+
+🟡 DODOWA
+   Document ID: 278e879b-451c-440a-862f-cd6273cc564b
+   Confidence: None
+   Sources: []
+
+🟡 ADENTA
+   Document ID: 93d9ded5-4337-410b-8923-85abcdf94855
+   Confidence: None
+   Sources: []
+
+🟡 MADINA
+   Document ID: 71e887c0-5526-4932-8fdb-6bbf3d12bce5
+   Confidence: None
+   Sources: []
+
+🟡 NORTH LEGON
+   Document ID: 8c2823f6-d521-4695-93b4-25c7a1cc1fff
+   Confidence: None
+   Sources: []
+
+🟡 LEGON
+   Document ID: d8247fa5-d2fe-438f-8466-20058a564cf8
+   Confidence: None
+   Sources: []
+
+🟡 37 AREA
+   Document ID: d047b2c4-f026-4213-9096-ca9c9363eb55
+   Confidence: None
+   Sources: []
+
+🟡 PATASE
+   Document ID: 98264c02-b7f7-40d8-ab9d-db23705e5415
+   Confidence: None
+   Sources: []
+
+🟡 SANTASI
+   Document ID: 40803807-1e39-4ed0-8f6a-fd1018d7277e
+   Confidence: None
+   Sources: []
+
+🟡 TANOSO
+   Document ID: c40520b7-cc4a-4924-a0f3-37a812edb263
+   Confidence: None
+   Sources: []
+
+🟡 ABUAKWA
+   Document ID: 913330f9-a59c-4e0d-b6a0-4363573114e3
+   Confidence: None
+   Sources: []
+
+🟡 MAMPONTENG
+   Document ID: 6964387a-a986-4b15-bf51-e598c79f7a63
+   Confidence: None
+   Sources: []
+
+🟡 BREMANG
+   Document ID: 78b8aeb3-3acb-4cab-99ec-724f80b71cef
+   Confidence: None
+   Sources: []
+
+🟡 TAFO
+   Document ID: 5b0aeb20-08a4-42bf-9d68-e0192c1371d2
+   Confidence: None
+   Sources: []
+
+🟡 ABREPO
+   Document ID: ebfab149-91b0-4aec-a498-0034b9f0c7e2
+   Confidence: None
+   Sources: []
+
+🟡 BANTAMA
+   Document ID: ffeca147-c1eb-4582-8644-b5308da9412d
+   Confidence: None
+   Sources: []
+
+🟡 ASOKWA
+   Document ID: 1a945a40-14ca-48ee-89f9-33d78a8807bd
+   Confidence: None
+   Sources: []
+
+🟡 EJISU
+   Document ID: d2626b8b-1df5-414e-b45c-6cfcb3d84936
+   Confidence: None
+   Sources: []
+
+🟡 KNUST
+   Document ID: 1252c7cd-68b4-4195-b1f1-3a1d0234ba17
+   Confidence: None
+   Sources: []
+
+🟡 BOMSO
+   Document ID: 2470c1d8-41f6-4b13-a0ef-1faf41150881
+   Confidence: None
+   Sources: []
+
+🟡 Winneba
+   Document ID: ddaae123-10ad-4181-945a-7e972428b434
+   Confidence: None
+   Sources: []
+
+🟡 Wenchi
+   Document ID: 98e237c5-6334-42a9-bd5e-1f4ecdc38835
+   Confidence: None
+   Sources: []
+
+🟡 Weija  Kasoa  Gbawe
+   Document ID: 7288ea56-80f3-404c-ba8a-0fa5df541072
+   Confidence: None
+   Sources: []
+
+🟡 Wassa Akropong
+   Document ID: fbb2607c-3e6b-403a-9ea5-acea81370a01
+   Confidence: None
+   Sources: []
+
+🟡 Wa
+   Document ID: 2af5c382-17b5-44a1-a599-4d3b8b1bb79f
+   Confidence: None
+   Sources: []
+
+🟡 Teshie  Nungua
+   Document ID: 914cfd93-edd8-40a0-9ee0-1749d2593559
+   Confidence: None
+   Sources: []
+
+🟡 Tesano
+   Document ID: 17936c0e-2255-4f63-b402-bc7699c4c06e
+   Confidence: None
+   Sources: []
+
+🟡 Tema Community 4  5  6  9  10  12
+   Document ID: 1e7f3463-8fb2-43af-8e48-0dc67c102e4d
+   Confidence: None
+   Sources: []
+
+🟡 Tema Community 2  4
+   Document ID: 34bc07a9-47c1-44b1-9f1c-cab91317e3ab
+   Confidence: None
+   Sources: []
+
+🟡 Tema Community 2
+   Document ID: 9c8bbe20-fc4e-470a-99a1-2db93e0fd14e
+   Confidence: None
+   Sources: []
+
+🟡 Techiman
+   Document ID: 3742d136-6c49-4bdc-84da-a70111e40059
+   Confidence: None
+   Sources: []
+
+🟡 Tarkwa
+   Document ID: 4236e9c1-9f3e-4721-af68-46c035862671
+   Confidence: None
+   Sources: []
+
+🟡 Tantra Hill  Ofankor
+   Document ID: b6b1e443-8341-4d57-953f-3620161fb88b
+   Confidence: None
+   Sources: []
+
+🟡 Tamale
+   Document ID: d7687747-da80-4beb-9346-4443f6ca1e9c
+   Confidence: None
+   Sources: []
+
+🟡 Takoradi
+   Document ID: f430d794-d04b-4c90-bd5d-c4465e337e71
+   Confidence: None
+   Sources: []
+
+🟡 Tafo
+   Document ID: ccf34fa6-6ad1-49c4-a2b6-0a01e0f73710
+   Confidence: None
+   Sources: []
+
+🟡 Sunyani
+   Document ID: 557f670e-55ef-4d4c-bba8-64471d03a014
+   Confidence: None
+   Sources: []
+
+🟡 Suhum
+   Document ID: 8da81562-a3bf-4846-9763-145a86e7004d
+   Confidence: None
+   Sources: []
+
+🟡 Suame
+   Document ID: ddb17d65-65a4-4b04-8bb4-e75ee2dc4b1c
+   Confidence: None
+   Sources: []
+
+🟡 Suaman Dadieso
+   Document ID: 0d7c6cdb-c74b-45ce-809b-a529f5f72fdc
+   Confidence: None
+   Sources: []
+
+🟡 Sakumono Estate  Lashibi  Comm 181921
+   Document ID: 76097ef2-9721-47a0-b857-a9c697238ec5
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in COMM 181921', 'Healthcare Providers in COMM 181921']
+
+🟡 Obuasi  Dunkwa
+   Document ID: a3460ead-f578-42de-a457-fef91f482e37
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in DUNKWA', 'Healthcare Providers in OBUASI']
+
+🟡 Legon  North Legon
+   Document ID: 9a3c6748-8282-4f32-a657-ee0645803295
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in EAST LEGON', 'Healthcare Providers in NORTH LEGON']
+
+🟡 Latebiokoshie  Mataheko
+   Document ID: d3093139-1a8b-4248-b10e-387751dde04f
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in LATEBIOKOSHIE', 'Sry Providers - Premier Health Network']
+
+🟡 Kokomlemle  Maamobi  Nima
+   Document ID: 6aa9592d-b1de-4239-8a6d-02a6f33dbfcc
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in COMMUNITY 26', 'Healthcare Providers in Ashaiman  Community 26']
+
+🟡 Dome  Haatso  Ashongman  Kwabenya
+   Document ID: a1cf0688-0ed5-46cf-8de3-0dfe9e484699
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in DOME', 'Healthcare Providers in DOME']
+
+🟡 Comm 22  Michel Camp  Afienya Road
+   Document ID: 376be1b0-91c6-4a8c-8290-29ab3618859b
+   Confidence: 0.95
+   Sources: ['Sry Providers - Premier Health Network', 'Healthcare Providers in COMMUNITY 26']
+
+🟡 Cape Coast  Environs
+   Document ID: 1ed147db-b83f-49e0-8fac-b1ba46094c7f
+   Confidence: 0.95
+   Sources: ['Premier Health Provider Network', 'Healthcare Providers in ENVIRONS']
+
+🟡 Ahodwo  Ahinsan
+   Document ID: 725bfec6-fa58-4168-9400-0e2273f258d8
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in AHINSAN', 'Healthcare Providers in AHODWO']
+
+🟡 LEGON & NORTH LEGON
+   Document ID: providers_area_legon_&_north_legon
+   Confidence: 0.95
+   Sources: ['Healthcare Providers in EAST LEGON', 'Healthcare Providers in EAST LEGON']
+
+================================================================================
+📈 SUMMARY STATISTICS
+================================================================================
+Total documents tested: 321
+Working correctly: 161 (50.2%)
+Definitely broken: 66 (20.6%)
+Needs review: 94 (29.3%)
+
+================================================================================
+🎯 CRITICAL CITIES STATUS
+================================================================================
+⚠️  KOKOMLEMLE: Suspicious
+⚠️  MAAMOBI: Suspicious
+⚠️  NIMA: Suspicious
+✅ TUDU: Working
+❌ MAKOLA: BROKEN
+⚠️  37 AREA: Suspicious
+❌ AMASAMAN: BROKEN
+✅ POKUASE: Working
+✅ TAMALE: Working
+✅ WA: Working
+✅ BOLGATANGA: Working
+❓ KUMASI: Not found in database
+
+💾 Full results saved to: /opt/kasaai/apps/automations/premier-health/rag_audit_results.json
+
+✅ Audit complete!

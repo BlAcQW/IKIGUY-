@@ -1,0 +1,10 @@
+{
+  "dataset": "Common Voice Twi",
+  "total_samples": 145,
+  "samples_with_twi_chars": 127,
+  "twi_percentage": 87.58620689655172,
+  "avg_word_count": 7.43448275862069,
+  "avg_char_count": 35.255172413793105,
+  "has_real_transcriptions": true,
+  "processing_date": "2025-09-06T04:09:46.776061"
+}

@@ -1,0 +1,70 @@
+{
+  "name": "Premier Health Navigator Squad",
+  "members": [
+    {
+      "assistant": "{{ROUTER_ASSISTANT_ID}}",
+      "assistantDestinations": [
+        {
+          "type": "assistant",
+          "assistantId": "{{GREATER_ACCRA_ASSISTANT_ID}}",
+          "assistantName": "Premier Health Greater Accra",
+          "message": "Let me connect you to our Greater Accra specialist who knows all the healthcare facilities in your area.",
+          "description": "Transfer to Greater Accra specialist for Accra, Tema, Madina, Legon, and surrounding areas"
+        },
+        {
+          "type": "assistant",
+          "assistantId": "{{ASHANTI_ASSISTANT_ID}}",
+          "assistantName": "Premier Health Ashanti",
+          "message": "Let me connect you to our Ashanti specialist who knows all the healthcare facilities in your area.",
+          "description": "Transfer to Ashanti specialist for Kumasi, Obuasi, Mampong, and surrounding areas"
+        },
+        {
+          "type": "assistant",
+          "assistantId": "{{NORTHERN_REGIONS_ASSISTANT_ID}}",
+          "assistantName": "Premier Health Northern Regions",
+          "message": "Let me connect you to our Northern regions specialist who knows all the healthcare facilities in your area.",
+          "description": "Transfer to Northern specialist for Tamale, Bolgatanga, Wa, Bawku, and surrounding areas"
+        },
+        {
+          "type": "assistant",
+          "assistantId": "{{WESTERN_AND_CENTRAL_ASSISTANT_ID}}",
+          "assistantName": "Premier Health Western and Central",
+          "message": "Let me connect you to our Western and Central specialist who knows all the healthcare facilities in your area.",
+          "description": "Transfer to Western/Central specialist for Takoradi, Sekondi, Cape Coast, and surrounding areas"
+        },
+        {
+          "type": "assistant",
+          "assistantId": "{{EASTERN_AND_VOLTA_ASSISTANT_ID}}",
+          "assistantName": "Premier Health Eastern and Volta",
+          "message": "Let me connect you to our Eastern and Volta specialist who knows all the healthcare facilities in your area.",
+          "description": "Transfer to Eastern/Volta specialist for Koforidua, Ho, Hohoe, and surrounding areas"
+        },
+        {
+          "type": "assistant",
+          "assistantId": "{{BONO_REGIONS_ASSISTANT_ID}}",
+          "assistantName": "Premier Health Bono Regions",
+          "message": "Let me connect you to our Bono specialist who knows all the healthcare facilities in your area.",
+          "description": "Transfer to Bono specialist for Sunyani, Techiman, Berekum, and surrounding areas"
+        }
+      ]
+    },
+    {
+      "assistant": "{{GREATER_ACCRA_ASSISTANT_ID}}"
+    },
+    {
+      "assistant": "{{ASHANTI_ASSISTANT_ID}}"
+    },
+    {
+      "assistant": "{{NORTHERN_REGIONS_ASSISTANT_ID}}"
+    },
+    {
+      "assistant": "{{WESTERN_AND_CENTRAL_ASSISTANT_ID}}"
+    },
+    {
+      "assistant": "{{EASTERN_AND_VOLTA_ASSISTANT_ID}}"
+    },
+    {
+      "assistant": "{{BONO_REGIONS_ASSISTANT_ID}}"
+    }
+  ]
+}

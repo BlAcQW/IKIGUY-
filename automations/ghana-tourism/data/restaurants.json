@@ -1,0 +1,248 @@
+{
+  "restaurants": [
+    {
+      "id": "rest_001",
+      "name": "Buka Restaurant",
+      "location": "Osu, Accra",
+      "region": "Greater Accra",
+      "cuisine_type": ["Nigerian", "West African"],
+      "price_range": "$$",
+      "description": "Popular restaurant serving authentic Nigerian and West African cuisine in a vibrant atmosphere.",
+      "specialties": ["Jollof rice", "Suya", "Pounded yam", "Pepper soup"],
+      "dining_options": ["Dine-in", "Takeaway", "Delivery"],
+      "average_meal_cost_ghs": "80-150",
+      "opening_hours": "11:00 AM - 11:00 PM (Daily)",
+      "contact": {
+        "phone": "+233 30 278 2222",
+        "website": "https://www.bukarestaurant.com"
+      },
+      "amenities": ["Outdoor seating", "Live music (weekends)", "Bar", "Wi-Fi"],
+      "dietary_options": ["Vegetarian options available"],
+      "popular_for": ["Lunch", "Dinner", "Weekend brunch"]
+    },
+    {
+      "id": "rest_002",
+      "name": "Chez Clarisse",
+      "location": "Labone, Accra",
+      "region": "Greater Accra",
+      "cuisine_type": ["Ivorian", "West African"],
+      "price_range": "$$$",
+      "description": "Elegant Ivorian restaurant known for authentic West African flavors and sophisticated ambiance.",
+      "specialties": ["Attiéké with grilled fish", "Poulet braisé", "Aloco", "Sauce graine"],
+      "dining_options": ["Dine-in", "Private dining"],
+      "average_meal_cost_ghs": "150-250",
+      "opening_hours": "12:00 PM - 10:00 PM (Tue-Sun, Closed Monday)",
+      "contact": {
+        "phone": "+233 30 277 6751",
+        "website": null
+      },
+      "amenities": ["Outdoor terrace", "Bar", "Parking"],
+      "dietary_options": ["Fish and seafood focus"],
+      "popular_for": ["Dinner", "Special occasions", "Business meetings"]
+    },
+    {
+      "id": "rest_003",
+      "name": "Skybar 25",
+      "location": "Osu, Accra (Accra Shopping Mall rooftop)",
+      "region": "Greater Accra",
+      "cuisine_type": ["Continental", "International", "Bar"],
+      "price_range": "$$$",
+      "description": "Rooftop bar and restaurant offering stunning city views, cocktails, and international cuisine.",
+      "specialties": ["Cocktails", "Burgers", "Pasta", "Grilled meats"],
+      "dining_options": ["Dine-in", "Bar service"],
+      "average_meal_cost_ghs": "120-200",
+      "opening_hours": "5:00 PM - Late (Daily)",
+      "contact": {
+        "phone": "+233 24 XXX XXXX",
+        "website": null
+      },
+      "amenities": ["Rooftop views", "Live DJ", "Full bar", "Outdoor seating"],
+      "dietary_options": ["Vegetarian options", "Vegan options"],
+      "popular_for": ["Drinks", "Dinner", "Nightlife", "Date night"]
+    },
+    {
+      "id": "rest_004",
+      "name": "Azmera Restaurant",
+      "location": "East Legon, Accra",
+      "region": "Greater Accra",
+      "cuisine_type": ["Ethiopian", "Eritrean"],
+      "price_range": "$$",
+      "description": "Authentic Ethiopian and Eritrean restaurant serving traditional injera-based dishes.",
+      "specialties": ["Doro wat", "Kitfo", "Injera", "Tibs", "Vegetarian platters"],
+      "dining_options": ["Dine-in", "Takeaway", "Delivery"],
+      "average_meal_cost_ghs": "70-120",
+      "opening_hours": "12:00 PM - 10:00 PM (Daily)",
+      "contact": {
+        "phone": "+233 30 254 XXXX",
+        "website": null
+      },
+      "amenities": ["Traditional seating", "Wi-Fi", "Parking"],
+      "dietary_options": ["Excellent vegetarian/vegan options"],
+      "popular_for": ["Lunch", "Dinner", "Group dining"]
+    },
+    {
+      "id": "rest_005",
+      "name": "Chez Afrique",
+      "location": "Osu, Accra",
+      "region": "Greater Accra",
+      "cuisine_type": ["Ghanaian", "West African"],
+      "price_range": "$$",
+      "description": "Cozy restaurant specializing in authentic Ghanaian dishes with a modern twist.",
+      "specialties": ["Banku and tilapia", "Red red", "Waakye", "Kelewele", "Groundnut soup"],
+      "dining_options": ["Dine-in", "Takeaway"],
+      "average_meal_cost_ghs": "50-100",
+      "opening_hours": "10:00 AM - 9:00 PM (Daily)",
+      "contact": {
+        "phone": "+233 24 XXX XXXX",
+        "website": null
+      },
+      "amenities": ["Outdoor seating", "Local art display", "Wi-Fi"],
+      "dietary_options": ["Vegetarian options"],
+      "popular_for": ["Traditional Ghanaian experience", "Lunch", "Dinner"]
+    },
+    {
+      "id": "rest_006",
+      "name": "Santoku Restaurant & Lounge",
+      "location": "Airport Residential Area, Accra",
+      "region": "Greater Accra",
+      "cuisine_type": ["Japanese", "Asian Fusion", "Sushi"],
+      "price_range": "$$$",
+      "description": "Upscale Japanese restaurant offering fresh sushi, sashimi, and Asian fusion dishes.",
+      "specialties": ["Sushi rolls", "Sashimi", "Teppanyaki", "Ramen", "Sake selection"],
+      "dining_options": ["Dine-in", "Takeaway", "Delivery"],
+      "average_meal_cost_ghs": "200-350",
+      "opening_hours": "12:00 PM - 11:00 PM (Daily)",
+      "contact": {
+        "phone": "+233 30 XXX XXXX",
+        "website": "https://www.santokurestaurant.com"
+      },
+      "amenities": ["Sushi bar", "Lounge area", "Full bar", "Parking", "Wi-Fi"],
+      "dietary_options": ["Vegetarian options", "Gluten-free options"],
+      "popular_for": ["Sushi lovers", "Business dinners", "Special occasions"]
+    },
+    {
+      "id": "rest_007",
+      "name": "Bloom Bar",
+      "location": "Roman Ridge, Accra",
+      "region": "Greater Accra",
+      "cuisine_type": ["International", "Bar Food"],
+      "price_range": "$$",
+      "description": "Trendy bar and restaurant known for its lively atmosphere, cocktails, and international menu.",
+      "specialties": ["Burgers", "Wings", "Cocktails", "Tapas"],
+      "dining_options": ["Dine-in", "Bar service"],
+      "average_meal_cost_ghs": "80-150",
+      "opening_hours": "5:00 PM - Late (Daily)",
+      "contact": {
+        "phone": "+233 30 296 7XXX",
+        "website": null
+      },
+      "amenities": ["Outdoor area", "Live music", "DJ nights", "Full bar"],
+      "dietary_options": ["Vegetarian options"],
+      "popular_for": ["After-work drinks", "Weekend hangouts", "Live entertainment"]
+    },
+    {
+      "id": "rest_008",
+      "name": "Mamma Mia Pizzeria",
+      "location": "Multiple locations (Osu, East Legon)",
+      "region": "Greater Accra",
+      "cuisine_type": ["Italian", "Pizza"],
+      "price_range": "$$",
+      "description": "Popular Italian restaurant chain serving authentic pizzas, pasta, and Italian classics.",
+      "specialties": ["Wood-fired pizzas", "Pasta", "Tiramisu", "Italian wines"],
+      "dining_options": ["Dine-in", "Takeaway", "Delivery"],
+      "average_meal_cost_ghs": "80-150",
+      "opening_hours": "11:00 AM - 11:00 PM (Daily)",
+      "contact": {
+        "phone": "+233 30 277 XXXX",
+        "website": "https://www.mammamiagh.com"
+      },
+      "amenities": ["Family-friendly", "Outdoor seating", "Wi-Fi", "Parking"],
+      "dietary_options": ["Vegetarian pizzas", "Gluten-free crust available"],
+      "popular_for": ["Family dinners", "Italian food", "Pizza delivery"]
+    },
+    {
+      "id": "rest_009",
+      "name": "Asanka Local",
+      "location": "Osu, Accra",
+      "region": "Greater Accra",
+      "cuisine_type": ["Ghanaian", "Street Food"],
+      "price_range": "$",
+      "description": "Casual eatery serving traditional Ghanaian street food and local favorites in a modern setting.",
+      "specialties": ["Waakye", "Kenkey and fish", "Banku", "Fufu", "Red red"],
+      "dining_options": ["Dine-in", "Takeaway"],
+      "average_meal_cost_ghs": "20-50",
+      "opening_hours": "7:00 AM - 9:00 PM (Daily)",
+      "contact": {
+        "phone": "+233 24 XXX XXXX",
+        "website": null
+      },
+      "amenities": ["Fast service", "Local atmosphere", "Affordable"],
+      "dietary_options": ["Traditional Ghanaian vegetarian dishes"],
+      "popular_for": ["Breakfast", "Lunch", "Authentic local food", "Budget dining"]
+    },
+    {
+      "id": "rest_010",
+      "name": "Bella Roma Italian Restaurant",
+      "location": "Labone, Accra",
+      "region": "Greater Accra",
+      "cuisine_type": ["Italian"],
+      "price_range": "$$$",
+      "description": "Fine dining Italian restaurant with an elegant atmosphere and authentic Italian cuisine.",
+      "specialties": ["Fresh pasta", "Seafood risotto", "Osso buco", "Italian wine selection"],
+      "dining_options": ["Dine-in", "Private dining"],
+      "average_meal_cost_ghs": "150-300",
+      "opening_hours": "12:00 PM - 11:00 PM (Tue-Sun, Closed Monday)",
+      "contact": {
+        "phone": "+233 30 XXX XXXX",
+        "website": null
+      },
+      "amenities": ["Elegant setting", "Full bar", "Parking", "Wi-Fi"],
+      "dietary_options": ["Vegetarian pasta options"],
+      "popular_for": ["Romantic dinners", "Business lunches", "Special occasions"]
+    }
+  ],
+  "food_categories": {
+    "ghanaian_traditional": [
+      "Fufu (pounded yam/cassava/plantain)",
+      "Banku (fermented corn dough)",
+      "Kenkey (fermented corn dough)",
+      "Jollof rice",
+      "Waakye (rice and beans)",
+      "Red red (bean stew with plantain)",
+      "Groundnut soup",
+      "Light soup",
+      "Palm nut soup",
+      "Tilapia",
+      "Kontomire (cocoyam leaves stew)",
+      "Kelewele (spicy fried plantain)"
+    ],
+    "street_food": [
+      "Waakye",
+      "Kelewele",
+      "Grilled tilapia",
+      "Fried yam with pepper",
+      "Bofrot (Ghanaian doughnut)",
+      "Roasted plantain",
+      "Grilled corn",
+      "Khebab",
+      "Meat pies",
+      "Fan ice (frozen yogurt)"
+    ]
+  },
+  "dining_tips": [
+    "Tipping: 10-15% is standard in restaurants",
+    "Payment: Cash is most common, some places accept mobile money and cards",
+    "Reservations: Recommended for upscale restaurants on weekends",
+    "Dress code: Smart casual for upscale restaurants",
+    "Food safety: Stick to busy, popular restaurants",
+    "Water: Ask for bottled water in restaurants",
+    "Spice levels: Ghanaian food can be spicy - ask for 'not too spicy' if sensitive",
+    "Best time to eat: Lunch (12-3 PM), Dinner (7-10 PM)"
+  ],
+  "price_guide": {
+    "$": "Under GHS 50 per person (Budget)",
+    "$$": "GHS 50-150 per person (Mid-range)",
+    "$$$": "GHS 150-300 per person (Upscale)",
+    "$$$$": "GHS 300+ per person (Fine dining)"
+  }
+}

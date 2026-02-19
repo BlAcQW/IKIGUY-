@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VAPI Widget Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      p {
+        color: #666;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>VAPI Widget Test Page</h1>
+      <p>
+        This is a test page to verify that the VAPI widget loads correctly. The
+        widget should appear in the bottom-right corner.
+      </p>
+      <p>
+        If you see any errors in the browser console, they will help us debug
+        the widget loading issues.
+      </p>
+    </div>
+
+    <!-- VAPI Widget -->
+    <vapi-widget
+      public-key="0c22dcea-0d6c-4fc0-8fb2-93292d8575e8"
+      assistant-id="2ac1c150-bfa0-41dd-8cb1-9f4321534c49"
+      mode="voice"
+      theme="dark"
+      base-bg-color="#000000"
+      accent-color="#14B8A6"
+      cta-button-color="#000000"
+      cta-button-text-color="#ffffff"
+      border-radius="large"
+      size="full"
+      position="bottom-right"
+      title="Talk to Test Assistant"
+      start-button-text="Start Call"
+      end-button-text="End Call"
+      chat-first-message="Hello! How can I help you today?"
+      chat-placeholder="Type your message..."
+      voice-show-transcript="true"
+      consent-required="true"
+      consent-title="Terms and conditions"
+      consent-content="By clicking 'Agree,' and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service."
+      consent-storage-key="vapi_widget_consent"
+    ></vapi-widget>
+
+    <script
+      src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
+      async
+      type="text/javascript"
+    ></script>
+  </body>
+</html>
+

@@ -1,0 +1,284 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1761054524.982232 2439821 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+🔧 FIXING BROKEN CITY EMBEDDINGS
+================================================================================
+Total broken cities to fix: 30
+================================================================================
+
+[1/30] Processing: Healthcare Providers in AKWATIA
+   Document ID: 1033
+   Original content length: 279 chars
+   Improved content length: 703 chars
+   ❌ Error processing AKWATIA: column "embedding" of relation "kb_documents" does not exist
+LINE 35:                         embedding = ARRAY[0.07069898,0.02916...
+                                 ^
+
+
+[2/30] Processing: Healthcare Providers in Akosombo
+   Document ID: 305
+   Original content length: 414 chars
+   Improved content length: 843 chars
+   ❌ Error processing AKOSOMBO: column "embedding" of relation "kb_documents" does not exist
+LINE 38:                         embedding = ARRAY[0.06385111,0.02909...
+                                 ^
+
+
+[3/30] Processing: Healthcare Providers in SUHUM
+   Document ID: 1022
+   Original content length: 484 chars
+   Improved content length: 898 chars
+   ❌ Error processing SUHUM: column "embedding" of relation "kb_documents" does not exist
+LINE 49:                         embedding = ARRAY[0.07223243, -0.016...
+                                 ^
+
+
+[4/30] Processing: Healthcare Providers in SEFWI ASAWINSO
+   Document ID: 1013
+   Original content length: 477 chars
+   Improved content length: 936 chars
+   ❌ Error processing SEFWI ASAWINSO: column "embedding" of relation "kb_documents" does not exist
+LINE 43:                         embedding = ARRAY[0.07274685,0.00530...
+                                 ^
+
+
+[5/30] Processing: Healthcare Providers in SEFWI BEKWAI
+   Document ID: 1010
+   Original content length: 342 chars
+   Improved content length: 791 chars
+   ❌ Error processing SEFWI BEKWAI: column "embedding" of relation "kb_documents" does not exist
+LINE 35:                         embedding = ARRAY[0.07972654,0.02030...
+                                 ^
+
+
+[6/30] Processing: Healthcare Providers in SEFWI ANHWIASO
+   Document ID: 1079
+   Original content length: 276 chars
+   Improved content length: 735 chars
+   ❌ Error processing SEFWI ANHWIASO: column "embedding" of relation "kb_documents" does not exist
+LINE 29:                         embedding = ARRAY[0.07075556,0.02926...
+                                 ^
+
+
+[7/30] Processing: Healthcare Providers in ASANKRAGWA
+   Document ID: 1004
+   Original content length: 337 chars
+   Improved content length: 776 chars
+   ❌ Error processing ASANKRAGWA: column "embedding" of relation "kb_documents" does not exist
+LINE 36:                         embedding = ARRAY[0.058157705, -0.00...
+                                 ^
+
+
+[8/30] Processing: Healthcare Providers in BOGOSO
+   Document ID: 1072
+   Original content length: 288 chars
+   Improved content length: 707 chars
+   ❌ Error processing BOGOSO: column "embedding" of relation "kb_documents" does not exist
+LINE 35:                         embedding = ARRAY[0.06481073,0.00639...
+                                 ^
+
+
+[9/30] Processing: Healthcare Providers in AJUMAKO
+   Document ID: 996
+   Original content length: 635 chars
+   Improved content length: 1059 chars
+   ❌ Error processing AJUMAKO: column "embedding" of relation "kb_documents" does not exist
+LINE 58:                         embedding = ARRAY[0.06712653,0.01895...
+                                 ^
+
+
+[10/30] Processing: Healthcare Providers in ASIKUMA
+   Document ID: 1065
+   Original content length: 635 chars
+   Improved content length: 1059 chars
+   ❌ Error processing ASIKUMA: column "embedding" of relation "kb_documents" does not exist
+LINE 58:                         embedding = ARRAY[0.07262505,0.01516...
+                                 ^
+
+
+[11/30] Processing: Healthcare Providers in MANKESSIM
+   Document ID: 994
+   Original content length: 416 chars
+   Improved content length: 850 chars
+   ❌ Error processing MANKESSIM: column "embedding" of relation "kb_documents" does not exist
+LINE 46:                         embedding = ARRAY[0.06903314,0.00588...
+                                 ^
+
+
+[12/30] Processing: Healthcare Providers in ASSIN
+   Document ID: 1061
+   Original content length: 1046 chars
+   Improved content length: 1460 chars
+   ❌ Error processing ASSIN: column "embedding" of relation "kb_documents" does not exist
+LINE 75:                         embedding = ARRAY[0.086278334, -0.01...
+                                 ^
+
+
+[13/30] Processing: Healthcare Providers in WENCHI
+   Document ID: 985
+   Original content length: 429 chars
+   Improved content length: 848 chars
+   ❌ Error processing WENCHI: column "embedding" of relation "kb_documents" does not exist
+LINE 43:                         embedding = ARRAY[0.07793289,0.01372...
+                                 ^
+
+
+[14/30] Processing: Healthcare Providers in KENYASE
+   Document ID: 1053
+   Original content length: 1051 chars
+   Improved content length: 1475 chars
+   ❌ Error processing KENYASE: column "embedding" of relation "kb_documents" does not exist
+LINE 74:                         embedding = ARRAY[0.05668694,0.01823...
+                                 ^
+
+
+[15/30] Processing: Healthcare Providers in TSE ADDO
+   Document ID: 905
+   Original content length: 1859 chars
+   Improved content length: 2288 chars
+   ❌ Error processing TSE ADDO: column "embedding" of relation "kb_documents" does not exist
+LINE 89:                         embedding = ARRAY[0.08670689,0.01665...
+                                 ^
+
+
+[16/30] Processing: Healthcare Providers in RIDGE
+   Document ID: 887
+   Original content length: 747 chars
+   Improved content length: 1161 chars
+   ❌ Error processing RIDGE: column "embedding" of relation "kb_documents" does not exist
+LINE 47:                         embedding = ARRAY[0.07437722, -0.004...
+                                 ^
+
+
+[17/30] Processing: Healthcare Providers in MAKOLA
+   Document ID: 437
+   Original content length: 2848 chars
+   Improved content length: 3267 chars
+   ❌ Error processing MAKOLA: column "embedding" of relation "kb_documents" does not exist
+LINE 162:                         embedding = ARRAY[0.04294091,0.04642...
+                                  ^
+
+
+[18/30] Processing: Healthcare Providers in LATEBIOKOSHIE
+   Document ID: 868
+   Original content length: 693 chars
+   Improved content length: 1147 chars
+   ❌ Error processing LATEBIOKOSHIE: column "embedding" of relation "kb_documents" does not exist
+LINE 44:                         embedding = ARRAY[0.05195078,0.03630...
+                                 ^
+
+
+[19/30] Processing: Claims Process and Reimbursement
+   Document ID: 1
+   Original content length: 998 chars
+   Improved content length: 1547 chars
+   ❌ Error processing LA: column "embedding" of relation "kb_documents" does not exist
+LINE 45:                         embedding = ARRAY[0.054155204, -0.02...
+                                 ^
+
+
+[20/30] Processing: Healthcare Providers in KWABENYA
+   Document ID: 863
+   Original content length: 1499 chars
+   Improved content length: 1928 chars
+   ❌ Error processing KWABENYA: column "embedding" of relation "kb_documents" does not exist
+LINE 74:                         embedding = ARRAY[0.074297,0.0236324...
+                                 ^
+
+
+[21/30] Processing: Healthcare Providers in KOKOMLEMLE
+   Document ID: 450
+   Original content length: 759 chars
+   Improved content length: 1198 chars
+   ❌ Error processing KOKOMLEMLE: column "embedding" of relation "kb_documents" does not exist
+LINE 51:                         embedding = ARRAY[0.07342701,0.02555...
+                                 ^
+
+
+[22/30] Processing: Healthcare Providers in DARKUMAN
+   Document ID: 847
+   Original content length: 1570 chars
+   Improved content length: 1999 chars
+   ❌ Error processing DARKUMAN: column "embedding" of relation "kb_documents" does not exist
+LINE 77:                         embedding = ARRAY[0.074364364, -0.01...
+                                 ^
+
+
+[23/30] Processing: Healthcare Providers in COMMUNITY 38
+   Document ID: 842
+   Original content length: 317 chars
+   Improved content length: 766 chars
+   ❌ Error processing COMMUNITY 38: column "embedding" of relation "kb_documents" does not exist
+LINE 28:                         embedding = ARRAY[0.056149192,0.0359...
+                                 ^
+
+
+[24/30] Processing: Healthcare Providers in AMANSAMAN
+   Document ID: 800
+   Original content length: 616 chars
+   Improved content length: 1050 chars
+   ❌ Error processing AMANSAMAN: column "embedding" of relation "kb_documents" does not exist
+LINE 44:                         embedding = ARRAY[0.06522341,0.00247...
+                                 ^
+
+
+[25/30] Processing: Healthcare Providers in ADJRINGANOR
+   Document ID: 792
+   Original content length: 2705 chars
+   Improved content length: 3149 chars
+   ❌ Error processing ADJRINGANOR: column "embedding" of relation "kb_documents" does not exist
+LINE 123:                         embedding = ARRAY[0.069977224, -0.02...
+                                  ^
+
+
+[26/30] Processing: Healthcare Providers in ADABRAKA
+   Document ID: 790
+   Original content length: 985 chars
+   Improved content length: 1414 chars
+   ❌ Error processing ADABRAKA: column "embedding" of relation "kb_documents" does not exist
+LINE 59:                         embedding = ARRAY[0.07720685,0.00466...
+                                 ^
+
+
+[27/30] Processing: Healthcare Providers in Accra Central  Tudu  Makola
+   Document ID: 299
+   Original content length: 2367 chars
+   Improved content length: 2891 chars
+   ❌ Error processing ACCRA CENTRAL: column "embedding" of relation "kb_documents" does not exist
+LINE 127:                         embedding = ARRAY[0.046991937,0.0308...
+                                  ^
+
+
+[28/30] Processing: Healthcare Providers in ABELENKPE
+   Document ID: 785
+   Original content length: 1354 chars
+   Improved content length: 1788 chars
+   ❌ Error processing ABELENKPE: column "embedding" of relation "kb_documents" does not exist
+LINE 70:                         embedding = ARRAY[0.061836656,0.0047...
+                                 ^
+
+
+[29/30] Processing: Healthcare Providers in Akosombo
+   Document ID: 305
+   Original content length: 414 chars
+   Improved content length: 843 chars
+   ❌ Error processing Akosombo: column "embedding" of relation "kb_documents" does not exist
+LINE 38:                         embedding = ARRAY[0.06385111,0.02909...
+                                 ^
+
+
+[30/30] Processing: Healthcare Providers in ADABRAKA
+   Document ID: 790
+   Original content length: 985 chars
+   Improved content length: 1414 chars
+   ❌ Error processing Adabraka: column "embedding" of relation "kb_documents" does not exist
+LINE 59:                         embedding = ARRAY[0.07720685,0.00466...
+                                 ^
+
+
+================================================================================
+📊 SUMMARY
+================================================================================
+Total cities processed: 30
+Successfully fixed: 0
+Failed: 30
+================================================================================

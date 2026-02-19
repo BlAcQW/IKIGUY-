@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Demo Request Received - Asenda AI{% endblock %}
+
+{% block content %}
+<h1>Great news, {{ name }}!</h1>
+
+<p>We've received your demo request for <strong>{{ company }}</strong> and we're excited to show you what Asenda AI can do.</p>
+
+{% if preferred_date or preferred_time %}
+<div class="highlight-box">
+    <p><strong>Your preferred time:</strong></p>
+    <p style="margin-top: 8px;">
+        {% if preferred_date %}{{ preferred_date }}{% endif %}
+        {% if preferred_time %} at {{ preferred_time }}{% endif %}
+    </p>
+</div>
+{% endif %}
+
+<div class="divider"></div>
+
+<p><strong>Here's what to expect:</strong></p>
+
+<div class="steps">
+    <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-text"><strong>Confirmation call</strong> - We'll reach out within 24 hours to confirm your demo time</div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-text"><strong>Calendar invite</strong> - You'll receive a meeting link with all the details</div>
+    </div>
+    <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-text"><strong>Personalized demo</strong> - See Asenda AI in action, tailored to your use case</div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<p><strong>During the demo, we'll cover:</strong></p>
+<ul style="color: #4a4a6a; padding-left: 20px;">
+    <li>Live demonstration of our voice AI agents</li>
+    <li>How Asenda AI integrates with your existing systems</li>
+    <li>ROI analysis for your specific use case</li>
+    <li>Pricing and implementation timeline</li>
+    <li>Q&A with our product specialists</li>
+</ul>
+
+<p style="text-align: center; margin-top: 24px;">
+    <a href="https://asenda.ai/#features" class="button">Explore Features Before Your Demo</a>
+</p>
+
+<div class="divider"></div>
+
+<p style="font-size: 14px; color: #71717a;">
+    Questions before the demo? Reply to this email or contact us at <strong>hello@asenda.ai</strong>.
+</p>
+{% endblock %}

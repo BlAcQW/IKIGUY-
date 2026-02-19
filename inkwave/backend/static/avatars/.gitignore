@@ -1,0 +1,6 @@
+# Ignore uploaded avatars
+*.jpg
+*.jpeg
+*.png
+*.webp
+!.gitkeep

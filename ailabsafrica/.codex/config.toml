@@ -1,0 +1,48 @@
+[mcp_servers.context7]
+command = "bunx"
+args = ["-y", "@upstash/context7-mcp"]
+# env = { "CONTEXT7_API_KEY" = "..." }
+
+# MCP servers configuration (TOML)
+
+[mcp_servers.supabase]
+command = "cmd"
+args = ["/c", "npx", "-y", "@supabase/mcp-server-supabase@latest", "--read-only", "--project-ref=<project-ref>"]
+
+[mcp_servers.supabase.env]
+SUPABASE_ACCESS_TOKEN = "<personal-access-token>"
+
+[mcp_servers."brave-search"]
+command = "npx"
+args = ["-y", "@mcp/brave-search"]
+
+[mcp_servers."brave-search".env]
+BRAVE_API_KEY = "BSAzgyfrNP7--3Wg1XwTOIDw-mogCJJ"
+
+[mcp_servers.firecrawl]
+command = "npx"
+args = ["-y", "@firecrawl/mcp-server"]
+
+[mcp_servers.firecrawl.env]
+FIRECRAWL_API_KEY = "fc-dec73a2970ae4afb9f32666e935684f4"
+
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+
+[mcp_servers.GitHub]
+# If you prefer splitting into command + args, you can.
+# Here we keep the single docker command string as provided.
+command = "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server"
+args = []
+
+[mcp_servers.GitHub.env]
+# Replace with your actual GitHub PAT
+GITHUB_PERSONAL_ACCESS_TOKEN = "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"
+
+[mcp_servers.Figma]
+url = "http://127.0.0.1:3845/sse"
+headers = {}
+
+[mcp_servers."crawl4ai-rag"]
+transport = "sse"
+url = "http://localhost:8051/sse"

@@ -1,0 +1,11 @@
+[
+  {
+    "provider": "f5tts",
+    "voice": "archbishop_1",
+    "language": "en",
+    "status": "success",
+    "duration": 13.813484,
+    "file_size": 575516,
+    "output_file": "/opt/kasaai/apps/voice-lab/clones/f5tts/archbishop_1_f5tts_eng_20251109_221128.wav"
+  }
+]

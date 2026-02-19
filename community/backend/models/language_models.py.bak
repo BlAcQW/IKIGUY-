@@ -1,0 +1,198 @@
+"""
+Language and family models for African Language Community Platform.
+
+Pydantic models for language families, subfamilies, and individual languages.
+"""
+
+from pydantic import BaseModel, Field
+from typing import Optional, List, Dict, Any
+from datetime import datetime
+from bson import ObjectId
+
+
+class PyObjectId(ObjectId):
+    """Custom ObjectId type for Pydantic models."""
+
+    @classmethod
+    def __get_pydantic_core_schema__(cls, source_type, handler):
+        from pydantic_core import core_schema
+        return core_schema.no_info_plain_validator_function(cls.validate)
+
+    @classmethod
+    def validate(cls, v):
+        if not ObjectId.is_valid(v):
+            raise ValueError("Invalid ObjectId")
+        return ObjectId(v)
+
+    @classmethod
+    def __get_pydantic_json_schema__(cls, field_schema):
+        field_schema.update(type="string")
+        return field_schema
+
+
+class LanguageFamily(BaseModel):
+    """
+    Language family model (e.g., Niger-Congo, Afroasiatic).
+
+    Represents the top-level grouping of related languages.
+    """
+
+    id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
+    name: str = Field(..., description="Family name (e.g., 'niger-congo')")
+    display_name: str = Field(..., description="Human-readable name")
+    description: str = Field(..., description="Family description and characteristics")
+    geographic_region: List[str] = Field(default=[], description="Primary geographic regions")
+    subfamilies: List[str] = Field(default=[], description="List of subfamily names")
+    shared_features: Dict[str, Any] = Field(default={}, description="Common linguistic features")
+    speaker_count_estimate: Optional[int] = Field(None, description="Estimated total speakers")
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: Optional[datetime] = None
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+
+
+class LanguageSubfamily(BaseModel):
+    """
+    Language subfamily model (e.g., Kwa, Yoruboid, Bantu).
+
+    Represents intermediate grouping within language families.
+    """
+
+    id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
+    family_id: PyObjectId = Field(..., description="Parent family ID")
+    name: str = Field(..., description="Subfamily name (e.g., 'kwa')")
+    display_name: str = Field(..., description="Human-readable name")
+    description: str = Field(..., description="Subfamily characteristics")
+    geographic_region: List[str] = Field(default=[], description="Geographic distribution")
+    languages: List[str] = Field(default=[], description="List of language codes")
+    shared_features: Dict[str, Any] = Field(default={}, description="Common subfamily features")
+    transfer_learning_efficiency: Dict[str, float] = Field(
+        default={}, description="Cross-language learning efficiency scores"
+    )
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: Optional[datetime] = None
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+
+
+class Language(BaseModel):
+    """
+    Individual language model (e.g., Twi, Yoruba, Swahili).
+
+    Represents specific languages within subfamilies.
+    """
+
+    id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
+    subfamily_id: PyObjectId = Field(..., description="Parent subfamily ID")
+    code: str = Field(..., description="ISO 639-3 language code")
+    name: str = Field(..., description="Language name in English")
+    native_name: str = Field(..., description="Language name in native script")
+    alternative_names: List[str] = Field(default=[], description="Alternative language names")
+
+    # Geographic and demographic info
+    countries: List[str] = Field(default=[], description="Countries where spoken")
+    regions: List[str] = Field(default=[], description="Specific regions/states")
+    speaker_count: Optional[int] = Field(None, description="Number of native speakers")
+    total_speakers: Optional[int] = Field(None, description="Including L2 speakers")
+
+    # Linguistic features
+    linguistic_features: Dict[str, Any] = Field(
+        default={}, description="Language-specific linguistic features"
+    )
+    phonetic_inventory: Dict[str, Any] = Field(
+        default={}, description="Phonemes and sound system"
+    )
+    tonal_system: Optional[Dict[str, Any]] = Field(
+        None, description="Tonal pattern information"
+    )
+    writing_systems: List[str] = Field(
+        default=[], description="Writing systems used (Latin, Arabic, etc.)"
+    )
+
+    # Cultural context
+    cultural_context: Dict[str, Any] = Field(
+        default={}, description="Cultural usage and context information"
+    )
+    dialects: List[str] = Field(default=[], description="Major dialect variations")
+
+    # Data availability and status
+    data_tier: str = Field(
+        default="tier-3", description="Data availability tier (tier-1/tier-2/tier-3)"
+    )
+    voice_support_level: str = Field(
+        default="basic", description="Voice AI support level"
+    )
+    training_data_availability: Dict[str, int] = Field(
+        default={}, description="Available training data by type"
+    )
+
+    # Metadata
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: Optional[datetime] = None
+    last_contribution: Optional[datetime] = None
+    active_contributors: int = Field(default=0)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+
+
+# Request/Response models
+
+class LanguageFamilyCreate(BaseModel):
+    """Request model for creating language families."""
+
+    name: str
+    display_name: str
+    description: str
+    geographic_region: List[str] = []
+    shared_features: Dict[str, Any] = {}
+    speaker_count_estimate: Optional[int] = None
+
+
+class LanguageSubfamilyCreate(BaseModel):
+    """Request model for creating language subfamilies."""
+
+    family_id: str
+    name: str
+    display_name: str
+    description: str
+    geographic_region: List[str] = []
+    shared_features: Dict[str, Any] = {}
+
+
+class LanguageCreate(BaseModel):
+    """Request model for creating languages."""
+
+    subfamily_id: str
+    code: str
+    name: str
+    native_name: str
+    alternative_names: List[str] = []
+    countries: List[str] = []
+    regions: List[str] = []
+    speaker_count: Optional[int] = None
+    total_speakers: Optional[int] = None
+    linguistic_features: Dict[str, Any] = {}
+    cultural_context: Dict[str, Any] = {}
+    dialects: List[str] = []
+
+
+class LanguageStats(BaseModel):
+    """Language statistics for community dashboard."""
+
+    total_submissions: int = 0
+    audio_hours: float = 0.0
+    text_samples: int = 0
+    validation_rate: float = 0.0
+    active_contributors: int = 0
+    quality_distribution: Dict[str, int] = Field(default_factory=dict)
+    recent_activity: List[Dict[str, Any]] = Field(default_factory=list)
+    top_contributors: List[Dict[str, Any]] = Field(default_factory=list)

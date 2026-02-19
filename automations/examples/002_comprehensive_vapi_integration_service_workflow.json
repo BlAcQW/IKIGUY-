@@ -1,0 +1,337 @@
+{
+  "meta": {
+    "instanceId": "bf3e42f3d16f2353e6001b8b22c87b09e26c42b72edeac83a3bf9fb7e5b7b3c6"
+  },
+  "name": "Premier Health Vapi Integration Service Workflow",
+  "version": 1,
+  "description": "Comprehensive voice assistant for Premier Health using existing Integration Service architecture with HubSpot, Email, Tavily, Supabase, and Calendar integrations",
+  "nodes": [
+    {
+      "id": "form-trigger",
+      "name": "Setup Form",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "parameters": {
+        "formTitle": "Premier Health Vapi Integration Service Setup",
+        "formDescription": "Configure your Premier Health voice assistant with comprehensive integration capabilities using the existing Integration Service",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Server URL",
+              "fieldType": "text",
+              "requiredField": true,
+              "defaultValue": "https://api.ailabsafrica.com"
+            },
+            {
+              "fieldLabel": "Organization Name",
+              "fieldType": "text",
+              "requiredField": true,
+              "defaultValue": "Premier Health Ghana"
+            },
+            {
+              "fieldLabel": "Service Area",
+              "fieldType": "text",
+              "requiredField": true,
+              "defaultValue": "Greater Accra"
+            },
+            {
+              "fieldLabel": "Support Email",
+              "fieldType": "email",
+              "requiredField": true,
+              "defaultValue": "support@premierhealth.com"
+            },
+            {
+              "fieldLabel": "Test Email",
+              "fieldType": "email",
+              "requiredField": true,
+              "defaultValue": "ailabsafrica@gmail.com"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "vapi-assistant-create",
+      "name": "Create Vapi Assistant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/assistant",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "vapiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 2fac5c5d-5355-463c-82ed-4df8f4690a6e"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $('Setup Form').item.json.organizationName }} Voice Assistant"
+            },
+            {
+              "name": "model",
+              "value": {
+                "provider": "anthropic",
+                "model": "claude-3-5-sonnet-20241022",
+                "temperature": 0.7,
+                "maxTokens": 2048,
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are an intelligent healthcare assistant for {{ $('Setup Form').item.json.organizationName }} serving the {{ $('Setup Form').item.json.serviceArea }} region.\n\nYour capabilities include:\n- Healthcare provider search (doctors, hospitals, clinics, pharmacies)\n- Emergency provider lookup\n- Information delivery via email and SMS\n- Calendar appointment scheduling\n- HubSpot contact management\n- Web search for current health information\n- Support ticket escalation\n\nPersonality:\n- Professional and empathetic\n- Healthcare-focused communication\n- Clear and action-oriented\n- Patient and understanding\n\nWhen users need healthcare services:\n1. Understand their specific healthcare needs\n2. Confirm their location in {{ $('Setup Form').item.json.serviceArea }}\n3. Search for relevant providers using search_healthcare_providers\n4. Present results clearly and offer to:\n   - Send details via email using send_email_notification\n   - Schedule appointments using schedule_calendar_appointment\n   - Save their information using save_contact_data\n   - Search for additional information using search_web_information\n\nFor complex queries or when you can't find suitable providers, use escalate_to_support to create a support ticket.\n\nAlways be helpful, accurate, and focused on connecting people with the healthcare services they need."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "voice",
+              "value": {
+                "provider": "11labs",
+                "voiceId": "21m00Tcm4TlvDq8ikWAM"
+              }
+            },
+            {
+              "name": "firstMessage",
+              "value": "Hello! I'm your {{ $('Setup Form').item.json.organizationName }} healthcare assistant. I can help you find doctors, hospitals, clinics, and pharmacies in the {{ $('Setup Form').item.json.serviceArea }} area. I can also schedule appointments, send you information via email, and assist with urgent healthcare needs. How can I help you today?"
+            },
+            {
+              "name": "recordingEnabled",
+              "value": true
+            },
+            {
+              "name": "hipaaEnabled",
+              "value": true
+            },
+            {
+              "name": "clientMessages",
+              "value": [
+                "transcript",
+                "hang",
+                "function-call",
+                "tool-calls"
+              ]
+            },
+            {
+              "name": "serverMessages",
+              "value": [
+                "end-of-call-report",
+                "status-update",
+                "hang",
+                "function-call"
+              ]
+            },
+            {
+              "name": "endCallMessage",
+              "value": "Thank you for contacting {{ $('Setup Form').item.json.organizationName }}. If you need further assistance, please don't hesitate to call back or contact our support team at {{ $('Setup Form').item.json.supportEmail }}. Take care!"
+            },
+            {
+              "name": "backgroundSound",
+              "value": "office"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "create-integration-tools",
+      "name": "Create Integration Service Tools",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 300],
+      "parameters": {
+        "language": "javascript",
+        "jsCode": "const serverUrl = $('Setup Form').item.json.serverUrl;\nconst orgName = $('Setup Form').item.json.organizationName;\n\n// Create comprehensive integration tools using the existing Integration Service\nconst tools = [\n  {\n    \"async\": true,\n    \"messages\": [\n      {\n        \"type\": \"request-start\",\n        \"content\": \"Searching for healthcare providers...\"\n      },\n      {\n        \"type\": \"request-complete\", \n        \"content\": \"Found healthcare providers in your area.\"\n      }\n    ],\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"search_healthcare_providers\",\n      \"description\": \"Search for healthcare providers including doctors, hospitals, clinics, and pharmacies in the Greater Accra region. Use this when users need to find medical services.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"query\": {\n            \"type\": \"string\",\n            \"description\": \"Search query describing the type of healthcare provider or service needed\"\n          },\n          \"location\": {\n            \"type\": \"string\", \n            \"description\": \"Specific location or area within Greater Accra region\"\n          },\n          \"specialty\": {\n            \"type\": \"string\",\n            \"description\": \"Medical specialty if looking for a specialist doctor\"\n          },\n          \"provider_type\": {\n            \"type\": \"string\",\n            \"enum\": [\"doctor\", \"hospital\", \"clinic\", \"pharmacy\", \"emergency\"],\n            \"description\": \"Type of healthcare provider\"\n          },\n          \"max_results\": {\n            \"type\": \"integer\",\n            \"default\": 5,\n            \"description\": \"Maximum number of results to return\"\n          }\n        },\n        \"required\": [\"query\", \"location\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 20,\n      \"url\": `${serverUrl}/premier-health/vapi-webhook`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"async\": true,\n    \"messages\": [\n      {\n        \"type\": \"request-start\",\n        \"content\": \"Sending email notification...\"\n      },\n      {\n        \"type\": \"request-complete\",\n        \"content\": \"Email sent successfully.\"\n      }\n    ],\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"send_email_notification\",\n      \"description\": \"Send healthcare provider information or appointment details via email using the Integration Service Resend integration.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"integration_name\": {\n            \"type\": \"string\",\n            \"default\": \"resend_consolidated\",\n            \"description\": \"Integration service name\"\n          },\n          \"action\": {\n            \"type\": \"string\",\n            \"default\": \"send_email\",\n            \"description\": \"Action to execute\"\n          },\n          \"recipient_email\": {\n            \"type\": \"string\",\n            \"description\": \"Email address to send information to\"\n          },\n          \"subject\": {\n            \"type\": \"string\",\n            \"description\": \"Email subject line\"\n          },\n          \"content\": {\n            \"type\": \"string\",\n            \"description\": \"Email content with healthcare provider details\"\n          },\n          \"sender_name\": {\n            \"type\": \"string\",\n            \"default\": orgName,\n            \"description\": \"Sender name\"\n          }\n        },\n        \"required\": [\"recipient_email\", \"subject\", \"content\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integration-webhooks/execute`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"async\": true,\n    \"messages\": [\n      {\n        \"type\": \"request-start\",\n        \"content\": \"Searching for current health information...\"\n      },\n      {\n        \"type\": \"request-complete\",\n        \"content\": \"Found relevant health information.\"\n      }\n    ],\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"search_web_information\",\n      \"description\": \"Search the web for current health information, medical guidelines, or healthcare news using the Integration Service Tavily search.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"integration_name\": {\n            \"type\": \"string\",\n            \"default\": \"tavily_consolidated\",\n            \"description\": \"Integration service name\"\n          },\n          \"action\": {\n            \"type\": \"string\",\n            \"default\": \"search\",\n            \"description\": \"Action to execute\"\n          },\n          \"query\": {\n            \"type\": \"string\",\n            \"description\": \"Search query for health information\"\n          },\n          \"include_domains\": {\n            \"type\": \"array\",\n            \"items\": {\"type\": \"string\"},\n            \"description\": \"Trusted health domains to include in search\"\n          },\n          \"max_results\": {\n            \"type\": \"integer\",\n            \"default\": 5,\n            \"description\": \"Maximum number of search results\"\n          }\n        },\n        \"required\": [\"query\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integration-webhooks/execute`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"async\": true,\n    \"messages\": [\n      {\n        \"type\": \"request-start\",\n        \"content\": \"Saving contact information...\"\n      },\n      {\n        \"type\": \"request-complete\",\n        \"content\": \"Contact information saved successfully.\"\n      }\n    ],\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"save_contact_data\",\n      \"description\": \"Save patient contact information and interaction history using the Integration Service HubSpot CRM integration.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"integration_name\": {\n            \"type\": \"string\",\n            \"default\": \"hubspot_consolidated\",\n            \"description\": \"Integration service name\"\n          },\n          \"action\": {\n            \"type\": \"string\",\n            \"default\": \"create_contact\",\n            \"description\": \"Action to execute\"\n          },\n          \"first_name\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's first name\"\n          },\n          \"last_name\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's last name\"\n          },\n          \"email\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's email address\"\n          },\n          \"phone\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's phone number\"\n          },\n          \"healthcare_needs\": {\n            \"type\": \"string\",\n            \"description\": \"Description of healthcare needs discussed\"\n          },\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's location or area\"\n          },\n          \"interaction_notes\": {\n            \"type\": \"string\",\n            \"description\": \"Notes from the conversation\"\n          }\n        },\n        \"required\": [\"first_name\", \"email\", \"healthcare_needs\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integration-webhooks/execute`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"async\": true,\n    \"messages\": [\n      {\n        \"type\": \"request-start\",\n        \"content\": \"Scheduling appointment...\"\n      },\n      {\n        \"type\": \"request-complete\",\n        \"content\": \"Appointment scheduled successfully.\"\n      }\n    ],\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"schedule_calendar_appointment\",\n      \"description\": \"Schedule healthcare appointments using the Integration Service Calendly integration.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"integration_name\": {\n            \"type\": \"string\",\n            \"default\": \"calendly_consolidated\",\n            \"description\": \"Integration service name\"\n          },\n          \"action\": {\n            \"type\": \"string\",\n            \"default\": \"create_event\",\n            \"description\": \"Action to execute\"\n          },\n          \"patient_name\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's full name\"\n          },\n          \"patient_email\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's email address\"\n          },\n          \"patient_phone\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's phone number\"\n          },\n          \"appointment_type\": {\n            \"type\": \"string\",\n            \"description\": \"Type of appointment (consultation, follow-up, etc.)\"\n          },\n          \"preferred_date\": {\n            \"type\": \"string\",\n            \"description\": \"Preferred appointment date\"\n          },\n          \"preferred_time\": {\n            \"type\": \"string\",\n            \"description\": \"Preferred appointment time\"\n          },\n          \"provider_name\": {\n            \"type\": \"string\",\n            \"description\": \"Healthcare provider name\"\n          },\n          \"notes\": {\n            \"type\": \"string\",\n            \"description\": \"Additional notes or requirements\"\n          }\n        },\n        \"required\": [\"patient_name\", \"patient_email\", \"appointment_type\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/integration-webhooks/execute`,\n      \"method\": \"POST\"\n    }\n  },\n  {\n    \"async\": true,\n    \"messages\": [\n      {\n        \"type\": \"request-start\",\n        \"content\": \"Creating support ticket...\"\n      },\n      {\n        \"type\": \"request-complete\",\n        \"content\": \"Support ticket created successfully.\"\n      }\n    ],\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"escalate_to_support\",\n      \"description\": \"Create a support ticket for complex healthcare queries that cannot be resolved through standard provider search.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"customer_name\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's full name\"\n          },\n          \"customer_email\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's email for follow-up\"\n          },\n          \"customer_phone\": {\n            \"type\": \"string\",\n            \"description\": \"Patient's phone number\"\n          },\n          \"search_query\": {\n            \"type\": \"string\",\n            \"description\": \"What the patient was searching for\"\n          },\n          \"location_searched\": {\n            \"type\": \"string\",\n            \"description\": \"Area or location they searched in\"\n          },\n          \"issue_description\": {\n            \"type\": \"string\",\n            \"description\": \"Detailed description of the issue or complex request\"\n          },\n          \"urgency_level\": {\n            \"type\": \"string\",\n            \"enum\": [\"low\", \"medium\", \"high\", \"urgent\"],\n            \"default\": \"medium\",\n            \"description\": \"Urgency level of the request\"\n          }\n        },\n        \"required\": [\"customer_name\", \"customer_email\", \"search_query\", \"issue_description\"]\n      }\n    },\n    \"server\": {\n      \"timeout\": 15,\n      \"url\": `${serverUrl}/premier-health/vapi-webhook`,\n      \"method\": \"POST\"\n    }\n  }\n];\n\nreturn { tools, toolCount: tools.length };"
+      }
+    },
+    {
+      "id": "update-assistant-tools",
+      "name": "Update Assistant with Integration Tools",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [960, 300],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ \"https://api.vapi.ai/assistant/\" + $('Create Vapi Assistant').item.json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "vapiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 2fac5c5d-5355-463c-82ed-4df8f4690a6e"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "serverUrl",
+              "value": "={{ $('Setup Form').item.json.serverUrl + '/vapi-webhook' }}"
+            },
+            {
+              "name": "tools",
+              "value": "={{ $('Create Integration Service Tools').item.json.tools }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "create-phone-number",
+      "name": "Create Phone Number",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/phone-number",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "vapiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 2fac5c5d-5355-463c-82ed-4df8f4690a6e"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "provider",
+              "value": "twilio"
+            },
+            {
+              "name": "assistantId",
+              "value": "={{ $('Create Vapi Assistant').item.json.id }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $('Setup Form').item.json.organizationName + ' Healthcare Hotline' }}"
+            },
+            {
+              "name": "serverUrl",
+              "value": "={{ $('Setup Form').item.json.serverUrl + '/vapi-webhook' }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "test-integrations",
+      "name": "Test All Integrations",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1440, 300],
+      "parameters": {
+        "language": "javascript",
+        "jsCode": "const serverUrl = $('Setup Form').item.json.serverUrl;\nconst testEmail = $('Setup Form').item.json.testEmail;\nconst orgName = $('Setup Form').item.json.organizationName;\n\n// Create comprehensive integration test scenarios\nconst integrationTests = [\n  {\n    \"name\": \"HubSpot Contact Creation Test\",\n    \"integration\": \"hubspot_consolidated\",\n    \"action\": \"create_contact\",\n    \"endpoint\": `${serverUrl}/integration-webhooks/execute`,\n    \"payload\": {\n      \"integration_name\": \"hubspot_consolidated\",\n      \"action\": \"create_contact\",\n      \"first_name\": \"Test\",\n      \"last_name\": \"Patient\",\n      \"email\": testEmail,\n      \"phone\": \"+233201234567\",\n      \"healthcare_needs\": \"Cardiology consultation in Accra\",\n      \"location\": \"East Legon, Accra\",\n      \"interaction_notes\": \"Voice assistant test - comprehensive integration workflow\"\n    }\n  },\n  {\n    \"name\": \"Resend Email Test\",\n    \"integration\": \"resend_consolidated\",\n    \"action\": \"send_email\",\n    \"endpoint\": `${serverUrl}/integration-webhooks/execute`,\n    \"payload\": {\n      \"integration_name\": \"resend_consolidated\",\n      \"action\": \"send_email\",\n      \"recipient_email\": testEmail,\n      \"subject\": `${orgName} Healthcare Provider Information`,\n      \"content\": \"Dear Patient,\\n\\nThank you for using our voice assistant. Here are the healthcare providers we found:\\n\\n1. Korle-Bu Teaching Hospital - Cardiology Department\\n2. Greater Accra Regional Hospital - General Medicine\\n3. Trust Hospital - Specialist Care\\n\\nFor appointments, please call the providers directly or use our scheduling service.\\n\\nBest regards,\\n${orgName} Team\",\n      \"sender_name\": orgName\n    }\n  },\n  {\n    \"name\": \"Tavily Health Search Test\", \n    \"integration\": \"tavily_consolidated\",\n    \"action\": \"search\",\n    \"endpoint\": `${serverUrl}/integration-webhooks/execute`,\n    \"payload\": {\n      \"integration_name\": \"tavily_consolidated\",\n      \"action\": \"search\",\n      \"query\": \"cardiovascular health guidelines Ghana healthcare\",\n      \"include_domains\": [\"who.int\", \"moh.gov.gh\", \"ghc.org.gh\"],\n      \"max_results\": 3\n    }\n  },\n  {\n    \"name\": \"Calendly Appointment Test\",\n    \"integration\": \"calendly_consolidated\", \n    \"action\": \"create_event\",\n    \"endpoint\": `${serverUrl}/integration-webhooks/execute`,\n    \"payload\": {\n      \"integration_name\": \"calendly_consolidated\",\n      \"action\": \"create_event\",\n      \"patient_name\": \"Test Patient\",\n      \"patient_email\": testEmail,\n      \"patient_phone\": \"+233201234567\",\n      \"appointment_type\": \"General Consultation\",\n      \"preferred_date\": \"2024-01-15\",\n      \"preferred_time\": \"10:00 AM\",\n      \"provider_name\": \"Dr. Test Provider\",\n      \"notes\": \"Voice assistant integration test appointment\"\n    }\n  },\n  {\n    \"name\": \"Premier Health Provider Search Test\",\n    \"integration\": \"premier_health\",\n    \"action\": \"search_providers\",\n    \"endpoint\": `${serverUrl}/premier-health/vapi-webhook`,\n    \"payload\": {\n      \"query\": \"cardiologist\",\n      \"location\": \"Accra\",\n      \"specialty\": \"cardiology\",\n      \"provider_type\": \"doctor\",\n      \"max_results\": 3\n    }\n  }\n];\n\nconst testSummary = {\n  \"total_tests\": integrationTests.length,\n  \"integrations_tested\": [\n    \"hubspot_consolidated\",\n    \"resend_consolidated\", \n    \"tavily_consolidated\",\n    \"calendly_consolidated\",\n    \"premier_health\"\n  ],\n  \"test_scenarios\": integrationTests.map(test => ({\n    \"name\": test.name,\n    \"integration\": test.integration,\n    \"endpoint\": test.endpoint\n  })),\n  \"voice_test_instructions\": {\n    \"step_1\": \"Call the generated phone number\",\n    \"step_2\": \"Say: 'I need a cardiologist in Accra and want the information sent to my email'\",\n    \"step_3\": \"Provide email when asked: \" + testEmail,\n    \"step_4\": \"Ask to schedule an appointment\",\n    \"step_5\": \"Ask to save your contact information\",\n    \"step_6\": \"Request current health guidelines\",\n    \"expected_results\": [\n      \"HubSpot contact created\",\n      \"Email sent with provider information\",\n      \"Calendar appointment scheduled\",\n      \"Web search results provided\",\n      \"All integrations working via voice\"\n    ]\n  }\n};\n\nreturn { integrationTests, testSummary };"
+      }
+    },
+    {
+      "id": "generate-summary",
+      "name": "Generate Setup Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1680, 300],
+      "parameters": {
+        "language": "javascript",
+        "jsCode": "const formData = $('Setup Form').item.json;\nconst assistant = $('Create Vapi Assistant').item.json;\nconst tools = $('Create Integration Service Tools').item.json;\nconst phoneNumber = $('Create Phone Number').item.json;\nconst tests = $('Test All Integrations').item.json;\n\nconst summary = {\n  \"workflow_name\": \"Premier Health Vapi Integration Service Workflow\",\n  \"version\": \"002\",\n  \"setup_date\": new Date().toISOString(),\n  \"organization\": {\n    \"name\": formData.organizationName,\n    \"service_area\": formData.serviceArea,\n    \"support_email\": formData.supportEmail,\n    \"server_url\": formData.serverUrl\n  },\n  \"vapi_configuration\": {\n    \"assistant_id\": assistant.id,\n    \"assistant_name\": assistant.name,\n    \"phone_number\": phoneNumber.number || \"Phone number creation pending\",\n    \"phone_number_id\": phoneNumber.id,\n    \"model\": \"claude-3-5-sonnet-20241022\",\n    \"voice_provider\": \"11labs\",\n    \"hipaa_enabled\": true,\n    \"recording_enabled\": true\n  },\n  \"integration_architecture\": {\n    \"service_type\": \"Integration Service Consolidated\",\n    \"total_tools\": tools.toolCount,\n    \"integration_endpoint\": formData.serverUrl + \"/integration-webhooks/execute\",\n    \"premier_health_endpoint\": formData.serverUrl + \"/premier-health/vapi-webhook\",\n    \"consolidated_services\": [\n      \"hubspot_consolidated - CRM and contact management\",\n      \"resend_consolidated - Email notifications\", \n      \"tavily_consolidated - Web search and research\",\n      \"calendly_consolidated - Appointment scheduling\",\n      \"premier_health - Healthcare provider search\"\n    ]\n  },\n  \"tools_configured\": [\n    {\n      \"name\": \"search_healthcare_providers\",\n      \"description\": \"Find doctors, hospitals, clinics, pharmacies\",\n      \"endpoint\": \"premier-health/vapi-webhook\"\n    },\n    {\n      \"name\": \"send_email_notification\", \n      \"description\": \"Send provider info via email (Resend)\",\n      \"integration\": \"resend_consolidated\"\n    },\n    {\n      \"name\": \"search_web_information\",\n      \"description\": \"Search health information (Tavily)\",\n      \"integration\": \"tavily_consolidated\"\n    },\n    {\n      \"name\": \"save_contact_data\",\n      \"description\": \"Save patient info (HubSpot)\",\n      \"integration\": \"hubspot_consolidated\"\n    },\n    {\n      \"name\": \"schedule_calendar_appointment\",\n      \"description\": \"Schedule appointments (Calendly)\",\n      \"integration\": \"calendly_consolidated\"\n    },\n    {\n      \"name\": \"escalate_to_support\",\n      \"description\": \"Create support tickets (Freshdesk)\",\n      \"endpoint\": \"premier-health/vapi-webhook\"\n    }\n  ],\n  \"testing_information\": {\n    \"comprehensive_tests_configured\": tests.testSummary.total_tests,\n    \"integrations_tested\": tests.testSummary.integrations_tested,\n    \"test_email\": formData.testEmail,\n    \"voice_test_instructions\": tests.testSummary.voice_test_instructions\n  },\n  \"key_improvements\": [\n    \"Uses existing Integration Service architecture\",\n    \"Leverages consolidated service instances\", \n    \"Proper webhook routing via integration-webhooks/execute\",\n    \"Maintains Premier Health custom tools for healthcare search\",\n    \"Comprehensive integration testing included\",\n    \"All major CRM, Email, Search, Calendar tools integrated\"\n  ],\n  \"next_steps\": [\n    \"Test voice conversation using provided phone number\",\n    \"Verify all integrations work via voice commands\",\n    \"Monitor integration webhook logs\",\n    \"Check HubSpot for contact creation\",\n    \"Verify emails sent to \" + formData.testEmail,\n    \"Confirm calendar appointments in Calendly\",\n    \"Review Tavily search results\"\n  ],\n  \"webhook_endpoints\": {\n    \"main_webhook\": formData.serverUrl + \"/vapi-webhook\",\n    \"integration_service\": formData.serverUrl + \"/integration-webhooks/execute\",\n    \"premier_health\": formData.serverUrl + \"/premier-health/vapi-webhook\"\n  }\n};\n\nreturn summary;"
+      }
+    }
+  ],
+  "connections": {
+    "form-trigger": {
+      "main": [
+        [
+          {
+            "node": "vapi-assistant-create",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "vapi-assistant-create": {
+      "main": [
+        [
+          {
+            "node": "create-integration-tools",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create-integration-tools": {
+      "main": [
+        [
+          {
+            "node": "update-assistant-tools",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update-assistant-tools": {
+      "main": [
+        [
+          {
+            "node": "create-phone-number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create-phone-number": {
+      "main": [
+        [
+          {
+            "node": "test-integrations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "test-integrations": {
+      "main": [
+        [
+          {
+            "node": "generate-summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-20T10:00:00.000Z",
+  "versionId": "002"
+}

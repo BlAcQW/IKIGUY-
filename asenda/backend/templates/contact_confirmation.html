@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Thanks for Contacting Us - Asenda AI{% endblock %}
+
+{% block content %}
+<h1>Thanks for reaching out, {{ name }}!</h1>
+
+<p>We've received your message and appreciate you taking the time to contact us.</p>
+
+{% if message %}
+<div class="highlight-box">
+    <p><strong>Your message:</strong></p>
+    <p style="margin-top: 8px; font-style: italic;">"{{ message[:500] }}{% if message|length > 500 %}...{% endif %}"</p>
+</div>
+{% endif %}
+
+<p>Our team is reviewing your inquiry and will get back to you within <strong>24 hours</strong>.</p>
+
+<div class="divider"></div>
+
+<p><strong>What happens next?</strong></p>
+
+<div class="steps">
+    <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-text">Our team reviews your message and matches you with the right specialist</div>
+    </div>
+    <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-text">We'll reach out via email or phone within 24 hours</div>
+    </div>
+    <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-text">Together, we'll explore how Asenda AI can help your business</div>
+    </div>
+</div>
+
+<p>In the meantime, feel free to explore our solutions:</p>
+
+<p style="text-align: center;">
+    <a href="https://asenda.ai/#services" class="button">Explore Our Services</a>
+</p>
+
+<div class="divider"></div>
+
+<p style="font-size: 14px; color: #71717a;">
+    Need immediate assistance? Reply to this email or call us at <strong>+1 (555) 123-4567</strong>.
+</p>
+{% endblock %}

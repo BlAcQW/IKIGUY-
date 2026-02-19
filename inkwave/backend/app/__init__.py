@@ -1,0 +1,1 @@
+"""InkWave Backend Application."""

@@ -1,0 +1,256 @@
+{
+  "domestic_flights": {
+    "airlines": [
+      {
+        "name": "PassionAir",
+        "type": "Domestic airline",
+        "routes": ["Accra - Kumasi", "Accra - Tamale", "Accra - Takoradi"],
+        "website": "https://www.fly-passionair.com",
+        "phone": "+233 302 740 340",
+        "booking_info": "Online booking available, book at least 24 hours in advance"
+      },
+      {
+        "name": "Africa World Airlines (AWA)",
+        "type": "Regional airline",
+        "routes": ["Accra - Kumasi", "Accra - Tamale"],
+        "website": "https://www.flyafricaworld.com",
+        "phone": "+233 302 511 105",
+        "booking_info": "Online and mobile app booking available"
+      }
+    ],
+    "major_airports": [
+      {
+        "name": "Kotoka International Airport",
+        "code": "ACC",
+        "location": "Accra",
+        "type": "International",
+        "services": ["Immigration", "Customs", "Currency exchange", "Car rental", "Restaurants", "Duty-free shopping"]
+      },
+      {
+        "name": "Kumasi Airport",
+        "code": "KMS",
+        "location": "Kumasi",
+        "type": "Domestic",
+        "services": ["Check-in", "Basic amenities", "Car rental"]
+      },
+      {
+        "name": "Tamale Airport",
+        "code": "TML",
+        "location": "Tamale",
+        "type": "Domestic",
+        "services": ["Check-in", "Basic amenities"]
+      },
+      {
+        "name": "Takoradi Airport",
+        "code": "TKD",
+        "location": "Takoradi",
+        "type": "Domestic",
+        "services": ["Check-in", "Basic amenities"]
+      }
+    ]
+  },
+  "intercity_buses": {
+    "companies": [
+      {
+        "name": "VIP Transport",
+        "type": "Premium bus service",
+        "routes": [
+          {"from": "Accra", "to": "Kumasi", "duration": "4-5 hours", "price_range_ghs": "80-120"},
+          {"from": "Accra", "to": "Takoradi", "duration": "4 hours", "price_range_ghs": "70-100"},
+          {"from": "Accra", "to": "Cape Coast", "duration": "2.5 hours", "price_range_ghs": "50-70"},
+          {"from": "Accra", "to": "Tamale", "duration": "10-12 hours", "price_range_ghs": "150-200"},
+          {"from": "Kumasi", "to": "Tamale", "duration": "6-7 hours", "price_range_ghs": "100-140"}
+        ],
+        "amenities": ["Air conditioning", "Comfortable seating", "Onboard entertainment", "Rest stops"],
+        "phone": "+233 302 221 542",
+        "booking": "Advanced booking recommended, online and at stations"
+      },
+      {
+        "name": "STC (State Transport Corporation)",
+        "type": "Standard bus service",
+        "routes": [
+          {"from": "Accra", "to": "Kumasi", "duration": "4-5 hours", "price_range_ghs": "60-90"},
+          {"from": "Accra", "to": "Takoradi", "duration": "4 hours", "price_range_ghs": "50-80"},
+          {"from": "Accra", "to": "Tamale", "duration": "10-12 hours", "price_range_ghs": "120-160"}
+        ],
+        "amenities": ["Air conditioning", "Standard seating", "Rest stops"],
+        "phone": "+233 302 221 212",
+        "booking": "Walk-in booking at stations"
+      },
+      {
+        "name": "OA Transport",
+        "type": "Budget bus service",
+        "routes": [
+          {"from": "Accra", "to": "Kumasi", "duration": "4-5 hours", "price_range_ghs": "50-70"},
+          {"from": "Accra", "to": "Cape Coast", "duration": "2.5 hours", "price_range_ghs": "40-60"}
+        ],
+        "amenities": ["Air conditioning", "Standard seating"],
+        "phone": "+233 24 XXX XXXX",
+        "booking": "Walk-in booking at stations"
+      },
+      {
+        "name": "Metro Mass Transit",
+        "type": "Government subsidized bus service",
+        "routes": "Extensive network covering most towns and cities",
+        "price_range": "Very affordable (GHS 20-60 for long distances)",
+        "amenities": ["Basic seating", "Air conditioning (select routes)"],
+        "phone": "+233 302 XXX XXX",
+        "booking": "Walk-in at stations, no advance booking"
+      }
+    ],
+    "major_terminals": [
+      {
+        "name": "Tema Station (Accra)",
+        "location": "Near Kwame Nkrumah Circle, Accra",
+        "services": ["Eastern and Volta routes", "Food vendors", "Restrooms"]
+      },
+      {
+        "name": "Kaneshie Station (Accra)",
+        "location": "Kaneshie, Accra",
+        "services": ["Western and Central routes", "Food vendors", "Restrooms", "ATM"]
+      },
+      {
+        "name": "Neoplan Station (Accra)",
+        "location": "Near Kwame Nkrumah Circle, Accra",
+        "services": ["Northern routes", "Food vendors", "Restrooms"]
+      },
+      {
+        "name": "Kejetia Bus Terminal (Kumasi)",
+        "location": "Central Kumasi",
+        "services": ["All major routes", "Large terminal", "Food vendors", "Restrooms"]
+      }
+    ]
+  },
+  "ride_hailing": {
+    "services": [
+      {
+        "name": "Uber",
+        "availability": ["Accra", "Kumasi", "Takoradi"],
+        "vehicle_types": ["UberX", "UberXL", "Uber Comfort"],
+        "payment_methods": ["Cash", "Mobile money", "Credit card"],
+        "app": "iOS and Android",
+        "price_estimate": "Base fare GHS 5 + per km charges"
+      },
+      {
+        "name": "Bolt (formerly Taxify)",
+        "availability": ["Accra", "Kumasi", "Takoradi", "Cape Coast"],
+        "vehicle_types": ["Economy", "Comfort"],
+        "payment_methods": ["Cash", "Mobile money", "Credit card"],
+        "app": "iOS and Android",
+        "price_estimate": "Slightly cheaper than Uber"
+      },
+      {
+        "name": "Yango",
+        "availability": ["Accra", "Kumasi"],
+        "vehicle_types": ["Economy", "Standard"],
+        "payment_methods": ["Cash", "Mobile money"],
+        "app": "iOS and Android",
+        "price_estimate": "Competitive pricing with Bolt"
+      }
+    ],
+    "traditional_taxis": {
+      "description": "Traditional yellow/orange taxis available throughout Ghana",
+      "payment": "Cash only, negotiate fare before trip or use meter",
+      "typical_rates": "Short trips (within city): GHS 15-30, Airport to city center: GHS 50-80",
+      "tips": [
+        "Always negotiate fare before starting journey",
+        "Ask hotel/locals for reasonable prices",
+        "Have small bills ready",
+        "Ensure driver knows your destination"
+      ]
+    }
+  },
+  "car_rentals": {
+    "companies": [
+      {
+        "name": "Budget Car Rental Ghana",
+        "locations": ["Kotoka Airport", "Accra city center"],
+        "vehicle_types": ["Economy", "SUV", "Luxury"],
+        "price_range_per_day": "GHS 200-800",
+        "requirements": ["Valid driver's license", "International driving permit (recommended)", "Credit card"],
+        "phone": "+233 302 XXX XXX"
+      },
+      {
+        "name": "Europcar Ghana",
+        "locations": ["Kotoka Airport", "Major hotels"],
+        "vehicle_types": ["Economy", "SUV", "Luxury"],
+        "price_range_per_day": "GHS 250-900",
+        "requirements": ["Valid driver's license", "International driving permit", "Credit card"],
+        "phone": "+233 302 XXX XXX"
+      },
+      {
+        "name": "Local Car Rental Companies",
+        "locations": "Various locations in Accra, Kumasi, Takoradi",
+        "vehicle_types": ["Economy", "SUV"],
+        "price_range_per_day": "GHS 150-500",
+        "requirements": ["Valid driver's license", "Deposit (cash or mobile money)"],
+        "note": "Cheaper but verify insurance coverage"
+      }
+    ],
+    "driving_tips": [
+      "Drive on the right side of the road",
+      "Roads vary from excellent highways to poor rural roads",
+      "Be cautious at night - limited street lighting",
+      "Watch for speed bumps (especially in towns)",
+      "Have patience - traffic in Accra can be heavy",
+      "Fuel stations: Shell, Total, Goil, Puma widely available"
+    ]
+  },
+  "airport_transfers": {
+    "options": [
+      {
+        "type": "Hotel Shuttle",
+        "description": "Many hotels offer free or paid airport pickup",
+        "price_range": "Free - GHS 100",
+        "booking": "Arrange in advance with hotel"
+      },
+      {
+        "type": "Private Transfer Services",
+        "description": "Pre-booked private car service",
+        "price_range": "GHS 150-300 (Kotoka to Accra hotels)",
+        "booking": "Online booking or through travel agencies"
+      },
+      {
+        "type": "Ride-hailing Apps",
+        "description": "Uber, Bolt, Yango available at airport",
+        "price_range": "GHS 80-150 to Accra city center",
+        "booking": "Book via app upon arrival"
+      },
+      {
+        "type": "Airport Taxi",
+        "description": "Official airport taxis",
+        "price_range": "GHS 100-200 to Accra city center",
+        "booking": "Available at designated taxi rank"
+      }
+    ]
+  },
+  "local_transportation": {
+    "trotro": {
+      "description": "Shared minibuses (trotros) are the most common form of public transport in Ghana",
+      "availability": "Everywhere in Ghana",
+      "price_range": "Very cheap (GHS 2-10 for city trips)",
+      "tips": [
+        "Great for budget travelers",
+        "Can be crowded",
+        "Ask locals for help with routes",
+        "Have exact change ready",
+        "Best for adventurous travelers"
+      ]
+    },
+    "motorcycle_taxis": {
+      "local_names": ["Okada", "Pragya"],
+      "availability": "Urban and rural areas",
+      "price_range": "GHS 5-20 for short trips",
+      "safety_note": "Not officially regulated, use caution and wear helmet if provided"
+    }
+  },
+  "general_tips": [
+    "Traffic in Accra is heaviest during rush hours (6-9 AM, 4-7 PM)",
+    "Book intercity buses a day in advance during holidays and festivals",
+    "Keep small bills for taxis and trotros",
+    "Mobile money (MTN, Vodafone) widely accepted for ride-hailing",
+    "For airport pickup, arrange in advance to avoid hassle",
+    "VIP and STC buses are safest for intercity travel",
+    "Download offline maps (Google Maps works offline in Ghana)"
+  ]
+}

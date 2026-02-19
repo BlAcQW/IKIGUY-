@@ -1,0 +1,94 @@
+{
+  "mcpServers": {
+    "n8n-mcp": {
+      "command": "npx",
+      "args": ["n8n-mcp"],
+      "env": {
+        "MCP_MODE": "stdio",
+        "LOG_LEVEL": "error",
+        "DISABLE_CONSOLE_OUTPUT": "true",
+        "N8N_API_URL": "https://automate.inspirecreations.it.com",
+        "N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MTBhMTUzMi04YmRkLTRkYjAtYjU1OS01ZTIxYTAzNjI4ODMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU2NDQxNjg4fQ.oAcaO5v0As8jl543StOB87l21jkURptt7bn9X6E7NcU"
+      }
+    },
+    "supabase": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--read-only",
+        "--project-ref=ljzbzjgvwzivpmlmuxhx"
+      ],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "sbp_9807f170531e7160a93d8bf39542a9d509e058bc"
+      }
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSAzgyfrNP7--3Wg1XwTOIDw-mogCJJ"
+      }
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-dec73a2970ae4afb9f32666e935684f4"
+      }
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "GitHub": {
+      "command": "npx",
+      "args": ["-y", "mcp-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
+      }
+    },
+    "markdownify": {
+      "command": "npx",
+      "args": ["-y", "markdownify-mcp"]
+    },
+    "tavily": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-tavily"],
+      "env": {
+        "TAVILY_API_KEY": "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"
+      }
+    },
+    "Figma": {
+      "url": "http://127.0.0.1:3845/sse",
+      "headers": {}
+    },
+    "vapi": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@vapi-ai/mcp-docs-server"
+      ]
+    },
+    "crawl4ai-rag": {
+      "transport": "sse",
+      "url": "http://localhost:8051/sse"
+    },
+    "n8n-workflows Docs": {
+      "url": "https://gitmcp.io/Zie619/n8n-workflows/blob/main/README.md"
+    }
+  }
+}
+
+
+CALENDLY_API_REFERENCE=https://developer.calendly.com/api-docs/d7755e2f9e5fe-calendly-api
+VAPI_API_REFERENCE=https://docs.vapi.ai/api-reference
+METABASE_GITHUB_README=https://github.com/metabase/metabase
+METABASE_GITHUB_API=https://www.metabase.com/docs/latest/api
+FRESHDESK_API=https://developers.freshworks.com/docs/app-sdk/v3.0/support_ticket/rest-apis/
+VONAGE_API_REFERENCE=https://developer.vonage.com/en/api/voice
+VONAGE_DEVELOPER_REFERENCE=https://developer.vonage.com/en/vonage-client-sdk/in-app-voice/overview

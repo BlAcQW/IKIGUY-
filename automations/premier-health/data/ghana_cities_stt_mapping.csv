@@ -1,0 +1,893 @@
+Correct_City,STT_Variation,Variation_Type,Confidence_Score,Region
+MADINA,medina,phonetic,0.9,GREATER_ACCRA
+MADINA,madonna,english_word,0.7,GREATER_ACCRA
+MADINA,moderna,english_word,0.7,GREATER_ACCRA
+MADINA,marina,english_word,0.7,GREATER_ACCRA
+MADINA,madinna,spelling,0.6,GREATER_ACCRA
+MADINA,madena,phonetic,0.7,GREATER_ACCRA
+MADINA,medena,phonetic,0.7,GREATER_ACCRA
+MADINA,ma dina,space_variation,0.8,GREATER_ACCRA
+MADINA,my dina,phonetic,0.6,GREATER_ACCRA
+MADINA,madeena,spelling,0.6,GREATER_ACCRA
+MADINA,madeira,english_word,0.5,GREATER_ACCRA
+ADENTA,a denta,space_variation,0.9,GREATER_ACCRA
+ADENTA,adventar,phonetic,0.7,GREATER_ACCRA
+ADENTA,advent,english_word,0.7,GREATER_ACCRA
+ADENTA,a dental,english_word,0.8,GREATER_ACCRA
+ADENTA,edenta,phonetic,0.6,GREATER_ACCRA
+ADENTA,uh denta,phonetic,0.6,GREATER_ACCRA
+ADENTA,adenter,phonetic,0.6,GREATER_ACCRA
+ADENTA,a denture,english_word,0.5,GREATER_ACCRA
+DODOWA,dodo wa,space_variation,0.9,GREATER_ACCRA
+DODOWA,dodo way,space_variation,0.8,GREATER_ACCRA
+DODOWA,do do wa,space_variation,0.8,GREATER_ACCRA
+DODOWA,doda wa,phonetic,0.7,GREATER_ACCRA
+DODOWA,dodua,phonetic,0.6,GREATER_ACCRA
+DODOWA,doduwa,spelling,0.7,GREATER_ACCRA
+DODOWA,do dawa,phonetic,0.6,GREATER_ACCRA
+ACCRA,akra,phonetic,0.9,GREATER_ACCRA
+ACCRA,accura,english_word,0.7,GREATER_ACCRA
+ACCRA,acura,english_word,0.7,GREATER_ACCRA
+ACCRA,acra,spelling,0.8,GREATER_ACCRA
+ACCRA,akara,phonetic,0.6,GREATER_ACCRA
+ACCRA,accara,spelling,0.6,GREATER_ACCRA
+ACCRA,ak-ra,hyphenated,0.7,GREATER_ACCRA
+ACCRA,ack-ra,hyphenated,0.7,GREATER_ACCRA
+ACCRA CENTRAL,akra central,phonetic,0.9,GREATER_ACCRA
+ACCRA CENTRAL,accura central,compound,0.7,GREATER_ACCRA
+ACCRA CENTRAL,acura central,compound,0.7,GREATER_ACCRA
+ACCRA CENTRAL,accra sentra,phonetic,0.6,GREATER_ACCRA
+ACCRA CENTRAL,accra sental,phonetic,0.6,GREATER_ACCRA
+ACCRA CENTRAL,accra center,english_word,0.8,GREATER_ACCRA
+TUDU,too doo,phonetic,0.9,GREATER_ACCRA
+TUDU,tu du,space_variation,0.9,GREATER_ACCRA
+TUDU,two doo,phonetic,0.8,GREATER_ACCRA
+TUDU,toodoo,phonetic,0.8,GREATER_ACCRA
+TUDU,tutu,phonetic,0.7,GREATER_ACCRA
+TUDU,to do,english_word,0.7,GREATER_ACCRA
+TUDU,todo,english_word,0.7,GREATER_ACCRA
+MAKOLA,macola,phonetic,0.9,GREATER_ACCRA
+MAKOLA,ma cola,space_variation,0.8,GREATER_ACCRA
+MAKOLA,makolla,spelling,0.7,GREATER_ACCRA
+MAKOLA,macolla,spelling,0.7,GREATER_ACCRA
+MAKOLA,ma kola,space_variation,0.8,GREATER_ACCRA
+MAKOLA,makala,phonetic,0.6,GREATER_ACCRA
+MAKOLA,morocco,english_word,0.5,GREATER_ACCRA
+MAKOLA,ma color,english_word,0.6,GREATER_ACCRA
+CIRCLE,circus,english_word,0.9,GREATER_ACCRA
+CIRCLE,sircle,phonetic,0.8,GREATER_ACCRA
+CIRCLE,sir kill,phonetic,0.6,GREATER_ACCRA
+CIRCLE,cerkle,phonetic,0.6,GREATER_ACCRA
+CIRCLE,circle e,phonetic,0.5,GREATER_ACCRA
+CIRCLE,sir cole,phonetic,0.5,GREATER_ACCRA
+KANESHIE,can a she,space_variation,0.9,GREATER_ACCRA
+KANESHIE,canashi,phonetic,0.8,GREATER_ACCRA
+KANESHIE,cane a she,space_variation,0.7,GREATER_ACCRA
+KANESHIE,kanashi,phonetic,0.8,GREATER_ACCRA
+KANESHIE,kenya she,english_word,0.7,GREATER_ACCRA
+KANESHIE,canashie,phonetic,0.8,GREATER_ACCRA
+KANESHIE,kan a she,space_variation,0.8,GREATER_ACCRA
+KANESHIE,can ash,phonetic,0.6,GREATER_ACCRA
+NORTH KANESHIE,north can a she,compound,0.9,GREATER_ACCRA
+NORTH KANESHIE,north canashi,compound,0.8,GREATER_ACCRA
+NORTH KANESHIE,north kenya she,compound,0.7,GREATER_ACCRA
+NORTH KANESHIE,north kanashi,compound,0.8,GREATER_ACCRA
+NORTH KANESHIE,north cane she,compound,0.7,GREATER_ACCRA
+INDUSTRIAL AREA,industrial aria,phonetic,0.8,GREATER_ACCRA
+INDUSTRIAL AREA,in dustrial area,space_variation,0.7,GREATER_ACCRA
+AIRPORT,air port,space_variation,0.9,GREATER_ACCRA
+AIRPORT,airpot,spelling,0.7,GREATER_ACCRA
+AIRPORT,ear port,phonetic,0.6,GREATER_ACCRA
+AIRPORT RESIDENTIAL AREA,airport residential,abbreviated,0.9,GREATER_ACCRA
+AIRPORT RESIDENTIAL AREA,airport residencial,spelling,0.7,GREATER_ACCRA
+AIRPORT RESIDENTIAL AREA,airport resi dental,phonetic,0.6,GREATER_ACCRA
+37 AREA,thirty seven area,expanded,0.9,GREATER_ACCRA
+37 AREA,37 aria,phonetic,0.8,GREATER_ACCRA
+37 AREA,three seven area,expanded,0.8,GREATER_ACCRA
+37 AREA,thirty-seven area,hyphenated,0.9,GREATER_ACCRA
+37 AREA,thirty 7 area,mixed,0.7,GREATER_ACCRA
+LEGON,legion,english_word,0.9,GREATER_ACCRA
+LEGON,lee gone,phonetic,0.8,GREATER_ACCRA
+LEGON,lay gone,phonetic,0.8,GREATER_ACCRA
+LEGON,leg on,space_variation,0.7,GREATER_ACCRA
+LEGON,lagon,phonetic,0.7,GREATER_ACCRA
+LEGON,leagon,spelling,0.7,GREATER_ACCRA
+LEGON,le gon,space_variation,0.7,GREATER_ACCRA
+LEGON,legan,phonetic,0.6,GREATER_ACCRA
+LEGON,legone,spelling,0.6,GREATER_ACCRA
+NORTH LEGON,north legion,compound,0.9,GREATER_ACCRA
+NORTH LEGON,north lee gone,compound,0.8,GREATER_ACCRA
+NORTH LEGON,north leagon,compound,0.7,GREATER_ACCRA
+EAST LEGON,east legion,compound,0.9,GREATER_ACCRA
+EAST LEGON,east lee gone,compound,0.8,GREATER_ACCRA
+EAST LEGON,east leagon,compound,0.7,GREATER_ACCRA
+EAST LEGON,east leg on,compound,0.7,GREATER_ACCRA
+EAST LEGON,ease legion,phonetic,0.6,GREATER_ACCRA
+DZORWULU,zo wulu,phonetic,0.9,GREATER_ACCRA
+DZORWULU,zor wulu,phonetic,0.9,GREATER_ACCRA
+DZORWULU,joe wulu,phonetic,0.8,GREATER_ACCRA
+DZORWULU,zow ulu,phonetic,0.7,GREATER_ACCRA
+DZORWULU,zorwulu,spelling,0.8,GREATER_ACCRA
+DZORWULU,jor wulu,phonetic,0.8,GREATER_ACCRA
+DZORWULU,jaw wulu,phonetic,0.8,GREATER_ACCRA
+DZORWULU,zor wooloo,phonetic,0.7,GREATER_ACCRA
+DZORWULU,dzor wooloo,phonetic,0.7,GREATER_ACCRA
+DZORWULU,zowulu,spelling,0.7,GREATER_ACCRA
+ABELENKPE,abel ink pay,phonetic,0.9,GREATER_ACCRA
+ABELENKPE,abel n k p,abbreviation,0.7,GREATER_ACCRA
+ABELENKPE,a belen kpe,space_variation,0.8,GREATER_ACCRA
+ABELENKPE,abelen k pe,space_variation,0.8,GREATER_ACCRA
+ABELENKPE,abelenkpay,phonetic,0.8,GREATER_ACCRA
+ABELENKPE,abel n pay,phonetic,0.7,GREATER_ACCRA
+ABELENKPE,abelenpe,spelling,0.7,GREATER_ACCRA
+ABELENKPE,a berlin pay,english_word,0.5,GREATER_ACCRA
+LAPAZ,la paz,space_variation,0.9,GREATER_ACCRA
+LAPAZ,lapa,abbreviated,0.7,GREATER_ACCRA
+LAPAZ,la pass,phonetic,0.8,GREATER_ACCRA
+LAPAZ,lapas,spelling,0.7,GREATER_ACCRA
+LAPAZ,la pah,phonetic,0.7,GREATER_ACCRA
+LAPAZ,lapez,phonetic,0.6,GREATER_ACCRA
+LAPAZ,la pez,phonetic,0.6,GREATER_ACCRA
+NYAMEKYE,nya mechi,phonetic,0.9,GREATER_ACCRA
+NYAMEKYE,nama key,phonetic,0.7,GREATER_ACCRA
+NYAMEKYE,nya me chi,space_variation,0.8,GREATER_ACCRA
+NYAMEKYE,nyamechi,phonetic,0.8,GREATER_ACCRA
+NYAMEKYE,nya mickey,english_word,0.6,GREATER_ACCRA
+NYAMEKYE,nama chi,phonetic,0.7,GREATER_ACCRA
+NYAMEKYE,nia mechi,phonetic,0.6,GREATER_ACCRA
+DARKUMAN,dark human,english_word,0.9,GREATER_ACCRA
+DARKUMAN,dar human,phonetic,0.8,GREATER_ACCRA
+DARKUMAN,darkman,abbreviated,0.7,GREATER_ACCRA
+DARKUMAN,dark man,space_variation,0.8,GREATER_ACCRA
+DARKUMAN,darcoman,phonetic,0.6,GREATER_ACCRA
+DARKUMAN,darkumen,phonetic,0.6,GREATER_ACCRA
+DARKUMAN,daku man,phonetic,0.5,GREATER_ACCRA
+ODORKOR,odor core,phonetic,0.9,GREATER_ACCRA
+ODORKOR,oh door core,phonetic,0.8,GREATER_ACCRA
+ODORKOR,o door cor,phonetic,0.8,GREATER_ACCRA
+ODORKOR,oh door cor,phonetic,0.8,GREATER_ACCRA
+ODORKOR,odoko,abbreviated,0.6,GREATER_ACCRA
+ODORKOR,oh doko,phonetic,0.6,GREATER_ACCRA
+KOKOMLEMLE,cocoa lemle,phonetic,0.9,GREATER_ACCRA
+KOKOMLEMLE,koko lemle,phonetic,0.9,GREATER_ACCRA
+KOKOMLEMLE,cocoa mlemle,phonetic,0.8,GREATER_ACCRA
+KOKOMLEMLE,koko mlemle,phonetic,0.8,GREATER_ACCRA
+KOKOMLEMLE,cocoa limley,phonetic,0.7,GREATER_ACCRA
+KOKOMLEMLE,koko limley,phonetic,0.7,GREATER_ACCRA
+KOKOMLEMLE,coco lemle,phonetic,0.8,GREATER_ACCRA
+KOKOMLEMLE,kokolemleh,spelling,0.7,GREATER_ACCRA
+MAAMOBI,ma mobi,space_variation,0.9,GREATER_ACCRA
+MAAMOBI,mama bee,phonetic,0.8,GREATER_ACCRA
+MAAMOBI,ma mo bee,space_variation,0.8,GREATER_ACCRA
+MAAMOBI,mamobi,spelling,0.9,GREATER_ACCRA
+MAAMOBI,ma mobby,phonetic,0.7,GREATER_ACCRA
+MAAMOBI,mama obi,phonetic,0.7,GREATER_ACCRA
+MAAMOBI,ma moby,phonetic,0.7,GREATER_ACCRA
+NIMA,neema,phonetic,0.9,GREATER_ACCRA
+NIMA,nema,phonetic,0.8,GREATER_ACCRA
+NIMA,knee ma,phonetic,0.7,GREATER_ACCRA
+NIMA,nee ma,phonetic,0.8,GREATER_ACCRA
+NIMA,nimah,spelling,0.8,GREATER_ACCRA
+NIMA,naima,english_word,0.6,GREATER_ACCRA
+NIMA,nama,phonetic,0.6,GREATER_ACCRA
+ASYLUM DOWN,asylum town,phonetic,0.8,GREATER_ACCRA
+ASYLUM DOWN,asylum dawn,phonetic,0.7,GREATER_ACCRA
+ASYLUM DOWN,a silum down,phonetic,0.7,GREATER_ACCRA
+ASYLUM DOWN,ay silum down,phonetic,0.7,GREATER_ACCRA
+ASYLUM DOWN,asylumdown,no_space,0.8,GREATER_ACCRA
+ADABRAKA,ada braka,space_variation,0.9,GREATER_ACCRA
+ADABRAKA,ada barack,english_word,0.7,GREATER_ACCRA
+ADABRAKA,ada braca,phonetic,0.8,GREATER_ACCRA
+ADABRAKA,adaraka,spelling,0.7,GREATER_ACCRA
+ADABRAKA,ada broker,english_word,0.6,GREATER_ACCRA
+ADABRAKA,ada baraka,phonetic,0.7,GREATER_ACCRA
+ADABRAKA,adabraca,spelling,0.7,GREATER_ACCRA
+OSU,oh sue,phonetic,0.9,GREATER_ACCRA
+OSU,oh so,phonetic,0.8,GREATER_ACCRA
+OSU,oh zoo,phonetic,0.7,GREATER_ACCRA
+OSU,osoo,spelling,0.8,GREATER_ACCRA
+OSU,ossue,spelling,0.7,GREATER_ACCRA
+OSU,ohio sue,english_word,0.5,GREATER_ACCRA
+RIDGE,rich,phonetic,0.8,GREATER_ACCRA
+RIDGE,ridges,plural,0.7,GREATER_ACCRA
+LABONE,la bone,space_variation,0.9,GREATER_ACCRA
+LABONE,lab one,phonetic,0.8,GREATER_ACCRA
+LABONE,la bonne,phonetic,0.7,GREATER_ACCRA
+LABONE,labonne,spelling,0.7,GREATER_ACCRA
+LABONE,la bon,phonetic,0.7,GREATER_ACCRA
+LABONE,labon,spelling,0.7,GREATER_ACCRA
+LA,lah,phonetic,0.9,GREATER_ACCRA
+LA,l a,space_variation,0.8,GREATER_ACCRA
+TSE ADDO,see ado,phonetic,0.9,GREATER_ACCRA
+TSE ADDO,say ado,phonetic,0.9,GREATER_ACCRA
+TSE ADDO,see a do,space_variation,0.8,GREATER_ACCRA
+TSE ADDO,say a do,space_variation,0.8,GREATER_ACCRA
+TSE ADDO,tsay ado,phonetic,0.8,GREATER_ACCRA
+TSE ADDO,chez ado,phonetic,0.6,GREATER_ACCRA
+CANTONMENTS,canton mints,phonetic,0.8,GREATER_ACCRA
+CANTONMENTS,canton ments,space_variation,0.9,GREATER_ACCRA
+CANTONMENTS,cantonment,singular,0.9,GREATER_ACCRA
+ACHIMOTA,ashimota,phonetic,0.9,GREATER_ACCRA
+ACHIMOTA,achimotor,phonetic,0.7,GREATER_ACCRA
+ACHIMOTA,achmota,spelling,0.7,GREATER_ACCRA
+ACHIMOTA,a chimota,space_variation,0.8,GREATER_ACCRA
+ACHIMOTA,aki mota,phonetic,0.7,GREATER_ACCRA
+ACHIMOTA,achi motor,english_word,0.7,GREATER_ACCRA
+ACHIMOTA,achimotah,spelling,0.7,GREATER_ACCRA
+NEW ACHIMOTA,new ashimota,compound,0.9,GREATER_ACCRA
+NEW ACHIMOTA,new achimotor,compound,0.7,GREATER_ACCRA
+NEW ACHIMOTA,new aki mota,compound,0.7,GREATER_ACCRA
+ADJRINGANOR,aj ringer nor,phonetic,0.9,GREATER_ACCRA
+ADJRINGANOR,adjringer nor,phonetic,0.8,GREATER_ACCRA
+ADJRINGANOR,ad jinger nor,phonetic,0.8,GREATER_ACCRA
+ADJRINGANOR,aj ringer,abbreviated,0.7,GREATER_ACCRA
+ADJRINGANOR,ad ringer nor,phonetic,0.8,GREATER_ACCRA
+ADJRINGANOR,adjringanaw,phonetic,0.6,GREATER_ACCRA
+ADJRINGANOR,adjuringanor,spelling,0.6,GREATER_ACCRA
+DANSOMAN,dan so man,space_variation,0.9,GREATER_ACCRA
+DANSOMAN,danso man,space_variation,0.9,GREATER_ACCRA
+DANSOMAN,dan soaman,phonetic,0.7,GREATER_ACCRA
+DANSOMAN,danceman,english_word,0.6,GREATER_ACCRA
+DANSOMAN,dan soman,space_variation,0.8,GREATER_ACCRA
+DANSOMAN,dansomen,spelling,0.6,GREATER_ACCRA
+MAMPROBI,mam pro bee,phonetic,0.9,GREATER_ACCRA
+MAMPROBI,mam probi,phonetic,0.9,GREATER_ACCRA
+MAMPROBI,man probi,phonetic,0.7,GREATER_ACCRA
+MAMPROBI,mampro bee,phonetic,0.8,GREATER_ACCRA
+MAMPROBI,mamproby,spelling,0.7,GREATER_ACCRA
+MAMPROBI,mam pro b,abbreviated,0.7,GREATER_ACCRA
+KORLE-BU,korle boo,phonetic,0.9,GREATER_ACCRA
+KORLE-BU,cor lee boo,phonetic,0.8,GREATER_ACCRA
+KORLE-BU,corley boo,phonetic,0.7,GREATER_ACCRA
+KORLE-BU,korleh bu,phonetic,0.8,GREATER_ACCRA
+KORLE-BU,korle bu,no_hyphen,0.9,GREATER_ACCRA
+KORLE-BU,kor lay boo,phonetic,0.7,GREATER_ACCRA
+KORLE-BU,corlebu,no_hyphen,0.7,GREATER_ACCRA
+KORLE-BU,korlebu,no_hyphen,0.8,GREATER_ACCRA
+DOME,doom,phonetic,0.9,GREATER_ACCRA
+DOME,dom,abbreviated,0.7,GREATER_ACCRA
+HAATSO,hat so,space_variation,0.9,GREATER_ACCRA
+HAATSO,haat so,space_variation,0.9,GREATER_ACCRA
+HAATSO,hot so,phonetic,0.7,GREATER_ACCRA
+HAATSO,haht so,phonetic,0.8,GREATER_ACCRA
+HAATSO,ha so,abbreviated,0.6,GREATER_ACCRA
+HAATSO,hasso,spelling,0.7,GREATER_ACCRA
+ASHONGMAN,a song man,phonetic,0.9,GREATER_ACCRA
+ASHONGMAN,ashong man,space_variation,0.9,GREATER_ACCRA
+ASHONGMAN,ah shong man,phonetic,0.8,GREATER_ACCRA
+ASHONGMAN,a shang man,phonetic,0.7,GREATER_ACCRA
+ASHONGMAN,ashongmen,spelling,0.7,GREATER_ACCRA
+ASHONGMAN,ashong mon,phonetic,0.7,GREATER_ACCRA
+KWABENYA,kwah ben ya,phonetic,0.9,GREATER_ACCRA
+KWABENYA,kwa ben ya,phonetic,0.9,GREATER_ACCRA
+KWABENYA,kwabenja,phonetic,0.7,GREATER_ACCRA
+KWABENYA,quabenya,phonetic,0.7,GREATER_ACCRA
+KWABENYA,kwabania,phonetic,0.6,GREATER_ACCRA
+TESHIE,te she,space_variation,0.9,GREATER_ACCRA
+TESHIE,teshi,spelling,0.9,GREATER_ACCRA
+TESHIE,teshay,phonetic,0.8,GREATER_ACCRA
+TESHIE,teshe,spelling,0.8,GREATER_ACCRA
+TESHIE,teh she,phonetic,0.8,GREATER_ACCRA
+TESHIE,teshee,spelling,0.8,GREATER_ACCRA
+TESHIE,te shay,phonetic,0.7,GREATER_ACCRA
+NUNGUA,nun gua,space_variation,0.9,GREATER_ACCRA
+NUNGUA,nun wa,phonetic,0.8,GREATER_ACCRA
+NUNGUA,nunwa,phonetic,0.8,GREATER_ACCRA
+NUNGUA,nungwa,spelling,0.8,GREATER_ACCRA
+NUNGUA,nun gwa,phonetic,0.8,GREATER_ACCRA
+NUNGUA,nong wa,phonetic,0.7,GREATER_ACCRA
+NUNGUA,nangua,phonetic,0.6,GREATER_ACCRA
+SPINTEX,spin tex,space_variation,0.9,GREATER_ACCRA
+SPINTEX,spin text,english_word,0.8,GREATER_ACCRA
+SPINTEX,spin teks,phonetic,0.8,GREATER_ACCRA
+SPINTEX,spinteks,spelling,0.8,GREATER_ACCRA
+SPINTEX,spin tex road,compound,0.7,GREATER_ACCRA
+SPINTEX,spindex,phonetic,0.6,GREATER_ACCRA
+SPINTEX ROAD,spin tex road,space_variation,0.9,GREATER_ACCRA
+SPINTEX ROAD,spin text road,english_word,0.8,GREATER_ACCRA
+SPINTEX ROAD,spintex,abbreviated,0.9,GREATER_ACCRA
+BAATSONA,bat so na,space_variation,0.9,GREATER_ACCRA
+BAATSONA,baht sona,phonetic,0.8,GREATER_ACCRA
+BAATSONA,batso na,phonetic,0.8,GREATER_ACCRA
+BAATSONA,baht so na,phonetic,0.8,GREATER_ACCRA
+BAATSONA,bot sona,phonetic,0.6,GREATER_ACCRA
+TEMA,teema,spelling,0.9,GREATER_ACCRA
+TEMA,tima,phonetic,0.7,GREATER_ACCRA
+TEMA,tayma,phonetic,0.7,GREATER_ACCRA
+TEMA,tay ma,phonetic,0.7,GREATER_ACCRA
+TEMA,tea ma,phonetic,0.7,GREATER_ACCRA
+TEMA,tehmah,spelling,0.6,GREATER_ACCRA
+TEMA COMMUNITY 2,tema community two,expanded,0.9,GREATER_ACCRA
+TEMA COMMUNITY 2,tema comm two,abbreviated,0.8,GREATER_ACCRA
+TEMA COMMUNITY 2,tema comm 2,abbreviated,0.8,GREATER_ACCRA
+TEMA COMMUNITY 4,tema community four,expanded,0.9,GREATER_ACCRA
+TEMA COMMUNITY 4,tema comm four,abbreviated,0.8,GREATER_ACCRA
+TEMA COMMUNITY 4,tema comm 4,abbreviated,0.8,GREATER_ACCRA
+SAKUMONO,sack u mono,phonetic,0.9,GREATER_ACCRA
+SAKUMONO,saku mono,space_variation,0.9,GREATER_ACCRA
+SAKUMONO,sacomono,phonetic,0.7,GREATER_ACCRA
+SAKUMONO,sako mono,phonetic,0.8,GREATER_ACCRA
+SAKUMONO,sak mono,abbreviated,0.7,GREATER_ACCRA
+SAKUMONO ESTATE,sack u mono estate,compound,0.9,GREATER_ACCRA
+SAKUMONO ESTATE,sakumono state,phonetic,0.7,GREATER_ACCRA
+SAKUMONO ESTATE,saku mono estate,compound,0.9,GREATER_ACCRA
+SAKUMONO ESTATE,sacomono estate,compound,0.7,GREATER_ACCRA
+LASHIBI,la she bee,phonetic,0.9,GREATER_ACCRA
+LASHIBI,lashe bi,phonetic,0.8,GREATER_ACCRA
+LASHIBI,lashi bi,phonetic,0.8,GREATER_ACCRA
+LASHIBI,lashibee,spelling,0.8,GREATER_ACCRA
+LASHIBI,la shi bi,space_variation,0.8,GREATER_ACCRA
+LASHIBI,la she b,abbreviated,0.7,GREATER_ACCRA
+ASHAIMAN,a shy man,phonetic,0.9,GREATER_ACCRA
+ASHAIMAN,ashay man,phonetic,0.8,GREATER_ACCRA
+ASHAIMAN,asha man,abbreviated,0.7,GREATER_ACCRA
+ASHAIMAN,ashaimen,spelling,0.7,GREATER_ACCRA
+ASHAIMAN,a shaman,english_word,0.6,GREATER_ACCRA
+ASHAIMAN,ashiman,spelling,0.7,GREATER_ACCRA
+ASHAIMAN,ashai man,phonetic,0.7,GREATER_ACCRA
+WEIJA,way ja,phonetic,0.9,GREATER_ACCRA
+WEIJA,wei ja,phonetic,0.9,GREATER_ACCRA
+WEIJA,waya,phonetic,0.7,GREATER_ACCRA
+WEIJA,weja,spelling,0.7,GREATER_ACCRA
+WEIJA,wayja,spelling,0.8,GREATER_ACCRA
+WEIJA,we jar,phonetic,0.6,GREATER_ACCRA
+KASOA,ka so a,space_variation,0.9,GREATER_ACCRA
+KASOA,casoa,phonetic,0.8,GREATER_ACCRA
+KASOA,ka soar,phonetic,0.7,GREATER_ACCRA
+KASOA,kasowa,phonetic,0.7,GREATER_ACCRA
+KASOA,ka so wa,phonetic,0.7,GREATER_ACCRA
+KASOA,cassoa,spelling,0.7,GREATER_ACCRA
+GBAWE,bah way,phonetic,0.9,GREATER_ACCRA
+GBAWE,gba way,space_variation,0.9,GREATER_ACCRA
+GBAWE,ba way,phonetic,0.8,GREATER_ACCRA
+GBAWE,gbaway,no_space,0.8,GREATER_ACCRA
+GBAWE,gba we,space_variation,0.8,GREATER_ACCRA
+GBAWE,bah we,phonetic,0.8,GREATER_ACCRA
+GBAWE,gabawe,spelling,0.6,GREATER_ACCRA
+AMANSAMAN,a man saman,space_variation,0.9,GREATER_ACCRA
+AMANSAMAN,amansa man,phonetic,0.8,GREATER_ACCRA
+AMANSAMAN,aman saman,space_variation,0.8,GREATER_ACCRA
+AMANSAMAN,amanda man,english_word,0.6,GREATER_ACCRA
+AMANSAMAN,aman sa man,space_variation,0.7,GREATER_ACCRA
+POKUASE,poco a say,phonetic,0.9,GREATER_ACCRA
+POKUASE,poko a say,phonetic,0.9,GREATER_ACCRA
+POKUASE,pocoa say,phonetic,0.8,GREATER_ACCRA
+POKUASE,poko ase,phonetic,0.8,GREATER_ACCRA
+POKUASE,poco ase,phonetic,0.8,GREATER_ACCRA
+TANTRA HILL,tantra heel,phonetic,0.8,GREATER_ACCRA
+TANTRA HILL,tandra hill,phonetic,0.7,GREATER_ACCRA
+TANTRA HILL,tantra heal,phonetic,0.7,GREATER_ACCRA
+TANTRA HILL,tantra,abbreviated,0.6,GREATER_ACCRA
+OFANKOR,oh fan core,phonetic,0.9,GREATER_ACCRA
+OFANKOR,o fan cor,phonetic,0.9,GREATER_ACCRA
+OFANKOR,ofan core,phonetic,0.8,GREATER_ACCRA
+OFANKOR,o fanko,phonetic,0.7,GREATER_ACCRA
+OFANKOR,oh fanko,phonetic,0.7,GREATER_ACCRA
+OFANKOR,ofancore,no_space,0.7,GREATER_ACCRA
+LATEBIOKOSHIE,late bio ko she,space_variation,0.9,GREATER_ACCRA
+LATEBIOKOSHIE,late bio koshi,phonetic,0.8,GREATER_ACCRA
+LATEBIOKOSHIE,latter bio koshi,phonetic,0.7,GREATER_ACCRA
+LATEBIOKOSHIE,late biokoshire,phonetic,0.7,GREATER_ACCRA
+LATEBIOKOSHIE,late bio ko shay,phonetic,0.7,GREATER_ACCRA
+MATAHEKO,mata heko,space_variation,0.9,GREATER_ACCRA
+MATAHEKO,mata echo,english_word,0.8,GREATER_ACCRA
+MATAHEKO,matta heko,spelling,0.8,GREATER_ACCRA
+MATAHEKO,ma ta heko,space_variation,0.8,GREATER_ACCRA
+MATAHEKO,mataheco,spelling,0.7,GREATER_ACCRA
+TESANO,te sa no,space_variation,0.9,GREATER_ACCRA
+TESANO,te sano,space_variation,0.9,GREATER_ACCRA
+TESANO,tay sano,phonetic,0.8,GREATER_ACCRA
+TESANO,tessa no,phonetic,0.7,GREATER_ACCRA
+TESANO,tesanoh,spelling,0.7,GREATER_ACCRA
+MICHEL CAMP,michael camp,english_word,0.9,GREATER_ACCRA
+MICHEL CAMP,mitchell camp,english_word,0.8,GREATER_ACCRA
+MICHEL CAMP,michelle camp,english_word,0.8,GREATER_ACCRA
+MICHEL CAMP,micheal camp,spelling,0.8,GREATER_ACCRA
+AFIENYA,a fie nya,space_variation,0.9,GREATER_ACCRA
+AFIENYA,ah fee nya,phonetic,0.8,GREATER_ACCRA
+AFIENYA,a feenya,phonetic,0.8,GREATER_ACCRA
+AFIENYA,afenya,spelling,0.7,GREATER_ACCRA
+AFIENYA,ah finya,phonetic,0.7,GREATER_ACCRA
+CAPE COAST,cape cost,phonetic,0.9,CENTRAL
+CAPE COAST,cap coast,abbreviated,0.7,CENTRAL
+CAPE COAST,cape coste,spelling,0.7,CENTRAL
+CAPE COAST,capecoast,no_space,0.8,CENTRAL
+CAPE COAST,capo coast,phonetic,0.6,CENTRAL
+WINNEBA,winnipeg,english_word,0.9,CENTRAL
+WINNEBA,winnebago,english_word,0.9,CENTRAL
+WINNEBA,wini ba,space_variation,0.8,CENTRAL
+WINNEBA,winnie ba,phonetic,0.8,CENTRAL
+WINNEBA,win a ba,space_variation,0.8,CENTRAL
+WINNEBA,winna ba,phonetic,0.8,CENTRAL
+WINNEBA,winnaba,spelling,0.7,CENTRAL
+WINNEBA,winebah,spelling,0.7,CENTRAL
+WINNEBA,winnepeg,english_word,0.8,CENTRAL
+WINNEBA,winibar,phonetic,0.6,CENTRAL
+ELMINA,el mina,space_variation,0.9,CENTRAL
+ELMINA,el meena,phonetic,0.8,CENTRAL
+ELMINA,el mena,phonetic,0.8,CENTRAL
+ELMINA,almina,phonetic,0.7,CENTRAL
+ELMINA,elmeena,spelling,0.7,CENTRAL
+ASSIN,a sin,space_variation,0.9,CENTRAL
+ASSIN,assign,english_word,0.8,CENTRAL
+ASSIN,assing,spelling,0.7,CENTRAL
+ASSIN,assine,spelling,0.7,CENTRAL
+SWEDRU,swed roo,phonetic,0.9,CENTRAL
+SWEDRU,swed drew,phonetic,0.8,CENTRAL
+SWEDRU,sweden,english_word,0.7,CENTRAL
+SWEDRU,swedrew,spelling,0.7,CENTRAL
+SWEDRU,sweet drew,phonetic,0.6,CENTRAL
+SWEDRU,swe drew,phonetic,0.7,CENTRAL
+ASSINSWEDRU,assin swedru,space_variation,0.9,CENTRAL
+ASSINSWEDRU,assine swedru,phonetic,0.8,CENTRAL
+ASSINSWEDRU,assin swed roo,compound,0.8,CENTRAL
+MANKESSIM,man cassim,phonetic,0.9,CENTRAL
+MANKESSIM,man ke sim,space_variation,0.9,CENTRAL
+MANKESSIM,man kesim,phonetic,0.8,CENTRAL
+MANKESSIM,man ca sim,phonetic,0.8,CENTRAL
+MANKESSIM,man cass im,phonetic,0.7,CENTRAL
+MANKESSIM,man keseem,phonetic,0.7,CENTRAL
+ASIKUMA,asi kuma,space_variation,0.9,CENTRAL
+ASIKUMA,a si kuma,space_variation,0.9,CENTRAL
+ASIKUMA,as kuma,abbreviated,0.7,CENTRAL
+ASIKUMA,asi cuma,phonetic,0.7,CENTRAL
+AJUMAKO,a ju mako,space_variation,0.9,CENTRAL
+AJUMAKO,aju mako,space_variation,0.9,CENTRAL
+AJUMAKO,ah ju marco,phonetic,0.7,CENTRAL
+AJUMAKO,ajumarco,phonetic,0.7,CENTRAL
+AJUMAKO,a juma ko,space_variation,0.8,CENTRAL
+AJUMAKO,ajumaco,spelling,0.7,CENTRAL
+BOMSO,bomb so,phonetic,0.9,ASHANTI
+BOMSO,bom so,space_variation,0.9,ASHANTI
+BOMSO,bonso,phonetic,0.7,ASHANTI
+BOMSO,bomzo,phonetic,0.6,ASHANTI
+KNUST,canust,phonetic,0.9,ASHANTI
+KNUST,k nust,space_variation,0.9,ASHANTI
+KNUST,k n u s t,abbreviation,0.8,ASHANTI
+KNUST,kay nust,phonetic,0.8,ASHANTI
+KNUST,knew st,phonetic,0.6,ASHANTI
+EJISU,e ji su,space_variation,0.9,ASHANTI
+EJISU,eji sue,phonetic,0.8,ASHANTI
+EJISU,eh jisu,phonetic,0.8,ASHANTI
+EJISU,eh ji soo,phonetic,0.8,ASHANTI
+EJISU,ejisoo,spelling,0.7,ASHANTI
+EJISU,e jee sue,phonetic,0.7,ASHANTI
+ASOKWA,a sock wa,phonetic,0.9,ASHANTI
+ASOKWA,asok wa,space_variation,0.9,ASHANTI
+ASOKWA,ah sok wa,phonetic,0.8,ASHANTI
+ASOKWA,a soak wa,phonetic,0.7,ASHANTI
+ASOKWA,asoqua,phonetic,0.6,ASHANTI
+BANTAMA,ban tama,space_variation,0.9,ASHANTI
+BANTAMA,banta ma,space_variation,0.9,ASHANTI
+BANTAMA,ban tammer,phonetic,0.7,ASHANTI
+BANTAMA,bantamah,spelling,0.7,ASHANTI
+BANTAMA,ban tamar,phonetic,0.7,ASHANTI
+BANTAMA,bantamaa,spelling,0.7,ASHANTI
+ABREPO,ab repo,space_variation,0.9,ASHANTI
+ABREPO,a brepo,space_variation,0.9,ASHANTI
+ABREPO,abripo,spelling,0.7,ASHANTI
+ABREPO,abrapo,spelling,0.7,ASHANTI
+ABREPO,a bray po,phonetic,0.7,ASHANTI
+ABREPO,abrego,phonetic,0.6,ASHANTI
+TAFO,taffo,spelling,0.9,ASHANTI
+TAFO,ta foe,phonetic,0.8,ASHANTI
+TAFOBREMANG,tafo bremang,space_variation,0.9,ASHANTI
+TAFOBREMANG,tafo bray mang,phonetic,0.8,ASHANTI
+BREMANG,bray mang,phonetic,0.9,ASHANTI
+BREMANG,bre mang,phonetic,0.8,ASHANTI
+BREMANG,bre man,abbreviated,0.7,ASHANTI
+BREMANG,breh mang,phonetic,0.8,ASHANTI
+BREMANG,bremen,english_word,0.6,ASHANTI
+ABUAKWA,abu akwa,space_variation,0.9,ASHANTI
+ABUAKWA,abu aqua,phonetic,0.8,ASHANTI
+ABUAKWA,abu aqwa,phonetic,0.8,ASHANTI
+ABUAKWA,abuaqua,phonetic,0.8,ASHANTI
+ABUAKWA,abu ak wa,space_variation,0.8,ASHANTI
+TANOSO,ta no so,space_variation,0.9,ASHANTI
+TANOSO,tan oh so,phonetic,0.8,ASHANTI
+TANOSO,tannosso,spelling,0.7,ASHANTI
+TANOSO,ta nose oh,phonetic,0.6,ASHANTI
+ABUAKWATANOSO,abu akwa tanoso,space_variation,0.9,ASHANTI
+ABUAKWATANOSO,abu aqua tanoso,phonetic,0.8,ASHANTI
+ABUAKWATANOSO,abu ak wa ta no so,space_variation,0.8,ASHANTI
+ABUAKWATANOSO,abuaqua tanoso,phonetic,0.8,ASHANTI
+ABUAKWATANOSO,abu water tanoso,phonetic,0.6,ASHANTI
+SANTASI,san ta si,space_variation,0.9,ASHANTI
+SANTASI,santa see,phonetic,0.8,ASHANTI
+SANTASI,san tasi,space_variation,0.8,ASHANTI
+SANTASIPATASE,santasi patase,space_variation,0.9,ASHANTI
+SANTASIPATASE,santa see patase,phonetic,0.8,ASHANTI
+PATASE,pa ta say,phonetic,0.9,ASHANTI
+PATASE,pata say,phonetic,0.9,ASHANTI
+PATASE,pa tase,space_variation,0.9,ASHANTI
+PATASE,patasay,no_space,0.8,ASHANTI
+SUAME,sue me,phonetic,0.9,ASHANTI
+SUAME,sua me,phonetic,0.9,ASHANTI
+SUAME,swami,english_word,0.7,ASHANTI
+SUAME,suameh,spelling,0.7,ASHANTI
+SUAME,sua may,phonetic,0.7,ASHANTI
+ADUM,adam,english_word,0.9,ASHANTI
+ADUM,a doom,phonetic,0.8,ASHANTI
+ADUM,adham,phonetic,0.7,ASHANTI
+ADUM,a dum,space_variation,0.8,ASHANTI
+ADUM,adom,spelling,0.7,ASHANTI
+ADUM,uh dum,phonetic,0.7,ASHANTI
+AHODWO,a hodo,abbreviated,0.9,ASHANTI
+AHODWO,ah hodo,phonetic,0.9,ASHANTI
+AHODWO,ah hodwo,phonetic,0.8,ASHANTI
+AHODWO,ahojo,phonetic,0.6,ASHANTI
+AHODWO,a hoe dwo,phonetic,0.6,ASHANTI
+AHINSAN,a hinsan,space_variation,0.9,ASHANTI
+AHINSAN,ahisan,phonetic,0.8,ASHANTI
+AHINSAN,ahi san,space_variation,0.8,ASHANTI
+AHINSAN,a hinson,phonetic,0.7,ASHANTI
+AHINSAN,ah in san,space_variation,0.8,ASHANTI
+MAMPONTENG,mam pon teng,space_variation,0.9,ASHANTI
+MAMPONTENG,mampong teng,phonetic,0.8,ASHANTI
+MAMPONTENG,mam pont eng,space_variation,0.8,ASHANTI
+MAMPONTENG,mampon tang,phonetic,0.7,ASHANTI
+MAMPONTENG,mam pon ten,phonetic,0.7,ASHANTI
+MAMPONG,mam pong,space_variation,0.9,ASHANTI
+MAMPONG,man pong,phonetic,0.7,ASHANTI
+MAMPONG,mam pung,phonetic,0.7,ASHANTI
+MAMPONG,mampon,abbreviated,0.7,ASHANTI
+AGONA,a go na,space_variation,0.9,ASHANTI
+AGONA,ah go na,phonetic,0.9,ASHANTI
+AGONA,ah gonna,phonetic,0.7,ASHANTI
+AGONA,a gonna,phonetic,0.7,ASHANTI
+WIAMOASE,wee a mo ase,phonetic,0.9,ASHANTI
+WIAMOASE,wia moase,space_variation,0.9,ASHANTI
+WIAMOASE,we ah moase,phonetic,0.8,ASHANTI
+WIAMOASE,wiamoseh,spelling,0.7,ASHANTI
+WIAMOASE,we a mo say,phonetic,0.8,ASHANTI
+OBUASI,oh bu asi,phonetic,0.9,ASHANTI
+OBUASI,o boo asi,phonetic,0.8,ASHANTI
+OBUASI,oh boo asi,phonetic,0.8,ASHANTI
+OBUASI,obuasee,spelling,0.7,ASHANTI
+OBUASI,oh bwasi,phonetic,0.6,ASHANTI
+DUNKWA,dunk wa,space_variation,0.9,ASHANTI
+DUNKWA,donk wa,phonetic,0.8,ASHANTI
+DUNKWA,don qua,phonetic,0.7,ASHANTI
+DUNKWA,dunkwah,spelling,0.7,ASHANTI
+KONONGO,ko no ngo,space_variation,0.9,ASHANTI
+KONONGO,con on go,phonetic,0.8,ASHANTI
+KONONGO,ko non go,space_variation,0.8,ASHANTI
+KONONGO,co nongo,phonetic,0.7,ASHANTI
+AGOGO,ah go go,phonetic,0.9,ASHANTI
+AGOGO,a go go,space_variation,0.9,ASHANTI
+AGOGO,ah gogo,phonetic,0.8,ASHANTI
+AGOGO,agohgo,spelling,0.6,ASHANTI
+SUNYANI,sue n yani,phonetic,0.9,BRONG_AHAFO
+SUNYANI,sun yani,space_variation,0.9,BRONG_AHAFO
+SUNYANI,soon yani,phonetic,0.8,BRONG_AHAFO
+SUNYANI,son yani,phonetic,0.8,BRONG_AHAFO
+SUNYANI,sue knee ani,phonetic,0.7,BRONG_AHAFO
+SUNYANI,suniani,no_space,0.7,BRONG_AHAFO
+TECHIMAN,teki man,phonetic,0.9,BRONG_AHAFO
+TECHIMAN,tech man,abbreviated,0.8,BRONG_AHAFO
+TECHIMAN,techy man,phonetic,0.7,BRONG_AHAFO
+TECHIMAN,techi man,phonetic,0.8,BRONG_AHAFO
+TECHIMAN,take man,phonetic,0.6,BRONG_AHAFO
+TECHIMAN,teckman,no_space,0.7,BRONG_AHAFO
+BEREKUM,bere kum,space_variation,0.9,BRONG_AHAFO
+BEREKUM,berry come,phonetic,0.8,BRONG_AHAFO
+BEREKUM,berry kum,phonetic,0.8,BRONG_AHAFO
+BEREKUM,bere come,phonetic,0.8,BRONG_AHAFO
+BEREKUM,bericum,phonetic,0.6,BRONG_AHAFO
+DORMAA,door ma,phonetic,0.9,BRONG_AHAFO
+DORMAA,dor maa,space_variation,0.9,BRONG_AHAFO
+DORMAA,dorma,spelling,0.8,BRONG_AHAFO
+DORMAA,door mah,phonetic,0.8,BRONG_AHAFO
+NKORANZA,n ko ran za,space_variation,0.9,BRONG_AHAFO
+NKORANZA,encoranza,phonetic,0.8,BRONG_AHAFO
+NKORANZA,en ko ranza,space_variation,0.8,BRONG_AHAFO
+NKORANZA,n coranza,phonetic,0.8,BRONG_AHAFO
+NKORANZA,encore anza,english_word,0.7,BRONG_AHAFO
+WENCHI,wen chi,space_variation,0.9,BRONG_AHAFO
+WENCHI,when chi,phonetic,0.8,BRONG_AHAFO
+WENCHI,winch,phonetic,0.7,BRONG_AHAFO
+WENCHI,wench,english_word,0.7,BRONG_AHAFO
+WENCHI,wenchy,spelling,0.6,BRONG_AHAFO
+DROBO,dro bo,space_variation,0.9,BRONG_AHAFO
+DROBO,dro bow,phonetic,0.8,BRONG_AHAFO
+DROBO,droboh,spelling,0.7,BRONG_AHAFO
+DROBO,draw bow,phonetic,0.6,BRONG_AHAFO
+BECHEM,be chem,space_variation,0.9,BRONG_AHAFO
+BECHEM,bay chem,phonetic,0.8,BRONG_AHAFO
+BECHEM,behem,phonetic,0.6,BRONG_AHAFO
+BECHEM,be kem,phonetic,0.7,BRONG_AHAFO
+BECHEM,bekim,phonetic,0.6,BRONG_AHAFO
+SAMPA,sam pa,space_variation,0.9,BRONG_AHAFO
+SAMPA,samba,phonetic,0.8,BRONG_AHAFO
+SAMPA,sam pah,phonetic,0.8,BRONG_AHAFO
+SAMPA,sampah,spelling,0.7,BRONG_AHAFO
+GOASO,go a so,space_variation,0.9,BRONG_AHAFO
+GOASO,go ah so,phonetic,0.9,BRONG_AHAFO
+GOASO,go aso,space_variation,0.8,BRONG_AHAFO
+GOASO,guaso,phonetic,0.6,BRONG_AHAFO
+GOASO,go wa so,phonetic,0.6,BRONG_AHAFO
+HWIDIEM,hwi diem,space_variation,0.9,BRONG_AHAFO
+HWIDIEM,whidiem,phonetic,0.8,BRONG_AHAFO
+HWIDIEM,we diem,phonetic,0.8,BRONG_AHAFO
+HWIDIEM,we deem,phonetic,0.7,BRONG_AHAFO
+HWIDIEM,whee diem,phonetic,0.7,BRONG_AHAFO
+KENYASE,ken ya se,space_variation,0.9,BRONG_AHAFO
+KENYASE,kenya say,phonetic,0.8,BRONG_AHAFO
+KENYASE,kenya se,phonetic,0.8,BRONG_AHAFO
+KENYASE,kenyassay,no_space,0.7,BRONG_AHAFO
+KENYASE,ken yassy,phonetic,0.7,BRONG_AHAFO
+KINTAMPO,kin tam po,space_variation,0.9,BRONG_AHAFO
+KINTAMPO,can tampo,phonetic,0.8,BRONG_AHAFO
+KINTAMPO,kin tampo,space_variation,0.8,BRONG_AHAFO
+KINTAMPO,quintampo,phonetic,0.6,BRONG_AHAFO
+KINTAMPO,kin tempo,phonetic,0.7,BRONG_AHAFO
+DUAYAW NKWANTA,dua yaw en kwanta,space_variation,0.9,BRONG_AHAFO
+DUAYAW NKWANTA,doo yaw n quanta,phonetic,0.8,BRONG_AHAFO
+DUAYAW NKWANTA,duayaw nkwanta,no_space,0.9,BRONG_AHAFO
+DUAYAW,dua yaw,space_variation,0.9,BRONG_AHAFO
+DUAYAW,doo yaw,phonetic,0.8,BRONG_AHAFO
+DUAYAW,doo a yaw,space_variation,0.8,BRONG_AHAFO
+DUAYAW,dway aw,phonetic,0.7,BRONG_AHAFO
+NKWANTA,n kwanta,space_variation,0.9,BRONG_AHAFO
+NKWANTA,en kwanta,phonetic,0.9,BRONG_AHAFO
+NKWANTA,n quanta,phonetic,0.8,BRONG_AHAFO
+NKWANTA,enkwanta,phonetic,0.8,BRONG_AHAFO
+KOFORIDUA,ko fo ridua,space_variation,0.9,EASTERN
+KOFORIDUA,coforidua,phonetic,0.9,EASTERN
+KOFORIDUA,ko for idea,phonetic,0.7,EASTERN
+KOFORIDUA,coffee ridua,english_word,0.8,EASTERN
+KOFORIDUA,ko fori dua,space_variation,0.8,EASTERN
+KOFORIDUA,koforidwa,phonetic,0.7,EASTERN
+KOFORIDUA,koforidu,abbreviated,0.7,EASTERN
+NSAWAM,n sawam,space_variation,0.9,EASTERN
+NSAWAM,ensawam,phonetic,0.9,EASTERN
+NSAWAM,en sawam,space_variation,0.9,EASTERN
+NSAWAM,n saw am,space_variation,0.8,EASTERN
+NSAWAM,insawam,phonetic,0.7,EASTERN
+SUHUM,sue hum,phonetic,0.9,EASTERN
+SUHUM,sue home,phonetic,0.8,EASTERN
+SUHUM,su home,phonetic,0.8,EASTERN
+SUHUM,suhome,no_space,0.7,EASTERN
+SUHUM,sue um,abbreviated,0.7,EASTERN
+AKOSOMBO,ako sombo,space_variation,0.9,EASTERN
+AKOSOMBO,acho sombo,phonetic,0.8,EASTERN
+AKOSOMBO,ako combo,phonetic,0.7,EASTERN
+AKOSOMBO,akosambo,phonetic,0.7,EASTERN
+AKOSOMBO,ako zombo,phonetic,0.6,EASTERN
+AKOSOMBO,akombo,abbreviated,0.6,EASTERN
+SOMANYA,so man ya,space_variation,0.9,EASTERN
+SOMANYA,somalia,english_word,0.8,EASTERN
+SOMANYA,so manya,space_variation,0.8,EASTERN
+SOMANYA,soh man ya,phonetic,0.8,EASTERN
+SOMANYAODUMASE KROBO,somanya odumase krobo,space_variation,0.9,EASTERN
+SOMANYAODUMASE KROBO,somalia odumase krobo,english_word,0.8,EASTERN
+ODUMASE,oh duma say,phonetic,0.9,EASTERN
+ODUMASE,oh duma se,phonetic,0.9,EASTERN
+ODUMASE,o duma say,phonetic,0.9,EASTERN
+ODUMASE,oh duma sei,phonetic,0.8,EASTERN
+KROBO,crow bow,phonetic,0.9,EASTERN
+KROBO,crow bo,phonetic,0.9,EASTERN
+KROBO,kro bo,space_variation,0.9,EASTERN
+KROBO,cro bow,phonetic,0.8,EASTERN
+ODA,oh da,phonetic,0.9,EASTERN
+ODA,odah,spelling,0.8,EASTERN
+ODA,o dah,phonetic,0.8,EASTERN
+ODA,oder,phonetic,0.6,EASTERN
+AKWATIA,ak wa tia,space_variation,0.9,EASTERN
+AKWATIA,aquatia,phonetic,0.8,EASTERN
+AKWATIA,ak qua tia,space_variation,0.8,EASTERN
+AKWATIA,ak water,english_word,0.7,EASTERN
+AKWATIA,akwatiah,spelling,0.7,EASTERN
+KADE,kay day,phonetic,0.9,EASTERN
+KADE,ka day,phonetic,0.9,EASTERN
+KADE,caddy,english_word,0.7,EASTERN
+KADE,kadeh,spelling,0.7,EASTERN
+BEGORO,be go ro,space_variation,0.9,EASTERN
+BEGORO,bay goro,phonetic,0.8,EASTERN
+BEGORO,be goro,space_variation,0.9,EASTERN
+BEGORO,begorrow,spelling,0.6,EASTERN
+BEGOROOSIEM,begoro osiem,space_variation,0.9,EASTERN
+BEGOROOSIEM,begoro oh seem,phonetic,0.8,EASTERN
+OSIEM,oh seem,phonetic,0.9,EASTERN
+OSIEM,oh see em,space_variation,0.9,EASTERN
+OSIEM,o seem,phonetic,0.8,EASTERN
+OSIEM,osiym,spelling,0.6,EASTERN
+NKAWKAW,n kaw kaw,space_variation,0.9,EASTERN
+NKAWKAW,enkawkaw,phonetic,0.9,EASTERN
+NKAWKAW,en caw caw,space_variation,0.8,EASTERN
+NKAWKAW,n cow cow,phonetic,0.7,EASTERN
+NKAWKAW,n ka ka,abbreviated,0.7,EASTERN
+NEW ABIREM,new a bi rem,space_variation,0.9,EASTERN
+NEW ABIREM,new abbey rem,english_word,0.7,EASTERN
+NEW ABIREM,new ah birem,phonetic,0.8,EASTERN
+NEW ABIREM,new ab rem,abbreviated,0.7,EASTERN
+ASAMANKESE,a saman ke se,space_variation,0.9,EASTERN
+ASAMANKESE,ah saman case,phonetic,0.8,EASTERN
+ASAMANKESE,a sa man ke se,space_variation,0.8,EASTERN
+ASAMANKESE,asaman casey,phonetic,0.7,EASTERN
+ASIAKWA,asi ak wa,space_variation,0.9,EASTERN
+ASIAKWA,asia qua,phonetic,0.8,EASTERN
+ASIAKWA,asi aqua,phonetic,0.8,EASTERN
+ASIAKWA,asia akwa,phonetic,0.7,EASTERN
+OSINO,oh see no,phonetic,0.9,EASTERN
+OSINO,oh sino,phonetic,0.9,EASTERN
+OSINO,o see no,phonetic,0.8,EASTERN
+OSINO,osiino,spelling,0.7,EASTERN
+ANYINAM,any nam,space_variation,0.9,EASTERN
+ANYINAM,annie nam,english_word,0.7,EASTERN
+ANYINAM,ani nam,space_variation,0.8,EASTERN
+ENYIRESI,en yi re si,space_variation,0.9,EASTERN
+ENYIRESI,en ire si,abbreviated,0.8,EASTERN
+ENYIRESI,eniresi,no_space,0.8,EASTERN
+ENYIRESI,en ye re si,space_variation,0.8,EASTERN
+KIBI,kee bi,phonetic,0.9,EASTERN
+KIBI,key bee,phonetic,0.9,EASTERN
+KIBI,keebi,no_space,0.8,EASTERN
+KIBI,keebee,spelling,0.8,EASTERN
+MAMFE- AKUAPEM,mamfe akuapem,space_variation,0.9,EASTERN
+MAMFE- AKUAPEM,mamfe ah qua pem,phonetic,0.8,EASTERN
+MAMFE,mam fe,space_variation,0.9,EASTERN
+MAMFE,mom fe,phonetic,0.8,EASTERN
+MAMFE,mam fay,phonetic,0.8,EASTERN
+MAMFE,mamfeh,spelling,0.7,EASTERN
+AKUAPEM,ah qua pem,phonetic,0.9,EASTERN
+AKUAPEM,ah qua pim,phonetic,0.8,EASTERN
+AKUAPEM,aquapem,phonetic,0.8,EASTERN
+AKUAPEM,akwapem,spelling,0.8,EASTERN
+AKUAPEM,ah quay pem,phonetic,0.7,EASTERN
+TAKORADI,taco radi,phonetic,0.9,WESTERN
+TAKORADI,taco ready,phonetic,0.8,WESTERN
+TAKORADI,tako radi,phonetic,0.9,WESTERN
+TAKORADI,tacoradi,no_space,0.8,WESTERN
+TAKORADI,ta coradi,space_variation,0.8,WESTERN
+SEKONDI,say con di,phonetic,0.9,WESTERN
+SEKONDI,second,english_word,0.8,WESTERN
+SEKONDI,second i,phonetic,0.8,WESTERN
+SEKONDI,say condi,phonetic,0.8,WESTERN
+SEKONDI,secondi,spelling,0.8,WESTERN
+TARKWA,tark wa,space_variation,0.9,WESTERN
+TARKWA,tar qua,phonetic,0.8,WESTERN
+TARKWA,tar kwa,space_variation,0.8,WESTERN
+TARKWA,tarkwah,spelling,0.7,WESTERN
+TARKWA,tarqua,no_space,0.7,WESTERN
+BOGOSO,bo go so,space_variation,0.9,WESTERN
+BOGOSO,bow go so,phonetic,0.8,WESTERN
+BOGOSO,bogo so,space_variation,0.8,WESTERN
+BOGOSO,bo gosoh,spelling,0.7,WESTERN
+WASSA,wa sa,space_variation,0.9,WESTERN
+WASSA,wasa,spelling,0.9,WESTERN
+WASSA,wah sa,phonetic,0.8,WESTERN
+WASSA,wassah,spelling,0.7,WESTERN
+AKROPONG,ah crow pong,phonetic,0.9,WESTERN
+AKROPONG,acropong,phonetic,0.8,WESTERN
+AKROPONG,ak ro pong,space_variation,0.9,WESTERN
+AKROPONG,akro pong,space_variation,0.9,WESTERN
+WASSA AKROPONG,wassa akropong,space_variation,0.9,WESTERN
+WASSA AKROPONG,wasa akro pong,compound,0.8,WESTERN
+ASANKRAGWA,a san kra gwa,space_variation,0.9,WESTERN
+ASANKRAGWA,a san cragwa,phonetic,0.8,WESTERN
+ASANKRAGWA,asan kragwa,space_variation,0.8,WESTERN
+ASANKRAGWA,ah sankragwa,phonetic,0.8,WESTERN
+SAMREBOI,sam re boy,phonetic,0.9,WESTERN
+SAMREBOI,sam re boi,phonetic,0.9,WESTERN
+SAMREBOI,sam ray boy,phonetic,0.8,WESTERN
+SAMREBOI,samreboy,no_space,0.8,WESTERN
+ENCHI,en chi,space_variation,0.9,WESTERN
+ENCHI,inchi,phonetic,0.8,WESTERN
+ENCHI,en chee,phonetic,0.8,WESTERN
+ENCHI,enchee,phonetic,0.7,WESTERN
+ENCHI,inch,abbreviated,0.7,WESTERN
+INCHABAN,in cha ban,space_variation,0.9,WESTERN
+INCHABAN,inch a ban,space_variation,0.9,WESTERN
+INCHABAN,in cha bon,phonetic,0.7,WESTERN
+INCHABAN,inchabahn,spelling,0.7,WESTERN
+SUAMAN,sue a man,phonetic,0.9,WESTERN
+SUAMAN,soo aman,phonetic,0.8,WESTERN
+SUAMAN,sua man,space_variation,0.9,WESTERN
+SUAMAN,suahman,spelling,0.7,WESTERN
+DADIESO,da die so,space_variation,0.9,WESTERN
+DADIESO,daddy so,phonetic,0.8,WESTERN
+DADIESO,da di so,space_variation,0.9,WESTERN
+DADIESO,dadi esso,spelling,0.7,WESTERN
+SUAMAN DADIESO,suaman dadieso,space_variation,0.9,WESTERN
+SUAMAN DADIESO,sua man daddy so,phonetic,0.8,WESTERN
+SEFWI,sef we,space_variation,0.9,WESTERN
+SEFWI,sef wee,phonetic,0.8,WESTERN
+SEFWI,say fee,phonetic,0.7,WESTERN
+SEFWI,sef wi,space_variation,0.9,WESTERN
+SEFWI,sefwe,no_space,0.8,WESTERN
+BIBIANI,bi bi ani,space_variation,0.9,WESTERN
+BIBIANI,bee bee ani,phonetic,0.8,WESTERN
+BIBIANI,bi bianie,spelling,0.7,WESTERN
+BIBIANI,bibi ani,space_variation,0.8,WESTERN
+SEFWI BIBIANI,sefwi bibiani,space_variation,0.9,WESTERN
+SEFWI BIBIANI,sef we bee bee ani,compound,0.8,WESTERN
+ANHWIASO,an we a so,space_variation,0.9,WESTERN
+ANHWIASO,an we aso,space_variation,0.9,WESTERN
+ANHWIASO,anhwiasso,spelling,0.7,WESTERN
+ANHWIASO,an wee aso,phonetic,0.8,WESTERN
+SEFWI ANHWIASO,sefwi anhwiaso,space_variation,0.9,WESTERN
+SEFWI ANHWIASO,sef we anhwiaso,compound,0.9,WESTERN
+BEKWAI,be kwai,space_variation,0.9,WESTERN
+BEKWAI,bek way,phonetic,0.8,WESTERN
+BEKWAI,beck why,phonetic,0.7,WESTERN
+BEKWAI,bekwy,spelling,0.7,WESTERN
+SEFWI BEKWAI,sefwi bekwai,space_variation,0.9,WESTERN
+SEFWI BEKWAI,sef we bekwai,compound,0.9,WESTERN
+WIAWSO,wee aw so,phonetic,0.9,WESTERN
+WIAWSO,we aw so,phonetic,0.9,WESTERN
+WIAWSO,wee a so,space_variation,0.8,WESTERN
+WIAWSO,wiahso,spelling,0.7,WESTERN
+SEFWI WIAWSO,sefwi wiawso,space_variation,0.9,WESTERN
+SEFWI WIAWSO,sef we wiawso,compound,0.9,WESTERN
+ASAFO,a sa fo,space_variation,0.9,WESTERN
+ASAFO,ah sa fo,phonetic,0.9,WESTERN
+ASAFO,asafoh,spelling,0.7,WESTERN
+ASAFO,a safari,english_word,0.6,WESTERN
+SEFWI ASAFO,sefwi asafo,space_variation,0.9,WESTERN
+SEFWI ASAFO,sef we asafo,compound,0.9,WESTERN
+ASAWINSO,a sa win so,space_variation,0.9,WESTERN
+ASAWINSO,ah sa win so,phonetic,0.9,WESTERN
+ASAWINSO,asa winso,space_variation,0.9,WESTERN
+SEFWI ASAWINSO,sefwi asawinso,space_variation,0.9,WESTERN
+SEFWI ASAWINSO,sef we asawinso,compound,0.9,WESTERN
+JUABOSO,ju a bo so,space_variation,0.9,WESTERN
+JUABOSO,jua boso,space_variation,0.9,WESTERN
+JUABOSO,joo boso,phonetic,0.8,WESTERN
+JUABOSO,juabosso,spelling,0.7,WESTERN
+SEFWI JUABOSO,sefwi juaboso,space_variation,0.9,WESTERN
+SEFWI JUABOSO,sef we juaboso,compound,0.9,WESTERN
+BODI,bo di,space_variation,0.9,WESTERN
+BODI,bow dee,phonetic,0.8,WESTERN
+BODI,body,english_word,0.7,WESTERN
+BODI,bodee,spelling,0.7,WESTERN
+SEFWI BODI,sefwi bodi,space_variation,0.9,WESTERN
+SEFWI BODI,sef we body,compound,0.8,WESTERN
+ESSAM,es sam,space_variation,0.9,WESTERN
+ESSAM,essay,english_word,0.7,WESTERN
+ESSAM,essem,phonetic,0.7,WESTERN
+ESSAM,esam,spelling,0.8,WESTERN
+SEFWI ESSAM,sefwi essam,space_variation,0.9,WESTERN
+SEFWI ESSAM,sef we essam,compound,0.9,WESTERN
+AKONTOMBRA,ah kon tombra,phonetic,0.9,WESTERN
+AKONTOMBRA,ah con tombra,phonetic,0.9,WESTERN
+AKONTOMBRA,akon tombra,space_variation,0.9,WESTERN
+AKONTOMBRA,ah contombra,phonetic,0.8,WESTERN
+SEFWI AKONTOMBRA,sefwi akontombra,space_variation,0.9,WESTERN
+SEFWI AKONTOMBRA,sef we akontombra,compound,0.9,WESTERN
+HO,hoe,phonetic,0.9,VOLTA
+HO,hoh,phonetic,0.8,VOLTA
+HO,how,phonetic,0.7,VOLTA
+HO,haw,phonetic,0.6,VOLTA
+HOHOE,ho ho,space_variation,0.9,VOLTA
+HOHOE,hoe hoe,phonetic,0.9,VOLTA
+HOHOE,ho ho ay,phonetic,0.8,VOLTA
+HOHOE,ho hoy,phonetic,0.7,VOLTA
+HOHOE,hoho,no_space,0.8,VOLTA
+TAMALE,ta ma lee,phonetic,0.9,NORTHERN
+TAMALE,tama lee,space_variation,0.9,NORTHERN
+TAMALE,ta molly,phonetic,0.7,NORTHERN
+TAMALE,tomale,spelling,0.7,NORTHERN
+TAMALE,tamalee,no_space,0.8,NORTHERN
+TAMALE,ta marley,phonetic,0.6,NORTHERN
+WA,wah,phonetic,0.9,NORTHERN
+WA,war,phonetic,0.7,NORTHERN
+WA,where,english_word,0.6,NORTHERN
+BOLGATANGA,bol ga tanga,space_variation,0.9,NORTHERN
+BOLGATANGA,bol ga tongo,phonetic,0.7,NORTHERN
+BOLGATANGA,ball ga tanga,phonetic,0.8,NORTHERN
+BOLGATANGA,bolga tanga,space_variation,0.9,NORTHERN
+BOLGATANGA,bolgo tanga,phonetic,0.7,NORTHERN
+BAWKU,baw ku,space_variation,0.9,NORTHERN
+BAWKU,bow coo,phonetic,0.8,NORTHERN
+BAWKU,back you,phonetic,0.6,NORTHERN
+BAWKU,bow koo,phonetic,0.8,NORTHERN
+BAWKU,bawk,abbreviated,0.7,NORTHERN
+NAVRONGO,nav rongo,space_variation,0.9,NORTHERN
+NAVRONGO,nav ron go,space_variation,0.9,NORTHERN
+NAVRONGO,na rongo,abbreviated,0.7,NORTHERN
+NAVRONGO,nav ronco,phonetic,0.7,NORTHERN
+LAWRA,law ra,space_variation,0.9,NORTHERN
+LAWRA,laura,english_word,0.9,NORTHERN
+LAWRA,lara,english_word,0.7,NORTHERN
+LAWRA,lawrah,spelling,0.7,NORTHERN

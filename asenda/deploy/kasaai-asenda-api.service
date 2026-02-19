@@ -1,0 +1,30 @@
+[Unit]
+Description=Asenda.ai - Backend API
+After=network.target mongodb.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/kasaai/apps/asenda
+Environment=PYTHONPATH=/opt/kasaai/apps/asenda
+Environment=MONGO_URI=mongodb://admin:aawwER4444%40@127.0.0.1:27017/
+Environment=DATABASE_NAME=asenda
+Environment=SMTP_HOST=localhost
+Environment=SMTP_PORT=25
+Environment=FROM_EMAIL=hello@asenda.ai
+Environment=FROM_NAME=Asenda AI
+ExecStart=/opt/kasaai/apps/venv/bin/uvicorn backend.main:app --host 0.0.0.0 --port 30051 --workers 2
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=kasaai-asenda-api
+
+# Process limits
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

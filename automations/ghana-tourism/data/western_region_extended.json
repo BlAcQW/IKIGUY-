@@ -1,0 +1,288 @@
+{
+  "destinations": [
+    {
+      "id": "dest_025",
+      "name": "Nzulezo Stilt Village",
+      "region": "Western",
+      "city": "Beyin",
+      "category": ["cultural", "nature", "adventure", "unique"],
+      "description": "Unique village built entirely on stilts on Lake Tadane. The entire community lives on wooden platforms above the water, accessed only by canoe. A UNESCO tentative world heritage site and one of Ghana's most unusual attractions.",
+      "highlights": [
+        "Entire village on stilts above water",
+        "UNESCO tentative heritage site",
+        "Canoe access only",
+        "Traditional fishing lifestyle",
+        "Unique architecture",
+        "Surrounded by rainforest"
+      ],
+      "activities": [
+        "Canoe tour to village",
+        "Village exploration",
+        "Photography",
+        "Cultural interaction",
+        "Bird watching",
+        "Rainforest hiking",
+        "Learning traditional fishing methods"
+      ],
+      "best_time_to_visit": "November to April (dry season)",
+      "estimated_visit_duration": "Half day (includes canoe journey)",
+      "entry_fee": "Canoe tour GHS 100-150 per person (includes guide)",
+      "accessibility": "Requires 45-minute canoe trip, moderate fitness needed",
+      "location_details": "Near Beyin, Western Region. 90km west of Takoradi. Canoe departure from Beyin."
+    },
+    {
+      "id": "dest_026",
+      "name": "Ankasa Conservation Area",
+      "region": "Western",
+      "city": "Ankasa",
+      "category": ["nature", "wildlife", "adventure", "eco-tourism"],
+      "description": "Pristine tropical rainforest reserve with diverse wildlife including forest elephants, bongo antelopes, and over 190 bird species. One of Ghana's most biodiverse protected areas with ancient rainforest.",
+      "highlights": [
+        "Ancient tropical rainforest",
+        "Forest elephants",
+        "Rare bongo antelopes",
+        "190+ bird species",
+        "Canopy walkway",
+        "Pristine wilderness",
+        "Butterfly diversity"
+      ],
+      "activities": [
+        "Rainforest hiking",
+        "Wildlife tracking",
+        "Bird watching",
+        "Canopy walkway",
+        "Photography",
+        "Nature education",
+        "Butterfly spotting"
+      ],
+      "best_time_to_visit": "November to March (dry season for wildlife viewing)",
+      "estimated_visit_duration": "Full day",
+      "entry_fee": "GHS 40 for adults, GHS 20 for students (guide required)",
+      "accessibility": "Accessible by 4x4, guide mandatory",
+      "location_details": "Near Elubo, Western Region. 3 hours from Takoradi. 4x4 vehicle recommended."
+    },
+    {
+      "id": "dest_027",
+      "name": "Axim Beach",
+      "region": "Western",
+      "city": "Axim",
+      "category": ["beach", "recreation", "historical"],
+      "description": "Beautiful, relatively quiet beach town with historic Fort St. Antonio and pristine beaches. Less crowded than Busua, offering a more relaxed beach experience with historical significance.",
+      "highlights": [
+        "Pristine beaches",
+        "Fort St. Antonio (Portuguese fort)",
+        "Quiet, relaxed atmosphere",
+        "Good swimming conditions",
+        "Fishing village experience",
+        "Less touristy than other beaches"
+      ],
+      "activities": [
+        "Swimming",
+        "Beach relaxation",
+        "Fort exploration",
+        "Photography",
+        "Village walks",
+        "Fresh seafood dining",
+        "Fishing boat watching"
+      ],
+      "best_time_to_visit": "November to March, but year-round destination",
+      "estimated_visit_duration": "Half day to full day",
+      "entry_fee": "Free beach access, fort entry GHS 10",
+      "accessibility": "Easy beach access, accessible by car",
+      "location_details": "Axim town, Western Region. 65km west of Takoradi on coastal road."
+    },
+    {
+      "id": "dest_028",
+      "name": "Princess Town and Fort Gross Friedrichsburg",
+      "region": "Western",
+      "city": "Princess Town (Pokesu)",
+      "category": ["historical", "beach", "cultural"],
+      "description": "Historic coastal town with Brandenburg Fort Gross Friedrichsburg, originally built by Germans in the 17th century. Quiet beach town with significant colonial history.",
+      "highlights": [
+        "Fort Gross Friedrichsburg ruins",
+        "German colonial history",
+        "Quiet beaches",
+        "Fishing village culture",
+        "Less commercialized",
+        "Historical significance"
+      ],
+      "activities": [
+        "Fort exploration",
+        "Historical tours",
+        "Beach walks",
+        "Photography",
+        "Village tours",
+        "Fresh seafood",
+        "Cultural interaction"
+      ],
+      "best_time_to_visit": "Year-round",
+      "estimated_visit_duration": "2-3 hours",
+      "entry_fee": "Fort entry GHS 10-15",
+      "accessibility": "Accessible by car, 30km west of Takoradi",
+      "location_details": "Princess Town (Pokesu), Western Region. Between Takoradi and Busua."
+    },
+    {
+      "id": "dest_029",
+      "name": "Takoradi Market Circle",
+      "region": "Western",
+      "city": "Takoradi",
+      "category": ["shopping", "cultural", "urban"],
+      "description": "Bustling commercial hub and market in Ghana's oil city. Vibrant atmosphere with diverse goods, local food, and authentic urban Ghanaian experience. Gateway to Western Region attractions.",
+      "highlights": [
+        "Vibrant market atmosphere",
+        "Local goods and produce",
+        "Street food variety",
+        "Authentic urban experience",
+        "Central location for Western Region",
+        "Local craft shops"
+      ],
+      "activities": [
+        "Shopping",
+        "Local food tasting",
+        "People watching",
+        "Photography",
+        "Bargaining",
+        "Exploring nearby harbor"
+      ],
+      "best_time_to_visit": "Morning (7 AM - 12 PM)",
+      "estimated_visit_duration": "1-2 hours",
+      "entry_fee": "Free entry",
+      "accessibility": "Easy access in city center",
+      "location_details": "Central Takoradi, Western Region. Major transport hub for Western Region exploration."
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "acc_021",
+      "name": "Lou Moon Lodge",
+      "type": "lodge",
+      "star_rating": 3,
+      "city": "Busua",
+      "region": "Western",
+      "description": "Popular beachfront lodge in Busua with stunning ocean views. Comfortable rooms, good food, and direct beach access. Favorite among surfers and beach lovers.",
+      "amenities": [
+        "Beachfront location",
+        "Restaurant",
+        "Bar",
+        "Wi-Fi",
+        "Beach access",
+        "Surfboard rentals",
+        "Parking",
+        "Garden area"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "200-300"
+        },
+        {
+          "type": "Sea View Room",
+          "price_range_ghs": "350-450"
+        }
+      ],
+      "phone": "+233 244 XXX XXX",
+      "email": "info@loumoonlodge.com",
+      "website": null,
+      "additional_info": "Perfect for surfers and beach relaxation. Popular with travelers."
+    },
+    {
+      "id": "acc_022",
+      "name": "Axim Beach Resort",
+      "type": "resort",
+      "star_rating": 3,
+      "city": "Axim",
+      "region": "Western",
+      "description": "Beachfront resort offering comfortable accommodations with ocean views. Quieter alternative to busier beach towns, with good facilities and friendly service.",
+      "amenities": [
+        "Beachfront location",
+        "Restaurant",
+        "Bar",
+        "Swimming pool",
+        "Wi-Fi",
+        "Conference facilities",
+        "Parking",
+        "Water sports"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "250-350"
+        },
+        {
+          "type": "Ocean View Suite",
+          "price_range_ghs": "450-600"
+        }
+      ],
+      "phone": "+233 341 XXX XXX",
+      "email": null,
+      "website": null,
+      "additional_info": "Peaceful beach location, good for relaxation away from crowds."
+    },
+    {
+      "id": "acc_023",
+      "name": "Rainforest Lodge Ankasa",
+      "type": "lodge",
+      "star_rating": 2,
+      "city": "Ankasa",
+      "region": "Western",
+      "description": "Basic eco-lodge near Ankasa Conservation Area. Simple accommodations in the heart of the rainforest, perfect for nature enthusiasts and birdwatchers.",
+      "amenities": [
+        "Rainforest location",
+        "Restaurant (local meals)",
+        "Guided tours arrangement",
+        "Bird watching",
+        "Nature trails",
+        "Basic facilities",
+        "Eco-friendly"
+      ],
+      "room_types": [
+        {
+          "type": "Basic Room",
+          "price_range_ghs": "150-220"
+        },
+        {
+          "type": "Camping",
+          "price_range_ghs": "80-120"
+        }
+      ],
+      "phone": "+233 24 XXX XXXX",
+      "email": null,
+      "website": null,
+      "additional_info": "Best for eco-tourists and nature lovers. Book rainforest tours through lodge."
+    },
+    {
+      "id": "acc_024",
+      "name": "Planters Lodge Takoradi",
+      "type": "hotel",
+      "star_rating": 3,
+      "city": "Takoradi",
+      "region": "Western",
+      "description": "Well-established hotel in Takoradi with comfortable rooms and good business facilities. Popular with oil industry workers and tourists exploring the Western Region.",
+      "amenities": [
+        "Free Wi-Fi",
+        "Restaurant",
+        "Bar",
+        "Swimming pool",
+        "Business center",
+        "Conference rooms",
+        "24-hour reception",
+        "Parking",
+        "Gym"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "300-400"
+        },
+        {
+          "type": "Executive Room",
+          "price_range_ghs": "500-650"
+        }
+      ],
+      "phone": "+233 312 028 888",
+      "email": "info@planterslodge.com",
+      "website": "https://www.planterslodge.com",
+      "additional_info": "Good base for exploring Western Region beaches and attractions."
+    }
+  ]
+}

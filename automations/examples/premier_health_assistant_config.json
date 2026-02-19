@@ -1,0 +1,112 @@
+{
+  "assistant_id": "baa69b3a-8944-4557-9ef9-3a5aa6956eb3",
+  "assistant_name": "Ama - Premier Health Navigator",
+  "updated_at": "2025-10-15T15:26:56.737Z",
+  "configuration": {
+    "provider": "openai",
+    "model": "gpt-4-turbo",
+    "temperature": 0.7,
+    "voice": {
+      "provider": "11labs",
+      "voiceId": "EXAVITQu4vr4xnSDxMaL"
+    },
+    "tools_configured": 6,
+    "previous_tool_count": 19,
+    "tool_reduction": "68% (19 → 6 tools)"
+  },
+  "tools": [
+    {
+      "id": "560adfee-43bf-4614-baa8-0d5ccfbe9769",
+      "name": "query_premier_health_knowledge_base",
+      "type": "RAG-powered knowledge base search",
+      "priority": 1,
+      "description": "Primary tool for all healthcare provider queries using Google Gemini 2.5 Flash RAG"
+    },
+    {
+      "id": "abc528ae-e1f1-4e9c-a939-bc859e5e7d88",
+      "name": "send_notification_email",
+      "type": "Communication",
+      "priority": 2,
+      "description": "Send emails to customers or team"
+    },
+    {
+      "id": "fc1ca495-9083-492e-854a-aeee6e5b3f64",
+      "name": "send_sms_vonage",
+      "type": "Communication",
+      "priority": 3,
+      "description": "Send SMS to customer's phone (preferred method)"
+    },
+    {
+      "id": "83635498-8f71-453a-9a15-7e00e1e494a2",
+      "name": "create_support_ticket",
+      "type": "Escalation",
+      "priority": 4,
+      "description": "Create support ticket for complex issues or low confidence responses"
+    },
+    {
+      "id": "7a894aca-6633-429c-ba36-1a8fe4fbd6bf",
+      "name": "book_google_calendar_appointment",
+      "type": "Scheduling",
+      "priority": 5,
+      "description": "Book appointments in Google Calendar"
+    },
+    {
+      "id": "11692713-925f-4e77-a335-ba54c4d48db9",
+      "name": "check_google_calendar_availability",
+      "type": "Scheduling",
+      "priority": 6,
+      "description": "Check available appointment slots"
+    }
+  ],
+  "key_features": [
+    "RAG-powered healthcare search with confidence scoring",
+    "Confidence-based automatic escalation (< 0.7)",
+    "Conversational Ghanaian voice (no lists or bullet points)",
+    "Grade 4 level English for accessibility",
+    "First name only collection (never email or last name)",
+    "Automatic phone number usage from VAPI webhook",
+    "No-hallucination policy with tool result grounding",
+    "Medical disclaimers on all health advice",
+    "SMS-first communication strategy",
+    "Post-call transcript emailing to team"
+  ],
+  "confidence_handling": {
+    "high_confidence": "> 0.8 - Provide answer directly",
+    "medium_confidence": "0.5-0.8 - Provide answer with disclaimer",
+    "low_confidence": "< 0.5 - Automatic escalation to support",
+    "requires_escalation_flag": "true - Always escalate regardless of score"
+  },
+  "testing_checklist": [
+    "Test: 'Find me doctors in Madina' (should use RAG tool)",
+    "Test: 'Emergency hospitals in Accra' (should use RAG tool)",
+    "Test: Unknown location query (should trigger low confidence escalation)",
+    "Test: Request to send details (should use SMS)",
+    "Test: Book appointment (should use calendar tools)",
+    "Verify: Confidence scores in RAG responses",
+    "Verify: No lists or bullet points in responses",
+    "Verify: Medical disclaimers included",
+    "Verify: Post-call email to ailabsafrica@gmail.com"
+  ],
+  "deprecated_tools_removed": [
+    "search_healthcare_providers",
+    "get_emergency_providers",
+    "get_provider_details",
+    "get_providers_by_area",
+    "get_providers_by_specialty",
+    "get_available_areas",
+    "get_available_specialties",
+    "send_provider_info_email",
+    "send_provider_info_sms",
+    "send_call_summary_email",
+    "escalate_to_support (replaced by create_support_ticket)",
+    "search_web_with_ai",
+    "create_hubspot_contact"
+  ],
+  "notes": [
+    "Tool count reduced from 19 to 6 (68% reduction)",
+    "RAG tool replaces 5 deprecated structured search tools",
+    "Cleaner, more focused tool set for better LLM decision making",
+    "System prompt emphasizes RAG tool for ALL healthcare queries",
+    "Confidence-based escalation ensures quality responses"
+  ]
+}

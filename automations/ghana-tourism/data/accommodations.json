@@ -1,0 +1,287 @@
+{
+  "accommodations": [
+    {
+      "id": "acc_001",
+      "name": "Labadi Beach Hotel",
+      "region": "Greater Accra",
+      "city": "Accra",
+      "type": "hotel",
+      "star_rating": 4,
+      "description": "Beachfront hotel with direct beach access, pool, multiple restaurants, and conference facilities.",
+      "amenities": ["Beach access", "Swimming pool", "Restaurant", "Bar", "Gym", "Spa", "Conference rooms", "Free WiFi", "Parking"],
+      "room_types": [
+        {"type": "Standard Room", "price_range_ghs": "400-600"},
+        {"type": "Deluxe Room", "price_range_ghs": "600-800"},
+        {"type": "Suite", "price_range_ghs": "1000-1500"}
+      ],
+      "location": {
+        "neighborhood": "La",
+        "distance_from_airport_km": 15,
+        "coordinates": {"lat": 5.5928, "lon": -0.1456}
+      },
+      "contact": {
+        "phone": "+233 302 772 501",
+        "email": "reservations@labadibeachhotel.com",
+        "website": "https://www.labadibeachhotel.com"
+      },
+      "booking_platforms": ["Direct", "Booking.com", "Expedia", "Hotels.com"]
+    },
+    {
+      "id": "acc_002",
+      "name": "Kempinski Hotel Gold Coast City",
+      "region": "Greater Accra",
+      "city": "Accra",
+      "type": "hotel",
+      "star_rating": 5,
+      "description": "Luxury hotel with world-class facilities, rooftop bar, multiple dining options, and spa.",
+      "amenities": ["Swimming pool", "Multiple restaurants", "Rooftop bar", "Spa", "Gym", "Business center", "Free WiFi", "Valet parking"],
+      "room_types": [
+        {"type": "Deluxe Room", "price_range_ghs": "1200-1500"},
+        {"type": "Executive Room", "price_range_ghs": "1500-2000"},
+        {"type": "Suite", "price_range_ghs": "2500-4000"}
+      ],
+      "location": {
+        "neighborhood": "Ridge",
+        "distance_from_airport_km": 10,
+        "coordinates": {"lat": 5.5755, "lon": -0.1936}
+      },
+      "contact": {
+        "phone": "+233 302 980 000",
+        "email": "reservations.accra@kempinski.com",
+        "website": "https://www.kempinski.com/en/accra"
+      },
+      "booking_platforms": ["Direct", "Booking.com", "Expedia"]
+    },
+    {
+      "id": "acc_003",
+      "name": "Coconut Grove Beach Resort",
+      "region": "Central",
+      "city": "Elmina",
+      "type": "resort",
+      "star_rating": 4,
+      "description": "Beachfront resort with traditional African architecture, water sports, and cultural experiences.",
+      "amenities": ["Beach access", "Swimming pool", "Restaurant", "Bar", "Water sports", "Cultural shows", "Free WiFi"],
+      "room_types": [
+        {"type": "Garden View", "price_range_ghs": "350-500"},
+        {"type": "Ocean View", "price_range_ghs": "500-700"},
+        {"type": "Suite", "price_range_ghs": "800-1200"}
+      ],
+      "location": {
+        "district": "Komenda Edina Eguafo Abirem",
+        "distance_from_accra_km": 145,
+        "coordinates": {"lat": 5.0833, "lon": -1.3500}
+      },
+      "contact": {
+        "phone": "+233 332 143 755",
+        "email": "reservations@coconutgroveresort.com",
+        "website": "https://www.coconutgroveresort.com"
+      },
+      "booking_platforms": ["Direct", "Booking.com"]
+    },
+    {
+      "id": "acc_004",
+      "name": "Zaina Lodge",
+      "region": "Northern",
+      "city": "Mole National Park",
+      "type": "lodge",
+      "star_rating": 3,
+      "description": "Eco-lodge inside Mole National Park with stunning views over watering hole. Best for safari experience.",
+      "amenities": ["Restaurant", "Bar", "Viewing deck", "Safari guides", "Limited WiFi", "Parking"],
+      "room_types": [
+        {"type": "Standard Room", "price_range_ghs": "250-350"},
+        {"type": "Chalet", "price_range_ghs": "350-450"}
+      ],
+      "location": {
+        "district": "West Gonja",
+        "inside_park": true,
+        "distance_from_accra_km": 610,
+        "coordinates": {"lat": 9.3316, "lon": -1.8605}
+      },
+      "contact": {
+        "phone": "+233 244 378 216",
+        "email": "info@zainalodge.com",
+        "website": "https://www.zainalodge.com"
+      },
+      "booking_platforms": ["Direct", "Phone booking"],
+      "special_notes": "Book in advance during peak season (December-March)"
+    },
+    {
+      "id": "acc_005",
+      "name": "Ankobra Beach Resort",
+      "region": "Western",
+      "city": "Axim",
+      "type": "resort",
+      "star_rating": 3,
+      "description": "Eco-resort on secluded beach. Perfect for relaxation and nature lovers.",
+      "amenities": ["Private beach", "Restaurant", "Bar", "Kayaking", "Snorkeling", "Solar power", "Library"],
+      "room_types": [
+        {"type": "Beach Chalet", "price_range_ghs": "300-450"},
+        {"type": "Forest Chalet", "price_range_ghs": "250-350"}
+      ],
+      "location": {
+        "district": "Nzema East",
+        "distance_from_accra_km": 300,
+        "coordinates": {"lat": 4.8667, "lon": -2.2333}
+      },
+      "contact": {
+        "phone": "+233 244 321 098",
+        "email": "info@ankobrabeach.com",
+        "website": "https://www.ankobrabeach.com"
+      },
+      "booking_platforms": ["Direct", "Email booking"]
+    },
+    {
+      "id": "acc_006",
+      "name": "Peduase Lodge",
+      "region": "Eastern",
+      "city": "Aburi",
+      "type": "lodge",
+      "star_rating": 3,
+      "description": "Colonial-style lodge in cool Aburi mountains. Great for weekend getaways from Accra.",
+      "amenities": ["Restaurant", "Bar", "Gardens", "Conference facilities", "Hiking trails", "Free WiFi", "Parking"],
+      "room_types": [
+        {"type": "Standard Room", "price_range_ghs": "200-300"},
+        {"type": "Executive Room", "price_range_ghs": "300-400"}
+      ],
+      "location": {
+        "district": "Akuapem South",
+        "distance_from_accra_km": 35,
+        "coordinates": {"lat": 5.8667, "lon": -0.1833}
+      },
+      "contact": {
+        "phone": "+233 342 023 131",
+        "email": "reservations@peduaselodge.com"
+      },
+      "booking_platforms": ["Direct", "Phone booking"]
+    },
+    {
+      "id": "acc_007",
+      "name": "Alisa Hotels",
+      "region": "Greater Accra",
+      "city": "Accra",
+      "type": "hotel",
+      "star_rating": 4,
+      "description": "Boutique hotels in multiple Accra locations. Modern amenities and excellent service.",
+      "amenities": ["Swimming pool", "Restaurant", "Bar", "Gym", "Business center", "Free WiFi", "Parking"],
+      "room_types": [
+        {"type": "Superior Room", "price_range_ghs": "500-700"},
+        {"type": "Deluxe Room", "price_range_ghs": "700-900"},
+        {"type": "Executive Suite", "price_range_ghs": "1000-1300"}
+      ],
+      "location": {
+        "neighborhood": "North Ridge",
+        "distance_from_airport_km": 12,
+        "coordinates": {"lat": 5.5833, "lon": -0.2000}
+      },
+      "contact": {
+        "phone": "+233 302 213 520",
+        "email": "reservations@alisahotels.com",
+        "website": "https://www.alisahotels.com"
+      },
+      "booking_platforms": ["Direct", "Booking.com", "Expedia"]
+    },
+    {
+      "id": "acc_008",
+      "name": "Volta Serene Hotel",
+      "region": "Volta",
+      "city": "Ho",
+      "type": "hotel",
+      "star_rating": 3,
+      "description": "Comfortable hotel in Volta Region capital. Good base for exploring Wli Falls and Mt. Afadja.",
+      "amenities": ["Restaurant", "Bar", "Conference room", "Free WiFi", "Parking", "Laundry"],
+      "room_types": [
+        {"type": "Standard Room", "price_range_ghs": "180-250"},
+        {"type": "Executive Room", "price_range_ghs": "250-350"}
+      ],
+      "location": {
+        "city": "Ho",
+        "distance_from_accra_km": 160,
+        "coordinates": {"lat": 6.6100, "lon": 0.4700}
+      },
+      "contact": {
+        "phone": "+233 362 026 221",
+        "email": "info@voltaserenehotel.com"
+      },
+      "booking_platforms": ["Direct", "Phone booking"]
+    },
+    {
+      "id": "acc_009",
+      "name": "Royal Senchi Resort",
+      "region": "Eastern",
+      "city": "Akosombo",
+      "type": "resort",
+      "star_rating": 4,
+      "description": "Resort on banks of Lake Volta. Water activities, spa, and beautiful lake views.",
+      "amenities": ["Lake access", "Swimming pool", "Spa", "Restaurant", "Bar", "Water sports", "Free WiFi", "Parking"],
+      "room_types": [
+        {"type": "Garden View", "price_range_ghs": "400-550"},
+        {"type": "Lake View", "price_range_ghs": "550-700"},
+        {"type": "Suite", "price_range_ghs": "900-1200"}
+      ],
+      "location": {
+        "district": "Asuogyaman",
+        "distance_from_accra_km": 95,
+        "coordinates": {"lat": 6.2667, "lon": 0.0500}
+      },
+      "contact": {
+        "phone": "+233 342 022 144",
+        "email": "reservations@royalsenchi.com",
+        "website": "https://www.royalsenchi.com"
+      },
+      "booking_platforms": ["Direct", "Booking.com"]
+    },
+    {
+      "id": "acc_010",
+      "name": "African Regent Hotel",
+      "region": "Greater Accra",
+      "city": "Accra",
+      "type": "hotel",
+      "star_rating": 4,
+      "description": "Luxury hotel in Airport Residential Area. Close to Kotoka International Airport.",
+      "amenities": ["Swimming pool", "Multiple restaurants", "Spa", "Gym", "Business center", "Free WiFi", "Shuttle service"],
+      "room_types": [
+        {"type": "Superior Room", "price_range_ghs": "600-800"},
+        {"type": "Deluxe Room", "price_range_ghs": "800-1000"},
+        {"type": "Suite", "price_range_ghs": "1200-1800"}
+      ],
+      "location": {
+        "neighborhood": "Airport Residential",
+        "distance_from_airport_km": 5,
+        "coordinates": {"lat": 5.6000, "lon": -0.1667}
+      },
+      "contact": {
+        "phone": "+233 302 740 300",
+        "email": "reservations@africanregenthotel.com",
+        "website": "https://www.africanregenthotel.com"
+      },
+      "booking_platforms": ["Direct", "Booking.com", "Expedia", "Hotels.com"]
+    }
+  ],
+  "accommodation_types": {
+    "hotel": "Standard hotel with modern amenities",
+    "resort": "Beach or nature resort with recreational facilities",
+    "lodge": "Often in national parks or rural areas, more rustic",
+    "guesthouse": "Smaller, family-run accommodation",
+    "hostel": "Budget accommodation with shared facilities",
+    "apartment": "Self-catering accommodation"
+  },
+  "booking_tips": [
+    "Book in advance during peak season (December-March)",
+    "Prices may be negotiable for longer stays",
+    "Confirm booking and keep confirmation emails",
+    "Check cancellation policies before booking",
+    "Some hotels offer airport transfers - ask when booking"
+  ],
+  "api_integration": {
+    "note": "For live availability, integrate with Booking.com API or Expedia API",
+    "booking_com_affiliate_id": "TO_BE_CONFIGURED",
+    "expedia_api_key": "TO_BE_CONFIGURED"
+  },
+  "metadata": {
+    "last_updated": "2025-10-02",
+    "total_accommodations": 10,
+    "source": "Compiled from Ghana Tourism Authority, Booking.com, hotel websites",
+    "currency": "GHS (Ghana Cedis)",
+    "note": "Prices are approximate and subject to seasonal variation"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "name": "Premier Health Router",
+  "model": {
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "temperature": 0.7,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a routing assistant for Premier Health Insurance Navigator in Ghana.\n\nYour ONLY job is to quickly identify which region the customer needs and transfer them to the appropriate regional specialist.\n\nAVAILABLE REGIONS:\n1. Greater Accra - Covers Accra, Tema, Madina, Legon, and surrounding areas\n2. Ashanti - Covers Kumasi, Obuasi, Mampong, and Ashanti region\n3. Northern Regions - Covers Tamale, Bolgatanga, Wa, Bawku, and all northern areas\n4. Western and Central - Covers Takoradi, Sekondi, Cape Coast, Tarkwa, and surrounding areas\n5. Eastern and Volta - Covers Koforidua, Ho, Hohoe, Nkawkaw, and surrounding areas\n6. Bono, Bono East, and Ahafo - Covers Sunyani, Techiman, Berekum, and surrounding areas\n\nROUTING PROCESS:\n1. Greet warmly: \"Hello! Welcome to Premier Health. I'm here to help you find healthcare providers.\"\n2. Ask for region: \"Which region are you calling from? For example, Greater Accra, Ashanti, Northern, Western, Central, Eastern, Volta, or Bono?\"\n3. Listen for ANY city or region name mentioned\n4. As SOON as you identify the region, transfer immediately using transfer_call tool\n5. NEVER provide healthcare information yourself - always transfer\n\nIMPORTANT:\n- Be quick and efficient - identify region and transfer within 2 exchanges\n- If customer mentions ANY city name, immediately identify its region and transfer\n- If unsure, ask: \"Are you in the Accra area, Kumasi area, Tamale area, or another region?\"\n- NEVER search for healthcare facilities - that's the regional assistant's job\n- ALWAYS use transfer_call tool after identifying region\n\nExample conversation:\nCustomer: \"I need a doctor\"\nYou: \"I can help with that! Which region are you in? For example, Accra, Kumasi, Tamale, or another area?\"\nCustomer: \"I'm in Madina\"\nYou: [Use transfer_call to Greater Accra specialist] \"Transferring you to our Greater Accra specialist who knows all the healthcare facilities in your area...\"\n\nExample 2:\nCustomer: \"I need emergency care in Kumasi\"\nYou: [Immediately use transfer_call to Ashanti specialist] \"Connecting you to our Ashanti region specialist right away...\"\n\nBe warm but BRIEF. Your goal is fast routing to the right specialist."
+      }
+    ],
+    "tools": [
+      {
+        "type": "transferCall",
+        "destinations": [
+          {
+            "type": "assistant",
+            "assistantName": "Premier Health Greater Accra",
+            "assistantId": "85e1cf7e-1711-4d01-9cad-c043b37707bd",
+            "message": "Let me connect you to our Greater Accra specialist who knows all the healthcare facilities in your area.",
+            "description": "Transfer to Greater Accra specialist for Accra, Tema, Madina, Legon, and surrounding areas"
+          },
+          {
+            "type": "assistant",
+            "assistantName": "Premier Health Ashanti",
+            "assistantId": "529d7292-c050-4f5c-941d-5207a4e3e3be",
+            "message": "Let me connect you to our Ashanti specialist who knows all the healthcare facilities in your area.",
+            "description": "Transfer to Ashanti specialist for Kumasi, Obuasi, Mampong, and surrounding areas"
+          },
+          {
+            "type": "assistant",
+            "assistantName": "Premier Health Northern Regions",
+            "assistantId": "650340b7-76ee-46e9-ae34-268ebc217dba",
+            "message": "Let me connect you to our Northern regions specialist who knows all the healthcare facilities in your area.",
+            "description": "Transfer to Northern specialist for Tamale, Bolgatanga, Wa, Bawku, and surrounding areas"
+          },
+          {
+            "type": "assistant",
+            "assistantName": "Premier Health Western and Central",
+            "assistantId": "caec99dc-3e51-43c2-a9cc-4b9b6bbef1dc",
+            "message": "Let me connect you to our Western and Central specialist who knows all the healthcare facilities in your area.",
+            "description": "Transfer to Western/Central specialist for Takoradi, Sekondi, Cape Coast, and surrounding areas"
+          },
+          {
+            "type": "assistant",
+            "assistantName": "Premier Health Eastern and Volta",
+            "assistantId": "0917ac57-8cac-44a1-9047-aead837af492",
+            "message": "Let me connect you to our Eastern and Volta specialist who knows all the healthcare facilities in your area.",
+            "description": "Transfer to Eastern/Volta specialist for Koforidua, Ho, Hohoe, and surrounding areas"
+          },
+          {
+            "type": "assistant",
+            "assistantName": "Premier Health Bono Regions",
+            "assistantId": "e39da43d-1190-419a-9739-d2c11bc8fe78",
+            "message": "Let me connect you to our Bono specialist who knows all the healthcare facilities in your area.",
+            "description": "Transfer to Bono specialist for Sunyani, Techiman, Berekum, and surrounding areas"
+          }
+        ]
+      }
+    ]
+  },
+  "transcriber": {
+    "provider": "deepgram",
+    "model": "nova-3",
+    "language": "en-GB",
+    "keyterm": [
+      "ACCRA",
+      "TEMA",
+      "MADINA",
+      "LEGON",
+      "DANSOMAN",
+      "KANESHIE",
+      "KUMASI",
+      "ASHANTI",
+      "OBUASI",
+      "MAMPONG",
+      "TAMALE",
+      "NORTHERN",
+      "BOLGATANGA",
+      "BOLGA",
+      "WA",
+      "BAWKU",
+      "TAKORADI",
+      "WESTERN",
+      "SEKONDI",
+      "CAPE COAST",
+      "CENTRAL",
+      "TARKWA",
+      "KOFORIDUA",
+      "EASTERN",
+      "HO",
+      "VOLTA",
+      "HOHOE",
+      "NKAWKAW",
+      "SUNYANI",
+      "BONO",
+      "TECHIMAN",
+      "BEREKUM",
+      "AHAFO"
+    ]
+  },
+  "voice": {
+    "provider": "11labs",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "model": "eleven_turbo_v2_5"
+  },
+  "firstMessage": "Hello! Welcome to Premier Health. I'm here to help you find healthcare providers. Which region are you calling from? For example, Greater Accra, Ashanti, Northern, Western, Central, Eastern, Volta, or Bono?",
+  "endCallMessage": "Thank you for calling Premier Health. Take care!",
+  "endCallPhrases": [
+    "goodbye",
+    "bye",
+    "end call",
+    "hang up"
+  ],
+  "recordingEnabled": true,
+  "hipaaEnabled": false,
+  "clientMessages": [
+    "transcript",
+    "hang",
+    "function-call",
+    "speech-update",
+    "metadata",
+    "conversation-update"
+  ],
+  "serverMessages": [
+    "end-of-call-report",
+    "status-update",
+    "hang",
+    "function-call",
+    "transfer-update",
+    "transfer-destination-request",
+    "transcript"
+  ],
+  "silenceTimeoutSeconds": 30,
+  "maxDurationSeconds": 600,
+  "backgroundSound": "office",
+  "backchannelingEnabled": false,
+  "backgroundDenoisingEnabled": true,
+  "modelOutputInMessagesEnabled": true,
+  "serverUrl": "https://api.ailabsafrica.com/premier-health/vapi-webhook",
+  "serverUrlSecret": "kHsYrRrbb66u3C5rNGk9iljyVhy06KYDyB7zaNBHnsY"
+}

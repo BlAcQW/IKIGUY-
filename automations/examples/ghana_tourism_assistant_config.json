@@ -1,0 +1,147 @@
+{
+  "assistant_id": "a9fd16e2-88da-4ccf-afc2-f1208126cd7e",
+  "assistant_name": "Ama - Ghana Tourism Board",
+  "updated_at": "2025-10-15T15:33:48.789Z",
+  "configuration": {
+    "provider": "openai",
+    "model": "gpt-4-turbo",
+    "temperature": 0.7,
+    "voice": {
+      "provider": "11labs",
+      "voiceId": "EXAVITQu4vr4xnSDxMaL"
+    },
+    "tools_configured": 6,
+    "previous_tool_count": 1,
+    "tool_increase": "500% (1 → 6 tools)"
+  },
+  "tools": [
+    {
+      "id": "2bac26dc-5f8e-4d3d-82b2-ca55286ddf36",
+      "name": "query_ghana_tourism_knowledge_base",
+      "type": "RAG-powered knowledge base search",
+      "priority": 1,
+      "description": "Primary tool for all tourism queries using Google Gemini 2.5 Flash RAG"
+    },
+    {
+      "id": "abc528ae-e1f1-4e9c-a939-bc859e5e7d88",
+      "name": "send_notification_email",
+      "type": "Communication",
+      "priority": 2,
+      "description": "Send emails to travelers or team"
+    },
+    {
+      "id": "fc1ca495-9083-492e-854a-aeee6e5b3f64",
+      "name": "send_sms_vonage",
+      "type": "Communication",
+      "priority": 3,
+      "description": "Send SMS to traveler's phone (preferred method)"
+    },
+    {
+      "id": "83635498-8f71-453a-9a15-7e00e1e494a2",
+      "name": "create_support_ticket",
+      "type": "Escalation",
+      "priority": 4,
+      "description": "Escalate to tourism officers for complex issues or low confidence responses"
+    },
+    {
+      "id": "7a894aca-6633-429c-ba36-1a8fe4fbd6bf",
+      "name": "book_google_calendar_appointment",
+      "type": "Scheduling",
+      "priority": 5,
+      "description": "Book tour appointments in Google Calendar"
+    },
+    {
+      "id": "11692713-925f-4e77-a335-ba54c4d48db9",
+      "name": "check_google_calendar_availability",
+      "type": "Scheduling",
+      "priority": 6,
+      "description": "Check available tour slots"
+    }
+  ],
+  "key_features": [
+    "RAG-powered tourism search with confidence scoring",
+    "Confidence-based automatic escalation (< 0.7)",
+    "Enthusiastic, welcoming Ghanaian tourism voice",
+    "Grade 4 level English for international accessibility",
+    "First name only collection (never email or last name)",
+    "Automatic phone number usage from VAPI webhook",
+    "No-hallucination policy with tool result grounding",
+    "Travel disclaimers on visa, prices, and requirements",
+    "SMS-first communication strategy",
+    "Post-call transcript emailing to team",
+    "Ghanaian greetings (Akwaaba, Medaase)",
+    "Seasonal travel considerations"
+  ],
+  "confidence_handling": {
+    "high_confidence": "> 0.8 - Provide enthusiastic answer directly",
+    "medium_confidence": "0.5-0.8 - Provide answer with option to connect with tourism officer",
+    "low_confidence": "< 0.5 - Automatic escalation to tourism officers",
+    "requires_escalation_flag": "true - Always escalate regardless of score"
+  },
+  "ghana_tourism_highlights": [
+    "Warm hospitality (Akwaaba - Welcome!)",
+    "Rich cultural heritage and history",
+    "Beautiful beaches (Kokrobite, Busua, Anomabo)",
+    "Wildlife and nature (Mole, Kakum National Parks)",
+    "Vibrant festivals (Homowo, Aboakyir, Panafest)",
+    "Delicious cuisine (jollof, waakye, kelewele)",
+    "Growing tech and creative scene",
+    "Year of Return and diaspora connections",
+    "Safe and stable democracy",
+    "English-speaking country"
+  ],
+  "testing_checklist": [
+    "Test: 'What are the best places to visit in Ghana?' (should use RAG tool)",
+    "Test: 'Tell me about hotels in Cape Coast' (should use RAG tool)",
+    "Test: 'What are visa requirements for Ghana?' (should provide visa info)",
+    "Test: 'Is Ghana safe to visit?' (should provide safety tips)",
+    "Test: 'How can I get a SIM card?' (should provide SIM info)",
+    "Test: Unknown destination query (should trigger low confidence escalation)",
+    "Test: Request to send details (should use SMS)",
+    "Test: Book tour (should use calendar tools)",
+    "Verify: Confidence scores in RAG responses",
+    "Verify: No lists or bullet points in responses",
+    "Verify: Enthusiastic, welcoming tone",
+    "Verify: Travel disclaimers included",
+    "Verify: Ghanaian greetings used",
+    "Verify: Post-call email to ailabsafrica@gmail.com"
+  ],
+  "tourism_specific_tools_available": [
+    "get_visa_requirements - Visa information by nationality (referenced in prompt)",
+    "get_sim_card_info - Mobile SIM providers and plans (referenced in prompt)",
+    "get_safety_security_tips - Safety information for travelers (referenced in prompt)",
+    "get_emergency_contacts - Emergency numbers in Ghana (referenced in prompt)",
+    "get_currency_exchange_info - Currency exchange rates (referenced in prompt)",
+    "send_tourism_info_email - Email tourism information (referenced in prompt)",
+    "escalate_to_tourism_officer - Escalate to tourism officers (referenced in prompt)"
+  ],
+  "deprecated_tools_replaced": [
+    "search_destinations - Replaced by query_ghana_tourism_knowledge_base",
+    "get_destination_details - Replaced by query_ghana_tourism_knowledge_base",
+    "search_accommodation - Replaced by query_ghana_tourism_knowledge_base",
+    "get_accommodation_details - Replaced by query_ghana_tourism_knowledge_base"
+  ],
+  "seasonal_considerations": [
+    "Best time to visit: November-March (dry season)",
+    "Rainy season: April-October (still beautiful)",
+    "Festival periods: Ask traveler about specific festivals",
+    "Weather appropriate clothing recommendations"
+  ],
+  "escalation_triggers": [
+    "RAG confidence score < 0.7",
+    "requires_escalation flag is true",
+    "Visa/immigration policy requiring official confirmation",
+    "Complex itinerary planning",
+    "Special accommodation needs (accessibility, medical)",
+    "Group tour bookings or special events",
+    "Official documentation requests"
+  ],
+  "notes": [
+    "Tool count increased from 1 to 6 (500% increase)",
+    "RAG tool replaces 4 deprecated structured search tools",
+    "Tourism-specific system prompt with Ghanaian cultural elements",
+    "Emphasis on enthusiasm and inspiration for Ghana travel",
+    "Confidence-based escalation ensures quality responses",
+    "Comprehensive travel information workflow"
+  ]
+}

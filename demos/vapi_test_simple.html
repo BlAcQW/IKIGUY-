@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAPI Assistant Test - Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+        .widget-status {
+            margin-top: 20px;
+            padding: 10px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VAPI Voice Assistant Test</h1>
+
+        <div class="status">
+            <h3>Status</h3>
+            <p><strong>Assistant ID:</strong> 5f4710ab-142f-4962-b488-d55be70e7c6f</p>
+            <p><strong>TTS Provider:</strong> Kokoro TTS (https://kokoro.ailabsafrica.com)</p>
+            <p><strong>Webhook:</strong> https://api.ailabsafrica.com/api/vapi/webhook</p>
+        </div>
+
+        <div class="widget-status">
+            <h3>How to use:</h3>
+            <ol>
+                <li>Click the widget button in the bottom-right corner</li>
+                <li>Click "Start" to begin the voice conversation</li>
+                <li>Speak naturally - the AI will respond with voice</li>
+                <li>Click "End Call" when done</li>
+            </ol>
+            <p><strong>Note:</strong> Make sure your browser has microphone permissions enabled.</p>
+        </div>
+
+        <div class="status">
+            <h3>Test Information</h3>
+            <p>This demo uses VAPI with our custom Kokoro TTS integration. The assistant should respond with natural-sounding voice.</p>
+            <p>If you experience issues:</p>
+            <ul>
+                <li>Check browser console for errors (F12)</li>
+                <li>Ensure microphone permissions are granted</li>
+                <li>Try refreshing the page</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- VAPI Widget -->
+    <vapi-widget
+        public-key="0c22dcea-0d6c-4fc0-8fb2-93292d8575e8"
+        assistant-id="5f4710ab-142f-4962-b488-d55be70e7c6f"
+        mode="voice"
+        theme="dark"
+        base-bg-color="#000000"
+        accent-color="#14B8A6"
+        cta-button-color="#000000"
+        cta-button-text-color="#ffffff"
+        border-radius="large"
+        size="full"
+        position="bottom-right"
+        title="Talk with AI"
+        start-button-text="Start"
+        end-button-text="End Call"
+        voice-show-transcript="true"
+    ></vapi-widget>
+
+    <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+
+    <script>
+        // Log widget events for debugging
+        console.log('VAPI Widget loaded');
+        console.log('Assistant ID: 5f4710ab-142f-4962-b488-d55be70e7c6f');
+        console.log('Public Key: 0c22dcea-0d6c-4fc0-8fb2-93292d8575e8');
+
+        // Listen for widget events
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type && event.data.type.startsWith('vapi')) {
+                console.log('VAPI Event:', event.data);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+{
+  "name": "Insurance Claims Processing with Vapi",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "insurance-claim-submit",
+        "responseMode": "responseNode",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "id": "webhook_claim_submit",
+      "name": "Webhook - Claim Submission",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "webhookId": "insurance-claim-webhook"
+    },
+    {
+      "parameters": {
+        "url": "https://api.vapi.ai/call",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$credentials.vapiApiKey}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phoneNumberId",
+              "value": "={{ $json.phoneNumberId }}"
+            },
+            {
+              "name": "assistantId",
+              "value": "={{ $env.VAPI_CLAIMS_ASSISTANT_ID }}"
+            },
+            {
+              "name": "customer": {
+                "number": "={{ $json.customerPhone }}",
+                "name": "={{ $json.customerName }}"
+              }
+            },
+            {
+              "name": "assistantOverrides": {
+                "firstMessage": "Hello {{ $json.customerName }}, I'm calling regarding your insurance claim #{{ $json.claimId }}. How can I assist you today?",
+                "variableValues": {
+                  "claimId": "={{ $json.claimId }}",
+                  "claimStatus": "={{ $json.status }}",
+                  "customerName": "={{ $json.customerName }}"
+                }
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "vapi_outbound_call",
+      "name": "Vapi - Initiate Claim Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [750, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapiCredentials",
+          "name": "Vapi API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "vapi-webhook",
+        "responseMode": "responseNode",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "webhook_vapi_events",
+      "name": "Webhook - Vapi Events",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 500],
+      "webhookId": "vapi-events-webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.type }}",
+              "operation": "equals",
+              "value2": "call-ended"
+            }
+          ]
+        }
+      },
+      "id": "if_call_ended",
+      "name": "IF - Call Ended",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [500, 500]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "insurance_claims",
+        "fields": {
+          "claimId": "={{ $json.claimId }}",
+          "customerName": "={{ $json.customerName }}",
+          "customerPhone": "={{ $json.customerPhone }}",
+          "claimType": "={{ $json.claimType }}",
+          "description": "={{ $json.description }}",
+          "amount": "={{ $json.amount }}",
+          "status": "submitted",
+          "submittedAt": "={{ $now }}",
+          "vapiCallId": "={{ $json.vapiCallId }}",
+          "transcription": "={{ $json.transcript }}",
+          "recordingUrl": "={{ $json.recordingUrl }}"
+        }
+      },
+      "id": "mongodb_insert_claim",
+      "name": "MongoDB - Insert Claim",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [750, 400],
+      "credentials": {
+        "mongoDb": {
+          "id": "mongoDbCredentials",
+          "name": "MongoDB Claims DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate and process claim data\nconst claim = $input.item.json;\n\n// Claim validation rules\nconst validationRules = {\n  requiredFields: ['customerName', 'customerPhone', 'claimType', 'description'],\n  claimTypes: ['auto', 'home', 'health', 'life', 'property'],\n  maxAmount: 1000000,\n  phoneRegex: /^[+]?[1-9]\\d{1,14}$/\n};\n\n// Validate required fields\nfor (const field of validationRules.requiredFields) {\n  if (!claim[field]) {\n    return {\n      json: {\n        valid: false,\n        error: `Missing required field: ${field}`\n      }\n    };\n  }\n}\n\n// Validate claim type\nif (!validationRules.claimTypes.includes(claim.claimType)) {\n  return {\n    json: {\n      valid: false,\n      error: `Invalid claim type: ${claim.claimType}`\n    }\n  };\n}\n\n// Validate phone number\nif (!validationRules.phoneRegex.test(claim.customerPhone)) {\n  return {\n    json: {\n      valid: false,\n      error: 'Invalid phone number format'\n    }\n  };\n}\n\n// Validate amount\nif (claim.amount && claim.amount > validationRules.maxAmount) {\n  return {\n    json: {\n      valid: false,\n      error: `Claim amount exceeds maximum: ${validationRules.maxAmount}`\n    }\n  };\n}\n\n// Generate claim ID\nconst claimId = `CLM-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;\n\n// Calculate priority based on claim type and amount\nlet priority = 'normal';\nif (claim.amount > 50000) priority = 'high';\nif (claim.claimType === 'health' && claim.urgent) priority = 'urgent';\n\n// Return validated and enriched claim\nreturn {\n  json: {\n    valid: true,\n    claimId: claimId,\n    ...claim,\n    priority: priority,\n    status: 'pending_review',\n    createdAt: new Date().toISOString()\n  }\n};"
+      },
+      "id": "code_validate_claim",
+      "name": "Code - Validate & Process Claim",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.valid }}",
+              "operation": "true"
+            }
+          ]
+        }
+      },
+      "id": "if_claim_valid",
+      "name": "IF - Claim Valid",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "claims@insurance.com",
+        "toEmail": "={{ $json.customerEmail }}",
+        "subject": "Claim #{{ $json.claimId }} Received",
+        "emailType": "html",
+        "message": "<h2>Dear {{ $json.customerName }},</h2>\n<p>We have received your insurance claim with the following details:</p>\n<ul>\n<li><strong>Claim ID:</strong> {{ $json.claimId }}</li>\n<li><strong>Type:</strong> {{ $json.claimType }}</li>\n<li><strong>Status:</strong> {{ $json.status }}</li>\n<li><strong>Amount:</strong> ${{ $json.amount }}</li>\n</ul>\n<p>We will process your claim within 24-48 hours. You will receive updates via email and SMS.</p>\n<p>For urgent inquiries, please call our hotline or use the claim status checker on our website.</p>\n<br>\n<p>Best regards,<br>Insurance Claims Team</p>",
+        "options": {
+          "attachments": "={{ $json.attachments }}"
+        }
+      },
+      "id": "email_confirmation",
+      "name": "Email - Send Confirmation",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [900, 300],
+      "credentials": {
+        "smtp": {
+          "id": "smtpCredentials",
+          "name": "SMTP Server"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "SMS",
+        "operation": "send",
+        "from": "={{ $env.TWILIO_PHONE_NUMBER }}",
+        "to": "={{ $json.customerPhone }}",
+        "message": "Your insurance claim #{{ $json.claimId }} has been received and is being processed. Current status: {{ $json.status }}. Reply STOP to unsubscribe."
+      },
+      "id": "twilio_sms",
+      "name": "Twilio - Send SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [900, 400],
+      "credentials": {
+        "twilioApi": {
+          "id": "twilioCredentials",
+          "name": "Twilio API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.vapi.ai/assistant/{{ $env.VAPI_CLAIMS_ASSISTANT_ID }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{$credentials.vapiApiKey}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model": {
+                "provider": "openai",
+                "model": "gpt-4",
+                "temperature": 0.7,
+                "systemPrompt": "You are an insurance claims assistant. Help customers with:\n1. Filing new claims\n2. Checking claim status\n3. Providing required documentation\n4. Answering questions about coverage\n\nAlways be professional, empathetic, and clear. Collect all necessary information for claims processing."
+              }
+            },
+            {
+              "name": "voice": {
+                "provider": "11labs",
+                "voiceId": "professional-female"
+              }
+            },
+            {
+              "name": "firstMessage": "Hello, I'm your insurance claims assistant. How can I help you today?"
+            },
+            {
+              "name": "endCallFunctionEnabled": true
+            },
+            {
+              "name": "serverUrl": "={{ $env.N8N_WEBHOOK_URL }}/vapi-function-calls"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "vapi_setup_assistant",
+      "name": "Vapi - Setup Claims Assistant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [250, 100],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapiCredentials",
+          "name": "Vapi API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "vapi-function-calls",
+        "responseMode": "responseNode",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "webhook_vapi_functions",
+      "name": "Webhook - Vapi Function Calls",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 700],
+      "webhookId": "vapi-functions-webhook"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{ $json.function }}",
+                    "operation": "equals",
+                    "value2": "checkClaimStatus"
+                  }
+                ]
+              },
+              "outputKey": "checkStatus"
+            },
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{ $json.function }}",
+                    "operation": "equals",
+                    "value2": "fileNewClaim"
+                  }
+                ]
+              },
+              "outputKey": "fileNew"
+            },
+            {
+              "conditions": {
+                "string": [
+                  {
+                    "value1": "={{ $json.function }}",
+                    "operation": "equals",
+                    "value2": "scheduleCallback"
+                  }
+                ]
+              },
+              "outputKey": "callback"
+            }
+          ]
+        }
+      },
+      "id": "switch_vapi_function",
+      "name": "Switch - Route Vapi Functions",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [500, 700]
+    },
+    {
+      "parameters": {
+        "operation": "find",
+        "collection": "insurance_claims",
+        "query": {
+          "claimId": "={{ $json.parameters.claimId }}"
+        },
+        "limit": 1
+      },
+      "id": "mongodb_check_status",
+      "name": "MongoDB - Check Claim Status",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [750, 600],
+      "credentials": {
+        "mongoDb": {
+          "id": "mongoDbCredentials",
+          "name": "MongoDB Claims DB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Response to Vapi",
+        "outputKey": "response"
+      },
+      "id": "respond_to_vapi",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1050, 700]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process transcription and extract claim details using AI\nconst transcript = $input.item.json.transcript;\nconst callData = $input.item.json;\n\n// Extract key information from transcript\n// This would typically use an AI service for NLP\nconst extractedData = {\n  claimType: detectClaimType(transcript),\n  urgency: detectUrgency(transcript),\n  estimatedAmount: extractAmount(transcript),\n  documentsmentioned: extractDocuments(transcript)\n};\n\nfunction detectClaimType(text) {\n  const types = ['auto', 'home', 'health', 'life', 'property'];\n  for (const type of types) {\n    if (text.toLowerCase().includes(type)) {\n      return type;\n    }\n  }\n  return 'general';\n}\n\nfunction detectUrgency(text) {\n  const urgentKeywords = ['urgent', 'emergency', 'immediate', 'asap', 'critical'];\n  return urgentKeywords.some(keyword => text.toLowerCase().includes(keyword));\n}\n\nfunction extractAmount(text) {\n  const amountMatch = text.match(/\\$([0-9,]+)/);;\n  if (amountMatch) {\n    return parseFloat(amountMatch[1].replace(',', ''));\n  }\n  return null;\n}\n\nfunction extractDocuments(text) {\n  const docs = [];\n  const docTypes = ['police report', 'medical report', 'photos', 'receipts', 'invoices'];\n  docTypes.forEach(doc => {\n    if (text.toLowerCase().includes(doc)) {\n      docs.push(doc);\n    }\n  });\n  return docs;\n}\n\nreturn {\n  json: {\n    ...callData,\n    ...extractedData,\n    processedAt: new Date().toISOString()\n  }\n};"
+      },
+      "id": "code_process_transcript",
+      "name": "Code - Process Call Transcript",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [750, 500]
+    },
+    {
+      "parameters": {
+        "content": "## Error Response",
+        "responseCode": 400,
+        "responseData": "={{ JSON.stringify({success: false, error: $json.error}) }}",
+        "options": {}
+      },
+      "id": "webhook_error_response",
+      "name": "Webhook Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 150]
+    },
+    {
+      "parameters": {
+        "content": "## Success Response",
+        "responseCode": 200,
+        "responseData": "={{ JSON.stringify({success: true, claimId: $json.claimId, status: $json.status}) }}",
+        "options": {}
+      },
+      "id": "webhook_success_response",
+      "name": "Webhook Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "workflowId": "={{ $env.ESCALATION_WORKFLOW_ID }}",
+        "options": {
+          "wait": false
+        }
+      },
+      "id": "execute_escalation",
+      "name": "Execute - Escalation Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [900, 500]
+    },
+    {
+      "parameters": {
+        "schedule": {
+          "cronExpression": "0 */6 * * *"
+        }
+      },
+      "id": "cron_claim_review",
+      "name": "Cron - Regular Claim Review",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [250, 900]
+    },
+    {
+      "parameters": {
+        "operation": "find",
+        "collection": "insurance_claims",
+        "query": {
+          "status": "pending_review",
+          "createdAt": {
+            "$lt": "={{ $now.minus({hours: 24}).toISO() }}"
+          }
+        }
+      },
+      "id": "mongodb_pending_claims",
+      "name": "MongoDB - Get Pending Claims",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1,
+      "position": [500, 900],
+      "credentials": {
+        "mongoDb": {
+          "id": "mongoDbCredentials",
+          "name": "MongoDB Claims DB"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "webhook_claim_submit": {
+      "main": [
+        [
+          {
+            "node": "code_validate_claim",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "code_validate_claim": {
+      "main": [
+        [
+          {
+            "node": "if_claim_valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if_claim_valid": {
+      "main": [
+        [
+          {
+            "node": "mongodb_insert_claim",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "email_confirmation",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "twilio_sms",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "webhook_error_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mongodb_insert_claim": {
+      "main": [
+        [
+          {
+            "node": "vapi_outbound_call",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "webhook_success_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "webhook_vapi_events": {
+      "main": [
+        [
+          {
+            "node": "if_call_ended",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if_call_ended": {
+      "main": [
+        [
+          {
+            "node": "code_process_transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "code_process_transcript": {
+      "main": [
+        [
+          {
+            "node": "execute_escalation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "webhook_vapi_functions": {
+      "main": [
+        [
+          {
+            "node": "switch_vapi_function",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "switch_vapi_function": {
+      "main": [
+        [
+          {
+            "node": "mongodb_check_status",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "mongodb_insert_claim",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "respond_to_vapi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mongodb_check_status": {
+      "main": [
+        [
+          {
+            "node": "respond_to_vapi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cron_claim_review": {
+      "main": [
+        [
+          {
+            "node": "mongodb_pending_claims",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "error-handler-workflow-id"
+  },
+  "staticData": null,
+  "meta": {
+    "templateId": "insurance-claims-vapi",
+    "instanceId": "premier-health-claims"
+  },
+  "tags": [
+    {
+      "name": "insurance",
+      "id": "1"
+    },
+    {
+      "name": "vapi",
+      "id": "2"
+    },
+    {
+      "name": "automation",
+      "id": "3"
+    }
+  ]
+}

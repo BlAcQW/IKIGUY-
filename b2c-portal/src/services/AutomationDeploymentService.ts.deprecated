@@ -1,0 +1,925 @@
+/**
+ * Complete Automation Deployment Service
+ *
+ * Handles end-to-end deployment of automation templates including:
+ * - VAPI agent creation
+ * - N8N workflow deployment
+ * - Freshdesk integration
+ * - Webhook configuration
+ */
+
+import {
+  automationTemplatesService,
+  type AutomationTemplate
+} from '@/services/AutomationTemplatesService';
+
+interface DeploymentConfig {
+  templateId: string;
+  automationName: string;
+  companyName?: string;
+  supportEmail?: string;
+  supportPhone?: string;
+  customInstructions?: string;
+  integrations: {
+    freshdesk?: {
+      domain: string;
+      apiKey: string;
+    };
+    twilio?: {
+      accountSid: string;
+      authToken: string;
+      phoneNumber: string;
+    };
+  };
+  templateConfigurations?: any;
+}
+
+interface DeploymentResult {
+  success: boolean;
+  automationId: string;
+  vapiAgentId: string;
+  n8nWorkflowId: string;
+  webhookUrl: string;
+  phoneNumber?: string;
+  errors?: string[];
+  warnings?: string[];
+}
+
+export class AutomationDeploymentService {
+  private static readonly VAPI_API_URL = 'https://api.vapi.ai';
+  private static readonly N8N_API_URL = 'https://automate.inspirecreations.it.com/api/v1';
+  private static readonly CORE_API_URL = 'https://api.ailabsafrica.com';
+
+  /**
+   * Deploy complete automation with VAPI agent and integrations
+   */
+  static async deployAutomation(config: DeploymentConfig): Promise<DeploymentResult> {
+    console.log('🚀 Starting automation deployment:', config.automationName);
+
+    try {
+      const template = await this.getTemplate(config.templateId);
+      if (!template) {
+        throw new Error(`Template ${config.templateId} not found`);
+      }
+
+      // Merge template configurations with deployment config
+      const mergedConfig = this.mergeTemplateConfigurations(template, config);
+
+      // Step 1: Create VAPI Agent
+      console.log('📞 Creating VAPI agent...');
+      const vapiAgent = await this.createVAPIAgent(template, mergedConfig);
+
+      // Step 2: Create Enhanced N8N Workflow with Freshdesk
+      console.log('⚡ Creating N8N workflow with integrations...');
+      const n8nWorkflow = await this.createEnhancedN8NWorkflow(template, mergedConfig, vapiAgent.id);
+
+      // Step 3: Configure Webhooks
+      console.log('🔗 Configuring webhooks...');
+      await this.configureWebhooks(vapiAgent.id, n8nWorkflow.webhookUrl);
+
+      // Step 4: Save automation configuration
+      console.log('💾 Saving automation configuration...');
+      const automationId = await this.saveAutomationConfig(mergedConfig, vapiAgent.id, n8nWorkflow.id);
+
+      console.log('✅ Automation deployment completed successfully!');
+
+      return {
+        success: true,
+        automationId,
+        vapiAgentId: vapiAgent.id,
+        n8nWorkflowId: n8nWorkflow.id,
+        webhookUrl: n8nWorkflow.webhookUrl,
+        phoneNumber: process.env.VITE_VAPI_PHONE_ID
+      };
+
+    } catch (error) {
+      console.error('❌ Automation deployment failed:', error);
+      return {
+        success: false,
+        automationId: '',
+        vapiAgentId: '',
+        n8nWorkflowId: '',
+        webhookUrl: '',
+        errors: [error instanceof Error ? error.message : 'Unknown deployment error']
+      };
+    }
+  }
+
+  /**
+   * Merge template configurations with deployment config
+   */
+  private static mergeTemplateConfigurations(template: AutomationTemplate, config: DeploymentConfig): DeploymentConfig {
+    const templateConfig = (template as any).configurations;
+    if (!templateConfig) {
+      return config;
+    }
+
+    return {
+      ...config,
+      integrations: {
+        ...config.integrations,
+        freshdesk: templateConfig.integrations?.freshdesk || config.integrations.freshdesk,
+        twilio: {
+          accountSid: templateConfig.integrations?.vonage?.apiKey || config.integrations.twilio?.accountSid || '',
+          authToken: templateConfig.integrations?.vonage?.apiSecret || config.integrations.twilio?.authToken || '',
+          phoneNumber: templateConfig.vapi?.phoneNumberId || config.integrations.twilio?.phoneNumber || ''
+        }
+      },
+      templateConfigurations: templateConfig
+    };
+  }
+
+  /**
+   * Create VAPI agent with healthcare-specific configuration
+   */
+  private static async createVAPIAgent(template: AutomationTemplate, config: DeploymentConfig) {
+    const systemPrompt = this.generateHealthcareSystemPrompt(template, config);
+    const functions = this.generateHealthcareFunctions();
+
+    const templateConfig = (config as any).templateConfigurations;
+
+    const agentConfig = {
+      name: `${config.automationName} - Healthcare Navigator`,
+      model: {
+        provider: 'openai',
+        model: templateConfig?.vapi?.model || 'gpt-4o-mini',
+        temperature: 0.7,
+        systemPrompt
+      },
+      voice: {
+        provider: templateConfig?.vapi?.voice?.provider || '11labs',
+        voiceId: templateConfig?.vapi?.voice?.voiceId || 'sarah',
+        stability: 0.5,
+        similarityBoost: 0.75
+      },
+      firstMessage: "Hello! I'm Sarah, your Healthcare Navigator with Premier Health Insurance. I'm here to help you find medical providers and services in the Greater Accra region. How may I assist you today?",
+      endCallMessage: "Thank you for calling Premier Health Insurance. I've sent the information to your phone. Take care and have a healthy day!",
+      functions,
+      serverUrl: `${this.N8N_API_URL.replace('/api/v1', '')}/webhook/premier-health-voice-tools`,
+      maxDuration: 600, // 10 minutes
+      silenceTimeout: 10,
+      recordingEnabled: true,
+      transcriptionEnabled: true,
+      metadata: {
+        templateId: template.id,
+        automationName: config.automationName,
+        industry: 'healthcare',
+        deployedAt: new Date().toISOString()
+      }
+    };
+
+    // Use template API key or fallback to environment variable
+    const apiKey = (config as any).templateConfigurations?.vapi?.apiKey || import.meta.env.VITE_VAPI_API_KEY;
+
+    const response = await fetch(`${this.VAPI_API_URL}/assistant`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(agentConfig)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(`VAPI agent creation failed: ${errorData.message || response.statusText}`);
+    }
+
+    const agent = await response.json();
+    console.log('✅ VAPI agent created:', agent.id);
+    return agent;
+  }
+
+  /**
+   * Create enhanced N8N workflow with Freshdesk integration
+   */
+  private static async createEnhancedN8NWorkflow(template: AutomationTemplate, config: DeploymentConfig, vapiAgentId: string) {
+    const templateConfig = (config as any).templateConfigurations;
+
+    const workflow = {
+      name: `${config.automationName} - Enhanced Healthcare Workflow`,
+      active: templateConfig?.deployment?.autoActivate !== false,
+      nodes: [
+        // Webhook trigger
+        {
+          id: 'webhook-trigger',
+          name: 'VAPI Webhook Trigger',
+          type: 'n8n-nodes-base.webhook',
+          typeVersion: 2,
+          position: [0, 0],
+          parameters: {
+            httpMethod: 'POST',
+            path: 'vapi-health-insurance',
+            responseMode: 'responseNode'
+          }
+        },
+        // Process call data
+        {
+          id: 'process-call',
+          name: 'Process Call Data',
+          type: 'n8n-nodes-base.code',
+          typeVersion: 2,
+          position: [200, 0],
+          parameters: {
+            jsCode: this.generateCallProcessingCode()
+          }
+        },
+        // Find health services
+        {
+          id: 'find-services',
+          name: 'Find Health Services',
+          type: 'n8n-nodes-base.httpRequest',
+          typeVersion: 4.2,
+          position: [400, 0],
+          parameters: {
+            url: `${this.CORE_API_URL}/health-services/search`,
+            authentication: 'genericCredentialType',
+            genericAuthType: 'httpHeaderAuth',
+            sendHeaders: true,
+            headerParameters: {
+              parameters: [{ name: 'Authorization', value: 'Bearer {{ $env.API_KEY }}' }]
+            },
+            sendBody: true,
+            specifyBody: 'json',
+            jsonBody: JSON.stringify({
+              serviceType: '{{ $json.analysis.serviceRequested }}',
+              location: '{{ $json.analysis.location }}',
+              urgency: '{{ $json.analysis.urgency }}',
+              patientInfo: {
+                phone: '{{ $json.customer.phoneNumber }}',
+                name: '{{ $json.customer.name }}'
+              }
+            })
+          }
+        },
+        // Create Freshdesk ticket for complex cases
+        {
+          id: 'create-freshdesk-ticket',
+          name: 'Create Freshdesk Ticket',
+          type: 'n8n-nodes-base.httpRequest',
+          typeVersion: 4.2,
+          position: [600, 100],
+          parameters: {
+            url: `https://${config.integrations.freshdesk?.domain}.freshdesk.com/api/v2/tickets`,
+            authentication: 'genericCredentialType',
+            genericAuthType: 'httpBasicAuth',
+            sendHeaders: true,
+            headerParameters: {
+              parameters: [{ name: 'Content-Type', value: 'application/json' }]
+            },
+            sendBody: true,
+            specifyBody: 'json',
+            jsonBody: JSON.stringify({
+              subject: 'Healthcare Service Request - {{ $json.customer.name }}',
+              description: 'Customer called seeking {{ $json.analysis.serviceRequested }} services in {{ $json.analysis.location }}.\n\nCall Summary:\n{{ $json.transcript }}\n\nUrgency: {{ $json.analysis.urgency }}',
+              email: config.supportEmail || 'support@premierhealthinsurance.com',
+              priority: '{{ $json.analysis.urgency === "high" ? 3 : 2 }}',
+              status: 2,
+              type: 'Question',
+              custom_fields: {
+                customer_phone: '{{ $json.customer.phoneNumber }}',
+                service_type: '{{ $json.analysis.serviceRequested }}',
+                location: '{{ $json.analysis.location }}',
+                vapi_agent_id: vapiAgentId
+              }
+            })
+          }
+        },
+        // Healthcare voice tools integration
+        {
+          id: 'healthcare-tools',
+          name: 'Healthcare Voice Tools',
+          type: 'n8n-nodes-base.code',
+          typeVersion: 2,
+          position: [500, 0],
+          parameters: {
+            mode: 'runOnceForAllItems',
+            jsCode: this.generateHealthcareToolsCode(templateConfig)
+          }
+        },
+        // Format response
+        {
+          id: 'format-response',
+          name: 'Format Response',
+          type: 'n8n-nodes-base.code',
+          typeVersion: 2,
+          position: [600, 0],
+          parameters: {
+            jsCode: this.generateResponseFormattingCode()
+          }
+        },
+        // Send SMS follow-up
+        {
+          id: 'send-sms',
+          name: 'Send SMS Follow-up',
+          type: 'n8n-nodes-base.httpRequest',
+          typeVersion: 4.2,
+          position: [800, 0],
+          parameters: {
+            url: templateConfig?.integrations?.vonage?.baseUrl ?
+              `${templateConfig.integrations.vonage.baseUrl}/v1/messages` :
+              `https://api.twilio.com/2010-04-01/Accounts/${config.integrations.twilio?.accountSid}/Messages.json`,
+            authentication: 'genericCredentialType',
+            genericAuthType: 'httpBasicAuth',
+            sendBody: true,
+            specifyBody: 'form',
+            bodyParameters: {
+              parameters: [
+                { name: 'To', value: '{{ $json.customer.phoneNumber }}' },
+                { name: 'From', value: config.integrations.twilio?.phoneNumber || '+1234567890' },
+                { name: 'Body', value: 'Premier Health Insurance - Healthcare Services:\n\n{{ $json.serviceResults.slice(0, 2).map(s => `${s.name}: ${s.address}, ${s.phone}`).join("\\n") }}\n\nTicket #{{ $json.freshdeskTicket.id }} created for follow-up.\nCall us: 1-800-PREMIER' }
+              ]
+            }
+          }
+        },
+        // Log analytics
+        {
+          id: 'log-analytics',
+          name: 'Log Analytics',
+          type: 'n8n-nodes-base.httpRequest',
+          typeVersion: 4.2,
+          position: [1000, 0],
+          parameters: {
+            url: `${this.CORE_API_URL}/analytics/voice-interactions`,
+            authentication: 'genericCredentialType',
+            genericAuthType: 'httpHeaderAuth',
+            sendBody: true,
+            specifyBody: 'json',
+            jsonBody: JSON.stringify({
+              callId: '{{ $json.customer.callId }}',
+              vapiAgentId,
+              customerPhone: '{{ $json.customer.phoneNumber }}',
+              serviceType: '{{ $json.analysis.serviceRequested }}',
+              location: '{{ $json.analysis.location }}',
+              urgency: '{{ $json.analysis.urgency }}',
+              resultsFound: '{{ $json.serviceResults.length }}',
+              freshdeskTicketId: '{{ $json.freshdeskTicket.id }}',
+              smsFollowUpSent: true,
+              timestamp: '{{ $json.customer.timestamp }}',
+              agentType: 'premier_health_insurance_navigator'
+            })
+          }
+        },
+        // Webhook response
+        {
+          id: 'webhook-response',
+          name: 'Webhook Response',
+          type: 'n8n-nodes-base.respondToWebhook',
+          typeVersion: 1,
+          position: [1200, 0],
+          parameters: {
+            respondWith: 'json',
+            responseBody: JSON.stringify({
+              status: 'success',
+              message: '{{ $json.response.message }}',
+              action: 'respond',
+              freshdeskTicket: '{{ $json.freshdeskTicket.id }}'
+            })
+          }
+        }
+      ],
+      connections: {
+        'VAPI Webhook Trigger': {
+          main: [[{ node: 'Process Call Data', type: 'main', index: 0 }]]
+        },
+        'Process Call Data': {
+          main: [[{ node: 'Find Health Services', type: 'main', index: 0 }]]
+        },
+        'Find Health Services': {
+          main: [[{ node: 'Healthcare Voice Tools', type: 'main', index: 0 }]]
+        },
+        'Healthcare Voice Tools': {
+          main: [
+            [{ node: 'Format Response', type: 'main', index: 0 }],
+            [{ node: 'Create Freshdesk Ticket', type: 'main', index: 0 }]
+          ]
+        },
+        'Create Freshdesk Ticket': {
+          main: [[{ node: 'Send SMS Follow-up', type: 'main', index: 0 }]]
+        },
+        'Format Response': {
+          main: [[{ node: 'Send SMS Follow-up', type: 'main', index: 0 }]]
+        },
+        'Send SMS Follow-up': {
+          main: [[{ node: 'Log Analytics', type: 'main', index: 0 }]]
+        },
+        'Log Analytics': {
+          main: [[{ node: 'Webhook Response', type: 'main', index: 0 }]]
+        }
+      },
+      settings: {
+        executionOrder: 'v1',
+        saveDataErrorExecution: 'all',
+        saveDataSuccessExecution: 'all'
+      }
+    };
+
+    // Use template N8N API key or fallback to hardcoded
+    const n8nApiKey = templateConfig?.n8n?.apiKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MTBhMTUzMi04YmRkLTRkYjAtYjU1OS01ZTIxYTAzNjI4ODMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU2NDQxNjg4fQ.oAcaO5v0As8jl543StOB87l21jkURptt7bn9X6E7NcU';
+    const n8nApiUrl = templateConfig?.n8n?.apiUrl ? `${templateConfig.n8n.apiUrl}/api/v1` : this.N8N_API_URL;
+
+    // Deploy to N8N
+    const response = await fetch(`${n8nApiUrl}/workflows`, {
+      method: 'POST',
+      headers: {
+        'X-N8N-API-KEY': n8nApiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(workflow)
+    });
+
+    if (!response.ok) {
+      throw new Error(`N8N workflow creation failed: ${response.statusText}`);
+    }
+
+    const deployedWorkflow = await response.json();
+    const webhookUrl = `${this.N8N_API_URL.replace('/api/v1', '')}/webhook/vapi-health-insurance`;
+
+    console.log('✅ N8N workflow created:', deployedWorkflow.id);
+    return { id: deployedWorkflow.id, webhookUrl };
+  }
+
+  /**
+   * Generate healthcare-specific system prompt
+   */
+  private static generateHealthcareSystemPrompt(template: AutomationTemplate, config: DeploymentConfig): string {
+    return `You are Sarah, a specialized Healthcare Navigator for Premier Health Insurance. Your role is to help customers find medical providers, facilities, and services covered under their Premier Health insurance plans in the Greater Accra region.
+
+**Your Expertise:**
+- Finding doctors, specialists, hospitals, clinics, and pharmacies
+- Providing location details, contact information, and hours
+- Assessing urgency and prioritizing emergency cases
+- Creating support tickets for complex requests
+
+**Guidelines:**
+- Always be empathetic and professional
+- Ask for location preference within Greater Accra
+- For emergencies, prioritize immediate care options
+- Offer to send information via SMS
+- Create support tickets for complex medical inquiries
+- Keep responses under 30 seconds when possible
+
+**Company Information:**
+- Company: ${config.companyName || 'Premier Health Insurance'}
+- Support Email: ${config.supportEmail || 'support@premierhealthinsurance.com'}
+- Support Phone: ${config.supportPhone || '1-800-PREMIER'}
+
+**Coverage Areas:**
+- Greater Accra (Accra, Tema, Kasoa)
+- Kumasi, Tamale, Cape Coast
+- Ho, Koforidua, Sunyani
+
+**Services You Help With:**
+- General practitioners and family doctors
+- Specialists (cardiology, dermatology, etc.)
+- Hospitals and emergency care
+- Pharmacies and prescriptions
+- Urgent care and walk-in clinics
+
+**PREMIER HEALTH APOMODEN PLAN KNOWLEDGE BASE:**
+
+**About Premier Health Insurance:**
+- NHIA-licensed insurer operating since 2011
+- Serves ~270 corporate policies and 100,000+ lives
+- Specializes in Apomoden Plan for dependents of Ghanaians abroad and Ghana residents
+
+**Apomoden Plan Coverage:**
+- Network: 700+ service providers nationwide (medical, dental, optical, lab/diagnostics)
+- All providers recognized by HeFRA & NHIA
+- Coverage includes: consultation, treatment, medications, lab tests, imaging, minor surgeries
+- Age ranges: 0-59, 60-69, 70-85 years with different premium tiers
+
+**Premium Structure (Annual, paid in advance):**
+- Ages 0-59: Base premium tier
+- Ages 60-69: Higher premium tier
+- Ages 70-85: Highest premium tier
+- Exchange rate used: USD 1 = GHS 12.50
+
+**Important Coverage Limitations:**
+- First-year waiting period: Maternity care (antenatal, delivery, postnatal) and surgeries not covered in year 1
+- Excluded: cosmetic procedures, overseas treatment, alternative therapies, fertility treatments, dental prosthetics, organ transplants
+
+**Customer Service Contacts:**
+- Marketing: 020-1354186 / 050-3328300
+- Apomoden Operations: 050-1550579 / 050-1550580 (apomuden@premierhealthinsurance.org)
+- Client Service: 059-6920715 (info@premierhealthinsurance.org)
+- Website: premierhealthinsurance.org
+
+**When customers ask about:**
+- Coverage details: Refer to Apomoden Plan specifics above
+- Premium costs: Direct them to contact marketing team for current rates
+- Claims: Explain the extensive IT systems and utilization tracking
+- Waiting periods: Clearly explain first-year limitations
+- Network providers: Emphasize 700+ nationwide network
+
+Always prioritize patient health and safety. If unsure about coverage or medical advice, escalate to human support.
+
+${config.customInstructions ? '\n\nAdditional Instructions:\n' + config.customInstructions : ''}`;
+  }
+
+  /**
+   * Generate healthcare-specific functions for VAPI agent
+   */
+  private static generateHealthcareFunctions() {
+    return [
+      {
+        name: 'findHealthcareProvider',
+        description: 'Find healthcare providers based on service type and location',
+        parameters: {
+          type: 'object',
+          properties: {
+            serviceType: {
+              type: 'string',
+              enum: ['doctor', 'specialist', 'hospital', 'pharmacy', 'clinic', 'emergency'],
+              description: 'Type of healthcare service needed'
+            },
+            location: {
+              type: 'string',
+              description: 'Preferred location in Greater Accra region'
+            },
+            urgency: {
+              type: 'string',
+              enum: ['low', 'normal', 'high', 'emergency'],
+              description: 'Urgency level of the request'
+            },
+            specialtyType: {
+              type: 'string',
+              description: 'Medical specialty if looking for specialist'
+            }
+          },
+          required: ['serviceType', 'location']
+        }
+      },
+      {
+        name: 'createSupportTicket',
+        description: 'Create a support ticket for complex medical inquiries',
+        parameters: {
+          type: 'object',
+          properties: {
+            subject: { type: 'string', description: 'Brief description of the issue' },
+            priority: {
+              type: 'string',
+              enum: ['low', 'medium', 'high', 'urgent'],
+              description: 'Priority level'
+            },
+            category: {
+              type: 'string',
+              enum: ['coverage_inquiry', 'provider_search', 'emergency_care', 'prescription', 'billing'],
+              description: 'Category of the support request'
+            },
+            details: { type: 'string', description: 'Detailed description of the request' }
+          },
+          required: ['subject', 'priority', 'category']
+        }
+      },
+      {
+        name: 'sendSMSFollowup',
+        description: 'Send SMS with healthcare provider information',
+        parameters: {
+          type: 'object',
+          properties: {
+            providers: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'List of provider information to send'
+            },
+            includeTicketNumber: { type: 'boolean', description: 'Include support ticket number' }
+          },
+          required: ['providers']
+        }
+      },
+      {
+        name: 'transferToNurse',
+        description: 'Transfer call to registered nurse for medical triage',
+        parameters: {
+          type: 'object',
+          properties: {
+            reason: { type: 'string', description: 'Reason for transfer to nurse' },
+            urgency: {
+              type: 'string',
+              enum: ['routine', 'urgent', 'emergency'],
+              description: 'Urgency of the medical consultation'
+            }
+          },
+          required: ['reason', 'urgency']
+        }
+      }
+    ];
+  }
+
+  /**
+   * Generate call processing JavaScript code
+   */
+  private static generateCallProcessingCode(): string {
+    return `
+// Enhanced call processing for healthcare services
+const callData = $json;
+
+const customer = {
+  phoneNumber: callData.customer?.number || 'Unknown',
+  name: callData.customer?.name || 'Anonymous',
+  timestamp: new Date().toISOString(),
+  callId: callData.id || 'unknown'
+};
+
+const transcript = callData.transcript || '';
+const analysisResult = {
+  serviceRequested: extractServiceType(transcript),
+  location: extractLocation(transcript),
+  urgency: assessUrgency(transcript),
+  needsFollowUp: shouldFollowUp(transcript),
+  specialtyType: extractSpecialty(transcript),
+  symptoms: extractSymptoms(transcript)
+};
+
+function extractServiceType(text) {
+  const services = {
+    'doctor': ['doctor', 'physician', 'medical', 'appointment', 'gp'],
+    'hospital': ['hospital', 'emergency', 'emergency room', 'er', 'acute'],
+    'pharmacy': ['pharmacy', 'medication', 'prescription', 'drugs', 'medicine'],
+    'specialist': ['specialist', 'cardiologist', 'dermatologist', 'neurologist', 'consultant'],
+    'clinic': ['clinic', 'urgent care', 'walk-in', 'outpatient'],
+    'emergency': ['emergency', 'urgent', 'critical', 'severe pain', 'chest pain']
+  };
+
+  for (const [service, keywords] of Object.entries(services)) {
+    if (keywords.some(keyword => text.toLowerCase().includes(keyword))) {
+      return service;
+    }
+  }
+  return 'general';
+}
+
+function extractLocation(text) {
+  const locations = ['accra', 'tema', 'kasoa', 'kumasi', 'tamale', 'cape coast', 'sunyani', 'ho', 'koforidua'];
+  for (const location of locations) {
+    if (text.toLowerCase().includes(location)) {
+      return location;
+    }
+  }
+  return 'greater accra';
+}
+
+function assessUrgency(text) {
+  const criticalKeywords = ['emergency', 'urgent', 'severe', 'chest pain', 'difficulty breathing', 'unconscious'];
+  const highKeywords = ['pain', 'bleeding', 'fever', 'asap', 'immediately', 'now'];
+
+  if (criticalKeywords.some(keyword => text.toLowerCase().includes(keyword))) {
+    return 'emergency';
+  }
+  if (highKeywords.some(keyword => text.toLowerCase().includes(keyword))) {
+    return 'high';
+  }
+  return 'normal';
+}
+
+function extractSpecialty(text) {
+  const specialties = {
+    'cardiology': ['heart', 'cardiac', 'cardiology', 'chest pain'],
+    'dermatology': ['skin', 'rash', 'dermatology', 'acne'],
+    'neurology': ['brain', 'headache', 'neurology', 'seizure'],
+    'orthopedics': ['bone', 'joint', 'orthopedic', 'fracture'],
+    'pediatrics': ['child', 'baby', 'pediatric', 'infant']
+  };
+
+  for (const [specialty, keywords] of Object.entries(specialties)) {
+    if (keywords.some(keyword => text.toLowerCase().includes(keyword))) {
+      return specialty;
+    }
+  }
+  return null;
+}
+
+function extractSymptoms(text) {
+  const symptomKeywords = ['pain', 'fever', 'cough', 'headache', 'nausea', 'fatigue', 'bleeding'];
+  return symptomKeywords.filter(symptom => text.toLowerCase().includes(symptom));
+}
+
+function shouldFollowUp(text) {
+  return text.length > 50 && !text.toLowerCase().includes('goodbye') && !text.toLowerCase().includes('thank you');
+}
+
+return [{
+  json: {
+    customer,
+    analysis: analysisResult,
+    transcript,
+    processedAt: new Date().toISOString()
+  }
+}];`;
+  }
+
+  /**
+   * Generate response formatting code
+   */
+  private static generateResponseFormattingCode(): string {
+    return `
+// Enhanced response formatting for healthcare services
+const serviceResults = $json.services || [];
+const customer = $('process-call').item.json.customer;
+const analysis = $('process-call').item.json.analysis;
+
+let responseMessage = '';
+let shouldCreateTicket = false;
+
+if (analysis.urgency === 'emergency') {
+  responseMessage = 'This sounds like a medical emergency. I'm immediately creating a priority support ticket and will also provide you with emergency contact information. ';
+  shouldCreateTicket = true;
+}
+
+if (serviceResults.length === 0) {
+  responseMessage += \`I apologize, but I couldn't find any \${analysis.serviceRequested} services in \${analysis.location} at the moment. I'm creating a support ticket so our healthcare team can personally assist you with finding the right provider.\`;
+  shouldCreateTicket = true;
+} else {
+  responseMessage += \`I found \${serviceResults.length} \${analysis.serviceRequested} \${serviceResults.length === 1 ? 'service' : 'services'} in \${analysis.location}:\\n\\n\`;
+
+  serviceResults.slice(0, 3).forEach((service, index) => {
+    responseMessage += \`\${index + 1}. \${service.name}\\n\`;
+    responseMessage += \`   Address: \${service.address}\\n\`;
+    responseMessage += \`   Phone: \${service.phone}\\n\`;
+    if (service.hours) responseMessage += \`   Hours: \${service.hours}\\n\`;
+    if (service.specialties) responseMessage += \`   Specialties: \${service.specialties.join(', ')}\\n\`;
+    responseMessage += \`\\n\`;
+  });
+
+  if (analysis.urgency === 'high') {
+    responseMessage += 'Since this appears urgent, I recommend calling ahead to confirm availability. ';
+    shouldCreateTicket = true;
+  }
+
+  responseMessage += 'I\\'ll send this information to your phone as an SMS and create a support ticket for follow-up care coordination.';
+  shouldCreateTicket = true;
+}
+
+return [{
+  json: {
+    response: {
+      message: responseMessage,
+      action: 'respond',
+      shouldEnd: analysis.urgency !== 'emergency'
+    },
+    serviceResults,
+    customer,
+    analysis,
+    shouldCreateTicket
+  }
+}];`;
+  }
+
+  /**
+   * Configure webhooks between VAPI and N8N
+   */
+  private static async configureWebhooks(vapiAgentId: string, webhookUrl: string) {
+    // Update VAPI agent with correct webhook URL
+    const updateResponse = await fetch(`${this.VAPI_API_URL}/assistant/${vapiAgentId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_VAPI_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        serverUrl: webhookUrl
+      })
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error(`Failed to update VAPI agent webhook: ${updateResponse.statusText}`);
+    }
+
+    console.log('✅ Webhook configuration updated');
+  }
+
+  /**
+   * Save automation configuration to backend
+   */
+  private static async saveAutomationConfig(config: DeploymentConfig, vapiAgentId: string, n8nWorkflowId: string): Promise<string> {
+    const automationConfig = {
+      templateId: config.templateId,
+      name: config.automationName,
+      vapiAgentId,
+      n8nWorkflowId,
+      integrations: config.integrations,
+      deployedAt: new Date().toISOString(),
+      status: 'active'
+    };
+
+    // Save to localStorage for now (in production, this would be an API call)
+    const savedAutomations = localStorage.getItem('kasaai_deployed_automations');
+    const automations = savedAutomations ? JSON.parse(savedAutomations) : [];
+
+    const automationId = `automation_${Date.now()}`;
+    automations.push({ id: automationId, ...automationConfig });
+
+    localStorage.setItem('kasaai_deployed_automations', JSON.stringify(automations));
+
+    return automationId;
+  }
+
+  /**
+   * Generate healthcare tools integration code
+   */
+  private static generateHealthcareToolsCode(templateConfig: any): string {
+    return `
+// Healthcare Voice Tools Integration
+const input = $input.all()[0].json;
+const functionName = input.message?.tool_calls?.[0]?.function?.name;
+const functionArgs = input.message?.tool_calls?.[0]?.function?.arguments;
+
+// Database connection configuration
+const dbConfig = {
+  host: 'localhost',
+  port: 5432,
+  database: 'healthcare_community_db',
+  user: 'community_user',
+  password: 'secure_password'
+};
+
+// Available healthcare functions
+const healthcareFunctions = {
+  search_healthcare_providers: async (args) => {
+    // Simulate database search
+    return [
+      {
+        id: 1,
+        name: "Tesano Medical Center",
+        type: "Hospital",
+        specialty: "General Medicine",
+        address: "123 Tesano Road, Accra",
+        phone: "+233-20-123-4567",
+        emergency: true
+      },
+      {
+        id: 2,
+        name: "East Legon Clinic",
+        type: "Clinic",
+        specialty: "Pediatrics",
+        address: "45 East Legon Avenue, Accra",
+        phone: "+233-24-987-6543",
+        emergency: false
+      }
+    ];
+  },
+
+  get_emergency_providers: async (args) => {
+    return [
+      {
+        id: 3,
+        name: "Korle Bu Teaching Hospital",
+        type: "Emergency Hospital",
+        specialty: "Emergency Medicine",
+        address: "Korle Bu, Accra",
+        phone: "+233-30-202-5401",
+        emergency: true,
+        available24_7: true
+      }
+    ];
+  },
+
+  escalate_to_support: async (args) => {
+    // Create Freshdesk ticket
+    const freshdeskUrl = "${templateConfig?.integrations?.freshdesk?.url || 'https://ailabs-888099064326049059.myfreshworks.com/'}";
+    const ticket = {
+      id: Math.floor(Math.random() * 10000),
+      subject: \`Healthcare Provider Search - \${args.search_query}\`,
+      description: \`Customer: \${args.customer_name}\\nEmail: \${args.customer_email}\\nPhone: \${args.customer_phone}\\nLocation: \${args.location_searched}\\nIssue: \${args.issue_description}\`,
+      status: 'open',
+      priority: 'medium'
+    };
+    return ticket;
+  }
+};
+
+// Execute the requested function
+let result = null;
+if (functionName && healthcareFunctions[functionName]) {
+  result = await healthcareFunctions[functionName](JSON.parse(functionArgs || '{}'));
+}
+
+return [{
+  json: {
+    ...input,
+    toolResult: result,
+    functionName,
+    functionArgs: JSON.parse(functionArgs || '{}'),
+    timestamp: new Date().toISOString()
+  }
+}];
+`;
+  }
+
+  /**
+   * Get automation template by ID
+   */
+  private static async getTemplate(templateId: string): Promise<AutomationTemplate | null> {
+    // Import and find template (this would be from your automation-templates.ts)
+    try {
+      const { AUTOMATION_TEMPLATES } = await import('@/config/automation-templates');
+      return AUTOMATION_TEMPLATES.find(t => t.id === templateId) || null;
+    } catch (error) {
+      console.error('Error loading template:', error);
+      return null;
+    }
+  }
+}
+
+export default AutomationDeploymentService;

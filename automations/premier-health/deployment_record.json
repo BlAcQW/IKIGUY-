@@ -1,0 +1,22 @@
+{
+  "deployed_at": "2025-10-20",
+  "router_assistant_id": "87182b39-a050-4ef4-9319-773666fabd6d",
+  "regional_assistants": {
+    "Greater Accra": "85e1cf7e-1711-4d01-9cad-c043b37707bd",
+    "Ashanti": "529d7292-c050-4f5c-941d-5207a4e3e3be",
+    "Northern Regions": "650340b7-76ee-46e9-ae34-268ebc217dba",
+    "Western and Central": "caec99dc-3e51-43c2-a9cc-4b9b6bbef1dc",
+    "Eastern and Volta": "0917ac57-8cac-44a1-9047-aead837af492",
+    "Bono Regions": "e39da43d-1190-419a-9739-d2c11bc8fe78"
+  },
+  "squad_id": "d9c801a1-34df-4496-bb90-7ac9e3f9e44e",
+  "total_assistants": 7,
+  "regions": [
+    "Greater Accra",
+    "Ashanti",
+    "Northern Regions",
+    "Western and Central",
+    "Eastern and Volta",
+    "Bono Regions"
+  ]
+}

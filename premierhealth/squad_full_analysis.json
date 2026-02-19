@@ -1,0 +1,62 @@
+{
+  "id": "d9c801a1-34df-4496-bb90-7ac9e3f9e44e",
+  "orgId": "cf1581f9-324e-4e13-853b-03f544b0afdb",
+  "createdAt": "2025-10-20T13:52:39.097Z",
+  "updatedAt": "2025-11-11T15:11:32.431Z",
+  "members": [
+    {
+      "assistantId": "87182b39-a050-4ef4-9319-773666fabd6d",
+      "assistantDestinations": [
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Greater Accra",
+          "assistantId": "85e1cf7e-1711-4d01-9cad-c043b37707bd"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Ashanti",
+          "assistantId": "529d7292-c050-4f5c-941d-5207a4e3e3be"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Northern Regions",
+          "assistantId": "650340b7-76ee-46e9-ae34-268ebc217dba"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Western and Central",
+          "assistantId": "caec99dc-3e51-43c2-a9cc-4b9b6bbef1dc"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Eastern and Volta",
+          "assistantId": "0917ac57-8cac-44a1-9047-aead837af492"
+        },
+        {
+          "type": "assistant",
+          "assistantName": "Premier Health Bono Regions",
+          "assistantId": "e39da43d-1190-419a-9739-d2c11bc8fe78"
+        }
+      ]
+    },
+    {
+      "assistantId": "85e1cf7e-1711-4d01-9cad-c043b37707bd"
+    },
+    {
+      "assistantId": "529d7292-c050-4f5c-941d-5207a4e3e3be"
+    },
+    {
+      "assistantId": "650340b7-76ee-46e9-ae34-268ebc217dba"
+    },
+    {
+      "assistantId": "caec99dc-3e51-43c2-a9cc-4b9b6bbef1dc"
+    },
+    {
+      "assistantId": "0917ac57-8cac-44a1-9047-aead837af492"
+    },
+    {
+      "assistantId": "e39da43d-1190-419a-9739-d2c11bc8fe78"
+    }
+  ],
+  "name": "Premier Health Navigator Squad"
+}

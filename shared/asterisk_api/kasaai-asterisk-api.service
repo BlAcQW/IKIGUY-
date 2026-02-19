@@ -1,0 +1,25 @@
+[Unit]
+Description=Kasa AI Asterisk REST API
+After=network.target asterisk.service
+Wants=asterisk.service
+
+[Service]
+Type=simple
+User=dev
+Group=dev
+WorkingDirectory=/opt/kasaai/apps/shared/asterisk-api
+Environment="PATH=/opt/kasaai/apps/venv/bin"
+Environment="PYTHONPATH=/opt/kasaai/apps"
+EnvironmentFile=/opt/kasaai/.env
+ExecStart=/opt/kasaai/apps/venv/bin/python main.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

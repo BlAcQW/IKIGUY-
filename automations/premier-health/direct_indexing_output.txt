@@ -1,0 +1,266 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1761057846.867268 2655088 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+🔧 DIRECT MANUAL INDEXING
+================================================================================
+Collection UUID: 6e2a7781-a28c-4a5e-9773-c5923777953c
+Found 50 documents to index (processing first 50)
+================================================================================
+
+[1/50] Healthcare Providers in ACCRA CENTRAL
+   Content length: 2226 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[2/50] Healthcare Providers in TUDU
+   Content length: 2082 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[3/50] Healthcare Providers in MAKOLA
+   Content length: 2114 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[4/50] Healthcare Providers in ADABRAKA
+   Content length: 1223 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[5/50] Healthcare Providers in AIRPORT RESIDENTIAL AREA
+   Content length: 2296 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[6/50] Healthcare Providers in 37 AREA
+   Content length: 2058 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[7/50] Healthcare Providers in ASYLUM DOWN
+   Content length: 1597 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[8/50] Healthcare Providers in LEGON & NORTH LEGON
+   Content length: 1520 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[9/50] Healthcare Providers in MADINA
+   Content length: 3566 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[10/50] Healthcare Providers in ADENTA
+   Content length: 3566 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[11/50] Healthcare Providers in DODOWA
+   Content length: 3566 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[12/50] Healthcare Providers in DZORWULU
+   Content length: 1623 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[13/50] Healthcare Providers in ABELENKPE
+   Content length: 1634 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[14/50] Healthcare Providers in CIRCLE
+   Content length: 2324 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[15/50] Healthcare Providers in KANESHIE
+   Content length: 2356 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[16/50] Healthcare Providers in NORTH KANESHIE
+   Content length: 2452 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[17/50] Healthcare Providers in INDUSTRIAL AREA
+   Content length: 2468 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[18/50] Healthcare Providers in KOKOMLEMLE
+   Content length: 527 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[19/50] Healthcare Providers in MAAMOBI
+   Content length: 512 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[20/50] Healthcare Providers in NIMA
+   Content length: 497 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[21/50] Healthcare Providers in LAPAZ
+   Content length: 1858 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[22/50] Healthcare Providers in NYAMEKYE
+   Content length: 1897 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[23/50] Healthcare Providers in DARKUMAN
+   Content length: 1897 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[24/50] Healthcare Providers in ODORKOR
+   Content length: 1884 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[25/50] Healthcare Providers in TESANO
+   Content length: 230 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[26/50] Healthcare Providers in LATEBIOKOSHIE
+   Content length: 843 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[27/50] Healthcare Providers in MATAHEKO
+   Content length: 813 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[28/50] Healthcare Providers in DANSOMAN
+   Content length: 2912 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[29/50] Healthcare Providers in MAMPROBI
+   Content length: 2912 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[30/50] Healthcare Providers in KORLE-BU
+   Content length: 2912 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[31/50] Healthcare Providers in OSU
+   Content length: 3092 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[32/50] Healthcare Providers in LABONE
+   Content length: 2185 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[33/50] Healthcare Providers in LA
+   Content length: 2129 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[34/50] Healthcare Providers in TSE ADDO
+   Content length: 2213 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[35/50] Healthcare Providers in CANTONMENTS
+   Content length: 2255 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[36/50] Healthcare Providers in TANTRA HILL
+   Content length: 902 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[37/50] Healthcare Providers in OFANKOR
+   Content length: 874 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[38/50] Healthcare Providers in SPINTEX ROAD
+   Content length: 2507 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[39/50] Healthcare Providers in BAATSONA
+   Content length: 2439 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[40/50] Healthcare Providers in DOME
+   Content length: 1748 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[41/50] Healthcare Providers in HAATSO
+   Content length: 1772 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[42/50] Healthcare Providers in ASHONGMAN
+   Content length: 1808 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[43/50] Healthcare Providers in KWABENYA
+   Content length: 1796 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[44/50] Healthcare Providers in TESHIE & NUNGUA
+   Content length: 1795 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[45/50] Healthcare Providers in ACHIMOTA & NEW ACHIMOTA
+   Content length: 1402 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[46/50] Healthcare Providers in EAST LEGON
+   Content length: 3327 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[47/50] Healthcare Providers in ADJRINGANOR
+   Content length: 3349 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[48/50] Healthcare Providers in RIDGE
+   Content length: 883 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[49/50] Healthcare Providers in SAKUMONO ESTATE
+   Content length: 3005 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+[50/50] Healthcare Providers in LASHIBI
+   Content length: 2845 chars
+   Generating embedding...
+   ❌ Error: can't adapt type 'dict'
+
+================================================================================
+📊 INDEXING SUMMARY
+================================================================================
+Total documents processed: 50
+Successfully indexed: 0
+Failed: 50
+Success rate: 0.0%
+================================================================================

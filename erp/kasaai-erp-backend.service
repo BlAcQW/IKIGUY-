@@ -1,0 +1,21 @@
+[Unit]
+Description=KasaAI ERP Backend
+After=network.target mongodb.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/kasaai/apps/erp/backend
+Environment="PATH=/opt/kasaai/apps/venv/bin"
+ExecStart=/opt/kasaai/apps/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 30034 --workers 4
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=kasaai-erp-backend
+
+[Install]
+WantedBy=multi-user.target

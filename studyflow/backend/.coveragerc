@@ -1,0 +1,90 @@
+# Coverage.py configuration for StudyFlow Backend
+# See: https://coverage.readthedocs.io/en/latest/config.html
+
+[run]
+# Source paths to measure coverage
+source =
+    app
+    .
+
+# Omit specific files/patterns from coverage
+omit =
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */venv/*
+    */env/*
+    */.venv/*
+    */site-packages/*
+    */migrations/*
+    */scripts/*
+    */conftest.py
+    app/__init__.py
+    */models/__init__.py
+    */api/__init__.py
+
+# Enable branch coverage (measures both if/else paths)
+branch = True
+
+# Track contexts for dynamic analysis (optional, adds overhead)
+dynamic_context = test_function
+
+[report]
+# Precision for coverage percentage
+precision = 2
+
+# Show lines that weren't executed
+show_missing = True
+
+# Skip files with no executable code
+skip_empty = True
+
+# Skip files that are 100% covered (focus on gaps)
+skip_covered = False
+
+# Sort by coverage percentage (lowest first)
+sort = Cover
+
+# Exclude lines/patterns from coverage measurement
+exclude_lines =
+    # Standard pragma for skipping lines
+    pragma: no cover
+
+    # Don't complain about missing debug-only code
+    def __repr__
+    def __str__
+
+    # Don't complain if tests don't hit defensive assertion code
+    raise AssertionError
+    raise NotImplementedError
+
+    # Don't complain if non-runnable code isn't run
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+
+    # Don't complain about abstract methods
+    @abstractmethod
+    @abc.abstractmethod
+
+    # Don't complain about overload definitions
+    @overload
+
+    # Don't complain about ellipsis in protocol/stub files
+    \.\.\.
+
+[html]
+# Directory for HTML coverage reports
+directory = htmlcov
+
+# Title for HTML report
+title = StudyFlow Backend Coverage Report
+
+[xml]
+# Output file for XML coverage report (for CI/CD)
+output = coverage.xml
+
+[json]
+# Output file for JSON coverage report
+output = coverage.json
+# Show contexts in JSON (useful for debugging)
+show_contexts = True

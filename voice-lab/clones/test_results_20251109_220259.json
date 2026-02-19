@@ -1,0 +1,9 @@
+[
+  {
+    "provider": "f5tts",
+    "voice": "juliet_bawuah",
+    "language": "en",
+    "status": "error",
+    "error": "The upstream Gradio app has raised an exception but has not enabled verbose error reporting. To enable, set show_error=True in launch()."
+  }
+]

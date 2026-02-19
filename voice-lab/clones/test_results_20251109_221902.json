@@ -1,0 +1,20 @@
+[
+  {
+    "provider": "f5tts",
+    "voice": "adom_okyere",
+    "language": "tw",
+    "status": "success",
+    "duration": 8.257266,
+    "file_size": 619676,
+    "output_file": "/opt/kasaai/apps/voice-lab/clones/f5tts/adom_okyere_f5tts_twi_20251109_221842.wav"
+  },
+  {
+    "provider": "f5tts",
+    "voice": "adom_okyere",
+    "language": "en",
+    "status": "success",
+    "duration": 7.002641,
+    "file_size": 723884,
+    "output_file": "/opt/kasaai/apps/voice-lab/clones/f5tts/adom_okyere_f5tts_eng_20251109_221853.wav"
+  }
+]

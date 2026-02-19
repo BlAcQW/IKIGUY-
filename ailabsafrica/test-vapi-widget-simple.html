@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple VAPI Widget Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      p {
+        color: #666;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Simple VAPI Widget Test</h1>
+      <p>
+        This is a simplified test to check if the basic VAPI widget loads
+        without advanced features.
+      </p>
+      <p>Check the browser console for any errors.</p>
+    </div>
+
+    <!-- Simple VAPI Widget -->
+    <vapi-widget
+      public-key="0c22dcea-0d6c-4fc0-8fb2-93292d8575e8"
+      assistant-id="2ac1c150-bfa0-41dd-8cb1-9f4321534c49"
+      mode="voice"
+      theme="dark"
+      position="bottom-right"
+      title="Test Assistant"
+    ></vapi-widget>
+
+    <script
+      src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
+      async
+      type="text/javascript"
+    ></script>
+  </body>
+</html>
+

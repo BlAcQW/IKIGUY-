@@ -1,0 +1,631 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* TTS Lab Light Theme - Clean, Modern, Professional */
+    --background: 0 0% 98%; /* #FAFAFA - Light gray background */
+    --foreground: 0 0% 15%; /* #262626 - Dark gray text */
+
+    --card: 0 0% 100%; /* #FFFFFF - Pure white cards */
+    --card-foreground: 0 0% 15%; /* #262626 - Dark gray text */
+
+    --popover: 0 0% 100%; /* White popover */
+    --popover-foreground: 0 0% 15%; /* Dark gray text */
+
+    /* Primary: Indigo accent matching TTS Lab */
+    --primary: 239 84% 67%; /* #6366F1 - Indigo-500 */
+    --primary-foreground: 0 0% 100%; /* White text */
+    --primary-hover: 239 84% 60%; /* Indigo-600 */
+
+    /* Secondary: Light gray panels */
+    --secondary: 0 0% 96%; /* #F5F5F5 - Light gray panel */
+    --secondary-foreground: 0 0% 15%; /* Dark gray text */
+
+    /* Accent: Bright indigo for CTAs */
+    --accent: 239 84% 67%; /* #6366F1 - Indigo-500 */
+    --accent-foreground: 0 0% 100%; /* White text */
+    --accent-hover: 239 84% 60%; /* Indigo-600 */
+
+    --muted: 0 0% 94%; /* #F0F0F0 - Muted backgrounds */
+    --muted-foreground: 0 0% 45%; /* #737373 - Medium gray text */
+
+    --destructive: 0 84% 60%; /* Red for errors */
+    --destructive-foreground: 0 0% 100%; /* White text */
+
+    --border: 0 0% 88%; /* #E0E0E0 - Light gray borders */
+    --input: 0 0% 96%; /* #F5F5F5 - Light gray input background */
+    --ring: 239 84% 67%; /* Indigo focus ring */
+
+    /* Design tokens */
+    --primary-light: 239 84% 75%; /* Lighter indigo */
+    --primary-glow: 239 84% 80%; /* Lightest indigo */
+    --accent-light: 239 84% 75%; /* Lighter indigo */
+    --accent-glow: 239 84% 80%; /* Lightest indigo */
+    --success: 142 76% 36%; /* Green */
+    --success-foreground: 0 0% 100%; /* White text */
+    --warning: 38 92% 50%; /* Orange/yellow */
+    --warning-foreground: 0 0% 100%; /* White text */
+
+    /* Status indicators matching TTS Lab */
+    --status-online: 142 76% 36%; /* Green */
+    --status-busy: 38 92% 50%; /* Orange */
+    --status-offline: 0 0% 60%; /* Gray */
+
+    /* Gradients - Subtle, clean gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(239 84% 67%), hsl(239 84% 75%));
+    --gradient-accent: linear-gradient(135deg, hsl(239 84% 67%), hsl(239 84% 75%));
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 100%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(0 0% 99%));
+    --gradient-premium: linear-gradient(135deg, hsl(239 84% 67%) 0%, hsl(239 84% 75%) 100%);
+
+    /* Shadows - Subtle, minimal shadows */
+    --shadow-primary: 0 1px 3px 0 hsl(0 0% 0% / 0.1);
+    --shadow-accent: 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-card: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow-glow: 0 0 15px hsl(239 84% 67% / 0.1);
+    --shadow-elegant: 0 2px 8px -2px hsl(0 0% 0% / 0.1);
+
+    /* Semantic Status Colors - Light Theme (TTS Lab style) */
+    --status-success-bg: 142 76% 92%; /* #DCFCE7 - Light green background */
+    --status-success-fg: 142 76% 28%; /* #15803D - Dark green text */
+    --status-success-border: 142 60% 60%; /* Medium green border */
+
+    --status-warning-bg: 38 92% 92%; /* #FEF3C7 - Light yellow background */
+    --status-warning-fg: 38 92% 30%; /* #92400E - Dark orange text */
+    --status-warning-border: 38 70% 55%; /* Medium orange border */
+
+    --status-error-bg: 0 84% 92%; /* #FEE2E2 - Light red background */
+    --status-error-fg: 0 84% 35%; /* #991B1B - Dark red text */
+    --status-error-border: 0 70% 60%; /* Medium red border */
+
+    --status-info-bg: 217 91% 92%; /* #DBEAFE - Light blue background */
+    --status-info-fg: 217 91% 30%; /* #1E40AF - Dark blue text */
+    --status-info-border: 217 70% 55%; /* Medium blue border */
+
+    --status-neutral-bg: 0 0% 94%; /* #F0F0F0 - Light gray background */
+    --status-neutral-fg: 0 0% 25%; /* #404040 - Dark gray text */
+    --status-neutral-border: 0 0% 75%; /* Medium gray border */
+
+    /* Accent Colors - Light Theme */
+    --accent-purple-bg: 270 91% 92%; /* #F3E8FF - Light purple */
+    --accent-purple-fg: 270 91% 30%; /* #6B21A8 - Dark purple text */
+    --accent-purple-border: 270 70% 60%; /* Medium purple border */
+
+    --accent-cyan-bg: 174 72% 92%; /* #CCFBF1 - Light cyan */
+    --accent-cyan-fg: 174 72% 28%; /* #115E59 - Dark cyan text */
+    --accent-cyan-border: 174 60% 55%; /* Medium cyan border */
+
+    --radius: 0.5rem; /* Rounded corners matching TTS Lab */
+
+    /* Sidebar - Clean white sidebar */
+    --sidebar-background: 0 0% 100%; /* White sidebar */
+    --sidebar-foreground: 0 0% 15%; /* Dark gray text */
+    --sidebar-primary: 239 84% 67%; /* Indigo accent */
+    --sidebar-primary-foreground: 0 0% 100%; /* White text */
+    --sidebar-accent: 239 84% 96%; /* Very light indigo */
+    --sidebar-accent-foreground: 0 0% 15%; /* Dark gray text */
+    --sidebar-border: 0 0% 88%; /* Light gray border */
+    --sidebar-ring: 239 84% 67%; /* Indigo ring */
+  }
+
+  .light {
+    /* Light theme is now default - same as :root */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 15%;
+
+    --accent: 239 84% 67%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 96%;
+    --ring: 239 84% 67%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 239 84% 67%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 239 84% 96%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 239 84% 67%;
+
+    /* Semantic Status Colors */
+    --status-success-bg: 142 76% 92%;
+    --status-success-fg: 142 76% 28%;
+    --status-success-border: 142 60% 60%;
+
+    --status-warning-bg: 38 92% 92%;
+    --status-warning-fg: 38 92% 30%;
+    --status-warning-border: 38 70% 55%;
+
+    --status-error-bg: 0 84% 92%;
+    --status-error-fg: 0 84% 35%;
+    --status-error-border: 0 70% 60%;
+
+    --status-info-bg: 217 91% 92%;
+    --status-info-fg: 217 91% 30%;
+    --status-info-border: 217 70% 55%;
+
+    --status-neutral-bg: 0 0% 94%;
+    --status-neutral-fg: 0 0% 25%;
+    --status-neutral-border: 0 0% 75%;
+
+    /* Accent Colors */
+    --accent-purple-bg: 270 91% 92%;
+    --accent-purple-fg: 270 91% 30%;
+    --accent-purple-border: 270 70% 60%;
+
+    --accent-cyan-bg: 174 72% 92%;
+    --accent-cyan-fg: 174 72% 28%;
+    --accent-cyan-border: 174 60% 55%;
+  }
+
+  /* Dark theme - kept for optional toggle */
+  .dark {
+    --background: 220 26% 11%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 26% 14%;
+    --card-foreground: 0 0% 90%;
+
+    --popover: 220 26% 14%;
+    --popover-foreground: 0 0% 90%;
+
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 13% 18%;
+    --secondary-foreground: 0 0% 80%;
+
+    --accent: 239 84% 67%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 220 13% 15%;
+    --muted-foreground: 0 0% 55%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 20%;
+    --input: 220 13% 16%;
+    --ring: 239 84% 67%;
+
+    --sidebar-background: 220 26% 9%;
+    --sidebar-foreground: 0 0% 75%;
+    --sidebar-primary: 239 84% 67%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 26% 14%;
+    --sidebar-accent-foreground: 0 0% 80%;
+    --sidebar-border: 220 13% 18%;
+    --sidebar-ring: 239 84% 67%;
+
+    /* Semantic Status Colors - Dark Theme */
+    --status-success-bg: 142 45% 15%;
+    --status-success-fg: 142 76% 65%;
+    --status-success-border: 142 60% 30%;
+
+    --status-warning-bg: 38 50% 15%;
+    --status-warning-fg: 38 92% 65%;
+    --status-warning-border: 38 70% 35%;
+
+    --status-error-bg: 0 50% 18%;
+    --status-error-fg: 0 84% 70%;
+    --status-error-border: 0 70% 40%;
+
+    --status-info-bg: 217 50% 15%;
+    --status-info-fg: 217 91% 70%;
+    --status-info-border: 217 70% 35%;
+
+    --status-neutral-bg: 220 13% 18%;
+    --status-neutral-fg: 220 13% 70%;
+    --status-neutral-border: 220 13% 35%;
+
+    /* Accent Colors - Dark Theme */
+    --accent-purple-bg: 270 50% 15%;
+    --accent-purple-fg: 270 91% 70%;
+    --accent-purple-border: 270 70% 35%;
+
+    --accent-cyan-bg: 174 50% 15%;
+    --accent-cyan-fg: 174 72% 65%;
+    --accent-cyan-border: 174 60% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair;
+  }
+
+  /* Responsive images and icons - prevent overflow */
+  img, svg {
+    @apply max-w-full h-auto;
+  }
+
+  /* Ensure icons in cards are properly sized */
+  .card img,
+  .card svg,
+  [class*="Card"] img,
+  [class*="Card"] svg {
+    @apply max-w-full h-auto;
+  }
+
+  /* Prevent icon overflow in flex containers */
+  svg {
+    @apply flex-shrink-0;
+  }
+
+  /* Icon size constraints */
+  .lucide, .lucide-icon, [class*="lucide-"] {
+    @apply flex-shrink-0;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* VAPI-style custom components */
+@layer components {
+  /* Assistant card styles */
+  .assistant-card {
+    @apply bg-card rounded-lg p-4 border border-border hover:border-primary/50 transition-all duration-200;
+    @apply hover:shadow-lg hover:shadow-primary/10 overflow-hidden;
+  }
+
+  /* Ensure all cards contain their content */
+  .card, [class*="Card"] {
+    @apply overflow-hidden;
+  }
+
+  /* Status indicator dots */
+  .status-dot {
+    @apply w-2 h-2 rounded-full inline-block;
+  }
+  
+  .status-dot.online {
+    @apply bg-green-500 animate-pulse;
+  }
+  
+  .status-dot.busy {
+    @apply bg-yellow-500;
+  }
+  
+  .status-dot.offline {
+    @apply bg-gray-500;
+  }
+
+  /* Metric cards with gradient bars */
+  .metric-card {
+    @apply bg-card/80 backdrop-blur rounded-lg p-4 space-y-3;
+  }
+  
+  .metric-bar {
+    @apply h-2 bg-muted rounded-full overflow-hidden relative;
+  }
+  
+  .metric-bar-fill {
+    @apply h-full rounded-full transition-all duration-500;
+    background: linear-gradient(90deg, 
+      hsl(var(--primary)) 0%, 
+      hsl(var(--accent)) 50%, 
+      hsl(var(--warning)) 100%);
+  }
+
+  /* VAPI-style buttons */
+  .btn-vapi {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-200;
+    @apply bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground;
+    @apply border border-primary/20 hover:border-primary;
+  }
+  
+  .btn-vapi-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+    @apply shadow-md hover:shadow-lg hover:shadow-primary/20;
+  }
+
+  /* Professional Typography System */
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.011em;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Professional Headers */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .text-heading {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .text-display {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .text-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.011em;
+  }
+
+  .text-ui {
+    font-family: 'DM Sans', 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  /* Professional Text Sizes */
+  .text-xs { font-size: 0.75rem; line-height: 1rem; }
+  .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+  .text-base { font-size: 1rem; line-height: 1.5rem; }
+  .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+  .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+  .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+  .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+  .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .text-5xl { font-size: 3rem; line-height: 1; }
+  .text-6xl { font-size: 3.75rem; line-height: 1; }
+
+  /* Professional Font Weights */
+  .font-light { font-weight: 300; }
+  .font-normal { font-weight: 400; }
+  .font-medium { font-weight: 500; }
+  .font-semibold { font-weight: 600; }
+  .font-bold { font-weight: 700; }
+  .font-extrabold { font-weight: 800; }
+
+  /* Talk to Assistant button style */
+  .btn-talk {
+    @apply bg-gradient-to-r from-primary to-accent text-white;
+    @apply px-6 py-2 rounded-md font-medium;
+    @apply hover:shadow-lg hover:shadow-accent/30 transition-all duration-200;
+    @apply border border-primary/20;
+  }
+
+  /* Publish button style */
+  .btn-publish {
+    @apply bg-accent text-accent-foreground px-6 py-2 rounded-md font-medium;
+    @apply hover:bg-accent/90 hover:shadow-lg transition-all duration-200;
+  }
+
+  /* Search input VAPI style */
+  .search-input {
+    @apply bg-input border-border/50 rounded-md px-4 py-2;
+    @apply focus:border-primary focus:ring-1 focus:ring-primary/20;
+    @apply placeholder:text-muted-foreground/60;
+  }
+
+  /* Tag badges */
+  .tag-badge {
+    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+    @apply bg-primary/10 text-primary border border-primary/20;
+  }
+  
+  .tag-badge.model {
+    @apply bg-purple-500/10 text-purple-400 border-purple-500/20;
+  }
+  
+  .tag-badge.voice {
+    @apply bg-blue-500/10 text-blue-400 border-blue-500/20;
+  }
+  
+  .tag-badge.transcriber {
+    @apply bg-green-500/10 text-green-400 border-green-500/20;
+  }
+
+  /* Configuration sections */
+  .config-section {
+    @apply bg-card/50 rounded-lg p-6 space-y-4 border border-border/50;
+  }
+  
+  .config-header {
+    @apply flex items-center justify-between pb-4 border-b border-border/30;
+  }
+  
+  .config-title {
+    @apply text-lg font-semibold text-foreground;
+  }
+
+  /* Sidebar navigation items */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200;
+    @apply text-muted-foreground hover:text-foreground;
+    @apply hover:bg-accent/10;
+  }
+  
+  .nav-item.active {
+    @apply bg-primary/10 text-primary border-l-2 border-primary;
+  }
+
+  /* Credits display */
+  .credits-display {
+    @apply flex items-center gap-2 px-3 py-2 bg-card/50 rounded-md;
+    @apply text-sm text-muted-foreground;
+  }
+
+  .credits-amount {
+    @apply font-semibold text-foreground;
+  }
+
+  /* Theme-aware Status Card Styles */
+  .status-card-success {
+    background-color: hsl(var(--status-success-bg));
+    color: hsl(var(--status-success-fg));
+    border-color: hsl(var(--status-success-border));
+  }
+
+  .status-card-warning {
+    background-color: hsl(var(--status-warning-bg));
+    color: hsl(var(--status-warning-fg));
+    border-color: hsl(var(--status-warning-border));
+  }
+
+  .status-card-error {
+    background-color: hsl(var(--status-error-bg));
+    color: hsl(var(--status-error-fg));
+    border-color: hsl(var(--status-error-border));
+  }
+
+  .status-card-info {
+    background-color: hsl(var(--status-info-bg));
+    color: hsl(var(--status-info-fg));
+    border-color: hsl(var(--status-info-border));
+  }
+
+  .status-card-neutral {
+    background-color: hsl(var(--status-neutral-bg));
+    color: hsl(var(--status-neutral-fg));
+    border-color: hsl(var(--status-neutral-border));
+  }
+
+  /* Theme-aware Accent Card Styles */
+  .accent-card-purple {
+    background-color: hsl(var(--accent-purple-bg));
+    color: hsl(var(--accent-purple-fg));
+    border-color: hsl(var(--accent-purple-border));
+  }
+
+  .accent-card-cyan {
+    background-color: hsl(var(--accent-cyan-bg));
+    color: hsl(var(--accent-cyan-fg));
+    border-color: hsl(var(--accent-cyan-border));
+  }
+
+  /* Theme-aware text colors for nested elements */
+  .status-card-success .card-value,
+  .status-card-success .status-text-primary {
+    color: hsl(var(--status-success-fg));
+  }
+
+  .status-card-warning .card-value,
+  .status-card-warning .status-text-primary {
+    color: hsl(var(--status-warning-fg));
+  }
+
+  .status-card-error .card-value,
+  .status-card-error .status-text-primary {
+    color: hsl(var(--status-error-fg));
+  }
+
+  .status-card-info .card-value,
+  .status-card-info .status-text-primary {
+    color: hsl(var(--status-info-fg));
+  }
+
+  .accent-card-purple .card-value,
+  .accent-card-purple .status-text-primary {
+    color: hsl(var(--accent-purple-fg));
+  }
+
+  .accent-card-cyan .card-value,
+  .accent-card-cyan .status-text-primary {
+    color: hsl(var(--accent-cyan-fg));
+  }
+
+  /* Icon colors */
+  .status-icon-success {
+    color: hsl(var(--status-success-fg));
+  }
+
+  .status-icon-warning {
+    color: hsl(var(--status-warning-fg));
+  }
+
+  .status-icon-error {
+    color: hsl(var(--status-error-fg));
+  }
+
+  .status-icon-info {
+    color: hsl(var(--status-info-fg));
+  }
+
+  .status-icon-neutral {
+    color: hsl(var(--status-neutral-fg));
+  }
+
+  .accent-icon-purple {
+    color: hsl(var(--accent-purple-fg));
+  }
+
+  .accent-icon-cyan {
+    color: hsl(var(--accent-cyan-fg));
+  }
+
+  /* Status badge styles */
+  .status-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium border;
+  }
+
+  .status-badge.success {
+    background-color: hsl(var(--status-success-bg));
+    color: hsl(var(--status-success-fg));
+    border-color: hsl(var(--status-success-border));
+  }
+
+  .status-badge.warning {
+    background-color: hsl(var(--status-warning-bg));
+    color: hsl(var(--status-warning-fg));
+    border-color: hsl(var(--status-warning-border));
+  }
+
+  .status-badge.error {
+    background-color: hsl(var(--status-error-bg));
+    color: hsl(var(--status-error-fg));
+    border-color: hsl(var(--status-error-border));
+  }
+
+  .status-badge.info {
+    background-color: hsl(var(--status-info-bg));
+    color: hsl(var(--status-info-fg));
+    border-color: hsl(var(--status-info-border));
+  }
+
+  .status-badge.neutral {
+    background-color: hsl(var(--status-neutral-bg));
+    color: hsl(var(--status-neutral-fg));
+    border-color: hsl(var(--status-neutral-border));
+  }
+}

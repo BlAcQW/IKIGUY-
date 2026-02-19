@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Icon Test</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+    button {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .green { color: green; background: #f0fdf4; }
+    .blue { color: blue; background: #eff6ff; }
+  </style>
+</head>
+<body>
+  <h1>SMS Campaign Icon Test</h1>
+
+  <div class="test-section">
+    <h2>Completed Campaign Buttons</h2>
+    <button class="green" title="Run Again (Duplicate & Start)">
+      <i data-lucide="play" style="width: 16px; height: 16px;"></i>
+      Run Again
+    </button>
+    <button class="blue" title="Duplicate & Edit">
+      <i data-lucide="edit" style="width: 16px; height: 16px;"></i>
+      Edit
+    </button>
+  </div>
+
+  <div class="test-section">
+    <h2>Failed Campaign Buttons</h2>
+    <button class="green" title="Run Again (Duplicate & Start)">
+      <i data-lucide="play" style="width: 16px; height: 16px;"></i>
+      Run Again
+    </button>
+    <button class="blue" title="Duplicate & Edit">
+      <i data-lucide="edit" style="width: 16px; height: 16px;"></i>
+      Edit
+    </button>
+  </div>
+
+  <div class="test-section">
+    <h2>Draft Campaign Buttons</h2>
+    <button class="green" title="Start Campaign">
+      <i data-lucide="play" style="width: 16px; height: 16px;"></i>
+      Start
+    </button>
+    <button class="blue" title="Edit Campaign">
+      <i data-lucide="edit" style="width: 16px; height: 16px;"></i>
+      Edit
+    </button>
+  </div>
+
+  <div class="test-section">
+    <h2>All Lucide Icons Used</h2>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <div><i data-lucide="play"></i> Play</div>
+      <div><i data-lucide="pause"></i> Pause</div>
+      <div><i data-lucide="edit"></i> Edit</div>
+      <div><i data-lucide="copy"></i> Copy</div>
+      <div><i data-lucide="trash-2"></i> Trash</div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

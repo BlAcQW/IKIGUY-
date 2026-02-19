@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Safe area insets for notched devices (iPhone X+) */
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+}
+
+@layer base {
+  /* Base body styles with safe area support */
+  body {
+    @apply bg-gray-950 text-gray-100;
+    /* Prevent overscroll bounce on iOS */
+    overscroll-behavior: none;
+    /* Smooth scrolling */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Apply safe area padding to html for full-bleed layouts */
+  html {
+    /* Ensure content doesn't go under the notch */
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Prevent text selection on touch hold (feels more app-like) */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Improve touch targets */
+  button, a, [role="button"] {
+    touch-action: manipulation;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Safe area padding utilities for notched devices */
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-left {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+
+  .safe-right {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  .safe-x {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  .safe-y {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-all {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+
+  /* Bottom bar with safe area (for fixed bottom navs) */
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Active state for touch feedback */
+  .touch-active:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+
+  /* Touch feedback with smoother transition */
+  .touch-feedback {
+    transition: transform 0.1s ease, opacity 0.1s ease;
+  }
+
+  .touch-feedback:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+
+  /* Subtle touch feedback for cards */
+  .touch-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Button touch feedback */
+  .touch-button:active {
+    transform: scale(0.92);
+    opacity: 0.9;
+    transition: transform 0.05s ease, opacity 0.05s ease;
+  }
+
+  /* Ripple-like visual effect on touch */
+  .touch-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .touch-ripple:active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
+    animation: ripple-fade 0.3s ease-out;
+  }
+
+  @keyframes ripple-fade {
+    from {
+      opacity: 1;
+      transform: scale(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(2);
+    }
+  }
+
+  /* Prevent double-tap zoom on buttons */
+  .no-zoom {
+    touch-action: manipulation;
+  }
+
+  /* Volume slider styling */
+  .volume-slider {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .volume-slider::-webkit-slider-thumb:hover {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.5);
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .volume-slider::-moz-range-thumb:hover {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.5);
+  }
+
+  .volume-slider::-webkit-slider-runnable-track {
+    background: linear-gradient(to top,
+      #3b82f6 0%,
+      #3b82f6 var(--volume-percent, 100%),
+      #374151 var(--volume-percent, 100%),
+      #374151 100%
+    );
+    border-radius: 4px;
+  }
+
+  .volume-slider::-moz-range-track {
+    background: #374151;
+    border-radius: 4px;
+  }
+
+  .volume-slider::-moz-range-progress {
+    background: linear-gradient(to top, #3b82f6, #8b5cf6);
+    border-radius: 4px;
+  }
+}

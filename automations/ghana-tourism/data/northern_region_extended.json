@@ -1,0 +1,186 @@
+{
+  "destinations": [
+    {
+      "id": "dest_021",
+      "name": "Larabanga Mosque",
+      "region": "Northern",
+      "city": "Larabanga",
+      "category": ["historical", "cultural", "spiritual"],
+      "description": "The oldest mosque in Ghana, dating back to the 15th century. Built in the Sudanese architectural style with distinctive mud and stick construction. A significant Islamic heritage site and national monument.",
+      "highlights": [
+        "Ghana's oldest mosque (1421 AD)",
+        "Sudanese architectural style",
+        "Sacred Quran stone",
+        "National monument",
+        "Islamic heritage site",
+        "Traditional mud architecture"
+      ],
+      "activities": [
+        "Guided tours (non-prayer times)",
+        "Photography (exterior)",
+        "Historical learning",
+        "Cultural education",
+        "Village walks"
+      ],
+      "best_time_to_visit": "November to March (dry season)",
+      "estimated_visit_duration": "30 minutes - 1 hour",
+      "entry_fee": "GHS 10-20 donation (guide tip expected)",
+      "accessibility": "Easy access, near Mole National Park entrance",
+      "location_details": "Larabanga village, 5km from Mole National Park entrance. Can be combined with Mole visit."
+    },
+    {
+      "id": "dest_022",
+      "name": "Mognori Eco-Village",
+      "region": "Northern",
+      "city": "Mognori",
+      "category": ["nature", "cultural", "adventure", "eco-tourism"],
+      "description": "Community-based eco-tourism village on the edge of Mole National Park. Offers canoe safaris on the Mole River, traditional village experiences, and wildlife viewing from a unique river perspective.",
+      "highlights": [
+        "Canoe safari on Mole River",
+        "Hippo and crocodile viewing",
+        "Bird watching paradise",
+        "Traditional village experience",
+        "Community-based tourism",
+        "Overnight camping available"
+      ],
+      "activities": [
+        "Canoe safaris",
+        "Wildlife viewing",
+        "Bird watching",
+        "Village tours",
+        "Traditional cooking",
+        "Camping",
+        "Fishing demonstrations"
+      ],
+      "best_time_to_visit": "November to April (dry season for wildlife)",
+      "estimated_visit_duration": "Half day to full day",
+      "entry_fee": "Canoe safari GHS 80-120 per person",
+      "accessibility": "Accessible by car, 20km from Mole Park entrance",
+      "location_details": "Mognori village, near Mole National Park. Book canoe tours in advance."
+    },
+    {
+      "id": "dest_023",
+      "name": "Salaga Slave Market and Wells",
+      "region": "Northern",
+      "city": "Salaga",
+      "category": ["historical", "cultural", "educational"],
+      "description": "Historic slave market town that was a major trading hub during the transatlantic slave trade. Features the original slave wells where captured people were kept, as well as the market grounds and historical monuments.",
+      "highlights": [
+        "Original slave wells",
+        "Historic market grounds",
+        "Slave bathing pool",
+        "Cemetery of slave traders",
+        "Educational historical site",
+        "Powerful historical narrative"
+      ],
+      "activities": [
+        "Guided historical tours",
+        "Historical education",
+        "Photography",
+        "Reflection",
+        "Learning about slave trade history"
+      ],
+      "best_time_to_visit": "Year-round, cooler November-February",
+      "estimated_visit_duration": "1-2 hours",
+      "entry_fee": "GHS 10-15 per person (guide included)",
+      "accessibility": "Accessible by car, mostly flat terrain",
+      "location_details": "Salaga town, Northern Region. 2-3 hours from Tamale."
+    },
+    {
+      "id": "dest_024",
+      "name": "Tamale Cultural Centre",
+      "region": "Northern",
+      "city": "Tamale",
+      "category": ["cultural", "art", "shopping"],
+      "description": "Hub for Northern Ghanaian arts, crafts, and cultural performances. Features exhibitions, craft shops, and occasional traditional music and dance performances. Great place to learn about Northern culture.",
+      "highlights": [
+        "Northern Region handicrafts",
+        "Traditional smock weaving",
+        "Occasional cultural performances",
+        "Art exhibitions",
+        "Craft demonstrations",
+        "Support local artisans"
+      ],
+      "activities": [
+        "Shopping for handicrafts",
+        "Cultural performances (when available)",
+        "Art viewing",
+        "Photography",
+        "Meeting local artisans",
+        "Learning traditional crafts"
+      ],
+      "best_time_to_visit": "Year-round, check performance schedules",
+      "estimated_visit_duration": "1-2 hours",
+      "entry_fee": "Small entrance fee (GHS 5-10)",
+      "accessibility": "Easy access in central Tamale",
+      "location_details": "Central Tamale, Northern Region. Easy to combine with city exploration."
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "acc_019",
+      "name": "Gariba Lodge",
+      "type": "lodge",
+      "star_rating": 3,
+      "city": "Tamale",
+      "region": "Northern",
+      "description": "Comfortable lodge in Tamale offering clean accommodations with good amenities. Popular with tourists heading to Mole National Park.",
+      "amenities": [
+        "Free Wi-Fi",
+        "Restaurant",
+        "Bar",
+        "Swimming pool",
+        "Conference room",
+        "24-hour reception",
+        "Parking",
+        "Tour desk"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "250-350"
+        },
+        {
+          "type": "Deluxe Room",
+          "price_range_ghs": "400-500"
+        }
+      ],
+      "phone": "+233 372 027 631",
+      "email": "info@garibalodge.com",
+      "website": null,
+      "additional_info": "Good stopover for Mole National Park trips. Can arrange tours."
+    },
+    {
+      "id": "acc_020",
+      "name": "Mognori Eco-Village Guesthouse",
+      "type": "guesthouse",
+      "star_rating": null,
+      "city": "Mognori",
+      "region": "Northern",
+      "description": "Community-run eco-lodge offering basic but comfortable accommodation near Mole National Park. Authentic village experience with locally prepared meals.",
+      "amenities": [
+        "Community-based tourism",
+        "Local meals included",
+        "Canoe safari arrangements",
+        "Traditional experience",
+        "Village tours",
+        "Basic facilities",
+        "Eco-friendly"
+      ],
+      "room_types": [
+        {
+          "type": "Basic Room",
+          "price_range_ghs": "100-150 (includes meals)"
+        },
+        {
+          "type": "Camping",
+          "price_range_ghs": "50-80"
+        }
+      ],
+      "phone": "+233 244 XXX XXX",
+      "email": null,
+      "website": null,
+      "additional_info": "Authentic eco-tourism experience. Proceeds support local community. Book canoe safaris here."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+alerting_enabled: true
+backup_enabled: true
+backup_interval_hours: 12
+data_retention_days: 30
+debug_mode: true
+environment: testing
+log_level: debug
+maintenance_window: {}
+max_call_duration: 1800
+max_concurrent_calls: 500
+monitoring_enabled: true
+performance_settings: {}
+security_settings: {}
+system_id: kasaai
+language_detect_threshold: 0.5

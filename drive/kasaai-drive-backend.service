@@ -1,0 +1,16 @@
+[Unit]
+Description=KasaAI Drive Backend API
+After=network.target mongodb.service
+
+[Service]
+Type=simple
+User=dev
+WorkingDirectory=/opt/kasaai/apps/drive/backend
+Environment="PATH=/opt/kasaai/apps/venv/bin"
+Environment="PYTHONPATH=/opt/kasaai:/opt/kasaai/apps"
+ExecStart=/opt/kasaai/apps/venv/bin/uvicorn main:app --host 0.0.0.0 --port 30037
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

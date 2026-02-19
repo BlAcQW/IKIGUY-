@@ -1,0 +1,424 @@
+2025-10-21 16:01:32,413 - INFO - ================================================================================
+2025-10-21 16:01:32,413 - INFO - 🌍 PREMIER HEALTH - UPLOAD ALL REGIONAL DATA
+2025-10-21 16:01:32,413 - INFO - ================================================================================
+2025-10-21 16:01:32,413 - INFO - CSV Directory: /opt/kasaai/apps/automations/premier-health/regional_cities/enriched
+2025-10-21 16:01:32,413 - INFO - Collection: premier_health_production
+2025-10-21 16:01:32,413 - INFO - ================================================================================
+2025-10-21 16:01:32,413 - INFO - 📁 Processing: greater_accra_region_enriched.csv
+2025-10-21 16:01:32,414 - INFO -    Found 0 cities with 0 providers
+2025-10-21 16:01:32,414 - INFO - 
+2025-10-21 16:01:32,414 - INFO - 📁 Processing: all_northern_regions_enriched.csv
+2025-10-21 16:01:32,414 - INFO -    Found 6 cities with 84 providers
+2025-10-21 16:01:32,417 - INFO - Document created in PostgreSQL: e56b1211-ef0d-4070-bf32-a38c4ed6cc1c for premier_health_production
+2025-10-21 16:01:32,417 - INFO -    ✅ TAMALE: 45 providers uploaded
+2025-10-21 16:01:32,418 - INFO - Document created in PostgreSQL: 93d1007b-b85b-49b0-b61c-8d19cf4157ca for premier_health_production
+2025-10-21 16:01:32,418 - INFO -    ✅ WA: 15 providers uploaded
+2025-10-21 16:01:32,419 - INFO - Document created in PostgreSQL: e93b7cbb-8a2f-4e44-bba6-f99ecf97989c for premier_health_production
+2025-10-21 16:01:32,419 - INFO -    ✅ LAWRA: 5 providers uploaded
+2025-10-21 16:01:32,420 - INFO - Document created in PostgreSQL: eaa602b4-85c8-421e-8124-c3c4fbf05c1c for premier_health_production
+2025-10-21 16:01:32,420 - INFO -    ✅ BOLGATANGA: 10 providers uploaded
+2025-10-21 16:01:32,421 - INFO - Document created in PostgreSQL: 4ebe178a-1ac1-4cb9-b4d5-b794ce0953d6 for premier_health_production
+2025-10-21 16:01:32,421 - INFO -    ✅ BAWKU: 5 providers uploaded
+2025-10-21 16:01:32,421 - INFO - Document created in PostgreSQL: ff810910-2684-4a60-8853-bd17ae8639ec for premier_health_production
+2025-10-21 16:01:32,421 - INFO -    ✅ NAVRONGO: 4 providers uploaded
+2025-10-21 16:01:32,421 - INFO - 
+2025-10-21 16:01:32,421 - INFO - 📁 Processing: ashanti_region_kumasi_enriched.csv
+2025-10-21 16:01:32,422 - INFO -    Found 0 cities with 0 providers
+2025-10-21 16:01:32,422 - INFO - 
+2025-10-21 16:01:32,422 - INFO - 📁 Processing: bono_regions_enriched.csv
+2025-10-21 16:01:32,422 - INFO -    Found 12 cities with 84 providers
+2025-10-21 16:01:32,422 - INFO - Document created in PostgreSQL: a8021daf-aa0c-4654-bfb0-36015109f6aa for premier_health_production
+2025-10-21 16:01:32,422 - INFO -    ✅ NKORANZA: 4 providers uploaded
+2025-10-21 16:01:32,423 - INFO - Document created in PostgreSQL: e6179b94-af18-40d6-b028-7939a8cb8472 for premier_health_production
+2025-10-21 16:01:32,423 - INFO -    ✅ DROBO: 2 providers uploaded
+2025-10-21 16:01:32,423 - INFO - Document created in PostgreSQL: f9c42c26-aef2-486d-85d3-d25bcc10c834 for premier_health_production
+2025-10-21 16:01:32,423 - INFO -    ✅ DORMAA: 4 providers uploaded
+2025-10-21 16:01:32,424 - INFO - Document created in PostgreSQL: b1db118f-093b-4b4e-875b-8f7e13f10fcc for premier_health_production
+2025-10-21 16:01:32,424 - INFO -    ✅ SUNYANI: 33 providers uploaded
+2025-10-21 16:01:32,425 - INFO - Document created in PostgreSQL: 6f9aa8ef-c036-485b-af6f-ae01c01cb8bb for premier_health_production
+2025-10-21 16:01:32,425 - INFO -    ✅ GOASO: 7 providers uploaded
+2025-10-21 16:01:32,425 - INFO - Document created in PostgreSQL: 90857fb8-3d5a-443e-81da-10bb7e6ebf3e for premier_health_production
+2025-10-21 16:01:32,425 - INFO -    ✅ HWIDIEM: 3 providers uploaded
+2025-10-21 16:01:32,426 - INFO - Document created in PostgreSQL: 31b8176b-b9f7-443c-b9b1-3ad6165052dd for premier_health_production
+2025-10-21 16:01:32,426 - INFO -    ✅ KENYASE: 7 providers uploaded
+2025-10-21 16:01:32,426 - INFO - Document created in PostgreSQL: 51833871-3f37-4905-8d6a-7b0dadc835e2 for premier_health_production
+2025-10-21 16:01:32,426 - INFO -    ✅ TECHIMAN: 9 providers uploaded
+2025-10-21 16:01:32,426 - INFO - Document created in PostgreSQL: 8a2442d6-d4a6-41bc-b8db-8a2bedc2a7f6 for premier_health_production
+2025-10-21 16:01:32,426 - INFO -    ✅ WENCHI: 3 providers uploaded
+2025-10-21 16:01:32,427 - INFO - Document created in PostgreSQL: 213a4dbd-1e74-4b6e-8b53-7c050be57e3a for premier_health_production
+2025-10-21 16:01:32,427 - INFO -    ✅ BEREKUM: 4 providers uploaded
+2025-10-21 16:01:32,427 - INFO - Document created in PostgreSQL: 970a732b-0fae-46ba-b359-db44c62d79e4 for premier_health_production
+2025-10-21 16:01:32,427 - INFO -    ✅ SAMPA: 2 providers uploaded
+2025-10-21 16:01:32,427 - INFO - Document created in PostgreSQL: 0548783e-e8a8-40d1-9f34-9c6a00fa26f3 for premier_health_production
+2025-10-21 16:01:32,427 - INFO -    ✅ KINTAMPO, DUAYAW NKWANTA & OTHERS: 6 providers uploaded
+2025-10-21 16:01:32,427 - INFO - 
+2025-10-21 16:01:32,428 - INFO - 📁 Processing: central_and_western_region_enriched.csv
+2025-10-21 16:01:32,428 - INFO -    Found 28 cities with 143 providers
+2025-10-21 16:01:32,428 - INFO - Document created in PostgreSQL: ac83c180-3461-48b8-9940-dac9b466787a for premier_health_production
+2025-10-21 16:01:32,428 - INFO -    ✅ CAPE COAST: 11 providers uploaded
+2025-10-21 16:01:32,429 - INFO - Document created in PostgreSQL: 0f21b003-d2c2-4f47-a3a7-881fe8d511ba for premier_health_production
+2025-10-21 16:01:32,429 - INFO -    ✅ ELMINA: 3 providers uploaded
+2025-10-21 16:01:32,429 - INFO - Document created in PostgreSQL: c62032db-71b7-41d9-b26b-8e4d748be000 for premier_health_production
+2025-10-21 16:01:32,429 - INFO -    ✅ ASSIN: 7 providers uploaded
+2025-10-21 16:01:32,430 - INFO - Document created in PostgreSQL: b85dab73-2674-4289-b896-041f74707e77 for premier_health_production
+2025-10-21 16:01:32,430 - INFO -    ✅ SWEDRU: 7 providers uploaded
+2025-10-21 16:01:32,430 - INFO - Document created in PostgreSQL: d61fb073-5692-43d9-9567-0605af3769cd for premier_health_production
+2025-10-21 16:01:32,430 - INFO -    ✅ WINNEBA: 4 providers uploaded
+2025-10-21 16:01:32,430 - INFO - Document created in PostgreSQL: a7de0d8d-3c3b-40a6-995c-949c03ad2c35 for premier_health_production
+2025-10-21 16:01:32,430 - INFO -    ✅ MANKESSIM: 4 providers uploaded
+2025-10-21 16:01:32,431 - INFO - Document created in PostgreSQL: adf0d796-2cb6-47bb-99c5-9789055e3694 for premier_health_production
+2025-10-21 16:01:32,431 - INFO -    ✅ ASIKUMA: 5 providers uploaded
+2025-10-21 16:01:32,431 - INFO - Document created in PostgreSQL: 20dec23c-d86e-40b6-bec9-dfce6d82ebdc for premier_health_production
+2025-10-21 16:01:32,431 - INFO -    ✅ AJUMAKO: 5 providers uploaded
+2025-10-21 16:01:32,431 - INFO - Document created in PostgreSQL: 24c9d586-cab4-4ace-b81f-ade8bcdab494 for premier_health_production
+2025-10-21 16:01:32,431 - INFO -    ✅ DUNKWA-ON-OFFIN: 5 providers uploaded
+2025-10-21 16:01:32,432 - INFO - Document created in PostgreSQL: c9d48e08-5536-40ba-a2e1-9cf2cc577a9b for premier_health_production
+2025-10-21 16:01:32,432 - INFO -    ✅ TAKORADI: 39 providers uploaded
+2025-10-21 16:01:32,433 - INFO - Document created in PostgreSQL: 9e18dd67-9389-41c2-90e0-e5536e6d1b36 for premier_health_production
+2025-10-21 16:01:32,433 - INFO -    ✅ SEKONDI: 3 providers uploaded
+2025-10-21 16:01:32,433 - INFO - Document created in PostgreSQL: 6e2ea0a7-212d-4d56-b6b6-7f0c8c678539 for premier_health_production
+2025-10-21 16:01:32,433 - INFO -    ✅ INCHABAN: 2 providers uploaded
+2025-10-21 16:01:32,433 - INFO - Document created in PostgreSQL: 5b6c5531-748f-416d-b557-cc496cfb02a7 for premier_health_production
+2025-10-21 16:01:32,433 - INFO -    ✅ TARKWA: 13 providers uploaded
+2025-10-21 16:01:32,434 - INFO - Document created in PostgreSQL: 6edcfde7-1da2-4d43-bb6d-d0a3036549c9 for premier_health_production
+2025-10-21 16:01:32,434 - INFO -    ✅ BOGOSO: 2 providers uploaded
+2025-10-21 16:01:32,434 - INFO - Document created in PostgreSQL: fab6f99f-3a7b-45f4-9d69-6224ad16f31b for premier_health_production
+2025-10-21 16:01:32,434 - INFO -    ✅ WASSA AKROPONG: 2 providers uploaded
+2025-10-21 16:01:32,434 - INFO - Document created in PostgreSQL: 3e2ee923-3f64-4d3a-a443-83d7f41aeb54 for premier_health_production
+2025-10-21 16:01:32,434 - INFO -    ✅ ASANKRAGWA: 2 providers uploaded
+2025-10-21 16:01:32,435 - INFO - Document created in PostgreSQL: 364f0bfa-72fe-4613-a4b4-b8255775580c for premier_health_production
+2025-10-21 16:01:32,435 - INFO -    ✅ SAMREBOI: 2 providers uploaded
+2025-10-21 16:01:32,435 - INFO - Document created in PostgreSQL: 0e7985e2-cb4b-4efb-b9d9-11d68b03ae2b for premier_health_production
+2025-10-21 16:01:32,435 - INFO -    ✅ ENCHI: 4 providers uploaded
+2025-10-21 16:01:32,435 - INFO - Document created in PostgreSQL: 61701b23-a03a-43c2-bc1d-fd3efa5108fc for premier_health_production
+2025-10-21 16:01:32,435 - INFO -    ✅ SUAMAN DADIESO: 2 providers uploaded
+2025-10-21 16:01:32,436 - INFO - Document created in PostgreSQL: 7483962d-d4d6-4eb1-aae9-582fd544255e for premier_health_production
+2025-10-21 16:01:32,436 - INFO -    ✅ SEFWI BIBIANI: 4 providers uploaded
+2025-10-21 16:01:32,436 - INFO - Document created in PostgreSQL: 0b6d110d-cc2a-4178-929e-4cc0b5558b7d for premier_health_production
+2025-10-21 16:01:32,436 - INFO -    ✅ SEFWI ANHWIASO: 1 providers uploaded
+2025-10-21 16:01:32,436 - INFO - Document created in PostgreSQL: a638baa3-7e38-4662-abac-83f93f633245 for premier_health_production
+2025-10-21 16:01:32,436 - INFO -    ✅ SEFWI BEKWAI: 2 providers uploaded
+2025-10-21 16:01:32,437 - INFO - Document created in PostgreSQL: 1e40ea4c-a70b-4178-bdfc-1267ca9df6b6 for premier_health_production
+2025-10-21 16:01:32,437 - INFO -    ✅ SEFWI WIAWSO: 3 providers uploaded
+2025-10-21 16:01:32,437 - INFO - Document created in PostgreSQL: 6b99c7f2-b8ff-4296-8668-576e543d8230 for premier_health_production
+2025-10-21 16:01:32,437 - INFO -    ✅ SEFWI ASAFO: 2 providers uploaded
+2025-10-21 16:01:32,437 - INFO - Document created in PostgreSQL: 02d5f8aa-40e7-41c4-a526-9db27dceda41 for premier_health_production
+2025-10-21 16:01:32,437 - INFO -    ✅ SEFWI ASAWINSO: 3 providers uploaded
+2025-10-21 16:01:32,438 - INFO - Document created in PostgreSQL: c3a78977-c124-48ec-9867-18e1ec5e1bd1 for premier_health_production
+2025-10-21 16:01:32,438 - INFO -    ✅ SEFWI BODI: 2 providers uploaded
+2025-10-21 16:01:32,438 - INFO - Document created in PostgreSQL: eb0eed3b-f96a-4881-a5e7-a891944e274d for premier_health_production
+2025-10-21 16:01:32,438 - INFO -    ✅ SEFWI AKONTOMBRA: 2 providers uploaded
+2025-10-21 16:01:32,438 - INFO - Document created in PostgreSQL: 1facb23d-31ed-4793-b35d-f04bf89e811a for premier_health_production
+2025-10-21 16:01:32,438 - INFO -    ✅ SEFWI ESSAM: 2 providers uploaded
+2025-10-21 16:01:32,438 - INFO - 
+2025-10-21 16:01:32,438 - INFO - 📁 Processing: eastern_and_volta_regions_enriched.csv
+2025-10-21 16:01:32,439 - INFO -    Found 24 cities with 150 providers
+2025-10-21 16:01:32,439 - INFO - Document created in PostgreSQL: a59e9e2d-ef95-4b9c-871c-5ad3f0370bcd for premier_health_production
+2025-10-21 16:01:32,439 - INFO -    ✅ MAMPONG: 1 providers uploaded
+2025-10-21 16:01:32,440 - INFO - Document created in PostgreSQL: 9e7d7559-cbac-44a8-bb64-e1b251b4ecbb for premier_health_production
+2025-10-21 16:01:32,440 - INFO -    ✅ KOFORIDUA: 21 providers uploaded
+2025-10-21 16:01:32,440 - INFO - Document created in PostgreSQL: 1832da08-d2b6-4a9d-8bbe-12240ec64645 for premier_health_production
+2025-10-21 16:01:32,440 - INFO -    ✅ MAMFE AKUAPEM: 2 providers uploaded
+2025-10-21 16:01:32,440 - INFO - Document created in PostgreSQL: 597e7367-24d6-4ee9-b58d-b46191b5055f for premier_health_production
+2025-10-21 16:01:32,440 - INFO -    ✅ TAFO: 4 providers uploaded
+2025-10-21 16:01:32,441 - INFO - Document created in PostgreSQL: 7bdd64f5-1758-48fe-a5a9-5aeb850f9ffd for premier_health_production
+2025-10-21 16:01:32,441 - INFO -    ✅ NSAWAM: 6 providers uploaded
+2025-10-21 16:01:32,441 - INFO - Document created in PostgreSQL: 391bb56e-5ab6-4039-86e0-aec3268b9a6b for premier_health_production
+2025-10-21 16:01:32,441 - INFO -    ✅ SUHUM: 4 providers uploaded
+2025-10-21 16:01:32,441 - INFO - Document created in PostgreSQL: ea57dc44-0623-4cd5-9840-30366415537e for premier_health_production
+2025-10-21 16:01:32,442 - INFO -    ✅ ASAMANKESE: 3 providers uploaded
+2025-10-21 16:01:32,442 - INFO - Document created in PostgreSQL: de81f9a9-be44-4cf3-9a78-34a9166d301d for premier_health_production
+2025-10-21 16:01:32,442 - INFO -    ✅ ASIAKWA: 9 providers uploaded
+2025-10-21 16:01:32,442 - INFO - Document created in PostgreSQL: d69bf4f6-6594-4c57-896d-45cae4de587d for premier_health_production
+2025-10-21 16:01:32,442 - INFO -    ✅ OSINO: 9 providers uploaded
+2025-10-21 16:01:32,443 - INFO - Document created in PostgreSQL: fdacbf65-75b4-4698-894b-9189f385f94e for premier_health_production
+2025-10-21 16:01:32,443 - INFO -    ✅ ANYINAM: 9 providers uploaded
+2025-10-21 16:01:32,443 - INFO - Document created in PostgreSQL: d9faefa9-5420-4b3f-a625-d27340ceea97 for premier_health_production
+2025-10-21 16:01:32,443 - INFO -    ✅ ENYIRESI: 9 providers uploaded
+2025-10-21 16:01:32,443 - INFO - Document created in PostgreSQL: 8b4a3aba-e185-4b73-b042-38b97eeda62c for premier_health_production
+2025-10-21 16:01:32,443 - INFO -    ✅ KIBI: 9 providers uploaded
+2025-10-21 16:01:32,444 - INFO - Document created in PostgreSQL: f0ded729-e2f8-4fd0-b03b-e60148470692 for premier_health_production
+2025-10-21 16:01:32,444 - INFO -    ✅ AKOSOMBO: 3 providers uploaded
+2025-10-21 16:01:32,444 - INFO - Document created in PostgreSQL: bd1d4d38-27d4-44f2-aaf4-2145c7d36e4c for premier_health_production
+2025-10-21 16:01:32,444 - INFO -    ✅ SOMANYA: 5 providers uploaded
+2025-10-21 16:01:32,444 - INFO - Document created in PostgreSQL: 7790b503-255d-493d-8ab4-4d826aa36544 for premier_health_production
+2025-10-21 16:01:32,444 - INFO -    ✅ ODUMASE KROBO: 5 providers uploaded
+2025-10-21 16:01:32,445 - INFO - Document created in PostgreSQL: c6983b90-cf04-4cae-8f58-98fb755bcf66 for premier_health_production
+2025-10-21 16:01:32,445 - INFO -    ✅ ODA: 6 providers uploaded
+2025-10-21 16:01:32,445 - INFO - Document created in PostgreSQL: 975b521f-8fbd-47ae-a170-3559abb91896 for premier_health_production
+2025-10-21 16:01:32,445 - INFO -    ✅ AKWATIA: 2 providers uploaded
+2025-10-21 16:01:32,445 - INFO - Document created in PostgreSQL: d0a4dc43-befb-4168-9981-491c81ff0ae8 for premier_health_production
+2025-10-21 16:01:32,445 - INFO -    ✅ KADE: 2 providers uploaded
+2025-10-21 16:01:32,446 - INFO - Document created in PostgreSQL: a8a15388-bf9e-4c9d-87b7-4a0ba1195ea9 for premier_health_production
+2025-10-21 16:01:32,446 - INFO -    ✅ BEGORO: 6 providers uploaded
+2025-10-21 16:01:32,446 - INFO - Document created in PostgreSQL: 9907eab6-8b19-42ef-be67-01e1e9894cfa for premier_health_production
+2025-10-21 16:01:32,446 - INFO -    ✅ OSIEM: 6 providers uploaded
+2025-10-21 16:01:32,447 - INFO - Document created in PostgreSQL: 50e5ee85-81d2-40be-a097-786c50eab901 for premier_health_production
+2025-10-21 16:01:32,447 - INFO -    ✅ NKAWKAW: 9 providers uploaded
+2025-10-21 16:01:32,447 - INFO - Document created in PostgreSQL: 8260fa34-a2e0-4177-b2e5-c83e9f7314b6 for premier_health_production
+2025-10-21 16:01:32,447 - INFO -    ✅ NEW ABIREM: 3 providers uploaded
+2025-10-21 16:01:32,448 - INFO - Document created in PostgreSQL: a25f5744-e55b-4048-b456-e8477df203d6 for premier_health_production
+2025-10-21 16:01:32,448 - INFO -    ✅ HO: 12 providers uploaded
+2025-10-21 16:01:32,448 - INFO - Document created in PostgreSQL: 03d10d1f-078f-4278-9a0c-b3e9e066351d for premier_health_production
+2025-10-21 16:01:32,448 - INFO -    ✅ HOHOE: 5 providers uploaded
+2025-10-21 16:01:32,449 - INFO - 
+2025-10-21 16:01:32,449 - INFO - ================================================================================
+2025-10-21 16:01:32,449 - INFO - 📊 UPLOAD SUMMARY
+2025-10-21 16:01:32,449 - INFO - ================================================================================
+2025-10-21 16:01:32,449 - INFO - 
+📁 greater_accra_region_enriched.csv
+2025-10-21 16:01:32,449 - INFO -    Cities: 0
+2025-10-21 16:01:32,449 - INFO -    Uploaded: 0
+2025-10-21 16:01:32,449 - INFO -    Skipped: 0
+2025-10-21 16:01:32,449 - INFO -    Errors: 0
+2025-10-21 16:01:32,449 - INFO - 
+📁 all_northern_regions_enriched.csv
+2025-10-21 16:01:32,449 - INFO -    Cities: 6
+2025-10-21 16:01:32,449 - INFO -    Uploaded: 6
+2025-10-21 16:01:32,449 - INFO -    Skipped: 0
+2025-10-21 16:01:32,449 - INFO -    Errors: 0
+2025-10-21 16:01:32,449 - INFO - 
+📁 ashanti_region_kumasi_enriched.csv
+2025-10-21 16:01:32,449 - INFO -    Cities: 0
+2025-10-21 16:01:32,449 - INFO -    Uploaded: 0
+2025-10-21 16:01:32,449 - INFO -    Skipped: 0
+2025-10-21 16:01:32,449 - INFO -    Errors: 0
+2025-10-21 16:01:32,449 - INFO - 
+📁 bono_regions_enriched.csv
+2025-10-21 16:01:32,449 - INFO -    Cities: 12
+2025-10-21 16:01:32,449 - INFO -    Uploaded: 12
+2025-10-21 16:01:32,449 - INFO -    Skipped: 0
+2025-10-21 16:01:32,449 - INFO -    Errors: 0
+2025-10-21 16:01:32,449 - INFO - 
+📁 central_and_western_region_enriched.csv
+2025-10-21 16:01:32,449 - INFO -    Cities: 28
+2025-10-21 16:01:32,449 - INFO -    Uploaded: 28
+2025-10-21 16:01:32,449 - INFO -    Skipped: 0
+2025-10-21 16:01:32,449 - INFO -    Errors: 0
+2025-10-21 16:01:32,449 - INFO - 
+📁 eastern_and_volta_regions_enriched.csv
+2025-10-21 16:01:32,449 - INFO -    Cities: 24
+2025-10-21 16:01:32,449 - INFO -    Uploaded: 24
+2025-10-21 16:01:32,449 - INFO -    Skipped: 0
+2025-10-21 16:01:32,449 - INFO -    Errors: 0
+2025-10-21 16:01:32,449 - INFO - 
+================================================================================
+2025-10-21 16:01:32,449 - INFO - 🎯 TOTALS
+2025-10-21 16:01:32,449 - INFO - ================================================================================
+2025-10-21 16:01:32,449 - INFO - Total cities: 70
+2025-10-21 16:01:32,449 - INFO - Newly uploaded: 70
+2025-10-21 16:01:32,449 - INFO - Already existed: 0
+2025-10-21 16:01:32,449 - INFO - Errors: 0
+2025-10-21 16:01:32,449 - INFO - ================================================================================
+2025-10-21 16:01:32,449 - INFO - ✅ ALL REGIONAL DATA UPLOADED SUCCESSFULLY!
+2025-10-21 16:01:32,449 - INFO - ================================================================================
+2025-10-21 16:01:32,451 - INFO - Updated document e56b1211-ef0d-4070-bf32-a38c4ed6cc1c status to processing
+2025-10-21 16:01:34,209 - ERROR - Error indexing document e56b1211-ef0d-4070-bf32-a38c4ed6cc1c: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,211 - INFO - Updated document e56b1211-ef0d-4070-bf32-a38c4ed6cc1c status to failed
+2025-10-21 16:01:34,212 - INFO - Updated document 93d1007b-b85b-49b0-b61c-8d19cf4157ca status to processing
+2025-10-21 16:01:34,213 - ERROR - Error indexing document 93d1007b-b85b-49b0-b61c-8d19cf4157ca: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,214 - INFO - Updated document 93d1007b-b85b-49b0-b61c-8d19cf4157ca status to failed
+2025-10-21 16:01:34,214 - INFO - Updated document e93b7cbb-8a2f-4e44-bba6-f99ecf97989c status to processing
+2025-10-21 16:01:34,216 - ERROR - Error indexing document e93b7cbb-8a2f-4e44-bba6-f99ecf97989c: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,216 - INFO - Updated document e93b7cbb-8a2f-4e44-bba6-f99ecf97989c status to failed
+2025-10-21 16:01:34,217 - INFO - Updated document eaa602b4-85c8-421e-8124-c3c4fbf05c1c status to processing
+2025-10-21 16:01:34,220 - ERROR - Error indexing document eaa602b4-85c8-421e-8124-c3c4fbf05c1c: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,221 - INFO - Updated document eaa602b4-85c8-421e-8124-c3c4fbf05c1c status to failed
+2025-10-21 16:01:34,221 - INFO - Updated document 4ebe178a-1ac1-4cb9-b4d5-b794ce0953d6 status to processing
+2025-10-21 16:01:34,225 - ERROR - Error indexing document 4ebe178a-1ac1-4cb9-b4d5-b794ce0953d6: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,225 - INFO - Updated document 4ebe178a-1ac1-4cb9-b4d5-b794ce0953d6 status to failed
+2025-10-21 16:01:34,225 - INFO - Updated document ff810910-2684-4a60-8853-bd17ae8639ec status to processing
+2025-10-21 16:01:34,229 - ERROR - Error indexing document ff810910-2684-4a60-8853-bd17ae8639ec: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,229 - INFO - Updated document ff810910-2684-4a60-8853-bd17ae8639ec status to failed
+2025-10-21 16:01:34,229 - INFO - Updated document a8021daf-aa0c-4654-bfb0-36015109f6aa status to processing
+2025-10-21 16:01:34,231 - ERROR - Error indexing document a8021daf-aa0c-4654-bfb0-36015109f6aa: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,232 - INFO - Updated document a8021daf-aa0c-4654-bfb0-36015109f6aa status to failed
+2025-10-21 16:01:34,232 - INFO - Updated document e6179b94-af18-40d6-b028-7939a8cb8472 status to processing
+2025-10-21 16:01:34,234 - ERROR - Error indexing document e6179b94-af18-40d6-b028-7939a8cb8472: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,234 - INFO - Updated document e6179b94-af18-40d6-b028-7939a8cb8472 status to failed
+2025-10-21 16:01:34,234 - INFO - Updated document f9c42c26-aef2-486d-85d3-d25bcc10c834 status to processing
+2025-10-21 16:01:34,236 - ERROR - Error indexing document f9c42c26-aef2-486d-85d3-d25bcc10c834: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,236 - INFO - Updated document f9c42c26-aef2-486d-85d3-d25bcc10c834 status to failed
+2025-10-21 16:01:34,237 - INFO - Updated document b1db118f-093b-4b4e-875b-8f7e13f10fcc status to processing
+2025-10-21 16:01:34,239 - ERROR - Error indexing document b1db118f-093b-4b4e-875b-8f7e13f10fcc: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,240 - INFO - Updated document b1db118f-093b-4b4e-875b-8f7e13f10fcc status to failed
+2025-10-21 16:01:34,240 - INFO - Updated document 6f9aa8ef-c036-485b-af6f-ae01c01cb8bb status to processing
+2025-10-21 16:01:34,242 - ERROR - Error indexing document 6f9aa8ef-c036-485b-af6f-ae01c01cb8bb: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,242 - INFO - Updated document 6f9aa8ef-c036-485b-af6f-ae01c01cb8bb status to failed
+2025-10-21 16:01:34,242 - INFO - Updated document 90857fb8-3d5a-443e-81da-10bb7e6ebf3e status to processing
+2025-10-21 16:01:34,244 - ERROR - Error indexing document 90857fb8-3d5a-443e-81da-10bb7e6ebf3e: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,245 - INFO - Updated document 90857fb8-3d5a-443e-81da-10bb7e6ebf3e status to failed
+2025-10-21 16:01:34,245 - INFO - Updated document 31b8176b-b9f7-443c-b9b1-3ad6165052dd status to processing
+2025-10-21 16:01:34,247 - ERROR - Error indexing document 31b8176b-b9f7-443c-b9b1-3ad6165052dd: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,247 - INFO - Updated document 31b8176b-b9f7-443c-b9b1-3ad6165052dd status to failed
+2025-10-21 16:01:34,247 - INFO - Updated document 51833871-3f37-4905-8d6a-7b0dadc835e2 status to processing
+2025-10-21 16:01:34,250 - ERROR - Error indexing document 51833871-3f37-4905-8d6a-7b0dadc835e2: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,250 - INFO - Updated document 51833871-3f37-4905-8d6a-7b0dadc835e2 status to failed
+2025-10-21 16:01:34,251 - INFO - Updated document 8a2442d6-d4a6-41bc-b8db-8a2bedc2a7f6 status to processing
+2025-10-21 16:01:34,252 - ERROR - Error indexing document 8a2442d6-d4a6-41bc-b8db-8a2bedc2a7f6: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,253 - INFO - Updated document 8a2442d6-d4a6-41bc-b8db-8a2bedc2a7f6 status to failed
+2025-10-21 16:01:34,253 - INFO - Updated document 213a4dbd-1e74-4b6e-8b53-7c050be57e3a status to processing
+2025-10-21 16:01:34,255 - ERROR - Error indexing document 213a4dbd-1e74-4b6e-8b53-7c050be57e3a: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,255 - INFO - Updated document 213a4dbd-1e74-4b6e-8b53-7c050be57e3a status to failed
+2025-10-21 16:01:34,255 - INFO - Updated document 970a732b-0fae-46ba-b359-db44c62d79e4 status to processing
+2025-10-21 16:01:34,257 - ERROR - Error indexing document 970a732b-0fae-46ba-b359-db44c62d79e4: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,257 - INFO - Updated document 970a732b-0fae-46ba-b359-db44c62d79e4 status to failed
+2025-10-21 16:01:34,257 - INFO - Updated document 0548783e-e8a8-40d1-9f34-9c6a00fa26f3 status to processing
+2025-10-21 16:01:34,259 - ERROR - Error indexing document 0548783e-e8a8-40d1-9f34-9c6a00fa26f3: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,260 - INFO - Updated document 0548783e-e8a8-40d1-9f34-9c6a00fa26f3 status to failed
+2025-10-21 16:01:34,260 - INFO - Updated document ac83c180-3461-48b8-9940-dac9b466787a status to processing
+2025-10-21 16:01:34,262 - ERROR - Error indexing document ac83c180-3461-48b8-9940-dac9b466787a: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,262 - INFO - Updated document ac83c180-3461-48b8-9940-dac9b466787a status to failed
+2025-10-21 16:01:34,262 - INFO - Updated document 0f21b003-d2c2-4f47-a3a7-881fe8d511ba status to processing
+2025-10-21 16:01:34,264 - ERROR - Error indexing document 0f21b003-d2c2-4f47-a3a7-881fe8d511ba: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,264 - INFO - Updated document 0f21b003-d2c2-4f47-a3a7-881fe8d511ba status to failed
+2025-10-21 16:01:34,265 - INFO - Updated document c62032db-71b7-41d9-b26b-8e4d748be000 status to processing
+2025-10-21 16:01:34,267 - ERROR - Error indexing document c62032db-71b7-41d9-b26b-8e4d748be000: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,267 - INFO - Updated document c62032db-71b7-41d9-b26b-8e4d748be000 status to failed
+2025-10-21 16:01:34,267 - INFO - Updated document b85dab73-2674-4289-b896-041f74707e77 status to processing
+2025-10-21 16:01:34,269 - ERROR - Error indexing document b85dab73-2674-4289-b896-041f74707e77: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,269 - INFO - Updated document b85dab73-2674-4289-b896-041f74707e77 status to failed
+2025-10-21 16:01:34,270 - INFO - Updated document d61fb073-5692-43d9-9567-0605af3769cd status to processing
+2025-10-21 16:01:34,271 - ERROR - Error indexing document d61fb073-5692-43d9-9567-0605af3769cd: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,272 - INFO - Updated document d61fb073-5692-43d9-9567-0605af3769cd status to failed
+2025-10-21 16:01:34,272 - INFO - Updated document a7de0d8d-3c3b-40a6-995c-949c03ad2c35 status to processing
+2025-10-21 16:01:34,274 - ERROR - Error indexing document a7de0d8d-3c3b-40a6-995c-949c03ad2c35: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,274 - INFO - Updated document a7de0d8d-3c3b-40a6-995c-949c03ad2c35 status to failed
+2025-10-21 16:01:34,275 - INFO - Updated document adf0d796-2cb6-47bb-99c5-9789055e3694 status to processing
+2025-10-21 16:01:34,276 - ERROR - Error indexing document adf0d796-2cb6-47bb-99c5-9789055e3694: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,277 - INFO - Updated document adf0d796-2cb6-47bb-99c5-9789055e3694 status to failed
+2025-10-21 16:01:34,277 - INFO - Updated document 20dec23c-d86e-40b6-bec9-dfce6d82ebdc status to processing
+2025-10-21 16:01:34,279 - ERROR - Error indexing document 20dec23c-d86e-40b6-bec9-dfce6d82ebdc: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,279 - INFO - Updated document 20dec23c-d86e-40b6-bec9-dfce6d82ebdc status to failed
+2025-10-21 16:01:34,279 - INFO - Updated document 24c9d586-cab4-4ace-b81f-ade8bcdab494 status to processing
+2025-10-21 16:01:34,281 - ERROR - Error indexing document 24c9d586-cab4-4ace-b81f-ade8bcdab494: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,282 - INFO - Updated document 24c9d586-cab4-4ace-b81f-ade8bcdab494 status to failed
+2025-10-21 16:01:34,282 - INFO - Updated document c9d48e08-5536-40ba-a2e1-9cf2cc577a9b status to processing
+2025-10-21 16:01:34,284 - ERROR - Error indexing document c9d48e08-5536-40ba-a2e1-9cf2cc577a9b: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,285 - INFO - Updated document c9d48e08-5536-40ba-a2e1-9cf2cc577a9b status to failed
+2025-10-21 16:01:34,285 - INFO - Updated document 9e18dd67-9389-41c2-90e0-e5536e6d1b36 status to processing
+2025-10-21 16:01:34,287 - ERROR - Error indexing document 9e18dd67-9389-41c2-90e0-e5536e6d1b36: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,288 - INFO - Updated document 9e18dd67-9389-41c2-90e0-e5536e6d1b36 status to failed
+2025-10-21 16:01:34,288 - INFO - Updated document 6e2ea0a7-212d-4d56-b6b6-7f0c8c678539 status to processing
+2025-10-21 16:01:34,290 - ERROR - Error indexing document 6e2ea0a7-212d-4d56-b6b6-7f0c8c678539: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,290 - INFO - Updated document 6e2ea0a7-212d-4d56-b6b6-7f0c8c678539 status to failed
+2025-10-21 16:01:34,291 - INFO - Updated document 5b6c5531-748f-416d-b557-cc496cfb02a7 status to processing
+2025-10-21 16:01:34,292 - ERROR - Error indexing document 5b6c5531-748f-416d-b557-cc496cfb02a7: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,293 - INFO - Updated document 5b6c5531-748f-416d-b557-cc496cfb02a7 status to failed
+2025-10-21 16:01:34,293 - INFO - Updated document 6edcfde7-1da2-4d43-bb6d-d0a3036549c9 status to processing
+2025-10-21 16:01:34,295 - ERROR - Error indexing document 6edcfde7-1da2-4d43-bb6d-d0a3036549c9: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,295 - INFO - Updated document 6edcfde7-1da2-4d43-bb6d-d0a3036549c9 status to failed
+2025-10-21 16:01:34,296 - INFO - Updated document fab6f99f-3a7b-45f4-9d69-6224ad16f31b status to processing
+2025-10-21 16:01:34,297 - ERROR - Error indexing document fab6f99f-3a7b-45f4-9d69-6224ad16f31b: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,298 - INFO - Updated document fab6f99f-3a7b-45f4-9d69-6224ad16f31b status to failed
+2025-10-21 16:01:34,298 - INFO - Updated document 3e2ee923-3f64-4d3a-a443-83d7f41aeb54 status to processing
+2025-10-21 16:01:34,300 - ERROR - Error indexing document 3e2ee923-3f64-4d3a-a443-83d7f41aeb54: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,300 - INFO - Updated document 3e2ee923-3f64-4d3a-a443-83d7f41aeb54 status to failed
+2025-10-21 16:01:34,300 - INFO - Updated document 364f0bfa-72fe-4613-a4b4-b8255775580c status to processing
+2025-10-21 16:01:34,302 - ERROR - Error indexing document 364f0bfa-72fe-4613-a4b4-b8255775580c: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,303 - INFO - Updated document 364f0bfa-72fe-4613-a4b4-b8255775580c status to failed
+2025-10-21 16:01:34,303 - INFO - Updated document 0e7985e2-cb4b-4efb-b9d9-11d68b03ae2b status to processing
+2025-10-21 16:01:34,305 - ERROR - Error indexing document 0e7985e2-cb4b-4efb-b9d9-11d68b03ae2b: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,306 - INFO - Updated document 0e7985e2-cb4b-4efb-b9d9-11d68b03ae2b status to failed
+2025-10-21 16:01:34,306 - INFO - Updated document 61701b23-a03a-43c2-bc1d-fd3efa5108fc status to processing
+2025-10-21 16:01:34,309 - ERROR - Error indexing document 61701b23-a03a-43c2-bc1d-fd3efa5108fc: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,309 - INFO - Updated document 61701b23-a03a-43c2-bc1d-fd3efa5108fc status to failed
+2025-10-21 16:01:34,309 - INFO - Updated document 7483962d-d4d6-4eb1-aae9-582fd544255e status to processing
+2025-10-21 16:01:34,312 - ERROR - Error indexing document 7483962d-d4d6-4eb1-aae9-582fd544255e: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,312 - INFO - Updated document 7483962d-d4d6-4eb1-aae9-582fd544255e status to failed
+2025-10-21 16:01:34,312 - INFO - Updated document 0b6d110d-cc2a-4178-929e-4cc0b5558b7d status to processing
+2025-10-21 16:01:34,314 - ERROR - Error indexing document 0b6d110d-cc2a-4178-929e-4cc0b5558b7d: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,315 - INFO - Updated document 0b6d110d-cc2a-4178-929e-4cc0b5558b7d status to failed
+2025-10-21 16:01:34,315 - INFO - Updated document a638baa3-7e38-4662-abac-83f93f633245 status to processing
+2025-10-21 16:01:34,317 - ERROR - Error indexing document a638baa3-7e38-4662-abac-83f93f633245: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,318 - INFO - Updated document a638baa3-7e38-4662-abac-83f93f633245 status to failed
+2025-10-21 16:01:34,318 - INFO - Updated document 1e40ea4c-a70b-4178-bdfc-1267ca9df6b6 status to processing
+2025-10-21 16:01:34,320 - ERROR - Error indexing document 1e40ea4c-a70b-4178-bdfc-1267ca9df6b6: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,321 - INFO - Updated document 1e40ea4c-a70b-4178-bdfc-1267ca9df6b6 status to failed
+2025-10-21 16:01:34,321 - INFO - Updated document 6b99c7f2-b8ff-4296-8668-576e543d8230 status to processing
+2025-10-21 16:01:34,323 - ERROR - Error indexing document 6b99c7f2-b8ff-4296-8668-576e543d8230: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,324 - INFO - Updated document 6b99c7f2-b8ff-4296-8668-576e543d8230 status to failed
+2025-10-21 16:01:34,324 - INFO - Updated document 02d5f8aa-40e7-41c4-a526-9db27dceda41 status to processing
+2025-10-21 16:01:34,326 - ERROR - Error indexing document 02d5f8aa-40e7-41c4-a526-9db27dceda41: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,326 - INFO - Updated document 02d5f8aa-40e7-41c4-a526-9db27dceda41 status to failed
+2025-10-21 16:01:34,327 - INFO - Updated document c3a78977-c124-48ec-9867-18e1ec5e1bd1 status to processing
+2025-10-21 16:01:34,329 - ERROR - Error indexing document c3a78977-c124-48ec-9867-18e1ec5e1bd1: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,329 - INFO - Updated document c3a78977-c124-48ec-9867-18e1ec5e1bd1 status to failed
+2025-10-21 16:01:34,330 - INFO - Updated document eb0eed3b-f96a-4881-a5e7-a891944e274d status to processing
+2025-10-21 16:01:34,332 - ERROR - Error indexing document eb0eed3b-f96a-4881-a5e7-a891944e274d: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,332 - INFO - Updated document eb0eed3b-f96a-4881-a5e7-a891944e274d status to failed
+2025-10-21 16:01:34,332 - INFO - Updated document 1facb23d-31ed-4793-b35d-f04bf89e811a status to processing
+2025-10-21 16:01:34,335 - ERROR - Error indexing document 1facb23d-31ed-4793-b35d-f04bf89e811a: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,335 - INFO - Updated document 1facb23d-31ed-4793-b35d-f04bf89e811a status to failed
+2025-10-21 16:01:34,335 - INFO - Updated document a59e9e2d-ef95-4b9c-871c-5ad3f0370bcd status to processing
+2025-10-21 16:01:34,338 - ERROR - Error indexing document a59e9e2d-ef95-4b9c-871c-5ad3f0370bcd: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,338 - INFO - Updated document a59e9e2d-ef95-4b9c-871c-5ad3f0370bcd status to failed
+2025-10-21 16:01:34,339 - INFO - Updated document 9e7d7559-cbac-44a8-bb64-e1b251b4ecbb status to processing
+2025-10-21 16:01:34,341 - ERROR - Error indexing document 9e7d7559-cbac-44a8-bb64-e1b251b4ecbb: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,342 - INFO - Updated document 9e7d7559-cbac-44a8-bb64-e1b251b4ecbb status to failed
+2025-10-21 16:01:34,342 - INFO - Updated document 1832da08-d2b6-4a9d-8bbe-12240ec64645 status to processing
+2025-10-21 16:01:34,344 - ERROR - Error indexing document 1832da08-d2b6-4a9d-8bbe-12240ec64645: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,344 - INFO - Updated document 1832da08-d2b6-4a9d-8bbe-12240ec64645 status to failed
+2025-10-21 16:01:34,345 - INFO - Updated document 597e7367-24d6-4ee9-b58d-b46191b5055f status to processing
+2025-10-21 16:01:34,347 - ERROR - Error indexing document 597e7367-24d6-4ee9-b58d-b46191b5055f: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,347 - INFO - Updated document 597e7367-24d6-4ee9-b58d-b46191b5055f status to failed
+2025-10-21 16:01:34,348 - INFO - Updated document 7bdd64f5-1758-48fe-a5a9-5aeb850f9ffd status to processing
+2025-10-21 16:01:34,350 - ERROR - Error indexing document 7bdd64f5-1758-48fe-a5a9-5aeb850f9ffd: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,350 - INFO - Updated document 7bdd64f5-1758-48fe-a5a9-5aeb850f9ffd status to failed
+2025-10-21 16:01:34,351 - INFO - Updated document 391bb56e-5ab6-4039-86e0-aec3268b9a6b status to processing
+2025-10-21 16:01:34,353 - ERROR - Error indexing document 391bb56e-5ab6-4039-86e0-aec3268b9a6b: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,353 - INFO - Updated document 391bb56e-5ab6-4039-86e0-aec3268b9a6b status to failed
+2025-10-21 16:01:34,353 - INFO - Updated document ea57dc44-0623-4cd5-9840-30366415537e status to processing
+2025-10-21 16:01:34,356 - ERROR - Error indexing document ea57dc44-0623-4cd5-9840-30366415537e: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,356 - INFO - Updated document ea57dc44-0623-4cd5-9840-30366415537e status to failed
+2025-10-21 16:01:34,357 - INFO - Updated document de81f9a9-be44-4cf3-9a78-34a9166d301d status to processing
+2025-10-21 16:01:34,359 - ERROR - Error indexing document de81f9a9-be44-4cf3-9a78-34a9166d301d: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,360 - INFO - Updated document de81f9a9-be44-4cf3-9a78-34a9166d301d status to failed
+2025-10-21 16:01:34,360 - INFO - Updated document d69bf4f6-6594-4c57-896d-45cae4de587d status to processing
+2025-10-21 16:01:34,362 - ERROR - Error indexing document d69bf4f6-6594-4c57-896d-45cae4de587d: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,363 - INFO - Updated document d69bf4f6-6594-4c57-896d-45cae4de587d status to failed
+2025-10-21 16:01:34,363 - INFO - Updated document fdacbf65-75b4-4698-894b-9189f385f94e status to processing
+2025-10-21 16:01:34,366 - ERROR - Error indexing document fdacbf65-75b4-4698-894b-9189f385f94e: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,366 - INFO - Updated document fdacbf65-75b4-4698-894b-9189f385f94e status to failed
+2025-10-21 16:01:34,367 - INFO - Updated document d9faefa9-5420-4b3f-a625-d27340ceea97 status to processing
+2025-10-21 16:01:34,370 - ERROR - Error indexing document d9faefa9-5420-4b3f-a625-d27340ceea97: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,370 - INFO - Updated document d9faefa9-5420-4b3f-a625-d27340ceea97 status to failed
+2025-10-21 16:01:34,371 - INFO - Updated document 8b4a3aba-e185-4b73-b042-38b97eeda62c status to processing
+2025-10-21 16:01:34,373 - ERROR - Error indexing document 8b4a3aba-e185-4b73-b042-38b97eeda62c: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,373 - INFO - Updated document 8b4a3aba-e185-4b73-b042-38b97eeda62c status to failed
+2025-10-21 16:01:34,373 - INFO - Updated document f0ded729-e2f8-4fd0-b03b-e60148470692 status to processing
+2025-10-21 16:01:34,375 - ERROR - Error indexing document f0ded729-e2f8-4fd0-b03b-e60148470692: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,376 - INFO - Updated document f0ded729-e2f8-4fd0-b03b-e60148470692 status to failed
+2025-10-21 16:01:34,376 - INFO - Updated document bd1d4d38-27d4-44f2-aaf4-2145c7d36e4c status to processing
+2025-10-21 16:01:34,378 - ERROR - Error indexing document bd1d4d38-27d4-44f2-aaf4-2145c7d36e4c: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,379 - INFO - Updated document bd1d4d38-27d4-44f2-aaf4-2145c7d36e4c status to failed
+2025-10-21 16:01:34,379 - INFO - Updated document 7790b503-255d-493d-8ab4-4d826aa36544 status to processing
+2025-10-21 16:01:34,381 - ERROR - Error indexing document 7790b503-255d-493d-8ab4-4d826aa36544: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,381 - INFO - Updated document 7790b503-255d-493d-8ab4-4d826aa36544 status to failed
+2025-10-21 16:01:34,382 - INFO - Updated document c6983b90-cf04-4cae-8f58-98fb755bcf66 status to processing
+2025-10-21 16:01:34,385 - ERROR - Error indexing document c6983b90-cf04-4cae-8f58-98fb755bcf66: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,386 - INFO - Updated document c6983b90-cf04-4cae-8f58-98fb755bcf66 status to failed
+2025-10-21 16:01:34,386 - INFO - Updated document 975b521f-8fbd-47ae-a170-3559abb91896 status to processing
+2025-10-21 16:01:34,388 - ERROR - Error indexing document 975b521f-8fbd-47ae-a170-3559abb91896: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,388 - INFO - Updated document 975b521f-8fbd-47ae-a170-3559abb91896 status to failed
+2025-10-21 16:01:34,389 - INFO - Updated document d0a4dc43-befb-4168-9981-491c81ff0ae8 status to processing
+2025-10-21 16:01:34,391 - ERROR - Error indexing document d0a4dc43-befb-4168-9981-491c81ff0ae8: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,391 - INFO - Updated document d0a4dc43-befb-4168-9981-491c81ff0ae8 status to failed
+2025-10-21 16:01:34,391 - INFO - Updated document a8a15388-bf9e-4c9d-87b7-4a0ba1195ea9 status to processing
+2025-10-21 16:01:34,393 - ERROR - Error indexing document a8a15388-bf9e-4c9d-87b7-4a0ba1195ea9: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,394 - INFO - Updated document a8a15388-bf9e-4c9d-87b7-4a0ba1195ea9 status to failed
+2025-10-21 16:01:34,394 - INFO - Updated document 9907eab6-8b19-42ef-be67-01e1e9894cfa status to processing
+2025-10-21 16:01:34,396 - ERROR - Error indexing document 9907eab6-8b19-42ef-be67-01e1e9894cfa: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,397 - INFO - Updated document 9907eab6-8b19-42ef-be67-01e1e9894cfa status to failed
+2025-10-21 16:01:34,397 - INFO - Updated document 50e5ee85-81d2-40be-a097-786c50eab901 status to processing
+2025-10-21 16:01:34,399 - ERROR - Error indexing document 50e5ee85-81d2-40be-a097-786c50eab901: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,400 - INFO - Updated document 50e5ee85-81d2-40be-a097-786c50eab901 status to failed
+2025-10-21 16:01:34,400 - INFO - Updated document 8260fa34-a2e0-4177-b2e5-c83e9f7314b6 status to processing
+2025-10-21 16:01:34,402 - ERROR - Error indexing document 8260fa34-a2e0-4177-b2e5-c83e9f7314b6: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,402 - INFO - Updated document 8260fa34-a2e0-4177-b2e5-c83e9f7314b6 status to failed
+2025-10-21 16:01:34,403 - INFO - Updated document a25f5744-e55b-4048-b456-e8477df203d6 status to processing
+2025-10-21 16:01:34,405 - ERROR - Error indexing document a25f5744-e55b-4048-b456-e8477df203d6: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,406 - INFO - Updated document a25f5744-e55b-4048-b456-e8477df203d6 status to failed
+2025-10-21 16:01:34,406 - INFO - Updated document 03d10d1f-078f-4278-9a0c-b3e9e066351d status to processing
+2025-10-21 16:01:34,408 - ERROR - Error indexing document 03d10d1f-078f-4278-9a0c-b3e9e066351d: POSTGRES_PASSWORD environment variable is required
+2025-10-21 16:01:34,408 - INFO - Updated document 03d10d1f-078f-4278-9a0c-b3e9e066351d status to failed

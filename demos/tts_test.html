@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAPI Assistant Test - AI Labs Africa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .info-box {
+            background: #f7fafc;
+            border-left: 4px solid #14B8A6;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .info-box h2 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .info-box p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .feature h3 {
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .feature p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #764ba2;
+        }
+
+        .widget-info {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+
+        .widget-info p {
+            color: #742a2a;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VAPI Voice Assistant Test</h1>
+        <p class="subtitle">AI-Powered Voice Interaction Demo</p>
+
+        <div class="info-box">
+            <h2>How to Use</h2>
+            <p>Click the widget button in the bottom-right corner to start talking with our AI assistant. You can have a natural voice conversation about various topics.</p>
+            <p><strong>Note:</strong> The widget will appear in the bottom-right corner of your screen. Click "Start" to begin the conversation.</p>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <h3>Voice Mode</h3>
+                <p>Natural voice interaction with real-time speech recognition and synthesis</p>
+            </div>
+            <div class="feature">
+                <h3>Dark Theme</h3>
+                <p>Sleek dark interface with teal accent colors for better visibility</p>
+            </div>
+            <div class="feature">
+                <h3>Live Transcript</h3>
+                <p>View real-time transcription of your conversation</p>
+            </div>
+            <div class="feature">
+                <h3>Privacy First</h3>
+                <p>Consent required before starting, with clear terms and conditions</p>
+            </div>
+        </div>
+
+        <div class="widget-info">
+            <p><strong>Widget Configuration:</strong> This demo uses the VAPI SDK with custom branding, consent management, and full voice interaction capabilities.</p>
+        </div>
+
+        <a href="/" class="back-link">← Back to Demos</a>
+    </div>
+
+    <!-- VAPI Widget -->
+    <vapi-widget
+        public-key="0c22dcea-0d6c-4fc0-8fb2-93292d8575e8"
+        assistant-id="5f4710ab-142f-4962-b488-d55be70e7c6f"
+        mode="voice"
+        theme="dark"
+        base-bg-color="#000000"
+        accent-color="#14B8A6"
+        cta-button-color="#000000"
+        cta-button-text-color="#ffffff"
+        border-radius="large"
+        size="full"
+        position="bottom-right"
+        title="TALK WITH AI"
+        start-button-text="Start"
+        end-button-text="End Call"
+        chat-first-message="Hey, How can I help you today?"
+        chat-placeholder="Type your message..."
+        voice-show-transcript="true"
+        consent-required="true"
+        consent-title="Terms and conditions"
+        consent-content="By clicking &quot;Agree,&quot; and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service."
+        consent-storage-key="vapi_widget_consent"
+    ></vapi-widget>
+
+    <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+</body>
+</html>

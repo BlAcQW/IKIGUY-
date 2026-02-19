@@ -1,0 +1,282 @@
+{
+  "visa_requirements": {
+    "visa_on_arrival": {
+      "description": "Ghana offers visa on arrival for citizens of all African Union member states and some other countries",
+      "fee_usd": 150,
+      "validity_days": 30,
+      "requirements": ["Valid passport (6 months validity)", "Return ticket", "Proof of accommodation", "Yellow fever certificate"],
+      "processing_time": "At airport upon arrival"
+    },
+    "e_visa": {
+      "description": "Electronic visa available for most nationalities",
+      "website": "https://visa.immigration.gov.gh",
+      "fee_usd": 150,
+      "validity_days": 60,
+      "processing_time_days": "3-5 business days",
+      "requirements": ["Valid passport", "Passport photo", "Travel itinerary", "Proof of accommodation", "Yellow fever certificate"]
+    },
+    "visa_free": {
+      "countries": ["ECOWAS member states (15 countries)", "Kenya", "Mauritius", "Seychelles", "Singapore"],
+      "duration_days": 90
+    },
+    "contact": {
+      "ghana_immigration_service": "+233 302 258 250",
+      "email": "info@immigration.gov.gh",
+      "website": "https://www.immigration.gov.gh"
+    }
+  },
+  "mobile_sim_cards": {
+    "providers": [
+      {
+        "name": "MTN Ghana",
+        "coverage": "Best nationwide coverage",
+        "data_plans": [
+          {"size": "1GB", "validity_days": 7, "price_ghs": 8},
+          {"size": "5GB", "validity_days": 30, "price_ghs": 35},
+          {"size": "10GB", "validity_days": 30, "price_ghs": 60}
+        ],
+        "tourist_package": {"price_ghs": 50, "includes": "5GB data + 30min calls + 50 SMS", "validity_days": 30},
+        "where_to_buy": ["Airport", "MTN Service Centers", "Licensed vendors", "Supermarkets"],
+        "registration": "Passport required",
+        "customer_service": "100 (toll-free)",
+        "website": "https://www.mtn.com.gh"
+      },
+      {
+        "name": "Vodafone Ghana",
+        "coverage": "Good urban and major highway coverage",
+        "data_plans": [
+          {"size": "1GB", "validity_days": 7, "price_ghs": 10},
+          {"size": "5GB", "validity_days": 30, "price_ghs": 40},
+          {"size": "10GB", "validity_days": 30, "price_ghs": 70}
+        ],
+        "tourist_package": {"price_ghs": 45, "includes": "4GB data + 20min calls", "validity_days": 30},
+        "where_to_buy": ["Airport", "Vodafone shops", "Authorized dealers"],
+        "registration": "Passport required",
+        "customer_service": "200 (toll-free)",
+        "website": "https://www.vodafone.com.gh"
+      },
+      {
+        "name": "AirtelTigo",
+        "coverage": "Growing network, good in major cities",
+        "data_plans": [
+          {"size": "1GB", "validity_days": 7, "price_ghs": 7},
+          {"size": "5GB", "validity_days": 30, "price_ghs": 30},
+          {"size": "10GB", "validity_days": 30, "price_ghs": 55}
+        ],
+        "tourist_package": {"price_ghs": 40, "includes": "5GB data + 15min calls", "validity_days": 30},
+        "where_to_buy": ["Airport", "AirtelTigo offices", "Vendors"],
+        "registration": "Passport required",
+        "customer_service": "181 (toll-free)",
+        "website": "https://www.airteltigo.com.gh"
+      }
+    ],
+    "general_info": {
+      "sim_card_cost_ghs": 1,
+      "registration_mandatory": true,
+      "documents_needed": ["Passport", "Ghana address (hotel acceptable)"],
+      "activation_time": "Immediate",
+      "airport_availability": "Yes, all 3 providers at Kotoka International Airport",
+      "mobile_money": "All providers offer mobile money services (MTN MoMo, Vodafone Cash, AirtelTigo Money)"
+    }
+  },
+  "currency_exchange": {
+    "currency": "Ghana Cedi (GHS)",
+    "symbol": "GH₵",
+    "subdivisions": "100 pesewas = 1 cedi",
+    "exchange_rate_approximation": {
+      "usd_to_ghs": 12.5,
+      "eur_to_ghs": 13.5,
+      "gbp_to_ghs": 15.8,
+      "note": "Rates fluctuate daily. Check current rates at banks or forex bureaus"
+    },
+    "where_to_exchange": [
+      {
+        "type": "Banks",
+        "pros": ["Secure", "Official rates", "Wide acceptance"],
+        "cons": ["May have long queues", "Limited hours"],
+        "locations": "All major cities",
+        "hours": "Monday-Friday 8:30am-4:00pm"
+      },
+      {
+        "type": "Forex Bureaus",
+        "pros": ["Better rates than banks", "Faster service", "Extended hours"],
+        "cons": ["Ensure licensed bureaus"],
+        "locations": "Major cities, airports, malls",
+        "hours": "Monday-Saturday 8:00am-6:00pm"
+      },
+      {
+        "type": "Hotels",
+        "pros": ["Convenient"],
+        "cons": ["Worst exchange rates"],
+        "recommendation": "Use only for emergencies"
+      }
+    ],
+    "atms": {
+      "availability": "Widely available in cities, limited in rural areas",
+      "major_banks": ["Ecobank", "GCB Bank", "Stanbic Bank", "Zenith Bank", "Fidelity Bank"],
+      "cards_accepted": ["Visa", "Mastercard", "Maestro"],
+      "daily_withdrawal_limit_ghs": "2000-5000 (varies by bank)",
+      "fees": "Varies by bank; expect GHS 5-15 per transaction",
+      "tips": ["Withdraw during bank hours", "Use ATMs inside banks for security", "Carry some cash for rural areas"]
+    },
+    "payment_methods": {
+      "cash": "Widely accepted everywhere",
+      "cards": "Accepted in hotels, large restaurants, supermarkets in cities",
+      "mobile_money": "Very popular; MTN MoMo most widely accepted",
+      "recommended": "Carry mix of cash and cards; small denominations useful"
+    }
+  },
+  "safety_security": {
+    "general_safety": {
+      "crime_level": "Moderate; Ghana is one of the safest countries in West Africa",
+      "common_issues": ["Pickpocketing in crowded areas", "Petty theft", "Occasional scams targeting tourists"],
+      "recommendations": [
+        "Keep valuables secure and out of sight",
+        "Use hotel safes for passports and extra cash",
+        "Be cautious in crowded markets and busy areas",
+        "Avoid displaying expensive jewelry or electronics",
+        "Use registered taxis or ride-sharing apps (Uber, Bolt, Yango)",
+        "Don't walk alone at night in unfamiliar areas",
+        "Keep copies of important documents separately"
+      ]
+    },
+    "health_safety": {
+      "vaccinations_required": ["Yellow fever (mandatory; proof required at entry)"],
+      "vaccinations_recommended": ["Hepatitis A", "Hepatitis B", "Typhoid", "Malaria prophylaxis", "Routine vaccines"],
+      "malaria_prevention": [
+        "Take antimalarial medication as prescribed",
+        "Use insect repellent (DEET 30%+)",
+        "Sleep under mosquito nets",
+        "Wear long sleeves and pants in evenings"
+      ],
+      "water_safety": "Drink only bottled or filtered water; avoid ice unless from trusted sources",
+      "food_safety": [
+        "Eat at busy, popular restaurants",
+        "Ensure meat is well-cooked",
+        "Peel fruits yourself",
+        "Avoid street food if you have a sensitive stomach"
+      ],
+      "medical_facilities": {
+        "accra": ["Nyaho Medical Centre", "Trust Hospital", "37 Military Hospital", "Ridge Hospital"],
+        "kumasi": ["Komfo Anokye Teaching Hospital", "Kumasi South Hospital"],
+        "general": "Private hospitals offer better service; bring travel insurance"
+      }
+    },
+    "road_safety": {
+      "driving": "Drive on the right side",
+      "conditions": "Variable; major highways good, rural roads can be poor",
+      "tips": [
+        "Avoid driving at night outside cities",
+        "Watch for pedestrians and animals on roads",
+        "Defensive driving essential",
+        "Consider hiring a driver for long trips"
+      ]
+    },
+    "scams_to_avoid": [
+      {
+        "scam": "Gold/diamond investment schemes",
+        "warning": "Too good to be true offers; avoid engaging"
+      },
+      {
+        "scam": "Overcharging for taxis",
+        "prevention": "Agree on price before entering; use ride-sharing apps"
+      },
+      {
+        "scam": "Fake tour guides",
+        "prevention": "Use licensed guides; book through reputable agencies"
+      },
+      {
+        "scam": "Charity/donation requests",
+        "prevention": "Give through established organizations only"
+      }
+    ],
+    "emergency_contacts": {
+      "police": "191 or 18555",
+      "ambulance": "193",
+      "fire_service": "192",
+      "tourist_police_accra": "+233 302 773 906"
+    }
+  },
+  "weather_climate": {
+    "seasons": [
+      {
+        "name": "Dry Season",
+        "months": ["November", "December", "January", "February", "March"],
+        "characteristics": "Low humidity, little rain, hot and dusty (especially January-February)",
+        "best_for": ["Beach activities", "Northern safari", "Festivals", "General tourism"]
+      },
+      {
+        "name": "Rainy Season (Major)",
+        "months": ["April", "May", "June"],
+        "characteristics": "Heavy rains, high humidity, lush greenery",
+        "best_for": ["Waterfalls", "Photography", "Lower hotel rates"],
+        "note": "Some roads may be difficult"
+      },
+      {
+        "name": "Dry Interlude",
+        "months": ["July", "August"],
+        "characteristics": "Brief dry period, cooler temperatures",
+        "best_for": ["Coastal areas", "General travel"]
+      },
+      {
+        "name": "Rainy Season (Minor)",
+        "months": ["September", "October"],
+        "characteristics": "Lighter rains compared to major season",
+        "best_for": ["Budget travel", "Fewer crowds"]
+      }
+    ],
+    "temperature": {
+      "coastal": "24-32°C (75-90°F) year-round",
+      "inland": "22-35°C (72-95°F)",
+      "northern": "Higher temperatures, can exceed 40°C (104°F) in dry season"
+    },
+    "what_to_pack": {
+      "dry_season": ["Light, breathable clothing", "Sun hat", "Sunscreen", "Sunglasses", "Light jacket for evenings"],
+      "rainy_season": ["Rain jacket/umbrella", "Quick-dry clothing", "Waterproof bag", "Light layers"],
+      "year_round": ["Comfortable walking shoes", "Insect repellent", "Modest clothing for cultural sites", "Swimwear"]
+    }
+  },
+  "cultural_etiquette": {
+    "greetings": {
+      "description": "Greetings are very important in Ghanaian culture",
+      "tips": [
+        "Always greet people before starting a conversation",
+        "Handshakes are common; use right hand",
+        "Ask 'How are you?' and expect same in return",
+        "Elders should be greeted first and with respect"
+      ],
+      "common_phrases": {
+        "english": "Hello, how are you?",
+        "twi": "Maakye/Maaha (Good morning/afternoon)",
+        "ga": "Ojekoo (Good morning)"
+      }
+    },
+    "dress_code": {
+      "general": "Smart casual acceptable most places",
+      "beaches": "Modest swimwear; topless bathing not acceptable",
+      "religious_sites": "Cover shoulders and knees; remove shoes",
+      "business": "Formal attire expected",
+      "note": "Ghanaians dress well; overly casual may be seen as disrespectful"
+    },
+    "photography": {
+      "rules": ["Always ask permission before photographing people", "Respect 'No Photography' signs", "Avoid photographing government/military buildings", "Offer to share photos with locals if they're interested"]
+    },
+    "tipping": {
+      "restaurants": "5-10% if service charge not included",
+      "taxis": "Round up fare or add GHS 2-5",
+      "hotels": "GHS 5-10 for porters/cleaners",
+      "tour_guides": "GHS 20-50 depending on service quality",
+      "note": "Tipping not mandatory but appreciated"
+    },
+    "gestures": {
+      "left_hand": "Avoid using left hand for giving/receiving items; considered impolite",
+      "pointing": "Use whole hand, not one finger",
+      "beckoning": "Wave with palm down, not palm up"
+    }
+  },
+  "metadata": {
+    "last_updated": "2025-10-02",
+    "source": "Ghana Tourism Authority, Ghana Immigration Service, compiled by AI Labs Africa",
+    "disclaimer": "Information subject to change; verify current requirements before travel"
+  }
+}

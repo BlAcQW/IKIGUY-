@@ -1,0 +1,249 @@
+{
+  "destinations": [
+    {
+      "id": "dest_030",
+      "name": "Boti Falls",
+      "region": "Eastern",
+      "city": "Boti",
+      "category": ["nature", "adventure", "recreation"],
+      "description": "Twin waterfalls nestled in lush forest, dropping about 30 meters into a natural pool. During rainy season, the falls form an umbrella shape. Popular swimming spot and picnic destination with scenic hiking trails.",
+      "highlights": [
+        "Twin waterfalls",
+        "Umbrella shape during rainy season",
+        "Natural swimming pool",
+        "Scenic hiking trails",
+        "Paragliding viewpoint nearby",
+        "Lush forest setting",
+        "Three-headed palm tree (local attraction)"
+      ],
+      "activities": [
+        "Swimming",
+        "Hiking",
+        "Photography",
+        "Picnicking",
+        "Nature walks",
+        "Waterfall viewing",
+        "Cave exploration nearby"
+      ],
+      "best_time_to_visit": "June to October (rainy season for full flow and umbrella effect)",
+      "estimated_visit_duration": "2-4 hours",
+      "entry_fee": "GHS 10 for adults, GHS 5 for students",
+      "accessibility": "Requires moderate hike down to falls (stairs provided)",
+      "location_details": "Near Koforidua, Eastern Region. 25km from Koforidua, accessible by car."
+    },
+    {
+      "id": "dest_031",
+      "name": "Umbrella Rock",
+      "region": "Eastern",
+      "city": "Boti",
+      "category": ["nature", "adventure", "photography"],
+      "description": "Unique rock formation resembling an umbrella, offering panoramic views of the surrounding landscape. Popular photography spot and natural landmark near Boti Falls.",
+      "highlights": [
+        "Unique umbrella-shaped rock",
+        "Panoramic valley views",
+        "Excellent photography spot",
+        "Natural rock formation",
+        "360-degree views",
+        "Close to Boti Falls"
+      ],
+      "activities": [
+        "Photography",
+        "Hiking to viewpoint",
+        "Sightseeing",
+        "Nature walks",
+        "Panoramic viewing"
+      ],
+      "best_time_to_visit": "Year-round, best views in clear weather (November-March)",
+      "estimated_visit_duration": "30 minutes - 1 hour",
+      "entry_fee": "GHS 5 per person",
+      "accessibility": "Moderate climb, requires some fitness",
+      "location_details": "Near Boti Falls, Eastern Region. Usually combined with Boti Falls visit."
+    },
+    {
+      "id": "dest_032",
+      "name": "Akosombo Dam and Lake Volta",
+      "region": "Eastern",
+      "city": "Akosombo",
+      "category": ["engineering", "nature", "recreation", "educational"],
+      "description": "Africa's largest man-made lake created by the Akosombo Dam. Impressive hydroelectric dam generating much of Ghana's electricity. Stunning lake views and boat cruise opportunities.",
+      "highlights": [
+        "Largest man-made lake in Africa",
+        "Impressive hydroelectric dam",
+        "Lake Volta boat cruises",
+        "Engineering marvel",
+        "Scenic views",
+        "Adomi Bridge viewpoint",
+        "Fishing communities"
+      ],
+      "activities": [
+        "Boat cruises",
+        "Dam tours (when available)",
+        "Photography",
+        "Fishing",
+        "Scenic viewing",
+        "Learning about hydroelectric power",
+        "Visiting lakeside communities"
+      ],
+      "best_time_to_visit": "Year-round, cooler November-February",
+      "estimated_visit_duration": "Half day (longer for boat cruises)",
+      "entry_fee": "Dam viewing area free, boat cruises vary (GHS 200-500)",
+      "accessibility": "Easy access, boat cruises require advance booking",
+      "location_details": "Akosombo town, Eastern Region. 80km from Accra, 2-hour drive."
+    },
+    {
+      "id": "dest_033",
+      "name": "Bunso Arboretum",
+      "region": "Eastern",
+      "city": "Bunso",
+      "category": ["nature", "eco-tourism", "educational"],
+      "description": "Beautiful arboretum and eco-park featuring diverse tree species, butterfly sanctuary, and nature trails. Peaceful environment for nature lovers and environmental education.",
+      "highlights": [
+        "Diverse tree species collection",
+        "Butterfly sanctuary",
+        "Nature trails",
+        "Bird watching",
+        "Canopy walkway",
+        "Environmental education center",
+        "Peaceful gardens"
+      ],
+      "activities": [
+        "Nature walks",
+        "Bird watching",
+        "Butterfly observation",
+        "Canopy walk",
+        "Photography",
+        "Picnicking",
+        "Environmental learning"
+      ],
+      "best_time_to_visit": "Year-round, best November-March for butterfly season",
+      "estimated_visit_duration": "2-3 hours",
+      "entry_fee": "GHS 15 for adults, GHS 10 for students",
+      "accessibility": "Easy access, suitable for all ages",
+      "location_details": "Bunso, Eastern Region. 60km from Koforidua on Accra-Kumasi highway."
+    },
+    {
+      "id": "dest_034",
+      "name": "Tetteh Quarshie Cocoa Farm",
+      "region": "Eastern",
+      "city": "Mampong",
+      "category": ["historical", "agricultural", "educational"],
+      "description": "Historic cocoa farm where Ghana's cocoa industry began. Tetteh Quarshie introduced cocoa to Ghana in 1879. Learn about cocoa farming, processing, and Ghana's cocoa heritage.",
+      "highlights": [
+        "Birthplace of Ghana's cocoa industry",
+        "Original cocoa trees from 1879",
+        "Cocoa farming demonstrations",
+        "Historical significance",
+        "Educational cocoa tour",
+        "Learn chocolate making process",
+        "Agricultural heritage"
+      ],
+      "activities": [
+        "Guided cocoa farm tours",
+        "Learning cocoa history",
+        "Cocoa processing demonstrations",
+        "Photography",
+        "Purchasing cocoa products",
+        "Educational tours for schools"
+      ],
+      "best_time_to_visit": "October-December (harvest season)",
+      "estimated_visit_duration": "1-2 hours",
+      "entry_fee": "GHS 10 per person (guide included)",
+      "accessibility": "Easy access by car",
+      "location_details": "Mampong-Akwapim, Eastern Region. 50km from Accra."
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "acc_025",
+      "name": "Volta Hotel Akosombo",
+      "type": "hotel",
+      "star_rating": 3,
+      "city": "Akosombo",
+      "region": "Eastern",
+      "description": "Historic hotel overlooking Lake Volta with beautiful views. Comfortable accommodations with restaurant, bar, and pool. Popular stop for Lake Volta cruises.",
+      "amenities": [
+        "Lake Volta views",
+        "Restaurant",
+        "Bar",
+        "Swimming pool",
+        "Conference facilities",
+        "Wi-Fi",
+        "24-hour reception",
+        "Parking",
+        "Boat cruise arrangements"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "280-380"
+        },
+        {
+          "type": "Lake View Room",
+          "price_range_ghs": "450-550"
+        }
+      ],
+      "phone": "+233 342 020 048",
+      "email": "info@voltahotel.com.gh",
+      "website": null,
+      "additional_info": "Spectacular Lake Volta views. Can arrange boat cruises."
+    },
+    {
+      "id": "acc_026",
+      "name": "Koforidua Ridge Royal Hotel",
+      "type": "hotel",
+      "star_rating": 3,
+      "city": "Koforidua",
+      "region": "Eastern",
+      "description": "Comfortable hotel in Koforidua town with good facilities. Ideal base for exploring Eastern Region attractions like Boti Falls and Umbrella Rock.",
+      "amenities": [
+        "Free Wi-Fi",
+        "Restaurant",
+        "Bar",
+        "Conference room",
+        "24-hour reception",
+        "Parking",
+        "Laundry service"
+      ],
+      "room_types": [
+        {
+          "type": "Standard Room",
+          "price_range_ghs": "200-300"
+        },
+        {
+          "type": "Executive Room",
+          "price_range_ghs": "350-450"
+        }
+      ],
+      "phone": "+233 342 XXX XXX",
+      "email": null,
+      "website": null,
+      "additional_info": "Central location in Koforidua, good for day trips to Eastern Region sites."
+    },
+    {
+      "id": "acc_027",
+      "name": "Boti Falls Lodge",
+      "type": "lodge",
+      "star_rating": 2,
+      "city": "Boti",
+      "region": "Eastern",
+      "description": "Basic lodge near Boti Falls offering simple accommodations for nature lovers. Great for those wanting to stay close to the waterfall and explore early morning.",
+      "amenities": [
+        "Close to Boti Falls",
+        "Restaurant (local meals)",
+        "Basic facilities",
+        "Parking",
+        "Nature setting"
+      ],
+      "room_types": [
+        {
+          "type": "Basic Room",
+          "price_range_ghs": "100-180"
+        }
+      ],
+      "phone": "+233 24 XXX XXXX",
+      "email": null,
+      "website": null,
+      "additional_info": "Simple accommodations for budget travelers. Very close to Boti Falls entrance."
+    }
+  ]
+}

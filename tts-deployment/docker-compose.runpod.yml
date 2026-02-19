@@ -1,0 +1,114 @@
+version: '3.8'
+
+# Docker Compose for RunPod GPU (48GB VRAM)
+# Services: F5-TTS, StyleTTS2, Kyutai/Moshi
+
+services:
+  # F5-TTS - Flow-matching based TTS (6-10GB VRAM)
+  f5tts:
+    build: ./docker/f5tts
+    container_name: f5tts
+    ports:
+      - "8002:8002"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - f5tts_ckpts:/app/F5-TTS/ckpts
+      - f5tts_outputs:/app/outputs
+    restart: unless-stopped
+    networks:
+      - tts_network
+
+  # StyleTTS2 - High-quality expressive TTS (8-12GB VRAM)
+  styletts:
+    build: ./docker/styletts2
+    container_name: styletts
+    ports:
+      - "8006:8006"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - styletts_models:/app/StyleTTS2/Models
+      - styletts_outputs:/app/outputs
+    restart: unless-stopped
+    networks:
+      - tts_network
+
+  # Kyutai/Moshi - Real-time conversational AI (12-16GB VRAM)
+  kyutai:
+    build: ./docker/kyutai
+    container_name: kyutai
+    ports:
+      - "8008:8008"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - kyutai_models:/app/models
+      - kyutai_outputs:/app/outputs
+    restart: unless-stopped
+    networks:
+      - tts_network
+
+  # Whisper ASR - Moved from local server to free up GPU
+  whisper-asr:
+    build: ./docker/whisper-asr
+    container_name: whisper-asr
+    ports:
+      - "8020:8020"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_VISIBLE_DEVICES=all
+      - WHISPER_PORT=8020
+      - WHISPER_MODEL=medium
+      - WHISPER_DEVICE=cuda
+      - WHISPER_COMPUTE_TYPE=float16
+      - WHISPER_PRELOAD_MODELS=medium
+    volumes:
+      - whisper_models:/root/.cache/huggingface
+    restart: unless-stopped
+    networks:
+      - tts_network
+
+networks:
+  tts_network:
+    driver: bridge
+
+volumes:
+  f5tts_ckpts:
+  f5tts_outputs:
+  styletts_models:
+  styletts_outputs:
+  kyutai_models:
+  kyutai_outputs:
+  whisper_models:

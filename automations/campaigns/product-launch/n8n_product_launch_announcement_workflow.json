@@ -1,0 +1,584 @@
+{
+  "name": "Enhanced Product Launch Announcement with VAPI + n8n",
+  "description": "AI-powered product launch workflow with voice agent and customer segmentation",
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    {
+      "createdAt": "2025-09-16T22:30:00.000Z",
+      "updatedAt": "2025-09-16T22:30:00.000Z",
+      "id": "1",
+      "name": "Product Launch"
+    },
+    {
+      "createdAt": "2025-09-16T22:30:00.000Z",
+      "updatedAt": "2025-09-16T22:30:00.000Z",
+      "id": "2",
+      "name": "VAPI"
+    },
+    {
+      "createdAt": "2025-09-16T22:30:00.000Z",
+      "updatedAt": "2025-09-16T22:30:00.000Z",
+      "id": "3",
+      "name": "Technology"
+    }
+  ],
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "product-launch-announcement-enhanced",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Product Launch Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "product-launch-announcement-enhanced"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract and validate product launch data\nconst requestBody = $input.first().json.body;\n\nconst productData = {\n  product_id: requestBody.product_id || '',\n  product_name: requestBody.product_name || '',\n  launch_date: requestBody.launch_date || new Date().toISOString(),\n  target_segments: requestBody.target_segments || ['early_adopters', 'loyal_customers'],\n  campaign_id: requestBody.campaign_id || `launch_${Date.now()}`,\n  customer_list: requestBody.customer_list || [],\n  launch_type: requestBody.launch_type || 'full_launch',\n  priority: requestBody.priority || 'high'\n};\n\n// Validate required fields\nif (!productData.product_id || !productData.product_name) {\n  throw new Error('Product ID and Product Name are required');\n}\n\n// Add metadata\nproductData.workflow_started = new Date().toISOString();\nproductData.workflow_id = 'enhanced_product_launch_announcement_vapi_n8n';\nproductData.processing_stage = 'segmentation';\n\nreturn {\n  json: productData\n};"
+      },
+      "id": "data-validation",
+      "name": "Validate Launch Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{$node['Validate Launch Data'].json.api_base_url || 'https://api.ailabsafrica.com'}}/api/campaigns/customer-segmentation",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Campaign-ID",
+              "value": "={{$node['Validate Launch Data'].json.campaign_id}}"
+            },
+            {
+              "name": "X-Product-ID",
+              "value": "={{$node['Validate Launch Data'].json.product_id}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "product_id",
+              "value": "={{$node['Validate Launch Data'].json.product_id}}"
+            },
+            {
+              "name": "target_segments",
+              "value": "={{$node['Validate Launch Data'].json.target_segments}}"
+            },
+            {
+              "name": "segmentation_criteria",
+              "value": "purchase_history,product_interest,engagement_level,customer_value"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000,
+          "retry": {
+            "enabled": true,
+            "maxRetries": 3
+          }
+        }
+      },
+      "id": "customer-segmentation",
+      "name": "Customer Segmentation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "kasaai-api-auth",
+          "name": "KASAAI API Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{$node['Customer Segmentation'].json.segmented_customers}}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-segmentation",
+      "name": "Check Segmentation Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "mode": "parallel",
+        "jsCode": "// Process each customer segment for personalized outreach\nconst segmentedCustomers = $node['Customer Segmentation'].json.segmented_customers;\nconst productData = $node['Validate Launch Data'].json;\n\nconst results = [];\n\nfor (const segment of segmentedCustomers) {\n  for (const customer of segment.customers) {\n    results.push({\n      json: {\n        customer_id: customer.customer_id,\n        customer_name: customer.name,\n        customer_email: customer.email,\n        customer_phone: customer.phone,\n        customer_segment: segment.segment_name,\n        product_id: productData.product_id,\n        product_name: productData.product_name,\n        campaign_id: productData.campaign_id,\n        personalization_data: {\n          segment: segment.segment_name,\n          purchase_history: customer.purchase_history || [],\n          interests: customer.interests || [],\n          engagement_score: customer.engagement_score || 5,\n          customer_value: customer.customer_value || 'medium'\n        },\n        launch_message_priority: segment.priority || 'normal',\n        preferred_contact_time: customer.preferred_contact_time || 'business_hours'\n      }\n    });\n  }\n}\n\nreturn results;"
+      },
+      "id": "process-customers",
+      "name": "Process Customer List",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "url": "={{$node['Process Customer List'].json.api_base_url || 'https://api.ailabsafrica.com'}}/api/campaigns/personalize-message",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Campaign-ID",
+              "value": "={{$node['Process Customer List'].json.campaign_id}}"
+            },
+            {
+              "name": "X-Customer-ID",
+              "value": "={{$node['Process Customer List'].json.customer_id}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer_data",
+              "value": "={{$node['Process Customer List'].json}}"
+            },
+            {
+              "name": "message_type",
+              "value": "product_launch_announcement"
+            },
+            {
+              "name": "personalization_factors",
+              "value": "customer_segment,past_purchases,interests,communication_style"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "personalize-message",
+      "name": "Personalize Launch Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "kasaai-api-auth",
+          "name": "KASAAI API Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.vapi.ai/call",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 42cf1e7c-2ef9-4bd7-ba30-52f2813605a2"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phoneNumberId",
+              "value": "={{$node['Process Customer List'].json.customer_phone}}"
+            },
+            {
+              "name": "assistantId",
+              "value": "product-launch-specialist-assistant"
+            },
+            {
+              "name": "metadata",
+              "value": "={{JSON.stringify({ campaign_id: $node['Process Customer List'].json.campaign_id, customer_id: $node['Process Customer List'].json.customer_id, product_id: $node['Process Customer List'].json.product_id, segment: $node['Process Customer List'].json.customer_segment })}}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000,
+          "retry": {
+            "enabled": true,
+            "maxRetries": 2
+          }
+        }
+      },
+      "id": "vapi-call",
+      "name": "VAPI Product Launch Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vapi-auth",
+          "name": "VAPI Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{$node['Process Customer List'].json.api_base_url || 'https://api.ailabsafrica.com'}}/api/campaigns/track-engagement",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Campaign-ID",
+              "value": "={{$node['Process Customer List'].json.campaign_id}}"
+            },
+            {
+              "name": "X-Call-ID",
+              "value": "={{$node['VAPI Product Launch Call'].json.id}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "engagement_data",
+              "value": "={{JSON.stringify({ call_id: $node['VAPI Product Launch Call'].json.id, customer_id: $node['Process Customer List'].json.customer_id, campaign_id: $node['Process Customer List'].json.campaign_id, call_status: $node['VAPI Product Launch Call'].json.status, timestamp: new Date().toISOString() })}}"
+            },
+            {
+              "name": "call_metadata",
+              "value": "={{JSON.stringify($node['Process Customer List'].json)}}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "track-engagement",
+      "name": "Track Call Engagement",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "kasaai-api-auth",
+          "name": "KASAAI API Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "summary-data",
+              "name": "summary_data",
+              "value": "={{JSON.stringify({ workflow_id: 'enhanced_product_launch_announcement_vapi_n8n', campaign_id: $node['Process Customer List'].json.campaign_id, product_id: $node['Process Customer List'].json.product_id, total_calls_initiated: $node['Process Customer List'].json.length || 1, call_results: { success: $node['VAPI Product Launch Call'].json.status === 'success' ? 1 : 0, failed: $node['VAPI Product Launch Call'].json.status !== 'success' ? 1 : 0 }, timestamp: new Date().toISOString() })}}"
+              },
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "prepare-summary",
+      "name": "Prepare Launch Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2000, 200]
+    },
+    {
+      "parameters": {
+        "url": "={{$node['Process Customer List'].json.api_base_url || 'https://api.ailabsafrica.com'}}/api/campaigns/launch-analytics",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Campaign-ID",
+              "value": "={{$node['Process Customer List'].json.campaign_id}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "analytics_data",
+              "value": "={{$node['Prepare Launch Summary'].json.summary_data}}"
+            },
+            {
+              "name": "workflow_completion",
+              "value": "success"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "record-analytics",
+      "name": "Record Launch Analytics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2220, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "kasaai-api-auth",
+          "name": "KASAAI API Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "error-details",
+              "name": "error_message",
+              "value": "Customer segmentation failed - no valid customer segments found",
+              "type": "string"
+            },
+            {
+              "id": "error-timestamp",
+              "name": "error_timestamp",
+              "value": "={{new Date().toISOString()}}",
+              "type": "string"
+            },
+            {
+              "id": "workflow-id",
+              "name": "workflow_id",
+              "value": "enhanced_product_launch_announcement_vapi_n8n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "error-handler",
+      "name": "Error Handler",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [900, 480]
+    },
+    {
+      "parameters": {
+        "url": "={{$node['Validate Launch Data'].json.api_base_url || 'https://api.ailabsafrica.com'}}/api/campaigns/error-logging",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Campaign-ID",
+              "value": "={{$node['Validate Launch Data'].json.campaign_id}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "error_data",
+              "value": "={{JSON.stringify($node['Error Handler'].json)}}"
+            },
+            {
+              "name": "workflow_stage",
+              "value": "customer_segmentation"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "log-error",
+      "name": "Log Launch Error",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 480],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "kasaai-api-auth",
+          "name": "KASAAI API Auth"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Product Launch Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Launch Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Launch Data": {
+      "main": [
+        [
+          {
+            "node": "Customer Segmentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Segmentation": {
+      "main": [
+        [
+          {
+            "node": "Check Segmentation Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Segmentation Success": {
+      "main": [
+        [
+          {
+            "node": "Process Customer List",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Customer List": {
+      "main": [
+        [
+          {
+            "node": "Personalize Launch Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Personalize Launch Message": {
+      "main": [
+        [
+          {
+            "node": "VAPI Product Launch Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VAPI Product Launch Call": {
+      "main": [
+        [
+          {
+            "node": "Track Call Engagement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track Call Engagement": {
+      "main": [
+        [
+          {
+            "node": "Prepare Launch Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Launch Summary": {
+      "main": [
+        [
+          {
+            "node": "Record Launch Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Log Launch Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "versionId": "1"
+}

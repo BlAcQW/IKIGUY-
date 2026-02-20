@@ -126,3 +126,95 @@ export async function checkChatHealth(): Promise<{
 
   return response.json();
 }
+
+// ==================== Conversation Management ====================
+
+export interface Conversation {
+  id: string;
+  property_id: string;
+  title?: string;
+  messages: ChatMessage[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ConversationListResponse {
+  conversations: Conversation[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
+/**
+ * List conversations.
+ *
+ * @param params - Query parameters
+ * @returns Promise<ConversationListResponse>
+ */
+export async function listConversations(params?: {
+  limit?: number;
+  offset?: number;
+}): Promise<ConversationListResponse> {
+  const searchParams = new URLSearchParams();
+  if (params?.limit) searchParams.set("limit", params.limit.toString());
+  if (params?.offset) searchParams.set("offset", params.offset.toString());
+
+  const url = buildApiUrl(`/api/v1/chat/conversations?${searchParams}`);
+  const token = getAuthTokenSync();
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: getDefaultHeaders(token || undefined),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ detail: "Failed to list conversations" }));
+    throw new Error(error.detail || "Failed to list conversations");
+  }
+
+  return response.json();
+}
+
+/**
+ * Get a single conversation by ID.
+ *
+ * @param conversationId - Conversation ID
+ * @returns Promise<Conversation>
+ */
+export async function getConversation(conversationId: string): Promise<Conversation> {
+  const url = buildApiUrl(`/api/v1/chat/conversations/${conversationId}`);
+  const token = getAuthTokenSync();
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: getDefaultHeaders(token || undefined),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ detail: "Failed to get conversation" }));
+    throw new Error(error.detail || "Failed to get conversation");
+  }
+
+  return response.json();
+}
+
+/**
+ * Delete a conversation.
+ *
+ * @param conversationId - Conversation ID
+ * @returns Promise<void>
+ */
+export async function deleteConversation(conversationId: string): Promise<void> {
+  const url = buildApiUrl(`/api/v1/chat/conversations/${conversationId}`);
+  const token = getAuthTokenSync();
+
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: getDefaultHeaders(token || undefined),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ detail: "Failed to delete conversation" }));
+    throw new Error(error.detail || "Failed to delete conversation");
+  }
+}

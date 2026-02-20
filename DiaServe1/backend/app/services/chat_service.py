@@ -13,6 +13,7 @@ from app.models.chat import (
     ChatRequest,
     ChatResponse,
     ChatMessage,
+    ChatSession,
     QuestionCategory,
     Source,
     MessageRole
@@ -33,6 +34,17 @@ class PropertyChatService:
         """Initialize chat service with Gemini provider."""
         self.gemini_service = GeminiService(model="gemini-2.0-flash-exp")
         self.context_service = PropertyContextService()
+        self._db = None
+
+    def set_database(self, database):
+        """Set database reference for conversation persistence."""
+        self._db = database
+
+    @property
+    def conversations_collection(self):
+        if self._db is None:
+            return None
+        return self._db["chat_conversations"]
 
     async def initialize(self):
         """Initialize the service (check Gemini availability)."""
@@ -423,7 +435,7 @@ Soyez conversationnel mais professionnel. Concentrez-vous sur aider l'utilisateu
         # 10. Calculate processing time
         processing_time_ms = (time.time() - start_time) * 1000
 
-        return ChatResponse(
+        response = ChatResponse(
             reply=reply,
             sources=sources,
             confidence=confidence,
@@ -432,3 +444,133 @@ Soyez conversationnel mais professionnel. Concentrez-vous sur aider l'utilisateu
             processing_time_ms=processing_time_ms,
             model_used=model_used
         )
+
+        # Persist conversation
+        await self._persist_message(
+            property_id=request.property_id,
+            property_name=property_data.name,
+            user_message=request.message,
+            assistant_reply=reply,
+            organization_id=organization_id,
+            user_id=user_id
+        )
+
+        return response
+
+    # ==================== Conversation Persistence ====================
+
+    async def _persist_message(
+        self,
+        property_id: str,
+        property_name: str,
+        user_message: str,
+        assistant_reply: str,
+        organization_id: str,
+        user_id: Optional[str] = None
+    ):
+        """Persist chat messages to the conversation collection."""
+        if not self.conversations_collection:
+            return
+
+        from datetime import datetime
+        import uuid
+
+        now = datetime.utcnow()
+
+        # Find existing conversation for this user + property
+        query = {
+            "property_id": property_id,
+            "organization_id": organization_id
+        }
+        if user_id:
+            query["user_id"] = user_id
+
+        existing = await self.conversations_collection.find_one(query, sort=[("updated_at", -1)])
+
+        user_msg = {"role": "user", "content": user_message, "timestamp": now}
+        assistant_msg = {"role": "assistant", "content": assistant_reply, "timestamp": now}
+
+        if existing:
+            # Append to existing conversation
+            await self.conversations_collection.update_one(
+                {"id": existing["id"]},
+                {
+                    "$push": {"messages": {"$each": [user_msg, assistant_msg]}},
+                    "$set": {"updated_at": now}
+                }
+            )
+        else:
+            # Create new conversation
+            conversation = {
+                "id": str(uuid.uuid4()),
+                "property_id": property_id,
+                "property_name": property_name,
+                "user_id": user_id,
+                "organization_id": organization_id,
+                "messages": [user_msg, assistant_msg],
+                "created_at": now,
+                "updated_at": now,
+                "metadata": {}
+            }
+            await self.conversations_collection.insert_one(conversation)
+
+    async def list_conversations(
+        self,
+        organization_id: str,
+        user_id: Optional[str] = None,
+        limit: int = 50,
+        offset: int = 0
+    ) -> tuple:
+        """List chat conversations."""
+        if not self.conversations_collection:
+            return [], 0
+
+        query = {"organization_id": organization_id}
+        if user_id:
+            query["user_id"] = user_id
+
+        total = await self.conversations_collection.count_documents(query)
+        cursor = self.conversations_collection.find(query).sort("updated_at", -1).skip(offset).limit(limit)
+        docs = await cursor.to_list(length=limit)
+
+        conversations = []
+        for doc in docs:
+            doc.pop("_id", None)
+            conversations.append(ChatSession(**doc))
+
+        return conversations, total
+
+    async def get_conversation(
+        self,
+        conversation_id: str,
+        organization_id: str
+    ) -> Optional[ChatSession]:
+        """Get a single conversation by ID."""
+        if not self.conversations_collection:
+            return None
+
+        doc = await self.conversations_collection.find_one({
+            "id": conversation_id,
+            "organization_id": organization_id
+        })
+
+        if not doc:
+            return None
+
+        doc.pop("_id", None)
+        return ChatSession(**doc)
+
+    async def delete_conversation(
+        self,
+        conversation_id: str,
+        organization_id: str
+    ) -> bool:
+        """Delete a conversation."""
+        if not self.conversations_collection:
+            return False
+
+        result = await self.conversations_collection.delete_one({
+            "id": conversation_id,
+            "organization_id": organization_id
+        })
+        return result.deleted_count > 0

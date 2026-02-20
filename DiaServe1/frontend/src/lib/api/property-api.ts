@@ -4,9 +4,8 @@
  * Provides functions to interact with the property endpoints.
  */
 
-import { buildApiUrl, getDefaultHeaders, API_ENDPOINTS, getSelectedOrganizationId, USE_MOCK_DATA } from "../api-config";
+import { buildApiUrl, getDefaultHeaders, API_ENDPOINTS, getSelectedOrganizationId } from "../api-config";
 import { getAuthTokenSync } from "../auth";
-import { mockFetch } from '@/lib/mock-api';
 import type {
   Property,
   PropertyCreate,
@@ -15,14 +14,6 @@ import type {
   PropertyFilters,
   PropertyStats,
 } from "../types/property";
-
-// Helper to choose fetch implementation
-const apiFetch = async (url: string, options?: RequestInit) => {
-  if (USE_MOCK_DATA) {
-    return mockFetch(url, options);
-  }
-  return fetch(url, options);
-};
 
 /**
  * Build query string from filters object.
@@ -78,7 +69,7 @@ export async function listProperties(filters?: PropertyFilters): Promise<Propert
   const token = getAuthTokenSync();
   const orgId = getSelectedOrganizationId();
 
-  const response = await apiFetch(url, {
+  const response = await fetch(url, {
     method: "GET",
     headers: getDefaultHeaders(token || undefined, orgId || undefined),
   });
@@ -104,7 +95,7 @@ export async function getProperty(id: string, currency?: string): Promise<Proper
   const token = getAuthTokenSync();
   const orgId = getSelectedOrganizationId();
 
-  const response = await apiFetch(url, {
+  const response = await fetch(url, {
     method: "GET",
     headers: getDefaultHeaders(token || undefined, orgId || undefined),
   });
@@ -131,7 +122,7 @@ export async function createProperty(property: PropertyCreate): Promise<Property
     throw new Error("Authentication required to create property");
   }
 
-  const response = await apiFetch(url, {
+  const response = await fetch(url, {
     method: "POST",
     headers: getDefaultHeaders(token),
     body: JSON.stringify(property),
@@ -160,7 +151,7 @@ export async function updateProperty(id: string, updates: PropertyUpdate): Promi
     throw new Error("Authentication required to update property");
   }
 
-  const response = await apiFetch(url, {
+  const response = await fetch(url, {
     method: "PUT",
     headers: getDefaultHeaders(token),
     body: JSON.stringify(updates),
@@ -188,7 +179,7 @@ export async function deleteProperty(id: string): Promise<void> {
     throw new Error("Authentication required to delete property");
   }
 
-  const response = await apiFetch(url, {
+  const response = await fetch(url, {
     method: "DELETE",
     headers: getDefaultHeaders(token),
   });
@@ -231,7 +222,7 @@ export async function searchProperties(
   const url = buildApiUrl(`${API_ENDPOINTS.properties.search}?${params.toString()}`);
   const token = getAuthTokenSync();
 
-  const response = await apiFetch(url, {
+  const response = await fetch(url, {
     method: "GET",
     headers: getDefaultHeaders(token || undefined),
   });
@@ -259,7 +250,7 @@ export async function getPropertyStats(): Promise<PropertyStats> {
     throw new Error("Authentication required to fetch property stats");
   }
 
-  const response = await apiFetch(url, {
+  const response = await fetch(url, {
     method: "GET",
     headers: getDefaultHeaders(token),
   });

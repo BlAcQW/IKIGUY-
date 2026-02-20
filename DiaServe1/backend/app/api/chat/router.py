@@ -8,7 +8,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from typing import Optional
 import logging
 
-from app.models.chat import ChatRequest, ChatResponse
+from app.models.chat import ChatRequest, ChatResponse, ChatSession, ChatSessionListResponse
 from app.services.chat_service import PropertyChatService
 from app.services.property_service import PropertyService
 from app.core.auth import get_current_user, get_optional_user
@@ -99,6 +99,9 @@ async def chat_about_property(
                 detail="Organization ID not found in user data"
             )
 
+        # Set database for conversation persistence
+        chat_service.set_database(database)
+
         # Get property data
         property_service = PropertyService(database)
         property_data = await property_service.get_property(
@@ -168,3 +171,89 @@ async def health_check():
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Chat service is unhealthy"
         )
+
+
+# ==================== Conversation History ====================
+
+
+@router.get(
+    "/conversations",
+    response_model=ChatSessionListResponse,
+    summary="List chat conversations"
+)
+async def list_conversations(
+    limit: int = 50,
+    offset: int = 0,
+    current_user: dict = Depends(get_current_user),
+    database=Depends(get_database)
+):
+    """List the current user's chat conversations."""
+    chat_service.set_database(database)
+
+    user_id = current_user.get("sub") or current_user.get("id")
+    organization_id = current_user.get("organization_id")
+
+    conversations, total = await chat_service.list_conversations(
+        organization_id=organization_id,
+        user_id=user_id,
+        limit=limit,
+        offset=offset
+    )
+
+    return ChatSessionListResponse(
+        conversations=conversations,
+        total=total,
+        limit=limit,
+        offset=offset
+    )
+
+
+@router.get(
+    "/conversations/{conversation_id}",
+    response_model=ChatSession,
+    summary="Get a conversation"
+)
+async def get_conversation(
+    conversation_id: str,
+    current_user: dict = Depends(get_current_user),
+    database=Depends(get_database)
+):
+    """Load a past conversation by ID."""
+    chat_service.set_database(database)
+
+    organization_id = current_user.get("organization_id")
+
+    conversation = await chat_service.get_conversation(
+        conversation_id=conversation_id,
+        organization_id=organization_id
+    )
+
+    if not conversation:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    return conversation
+
+
+@router.delete(
+    "/conversations/{conversation_id}",
+    summary="Delete a conversation"
+)
+async def delete_conversation(
+    conversation_id: str,
+    current_user: dict = Depends(get_current_user),
+    database=Depends(get_database)
+):
+    """Delete a conversation."""
+    chat_service.set_database(database)
+
+    organization_id = current_user.get("organization_id")
+
+    deleted = await chat_service.delete_conversation(
+        conversation_id=conversation_id,
+        organization_id=organization_id
+    )
+
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    return {"message": "Conversation deleted successfully"}

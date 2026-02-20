@@ -7,6 +7,8 @@ and e-signature integration.
 
 import uuid
 import json
+import re
+import io
 from datetime import datetime
 from typing import List, Optional, Dict, Any
 from motor.motor_asyncio import AsyncIOMotorDatabase
@@ -120,14 +122,137 @@ class DocumentService:
         return Document(**doc_dict)
 
     async def generate_pdf(self, document_id: str, organization_id: str) -> bytes:
-        """Generate PDF - Mock for now."""
-        # Mock PDF generation
-        return b"%PDF-1.4 Mock PDF Content"
+        """
+        Generate PDF from document's rendered HTML content using ReportLab.
+
+        Args:
+            document_id: Document ID
+            organization_id: Organization ID
+
+        Returns:
+            PDF file bytes
+
+        Raises:
+            ValueError: If document not found
+        """
+        document = await self.get_document(document_id, organization_id)
+        if not document:
+            raise ValueError(f"Document not found: {document_id}")
+
+        html_content = document.rendered_content or ""
+
+        from reportlab.lib.pagesizes import A4
+        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+        from reportlab.lib.units import inch
+        from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+
+        buffer = io.BytesIO()
+        doc = SimpleDocTemplate(buffer, pagesize=A4,
+                                leftMargin=inch, rightMargin=inch,
+                                topMargin=inch, bottomMargin=inch)
+
+        styles = getSampleStyleSheet()
+        title_style = ParagraphStyle('DocTitle', parent=styles['Title'], fontSize=18, spaceAfter=20)
+        heading_style = ParagraphStyle('DocHeading', parent=styles['Heading2'], fontSize=14, spaceAfter=10)
+        body_style = ParagraphStyle('DocBody', parent=styles['Normal'], fontSize=11, leading=16, spaceAfter=8)
+
+        story = []
+
+        # Add title
+        story.append(Paragraph(document.title, title_style))
+        story.append(Spacer(1, 12))
+
+        # Parse HTML content into paragraphs
+        # Strip HTML tags but preserve structure
+        text = html_content
+        # Convert <h1>, <h2>, <h3> to heading markers
+        text = re.sub(r'<h[1-3][^>]*>(.*?)</h[1-3]>', r'\n##HEADING##\1\n', text, flags=re.DOTALL)
+        # Convert <p> to paragraph markers
+        text = re.sub(r'<p[^>]*>(.*?)</p>', r'\1\n', text, flags=re.DOTALL)
+        # Convert <br> to newlines
+        text = re.sub(r'<br\s*/?>', '\n', text)
+        # Convert <li> to bullet markers
+        text = re.sub(r'<li[^>]*>(.*?)</li>', r'  - \1\n', text, flags=re.DOTALL)
+        # Strip remaining HTML tags
+        text = re.sub(r'<[^>]+>', '', text)
+        # Clean up whitespace
+        text = re.sub(r'\n\s*\n', '\n\n', text).strip()
+
+        for line in text.split('\n'):
+            line = line.strip()
+            if not line:
+                story.append(Spacer(1, 6))
+            elif line.startswith('##HEADING##'):
+                heading_text = line.replace('##HEADING##', '').strip()
+                story.append(Paragraph(heading_text, heading_style))
+            else:
+                story.append(Paragraph(line, body_style))
+
+        doc.build(story)
+        return buffer.getvalue()
 
     async def generate_docx(self, document_id: str, organization_id: str) -> bytes:
-        """Generate DOCX - Mock for now."""
-        # Mock DOCX generation
-        return b"Mock DOCX Content"
+        """
+        Generate DOCX from document's rendered HTML content using python-docx.
+
+        Args:
+            document_id: Document ID
+            organization_id: Organization ID
+
+        Returns:
+            DOCX file bytes
+
+        Raises:
+            ValueError: If document not found
+        """
+        document = await self.get_document(document_id, organization_id)
+        if not document:
+            raise ValueError(f"Document not found: {document_id}")
+
+        html_content = document.rendered_content or ""
+
+        from docx import Document as DocxDocument
+        from docx.shared import Pt, Inches
+
+        docx_doc = DocxDocument()
+
+        # Set default font
+        style = docx_doc.styles['Normal']
+        font = style.font
+        font.size = Pt(11)
+
+        # Add title
+        docx_doc.add_heading(document.title, level=0)
+
+        # Parse HTML to structured text
+        text = html_content
+        text = re.sub(r'<h1[^>]*>(.*?)</h1>', r'\n##H1##\1\n', text, flags=re.DOTALL)
+        text = re.sub(r'<h2[^>]*>(.*?)</h2>', r'\n##H2##\1\n', text, flags=re.DOTALL)
+        text = re.sub(r'<h3[^>]*>(.*?)</h3>', r'\n##H3##\1\n', text, flags=re.DOTALL)
+        text = re.sub(r'<p[^>]*>(.*?)</p>', r'\1\n', text, flags=re.DOTALL)
+        text = re.sub(r'<br\s*/?>', '\n', text)
+        text = re.sub(r'<li[^>]*>(.*?)</li>', r'##LI##\1\n', text, flags=re.DOTALL)
+        text = re.sub(r'<[^>]+>', '', text)
+        text = re.sub(r'\n\s*\n', '\n\n', text).strip()
+
+        for line in text.split('\n'):
+            line = line.strip()
+            if not line:
+                continue
+            elif line.startswith('##H1##'):
+                docx_doc.add_heading(line.replace('##H1##', '').strip(), level=1)
+            elif line.startswith('##H2##'):
+                docx_doc.add_heading(line.replace('##H2##', '').strip(), level=2)
+            elif line.startswith('##H3##'):
+                docx_doc.add_heading(line.replace('##H3##', '').strip(), level=3)
+            elif line.startswith('##LI##'):
+                docx_doc.add_paragraph(line.replace('##LI##', '').strip(), style='List Bullet')
+            else:
+                docx_doc.add_paragraph(line)
+
+        buffer = io.BytesIO()
+        docx_doc.save(buffer)
+        return buffer.getvalue()
 
     async def list_documents(
         self,
@@ -436,46 +561,10 @@ class DocumentService:
         except Exception as e:
             raise ValueError(f"Template rendering failed: {str(e)}")
 
-    async def _generate_pdf(self, html_content: str, document_id: str) -> str:
-        """
-        Generate PDF from HTML content.
-
-        Args:
-            html_content: HTML content
-            document_id: Document ID
-
-        Returns:
-            PDF file URL
-
-        TODO: Implement using WeasyPrint or similar
-        """
-        # Placeholder
-        return f"/documents/{document_id}.pdf"
-
-    async def _generate_docx(self, html_content: str, document_id: str) -> str:
-        """
-        Generate DOCX from HTML content.
-
-        Args:
-            html_content: HTML content
-            document_id: Document ID
-
-        Returns:
-            DOCX file URL
-
-        TODO: Implement using python-docx or pandoc
-        """
-        # Placeholder
-        return f"/documents/{document_id}.docx"
-
     async def _send_for_signature(self, document: Document):
         """
         Send document for e-signature.
 
-        Args:
-            document: Document to send
-
         TODO: Integrate with DocuSign, HelloSign, or Adobe Sign
         """
-        # Placeholder
         pass

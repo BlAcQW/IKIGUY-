@@ -5,6 +5,8 @@ Handles MongoDB connections and database operations.
 """
 
 import logging
+import ssl
+import certifi
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorGridFSBucket
 from typing import Optional
 
@@ -28,7 +30,10 @@ class MongoDB:
         Establishes connection to MongoDB database and creates necessary indexes.
         """
         try:
-            cls.client = AsyncIOMotorClient(settings.MONGODB_URL)
+            # Use Python's built-in ssl module with certifi CA bundle
+            # to avoid pyOpenSSL compatibility issues
+            tls_ctx = ssl.create_default_context(cafile=certifi.where())
+            cls.client = AsyncIOMotorClient(settings.MONGODB_URL, tls=True, tlsCAFile=certifi.where())
             cls.db = cls.client[settings.MONGODB_DB_NAME]
             # Test connection
             await cls.client.admin.command('ping')

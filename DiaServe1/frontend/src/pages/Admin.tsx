@@ -5,7 +5,7 @@
  * Only accessible to admin@ailabsafrica.com or users with role=admin.
  */
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,8 @@ import {
   Shield,
   Settings,
   Eye,
+  Loader2,
+  Clock,
 } from "lucide-react";
 import {
   Dialog,
@@ -47,16 +49,6 @@ import {
 } from "@/components/ui/select";
 import { EmptyState } from "@/components/ui/empty-state";
 
-interface TeamMember {
-  id: string;
-  email: string;
-  name?: string;
-  role: "admin" | "manager" | "agent" | "user";
-  organization_id: string;
-  status: "active" | "invited" | "suspended";
-  created_at?: string;
-}
-
 export default function Admin() {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -64,7 +56,7 @@ export default function Admin() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Check if user is universal admin
-  const isAdmin = user?.role === 'admin' || user?.email === 'admin@ailabsafrica.com' || user?.email === 'admin@estateflow.local';
+  const isAdmin = user?.role === 'admin' || user?.email === 'admin@ailabsafrica.com' || user?.email === 'admin@estateflow.com';
 
   // Invitation form state
   const [inviteForm, setInviteForm] = useState({
@@ -74,18 +66,32 @@ export default function Admin() {
     organization_id: "default", // Hardcoded for single-tenant
   });
 
-  // Mock team members (replace with real API)
-  const [teamMembers] = useState<TeamMember[]>([
-    {
-      id: "1",
-      email: "admin@ailabsafrica.com",
-      name: "System Admin",
-      role: "admin",
-      organization_id: "default",
-      status: "active",
-      created_at: "2025-01-01",
-    },
-  ]);
+  // Real user/invitation data
+  const [teamMembers, setTeamMembers] = useState<User[]>([]);
+  const [pendingInvitations, setPendingInvitations] = useState<PendingInvitation[]>([]);
+  const [isLoadingUsers, setIsLoadingUsers] = useState(true);
+
+  const fetchUsersAndInvitations = useCallback(async () => {
+    try {
+      setIsLoadingUsers(true);
+      const [usersRes, invitationsRes] = await Promise.all([
+        listUsers(),
+        listPendingInvitations(),
+      ]);
+      setTeamMembers(usersRes.users);
+      setPendingInvitations(invitationsRes.invitations);
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    } finally {
+      setIsLoadingUsers(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAdmin) {
+      fetchUsersAndInvitations();
+    }
+  }, [isAdmin, fetchUsersAndInvitations]);
 
   if (!isAdmin) {
     return (
@@ -127,6 +133,7 @@ export default function Admin() {
 
       setInviteDialogOpen(false);
       setInviteForm({ email: "", name: "", role: "user", organization_id: "default" });
+      fetchUsersAndInvitations();
     } catch (error) {
       console.error("Failed to invite user:", error);
       toast({
@@ -251,52 +258,103 @@ export default function Admin() {
                 <CardDescription>Manage team members and their access levels</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  {teamMembers.map((member) => (
-                    <div
-                      key={member.id}
-                      className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-secondary/50 transition-colors"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-white font-semibold">
-                          {member.name?.[0] || member.email[0].toUpperCase()}
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <p className="font-medium">{member.name || member.email}</p>
-                            <Badge variant={member.role === "admin" ? "premium" : "soft"}>
-                              {member.role}
-                            </Badge>
-                            <Badge
-                              variant={
-                                member.status === "active" ? "soft-success" :
-                                  member.status === "invited" ? "soft-warning" : "soft"
-                              }
-                            >
-                              {member.status}
-                            </Badge>
+                {isLoadingUsers ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                  </div>
+                ) : teamMembers.length === 0 ? (
+                  <EmptyState
+                    icon={Users}
+                    title="No Users Found"
+                    description="Invite your first team member to get started"
+                  />
+                ) : (
+                  <div className="space-y-3">
+                    {teamMembers.map((member) => (
+                      <div
+                        key={member.id}
+                        className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-secondary/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-white font-semibold">
+                            {member.name?.[0] || member.email[0].toUpperCase()}
                           </div>
-                          <p className="text-sm text-muted-foreground">{member.email}</p>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <p className="font-medium">{member.name || member.email}</p>
+                              <Badge variant={member.role === "admin" ? "premium" : "soft"}>
+                                {member.role}
+                              </Badge>
+                              <Badge
+                                variant={
+                                  member.status === "active" ? "soft-success" :
+                                    member.status === "invited" ? "soft-warning" : "soft"
+                                }
+                              >
+                                {member.status}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{member.email}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="sm">
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="sm">
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          {member.role !== 'admin' && (
+                            <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          )}
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        {member.role !== 'admin' && (
-                          <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
+
+            {/* Pending Invitations */}
+            {pendingInvitations.length > 0 && (
+              <Card variant="elevated">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Clock className="h-5 w-5" />
+                    Pending Invitations
+                  </CardTitle>
+                  <CardDescription>Invitations awaiting acceptance</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {pendingInvitations.map((invitation) => (
+                      <div
+                        key={invitation.token}
+                        className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-secondary/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warning/20 text-warning font-semibold">
+                            <Mail className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <p className="font-medium">{invitation.name || invitation.email}</p>
+                              <Badge variant="soft">{invitation.role}</Badge>
+                              <Badge variant="soft-warning">pending</Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              {invitation.email} — Expires {new Date(invitation.expires_at).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
 
           {/* System Settings Tab */}

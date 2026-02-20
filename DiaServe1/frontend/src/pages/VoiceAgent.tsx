@@ -1,75 +1,32 @@
 import { useState } from "react";
-import { 
-  Phone, 
-  PhoneCall, 
-  PhoneOff, 
-  Mic, 
-  MicOff, 
-  Volume2, 
+import {
+  Phone,
+  PhoneCall,
+  PhoneOff,
+  Volume2,
   VolumeX,
   Settings,
-  BarChart3,
   Clock,
   Users,
   CheckCircle,
   XCircle,
   Calendar,
-  TrendingUp
+  TrendingUp,
+  Loader2,
 } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-const recentCalls = [
-  {
-    id: 1,
-    caller: "Sarah Mitchell",
-    phone: "+1 (555) 123-4567",
-    duration: "4:32",
-    outcome: "Tour Scheduled",
-    property: "Luxury Penthouse Suite",
-    time: "10 min ago",
-    status: "success",
-  },
-  {
-    id: 2,
-    caller: "Mike Johnson",
-    phone: "+1 (555) 234-5678",
-    duration: "2:15",
-    outcome: "Information Provided",
-    property: "Modern Beach Villa",
-    time: "25 min ago",
-    status: "success",
-  },
-  {
-    id: 3,
-    caller: "Emily Chen",
-    phone: "+1 (555) 345-6789",
-    duration: "1:45",
-    outcome: "Transferred to Agent",
-    property: "Downtown Loft",
-    time: "1 hour ago",
-    status: "transferred",
-  },
-  {
-    id: 4,
-    caller: "Unknown",
-    phone: "+1 (555) 456-7890",
-    duration: "0:30",
-    outcome: "Missed Call",
-    property: null,
-    time: "2 hours ago",
-    status: "missed",
-  },
-];
-
-const stats = [
-  { name: "Calls Today", value: "127", icon: Phone, change: "+15%" },
-  { name: "Avg Duration", value: "3:24", icon: Clock, change: "+8%" },
-  { name: "Tours Scheduled", value: "34", icon: Calendar, change: "+23%" },
-  { name: "Satisfaction", value: "94%", icon: TrendingUp, change: "+2%" },
-];
+import {
+  useVoiceCalls,
+  useCallStats,
+  useVoiceConfig,
+  useUpdateVoiceConfig,
+  formatDuration,
+  formatTimeAgo,
+  getOutcomeLabel,
+} from "@/lib/api/voice-api";
 
 const capabilities = [
   "Answer property inquiries 24/7",
@@ -83,13 +40,32 @@ const capabilities = [
 ];
 
 export default function VoiceAgent() {
-  const [isActive, setIsActive] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
+
+  const { data: callsData, isLoading: callsLoading } = useVoiceCalls({ limit: 10 });
+  const { data: stats, isLoading: statsLoading } = useCallStats();
+  const { data: config } = useVoiceConfig();
+  const updateConfig = useUpdateVoiceConfig();
+
+  const isActive = config?.is_active ?? false;
+
+  const toggleActive = () => {
+    updateConfig.mutate({ is_active: !isActive });
+  };
+
+  const recentCalls = callsData?.calls ?? [];
+
+  const statCards = [
+    { name: "Calls Today", value: statsLoading ? "..." : String(stats?.calls_today ?? 0), icon: Phone },
+    { name: "Avg Duration", value: statsLoading ? "..." : formatDuration(stats?.avg_duration_seconds ?? 0), icon: Clock },
+    { name: "Tours Scheduled", value: statsLoading ? "..." : String(stats?.tours_scheduled ?? 0), icon: Calendar },
+    { name: "Success Rate", value: statsLoading ? "..." : `${stats?.satisfaction_rate ?? 0}%`, icon: TrendingUp },
+  ];
 
   return (
     <div className="min-h-screen">
-      <Header 
-        title="Voice AI Agent" 
+      <Header
+        title="Voice AI Agent"
         subtitle="24/7 automated phone support for inquiries"
         actions={
           <Button variant="outline" className="gap-2">
@@ -124,19 +100,19 @@ export default function VoiceAgent() {
                     </Badge>
                   </div>
                   <p className="text-muted-foreground mt-1">
-                    {isActive 
+                    {isActive
                       ? "Ready to handle incoming calls and schedule tours"
                       : "Agent is currently offline. Enable to start receiving calls."
                     }
                   </p>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Phone: <span className="font-mono text-foreground">+1 (800) 555-PROP</span>
+                    Phone: <span className="font-mono text-foreground">{config?.phone_number || "+1 (800) 555-PROP"}</span>
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="icon-lg"
                   onClick={() => setIsMuted(!isMuted)}
                 >
@@ -146,9 +122,12 @@ export default function VoiceAgent() {
                   variant={isActive ? "destructive" : "success"}
                   size="lg"
                   className="gap-2"
-                  onClick={() => setIsActive(!isActive)}
+                  onClick={toggleActive}
+                  disabled={updateConfig.isPending}
                 >
-                  {isActive ? (
+                  {updateConfig.isPending ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : isActive ? (
                     <>
                       <PhoneOff className="h-5 w-5" />
                       Deactivate
@@ -167,12 +146,11 @@ export default function VoiceAgent() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {stats.map((stat) => (
+          {statCards.map((stat) => (
             <Card key={stat.name}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <stat.icon className="h-8 w-8 text-accent" />
-                  <Badge variant="success">{stat.change}</Badge>
                 </div>
                 <p className="text-2xl font-bold text-foreground mt-4">{stat.value}</p>
                 <p className="text-sm text-muted-foreground">{stat.name}</p>
@@ -190,47 +168,58 @@ export default function VoiceAgent() {
                 <CardDescription>Latest interactions handled by the AI agent</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {recentCalls.map((call) => (
-                  <div
-                    key={call.id}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-colors"
-                  >
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-full ${
-                      call.status === "success" ? "bg-success/10" :
-                      call.status === "transferred" ? "bg-info/10" :
-                      "bg-destructive/10"
-                    }`}>
-                      {call.status === "success" ? (
-                        <CheckCircle className="h-6 w-6 text-success" />
-                      ) : call.status === "transferred" ? (
-                        <Users className="h-6 w-6 text-info" />
-                      ) : (
-                        <XCircle className="h-6 w-6 text-destructive" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium text-foreground">{call.caller}</p>
-                        <span className="text-sm text-muted-foreground">{call.phone}</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground truncate">
-                        {call.property ? `Property: ${call.property}` : "No property selected"}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <Badge variant={
-                        call.status === "success" ? "success" :
-                        call.status === "transferred" ? "info" :
-                        "destructive"
-                      }>
-                        {call.outcome}
-                      </Badge>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {call.duration} • {call.time}
-                      </p>
-                    </div>
+                {callsLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                   </div>
-                ))}
+                ) : recentCalls.length > 0 ? (
+                  recentCalls.map((call) => (
+                    <div
+                      key={call.id}
+                      className="flex items-center gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-colors"
+                    >
+                      <div className={`flex h-12 w-12 items-center justify-center rounded-full ${
+                        call.status === "completed" ? "bg-success/10" :
+                        call.outcome === "transferred" ? "bg-info/10" :
+                        "bg-destructive/10"
+                      }`}>
+                        {call.status === "completed" ? (
+                          <CheckCircle className="h-6 w-6 text-success" />
+                        ) : call.outcome === "transferred" ? (
+                          <Users className="h-6 w-6 text-info" />
+                        ) : (
+                          <XCircle className="h-6 w-6 text-destructive" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-foreground">{call.caller_name}</p>
+                          <span className="text-sm text-muted-foreground">{call.caller_phone}</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground truncate">
+                          {call.property_name ? `Property: ${call.property_name}` : "No property selected"}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <Badge variant={
+                          call.status === "completed" ? "success" :
+                          call.outcome === "transferred" ? "info" :
+                          "destructive"
+                        }>
+                          {getOutcomeLabel(call.outcome)}
+                        </Badge>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {formatDuration(call.duration_seconds)} - {formatTimeAgo(call.created_at)}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <Phone className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p>No calls recorded yet</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

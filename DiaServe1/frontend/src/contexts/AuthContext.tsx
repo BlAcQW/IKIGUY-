@@ -12,9 +12,7 @@ import {
   setAuthToken,
   removeAuthToken,
   getDefaultHeaders,
-  USE_MOCK_DATA
 } from '@/lib/api-config';
-import { mockFetch } from '@/lib/mock-api';
 
 // User type
 interface User {
@@ -46,14 +44,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Helper to choose fetch implementation
-  const apiFetch = async (url: string, options?: RequestInit) => {
-    if (USE_MOCK_DATA) {
-      return mockFetch(url, options);
-    }
-    return fetch(url, options);
-  };
-
   // Check for existing session on mount
   useEffect(() => {
     const checkAuth = async () => {
@@ -61,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (token) {
         try {
           // Verify token by fetching user info
-          const response = await apiFetch(`${API_BASE_URL}${API_ENDPOINTS.auth.me}`, {
+          const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.auth.me}`, {
             headers: getDefaultHeaders(token),
           });
 
@@ -85,7 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const response = await apiFetch(`${API_BASE_URL}${API_ENDPOINTS.auth.login}`, {
+      const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.auth.login}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     metadata?: { first_name?: string; last_name?: string }
   ) => {
     try {
-      const response = await apiFetch(`${API_BASE_URL}${API_ENDPOINTS.auth.signup}`, {
+      const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.auth.signup}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +141,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const token = getAuthToken();
       if (token) {
         // Optional: Call logout endpoint
-        await apiFetch(`${API_BASE_URL}${API_ENDPOINTS.auth.logout}`, {
+        await fetch(`${API_BASE_URL}${API_ENDPOINTS.auth.logout}`, {
           method: 'POST',
           headers: getDefaultHeaders(token),
         }).catch(() => { });

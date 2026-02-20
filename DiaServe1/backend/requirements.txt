@@ -40,5 +40,9 @@ google-generativeai>=0.8.0
 # Template rendering
 Jinja2>=3.1.0
 
+# Document generation (PDF/DOCX)
+reportlab>=4.0.0
+python-docx>=1.0.0
+
 # Image processing (GridFS thumbnails)
 Pillow>=10.0.0

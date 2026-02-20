@@ -4,13 +4,11 @@
  * Displays payment history with filtering, search, and stats.
  */
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Plus,
   Search,
-  Filter,
-  Download,
   Eye,
   RefreshCw,
   Loader2,
@@ -39,11 +37,8 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { usePayments, usePaymentStats, type PaymentFilters } from "@/hooks/use-payments";
 import {
-  listPayments,
-  getPaymentStats,
-  Payment,
-  PaymentStats,
   PaymentStatus,
   PaymentMethod,
   PaymentGateway,
@@ -57,12 +52,6 @@ export default function Payments() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Data state
-  const [payments, setPayments] = useState<Payment[]>([]);
-  const [stats, setStats] = useState<PaymentStats | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
   // Filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -71,66 +60,35 @@ export default function Payments() {
 
   // Pagination state
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const pageSize = 20;
 
-  // Load payments and stats
-  const loadData = async (showRefreshing = false) => {
-    if (showRefreshing) {
-      setIsRefreshing(true);
-    } else {
-      setIsLoading(true);
-    }
-
-    try {
-      // Build filters
-      const filters: Record<string, any> = {};
-      if (statusFilter !== "all") filters.status = statusFilter;
-      if (methodFilter !== "all") filters.payment_method = methodFilter;
-      if (gatewayFilter !== "all") filters.gateway = gatewayFilter;
-      if (searchQuery) filters.search = searchQuery;
-
-      // Load payments
-      const paymentsData = await listPayments(page, pageSize, filters);
-      setPayments(paymentsData);
-
-      // Calculate total pages (mock for now - API should return total count)
-      setTotalPages(Math.ceil(paymentsData.length / pageSize));
-
-      // Load stats
-      const statsData = await getPaymentStats();
-      setStats(statsData);
-    } catch (error: any) {
-      console.error("Failed to load payments:", error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to load payments",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-      setIsRefreshing(false);
-    }
-  };
-
-  // Load data on mount and when filters change
-  useEffect(() => {
-    loadData();
+  // Build filters for React Query
+  const filters = useMemo<PaymentFilters>(() => {
+    const f: PaymentFilters = {
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    };
+    if (statusFilter !== "all") f.status = statusFilter as PaymentStatus;
+    if (methodFilter !== "all") f.payment_method = methodFilter as PaymentMethod;
+    if (gatewayFilter !== "all") f.gateway = gatewayFilter as PaymentGateway;
+    return f;
   }, [page, statusFilter, methodFilter, gatewayFilter]);
 
-  // Search with debounce
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchQuery) {
-        setPage(1);
-        loadData();
-      }
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
+  // React Query hooks
+  const {
+    data: paymentsData,
+    isLoading,
+    isFetching,
+    refetch,
+  } = usePayments(filters);
+
+  const { data: stats } = usePaymentStats();
+
+  const payments = paymentsData?.payments ?? [];
+  const totalPages = paymentsData ? Math.ceil(paymentsData.total / pageSize) : 1;
 
   const handleRefresh = () => {
-    loadData(true);
+    refetch();
   };
 
   const handleViewPayment = (paymentId: string) => {
@@ -183,9 +141,9 @@ export default function Payments() {
               variant="outline"
               size="sm"
               onClick={handleRefresh}
-              disabled={isRefreshing}
+              disabled={isFetching}
             >
-              <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
+              <RefreshCw className={`h-4 w-4 mr-2 ${isFetching ? "animate-spin" : ""}`} />
               Refresh
             </Button>
             <Button onClick={handleNewPayment}>
@@ -207,10 +165,10 @@ export default function Payments() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {formatPaymentAmount(stats.total_amount, stats.currency || "GHS")}
+                  {formatPaymentAmount(stats.total_revenue, stats.currency || "GHS")}
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {stats.total_count} transactions
+                  {stats.total_payments} transactions
                 </p>
               </CardContent>
             </Card>
@@ -224,7 +182,7 @@ export default function Payments() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {formatPaymentAmount(stats.completed_amount, stats.currency || "GHS")}
+                  {formatPaymentAmount(stats.total_revenue - stats.pending_amount - stats.failed_amount - stats.refunded_amount, stats.currency || "GHS")}
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
                   {stats.completed_count} payments
@@ -258,12 +216,12 @@ export default function Payments() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {stats.total_count > 0
-                    ? Math.round((stats.completed_count / stats.total_count) * 100)
+                  {stats.total_payments > 0
+                    ? Math.round((stats.completed_count / stats.total_payments) * 100)
                     : 0}%
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {stats.completed_count} of {stats.total_count}
+                  {stats.completed_count} of {stats.total_payments}
                 </p>
               </CardContent>
             </Card>
@@ -287,7 +245,7 @@ export default function Payments() {
                 />
               </div>
 
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <Select value={statusFilter} onValueChange={(value) => { setStatusFilter(value); setPage(1); }}>
                 <SelectTrigger>
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
@@ -302,7 +260,7 @@ export default function Payments() {
                 </SelectContent>
               </Select>
 
-              <Select value={methodFilter} onValueChange={setMethodFilter}>
+              <Select value={methodFilter} onValueChange={(value) => { setMethodFilter(value); setPage(1); }}>
                 <SelectTrigger>
                   <SelectValue placeholder="Payment Method" />
                 </SelectTrigger>
@@ -316,7 +274,7 @@ export default function Payments() {
                 </SelectContent>
               </Select>
 
-              <Select value={gatewayFilter} onValueChange={setGatewayFilter}>
+              <Select value={gatewayFilter} onValueChange={(value) => { setGatewayFilter(value); setPage(1); }}>
                 <SelectTrigger>
                   <SelectValue placeholder="Gateway" />
                 </SelectTrigger>
@@ -324,7 +282,6 @@ export default function Payments() {
                   <SelectItem value="all">All Gateways</SelectItem>
                   <SelectItem value={PaymentGateway.STRIPE}>Stripe</SelectItem>
                   <SelectItem value={PaymentGateway.FLUTTERWAVE}>Flutterwave</SelectItem>
-                  <SelectItem value={PaymentGateway.PAYSTACK}>Paystack</SelectItem>
                   <SelectItem value={PaymentGateway.MANUAL}>Manual</SelectItem>
                 </SelectContent>
               </Select>
@@ -337,7 +294,7 @@ export default function Payments() {
           <CardHeader>
             <CardTitle>Payment History</CardTitle>
             <CardDescription>
-              {payments.length} payment{payments.length !== 1 ? "s" : ""} found
+              {paymentsData?.total ?? 0} payment{(paymentsData?.total ?? 0) !== 1 ? "s" : ""} found
             </CardDescription>
           </CardHeader>
           <CardContent>

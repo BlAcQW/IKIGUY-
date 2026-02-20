@@ -100,9 +100,10 @@ class ChatResponse(BaseModel):
 
 
 class ChatSession(BaseModel):
-    """Persistent chat session (optional - for future implementation)."""
+    """Persistent chat session."""
     id: str
     property_id: str
+    property_name: Optional[str] = None
     user_id: Optional[str] = None
     organization_id: str
     messages: List[ChatMessage] = Field(default_factory=list)
@@ -114,3 +115,11 @@ class ChatSession(BaseModel):
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
+
+
+class ChatSessionListResponse(BaseModel):
+    """Paginated list of chat sessions."""
+    conversations: List[ChatSession]
+    total: int
+    limit: int
+    offset: int

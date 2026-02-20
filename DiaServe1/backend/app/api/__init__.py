@@ -44,6 +44,18 @@ try:
 except ImportError:
     HAS_CAMPAIGNS = False
 
+try:
+    from app.api.voice.router import router as voice_router
+    HAS_VOICE = True
+except ImportError:
+    HAS_VOICE = False
+
+try:
+    from app.api.ai_tools.router import router as ai_tools_router
+    HAS_AI_TOOLS = True
+except ImportError:
+    HAS_AI_TOOLS = False
+
 
 api_router = APIRouter()
 
@@ -68,6 +80,10 @@ if HAS_SYSTEM:
     api_router.include_router(system_router, tags=["system"])
 if HAS_CAMPAIGNS:
     api_router.include_router(campaigns_router, tags=["campaigns"])
+if HAS_VOICE:
+    api_router.include_router(voice_router, tags=["voice"])
+if HAS_AI_TOOLS:
+    api_router.include_router(ai_tools_router, tags=["ai-tools"])
 
 
 @api_router.get("/")
@@ -90,5 +106,7 @@ async def api_root():
             "organizations": "/api/v1/organizations",
             "users": "/api/v1/users",
             "auth": "/api/v1/auth",
+            "voice": "/api/v1/voice",
+            "ai": "/api/v1/ai",
         }
     }

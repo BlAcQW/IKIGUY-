@@ -5,10 +5,10 @@
  */
 
 // Get API base URL from environment variable, fallback to localhost
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:30039";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://72.62.179.186:30039";
 
 // Enable mock data for frontend development (can be set via env var)
-export const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === "true" || true;
+export const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === "true" || false;
 
 
 /**

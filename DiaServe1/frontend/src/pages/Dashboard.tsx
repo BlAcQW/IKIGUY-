@@ -32,42 +32,20 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { usePropertyStats, useProperties } from "@/hooks/use-properties";
-
-const aiFeatures = [
-  {
-    name: "Voice Agent",
-    description: "24/7 phone support for inquiries",
-    icon: Phone,
-    status: "active",
-    calls: "127 calls today",
-  },
-  {
-    name: "Chat Assistant",
-    description: "Instant property questions answered",
-    icon: MessageSquare,
-    status: "active",
-    calls: "342 chats today",
-  },
-  {
-    name: "Smart Search",
-    description: "Natural language property search",
-    icon: Sparkles,
-    status: "active",
-    calls: "89 searches today",
-  },
-];
-
-const upcomingTasks = [
-  { id: 1, title: "Property tour with Sarah M.", time: "10:00 AM", type: "tour" },
-  { id: 2, title: "Send contract to Mike J.", time: "11:30 AM", type: "document" },
-  { id: 3, title: "Follow up on Beach Villa inquiry", time: "2:00 PM", type: "call" },
-  { id: 4, title: "Review maintenance request #234", time: "3:30 PM", type: "maintenance" },
-];
+import { useAuth } from "@/contexts/AuthContext";
+import { useCallStats } from "@/lib/api/voice-api";
+import { useAIStats } from "@/lib/api/ai-tools-api";
+import { useBookings } from "@/hooks/use-bookings";
 
 export default function Dashboard() {
+  const { user } = useAuth();
+
   // Fetch real data
   const { data: statsData, isLoading: statsLoading } = usePropertyStats();
   const { data: propertiesData, isLoading: propertiesLoading } = useProperties({ limit: 3, sort_by: 'created_at', sort_order: 'desc' });
+  const { data: callStatsData } = useCallStats();
+  const { data: aiStatsData } = useAIStats();
+  const { data: bookingsData } = useBookings({ limit: 5 });
 
   // Format currency
   const formatCurrency = (value: number) => {
@@ -116,7 +94,38 @@ export default function Dashboard() {
   };
 
   const timeOfDay = getTimeOfDay();
-  const userName = "there"; // TODO: Get from auth context
+  const userName = user?.first_name || "there";
+
+  // Build AI features from real stats
+  const aiFeatures = [
+    {
+      name: "Voice Agent",
+      icon: Phone,
+      calls: callStatsData ? `${callStatsData.calls_today} calls today` : "Loading...",
+    },
+    {
+      name: "Chat Assistant",
+      icon: MessageSquare,
+      calls: aiStatsData ? `${aiStatsData.generations_today} generations today` : "Loading...",
+    },
+    {
+      name: "Smart Search",
+      icon: Sparkles,
+      calls: aiStatsData ? `${aiStatsData.total_generations} total` : "Loading...",
+    },
+  ];
+
+  // Build upcoming tasks from real bookings
+  const upcomingTasks = (bookingsData?.bookings || [])
+    .filter(b => b.status !== 'cancelled' && b.status !== 'completed' && b.status !== 'no_show')
+    .sort((a, b) => new Date(a.scheduled_at).getTime() - new Date(b.scheduled_at).getTime())
+    .slice(0, 4)
+    .map(b => ({
+      id: b.id,
+      title: `${b.booking_type === 'tour' ? 'Property tour' : b.booking_type} - ${b.contact_name || 'Guest'}`,
+      time: new Date(b.scheduled_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      type: b.booking_type || 'tour',
+    }));
 
   const { toast } = useToast();
   const [isRateDialogOpen, setIsRateDialogOpen] = useState(false);
@@ -326,21 +335,27 @@ export default function Dashboard() {
               <CardDescription>Your upcoming tasks and appointments</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              {upcomingTasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-center gap-4 p-3 rounded-xl border border-border hover:bg-secondary/50 transition-colors"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-sm font-medium text-primary">
-                    {task.time.split(' ')[0]}
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-foreground">{task.title}</p>
-                    <p className="text-sm text-muted-foreground">{task.time}</p>
-                  </div>
-                  <Badge variant="muted">{task.type}</Badge>
+              {upcomingTasks.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  No upcoming bookings. Schedule a property tour to get started!
                 </div>
-              ))}
+              ) : (
+                upcomingTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className="flex items-center gap-4 p-3 rounded-xl border border-border hover:bg-secondary/50 transition-colors"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-sm font-medium text-primary">
+                      {task.time.split(' ')[0]}
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-foreground">{task.title}</p>
+                      <p className="text-sm text-muted-foreground">{task.time}</p>
+                    </div>
+                    <Badge variant="muted">{task.type}</Badge>
+                  </div>
+                ))
+              )}
             </CardContent>
           </Card>
 

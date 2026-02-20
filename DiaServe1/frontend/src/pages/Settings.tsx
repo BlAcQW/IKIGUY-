@@ -4,9 +4,11 @@
  * Organization and user settings management.
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { getUserProfile, updateUserProfile, UserProfile, UserProfileUpdate } from "@/lib/api/user-api";
+import { useOrganization } from "@/contexts/OrganizationContext";
+import { getUserProfile, updateUserProfile, listUsers, UserProfile, UserProfileUpdate, User } from "@/lib/api/user-api";
+import { updateOrganization } from "@/lib/api/organization-api";
 import { toast } from "sonner";
 import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,10 +27,13 @@ import {
   Save,
   Eye,
   EyeOff,
+  Loader2,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function Settings() {
   const { user } = useAuth();
+  const { currentOrganization } = useOrganization();
   const [showApiKeys, setShowApiKeys] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
@@ -41,15 +46,46 @@ export default function Settings() {
     phone: "",
   });
 
-  // Organization Settings
+  // Organization Settings - loaded from context
   const [orgSettings, setOrgSettings] = useState({
-    name: "My Real Estate Agency",
-    email: "admin@agency.com",
-    phone: "+233241234567",
-    address: "123 Main Street, Accra, Ghana",
-    description: "Premium real estate services",
-    website: "https://agency.com",
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    description: "",
+    website: "",
   });
+
+  // Team members state
+  const [teamMembers, setTeamMembers] = useState<User[]>([]);
+  const [isLoadingTeam, setIsLoadingTeam] = useState(false);
+
+  // Load org settings from context
+  useEffect(() => {
+    if (currentOrganization) {
+      setOrgSettings({
+        name: currentOrganization.name || "",
+        email: currentOrganization.email || "",
+        phone: currentOrganization.phone || "",
+        address: "",
+        description: currentOrganization.description || "",
+        website: "",
+      });
+    }
+  }, [currentOrganization]);
+
+  // Fetch team members
+  const fetchTeamMembers = useCallback(async () => {
+    try {
+      setIsLoadingTeam(true);
+      const res = await listUsers();
+      setTeamMembers(res.users);
+    } catch (error) {
+      console.error("Failed to fetch team members:", error);
+    } finally {
+      setIsLoadingTeam(false);
+    }
+  }, []);
 
   // API Keys
   const [apiKeys, setApiKeys] = useState({
@@ -100,6 +136,11 @@ export default function Settings() {
     loadProfile();
   }, [user]);
 
+  // Load team members on mount
+  useEffect(() => {
+    fetchTeamMembers();
+  }, [fetchTeamMembers]);
+
   const handleSaveProfile = async () => {
     setIsSaving(true);
     try {
@@ -121,11 +162,22 @@ export default function Settings() {
   };
 
   const handleSaveOrganization = async () => {
+    if (!currentOrganization?.id) {
+      toast.error("No organization selected");
+      return;
+    }
     setIsSaving(true);
     try {
-      // TODO: Implement API call to save organization settings
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log("Organization settings saved:", orgSettings);
+      await updateOrganization(currentOrganization.id, {
+        name: orgSettings.name || undefined,
+        description: orgSettings.description || undefined,
+        email: orgSettings.email || undefined,
+        phone: orgSettings.phone || undefined,
+      });
+      toast.success("Organization settings saved");
+    } catch (error) {
+      console.error("Failed to save organization:", error);
+      toast.error("Failed to save organization settings");
     } finally {
       setIsSaving(false);
     }
@@ -671,15 +723,45 @@ export default function Settings() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-12">
-                  <Users className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground">
-                    Team management coming soon
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Invite team members and manage their roles and permissions
-                  </p>
-                </div>
+                {isLoadingTeam ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                  </div>
+                ) : teamMembers.length === 0 ? (
+                  <div className="text-center py-12">
+                    <Users className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+                    <p className="text-muted-foreground">
+                      No team members found
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Invite team members from the Admin panel
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {teamMembers.map((member) => (
+                      <div
+                        key={member.id}
+                        className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-secondary/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-white font-semibold">
+                            {member.name?.[0] || member.email[0].toUpperCase()}
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <p className="font-medium">{member.name || member.email}</p>
+                              <Badge variant={member.role === "admin" ? "premium" : "soft"}>
+                                {member.role}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{member.email}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>

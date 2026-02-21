@@ -1,0 +1,11 @@
+{
+  "name": "load-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "screenshot": "node scripts/screenshot.mjs"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.2.0"
+  }
+}

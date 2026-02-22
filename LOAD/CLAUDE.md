@@ -87,6 +87,23 @@ The pipeline orchestrates Audio → STT → LLM → TTS → Audio:
 - Auth state (`src/lib/auth.ts` + `src/hooks/useAuth.ts`): Token stored as `load_token` in localStorage
 - No state management library — local state and prop drilling
 
+#### Vapi-Clone Design Direction
+
+The Assistants page uses a **split-panel editor** inspired by `dashboard.vapi.ai`:
+
+```
+Existing Sidebar (260px) | Assistant List (300px) | Assistant Editor (flex-1)
+```
+
+- **URL-based selection**: `/assistants` shows list + empty state; `/assistants/:id` shows list + editor
+- **Layout**: Uses `noPadding` prop on `Layout` component; sidebar active state uses `startsWith` for nested routes
+- **Panel theming**: CSS variables `--panel-bg`, `--editor-bg`, `--panel-border` with Tailwind tokens `panel`, `editor`
+- **File structure**: `src/pages/assistants/` directory with hooks, tabs, and panel components
+- **Editor tabs**: Model, Transcriber, Voice, Functions, Advanced
+- **Advanced settings in metadata**: Pipeline (silence timeout, response delay, interruption threshold), privacy (recording, HIPAA), messaging (server URL, idle) stored in `metadata` JSONB — zero backend changes required
+- **Dirty tracking**: Baseline JSON comparison; "Unsaved changes" badge; Ctrl/Cmd+S publishes
+- **Create flow**: Dialog (name only) then navigates to editor
+
 ### Database (PostgreSQL + Prisma)
 
 - Schema at `backend/prisma/schema.prisma`

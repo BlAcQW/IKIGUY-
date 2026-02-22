@@ -1,0 +1,158 @@
+================================================================================
+LOAD FRONTEND — PROGRESS LOG
+================================================================================
+Last Updated: 2026-02-21
+Session: Full frontend redesign ("Obsidian Forge" design system)
+
+================================================================================
+DESIGN DIRECTION
+================================================================================
+Theme: "Obsidian Forge" — premium dark developer platform aesthetic
+  - Deep obsidian dark surfaces with luminous emerald accents
+  - Typography: Outfit (display/headings), DM Sans (body), JetBrains Mono (code)
+  - Primary color: Emerald green (HSL 152 76% 36%)
+  - Background: HSL 240 6% 4.5%
+  - Effects: noise textures, gradient meshes, dot grids, glass blur, staggered animations
+  - Inspiration: Linear, Vercel, Resend quality level
+
+================================================================================
+COMPLETED WORK
+================================================================================
+
+TASK 1: Design System Foundation [DONE]
+  Files modified:
+    - index.html                  → Fonts updated to Outfit + DM Sans + JetBrains Mono
+    - tailwind.config.js          → font-display, custom shadows (glow, glow-lg, inner-glow),
+                                    keyframes (pulse-ring, pulse-glow, shimmer, float,
+                                    waveform-bar, spin-slow), emerald color tokens
+    - src/index.css               → Complete CSS variable overhaul for dark theme,
+                                    utility classes: scrollbar-thin, noise-overlay,
+                                    gradient-mesh, dot-grid, glass, stagger-children,
+                                    shimmer-bg, waveform-bar, glow-border
+
+TASK 2: Layout & Navigation Sidebar [DONE]
+  Files modified:
+    - src/components/Layout.tsx   → Sectioned sidebar navigation:
+                                      Overview: Dashboard, Analytics
+                                      Voice: Assistants, Web Call, Call History
+                                      Infrastructure: Phone Numbers, Tools, Squads
+                                      Outbound: Campaigns
+                                      Developers: Webhooks, Settings
+                                    Brand SVG logo, noise overlay, active indicator
+                                    with left 3px bar + emerald tint, user section,
+                                    sidebar width 260px, content max-width 1400px
+    - src/components/PageHeader.tsx → font-display on h1, mb-8 spacing
+
+TASK 3: Auth Pages (Login + Register) [DONE]
+  Files modified:
+    - src/pages/Login.tsx         → Premium split-panel (55%/45%), left panel with
+                                    gradient mesh + noise + dot grid + decorative orb,
+                                    staggered feature animations, refined form (h-11 inputs),
+                                    ArrowRight icon on submit
+    - src/pages/Register.tsx      → Same premium split-panel, side-by-side name/org fields
+
+TASK 4: Dashboard Page [DONE]
+  Files modified:
+    - src/pages/Dashboard.tsx     → Stat cards with icon color backgrounds + hover scale,
+                                    onboarding checklist with progress dots,
+                                    recent calls panel with formatTimeAgo,
+                                    quick actions grid (4 cards with route links),
+                                    call activity chart with CartesianGrid + custom tooltip,
+                                    stagger-children animations
+                                    (Note: linter added listTools, listWebhooks imports
+                                    and enhanced onboarding/recent calls — incorporated)
+
+TASK 5: WebCall Hero Page [DONE]
+  Files modified:
+    - src/pages/WebCall.tsx       → Custom Waveform component (16 animated bars with
+                                    staggered CSS delays), PulseRings component (3 rings),
+                                    call duration timer via setInterval,
+                                    idle state: dot-grid bg + oversized Headphones + pulsing border,
+                                    active state: recording orb with conditional glow styling,
+                                    waveform visualization + status badge + duration counter,
+                                    transcript: Bot/User icons with rounded avatars,
+                                    controls: shadow-glow + rounded-2xl buttons,
+                                    ended state: duration summary
+
+TASK 6: All CRUD Pages [DONE]
+  Files modified:
+    - src/pages/Assistants.tsx    → Card grid with Bot icon avatar, Cpu/Volume2 badges,
+                                    hover-reveal edit/delete (opacity-0 group-hover:opacity-100)
+    - src/pages/Calls.tsx         → Table with compact h-9 filter selects, text-[10px] badges,
+                                    font-mono IDs, scrollbar-thin transcript, pagination
+    - src/pages/PhoneNumbers.tsx  → Table with Search/Globe tab icons, hover-reveal delete,
+                                    compact search dialog
+    - src/pages/Tools.tsx         → Table with hover-reveal actions, grid-cols-2 name/type
+                                    in dialog
+    - src/pages/Squads.tsx        → Card grid (3 cols) with Users icon, Bot in member badges,
+                                    hover-reveal actions
+    - src/pages/Campaigns.tsx     → Table with progress bars (visual bar + fraction text),
+                                    status-aware action buttons (Play/Pause/Resume),
+                                    Users icon + contact count, AlertDialog for safe delete,
+                                    hover-reveal actions
+    - src/pages/Webhooks.tsx      → Expandable card list with Bell icon, delivery history
+                                    table, secret show/hide toggle + copy, event badges,
+                                    active/inactive badge, AlertDialog for safe delete,
+                                    stagger-children animation
+    - src/pages/Analytics.tsx     → 5 summary stat cards with colored icon backgrounds +
+                                    hover scale, bar chart with CartesianGrid + custom
+                                    ChartTooltipContent, pie chart by call type (donut),
+                                    assistant breakdown with progress bars, range toggle
+                                    (7d/30d/90d) with pill buttons, assistant filter dropdown
+    - src/pages/Settings.tsx      → API key card with Key icon header, show/hide toggle,
+                                    Shield security notice, key list with Key icons,
+                                    hover-reveal revoke, max-w-3xl constraint
+
+TASK 7: Build Verification [DONE]
+  - npm run build passes with 0 TypeScript errors
+  - Output: 874.23 kB JS (251.88 kB gzip), 46.54 kB CSS (8.72 kB gzip)
+  - Warning: chunk > 500 kB (can be addressed later with code splitting)
+
+================================================================================
+OTHER FILES MODIFIED (by linter/hooks during session)
+================================================================================
+  - src/components/ui/alert-dialog.tsx  → Added React import to fix TS6133
+
+================================================================================
+FILES NOT MODIFIED (kept as-is)
+================================================================================
+  - src/App.tsx                   → Was redesigned (LoadingScreen with gradient-mesh + SVG logo)
+  - src/main.tsx                  → Unchanged
+  - src/lib/api.ts                → Unchanged (fetch wrapper)
+  - src/lib/auth.ts               → Unchanged (auth helpers)
+  - src/hooks/useAuth.ts          → Unchanged (auth hook)
+  - src/types/index.ts            → Unchanged (entity types)
+  - All src/components/ui/*.tsx   → Unchanged (shadcn primitives)
+  - vite.config.ts                → Unchanged
+  - package.json                  → Unchanged
+
+================================================================================
+WHERE WE LEFT OFF
+================================================================================
+ALL 12 PAGES have been fully redesigned with the Obsidian Forge design system.
+The build compiles cleanly with zero errors.
+
+NEXT STEPS (not yet started):
+  1. Code splitting — address the 500 kB chunk warning with dynamic imports
+     (React.lazy for route-level splitting)
+  2. Responsive testing — verify mobile/tablet layouts for all pages
+  3. Accessibility audit — keyboard navigation, ARIA labels, focus management
+  4. Performance — add loading skeletons on route transitions, optimize re-renders
+  5. E2E tests — test critical flows (login, create assistant, make web call)
+  6. Polish — micro-interactions on buttons/cards, page transition animations
+  7. Backend integration testing — verify all API calls work end-to-end
+  8. Dark/light theme toggle — currently dark-only, could add toggle in Settings
+
+================================================================================
+ARCHITECTURE NOTES
+================================================================================
+  - All pages follow consistent pattern: animate-slide-up wrapper, PageHeader,
+    loading skeleton → empty state (border-dashed card) → data view
+  - Hover-reveal actions on all CRUD tables/cards (opacity-0 group-hover:opacity-100)
+  - Badges use text-[10px] consistently
+  - Form inputs use h-10 height, labels use text-xs font-medium
+  - Section labels use text-[10px] uppercase tracking-wider text-muted-foreground
+  - Linter auto-added AlertDialog pattern to Campaigns + Webhooks delete flows
+  - font-display class applied to all headings via CSS base layer + explicit classes
+
+================================================================================

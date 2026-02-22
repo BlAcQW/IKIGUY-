@@ -5,7 +5,7 @@
  */
 
 // Get API base URL from environment variable, fallback to localhost
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://72.62.179.186:30039";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 // Enable mock data for frontend development (can be set via env var)
 export const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === "true" || false;
@@ -133,6 +133,11 @@ export const API_ENDPOINTS = {
       unsave: (propertyId: string) => `/api/v1/users/me/saved-properties/${propertyId}`,
       check: (propertyId: string) => `/api/v1/users/me/saved-properties/${propertyId}/check`,
     },
+  },
+
+  // Leads (public)
+  leads: {
+    submit: "/api/v1/leads",
   },
 
   // Payments

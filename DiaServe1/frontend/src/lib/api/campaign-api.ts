@@ -5,7 +5,8 @@
  * and segment management.
  */
 
-import { API_BASE_URL } from '@/lib/api-config';
+import { API_BASE_URL, getSelectedOrganizationId } from '@/lib/api-config';
+import { getAuthTokenSync } from '../auth';
 
 // ==================== Types ====================
 
@@ -166,7 +167,7 @@ function buildHeaders(): HeadersInit {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const orgId = localStorage.getItem('kasaai_current_organization_id');
+  const orgId = getSelectedOrganizationId();
   if (orgId) {
     headers['X-Organization-ID'] = orgId;
   }

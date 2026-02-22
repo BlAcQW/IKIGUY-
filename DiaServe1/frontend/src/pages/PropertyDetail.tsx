@@ -268,6 +268,70 @@ export default function PropertyDetail() {
               </CardContent>
             </Card>
 
+            {/* Features */}
+            {(() => {
+              const featuresList = [
+                { key: "pool", label: "Pool" },
+                { key: "garden", label: "Garden" },
+                { key: "balcony", label: "Balcony" },
+                { key: "garage", label: "Garage" },
+                { key: "furnished", label: "Furnished" },
+                { key: "elevator", label: "Elevator" },
+                { key: "air_conditioning", label: "A/C" },
+                { key: "heating", label: "Heating" },
+                { key: "fireplace", label: "Fireplace" },
+                { key: "security_system", label: "Security" },
+                { key: "gym", label: "Gym" },
+                { key: "storage", label: "Storage" },
+                { key: "concierge", label: "Concierge" },
+                { key: "newly_built", label: "Newly Built" },
+                { key: "renovated", label: "Newly Renovated" },
+              ] as const;
+              const activeFeatures = featuresList.filter(
+                (f) => (property.features as Record<string, unknown>)[f.key]
+              );
+              const hasParking = property.features.parking_spaces && property.features.parking_spaces > 0;
+              const hasCustomFeatures = (property.features.custom_features?.length ?? 0) > 0;
+              if (activeFeatures.length === 0 && !hasParking && !hasCustomFeatures) return null;
+              return (
+                <Card variant="elevated" className="animate-slide-up-fade" style={{ animationDelay: '200ms' }}>
+                  <CardHeader>
+                    <CardTitle>Features</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-3">
+                      {activeFeatures.map((f) => (
+                        <Badge
+                          key={f.key}
+                          variant="muted"
+                          className="hover:scale-110 hover:-translate-y-1 hover:shadow-md hover:bg-primary/15 hover:text-primary hover:border-primary/30 cursor-default"
+                        >
+                          {f.label}
+                        </Badge>
+                      ))}
+                      {hasParking && (
+                        <Badge
+                          variant="muted"
+                          className="hover:scale-110 hover:-translate-y-1 hover:shadow-md hover:bg-primary/15 hover:text-primary hover:border-primary/30 cursor-default"
+                        >
+                          {property.features.parking_spaces} Parking
+                        </Badge>
+                      )}
+                      {property.features.custom_features?.map((feature) => (
+                        <Badge
+                          key={feature}
+                          variant="muted"
+                          className="hover:scale-110 hover:-translate-y-1 hover:shadow-md hover:bg-primary/15 hover:text-primary hover:border-primary/30 cursor-default"
+                        >
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })()}
+
             {/* Description */}
             <Card>
               <CardHeader>
@@ -302,7 +366,28 @@ export default function PropertyDetail() {
           <div className="space-y-6">
             {/* Lead Collection / Schedule Tour */}
             {!user ? (
-              <LeadForm propertyId={property.id} propertyName={property.name} />
+              <div className="space-y-6">
+                <Card variant="elevated" className="bg-gradient-to-br from-primary/5 to-accent/5">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Schedule a Tour</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <p className="text-sm text-muted-foreground">
+                      Interested in visiting this property? Book a tour at a time that works for you.
+                    </p>
+                    <Button
+                      onClick={() => setBookingDialogOpen(true)}
+                      className="w-full"
+                      size="lg"
+                      variant="default"
+                    >
+                      <Calendar className="mr-2 h-5 w-5" />
+                      Book a Tour
+                    </Button>
+                  </CardContent>
+                </Card>
+                <LeadForm propertyId={property.id} propertyName={property.name} />
+              </div>
             ) : (
               <Card variant="elevated" className="bg-gradient-to-br from-primary/5 to-accent/5">
                 <CardHeader>
@@ -428,25 +513,6 @@ export default function PropertyDetail() {
               </CardContent>
             </Card>
 
-            {/* Features */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Features</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {property.features.pool && <Badge variant="muted">Pool</Badge>}
-                  {property.features.garden && <Badge variant="muted">Garden</Badge>}
-                  {property.features.balcony && <Badge variant="muted">Balcony</Badge>}
-                  {property.features.elevator && <Badge variant="muted">Elevator</Badge>}
-                  {property.features.air_conditioning && <Badge variant="muted">A/C</Badge>}
-                  {property.features.heating && <Badge variant="muted">Heating</Badge>}
-                  {property.features.parking_spaces && (
-                    <Badge variant="muted">{property.features.parking_spaces} Parking</Badge>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>

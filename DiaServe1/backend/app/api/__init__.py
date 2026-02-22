@@ -56,6 +56,12 @@ try:
 except ImportError:
     HAS_AI_TOOLS = False
 
+try:
+    from app.api.leads.router import router as leads_router
+    HAS_LEADS = True
+except ImportError:
+    HAS_LEADS = False
+
 
 api_router = APIRouter()
 
@@ -84,6 +90,8 @@ if HAS_VOICE:
     api_router.include_router(voice_router, tags=["voice"])
 if HAS_AI_TOOLS:
     api_router.include_router(ai_tools_router, tags=["ai-tools"])
+if HAS_LEADS:
+    api_router.include_router(leads_router, tags=["leads"])
 
 
 @api_router.get("/")

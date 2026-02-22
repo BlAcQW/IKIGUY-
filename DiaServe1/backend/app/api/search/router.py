@@ -141,18 +141,27 @@ async def search_properties_get(
 async def get_popular_searches(
     limit: int = Query(10, ge=1, le=50, description="Number of results"),
     database: AsyncIOMotorDatabase = Depends(get_database),
-    current_user: Dict[str, Any] = Depends(get_current_user),
-    org_context: Dict[str, str] = Depends(get_organization_context)
+    current_user: Optional[Dict[str, Any]] = Depends(get_optional_user),
+    org_context: Optional[Dict[str, str]] = Depends(get_optional_organization_context)
 ):
     """
     Get most popular search queries.
 
     Useful for understanding user search patterns.
+
+    **Authentication:**
+    - Optional - Works for both authenticated and public users
     """
     search_analytics_collection = database["search_analytics"]
 
+    match_stage = (
+        {"$match": {"organization_id": org_context["organization_id"]}}
+        if org_context
+        else {"$match": {}}
+    )
+
     pipeline = [
-        {"$match": {"organization_id": org_context["organization_id"]}},
+        match_stage,
         {"$group": {"_id": "$query", "count": {"$sum": 1}}},
         {"$sort": {"count": -1}},
         {"$limit": limit}
@@ -255,31 +264,35 @@ async def get_location_suggestions(
     query: str = Query(..., min_length=1, description="Location search query"),
     limit: int = Query(10, ge=1, le=20, description="Number of suggestions"),
     database: AsyncIOMotorDatabase = Depends(get_database),
-    current_user: Dict[str, Any] = Depends(get_current_user),
-    org_context: Dict[str, str] = Depends(get_organization_context)
+    current_user: Optional[Dict[str, Any]] = Depends(get_optional_user),
+    org_context: Optional[Dict[str, str]] = Depends(get_optional_organization_context)
 ):
     """
     Get location autocomplete suggestions.
 
     Searches cities, states, and neighborhoods.
+
+    **Authentication:**
+    - Optional - Works for both authenticated and public users
     """
     properties_collection = database["properties"]
 
     # Regex search for locations
     regex_query = {"$regex": f"^{query}", "$options": "i"}
 
+    match_filter = {
+        "status": "active",
+        "$or": [
+            {"location.city": regex_query},
+            {"location.state": regex_query},
+            {"location.neighborhood": regex_query}
+        ]
+    }
+    if org_context:
+        match_filter["organization_id"] = org_context["organization_id"]
+
     pipeline = [
-        {
-            "$match": {
-                "organization_id": org_context["organization_id"],
-                "status": "active",
-                "$or": [
-                    {"location.city": regex_query},
-                    {"location.state": regex_query},
-                    {"location.neighborhood": regex_query}
-                ]
-            }
-        },
+        {"$match": match_filter},
         {
             "$group": {
                 "_id": None,
@@ -315,13 +328,16 @@ async def get_amenity_suggestions(
     query: str = Query("", description="Amenity search query"),
     limit: int = Query(10, ge=1, le=20, description="Number of suggestions"),
     database: AsyncIOMotorDatabase = Depends(get_database),
-    current_user: Dict[str, Any] = Depends(get_current_user),
-    org_context: Dict[str, str] = Depends(get_organization_context)
+    current_user: Optional[Dict[str, Any]] = Depends(get_optional_user),
+    org_context: Optional[Dict[str, str]] = Depends(get_optional_organization_context)
 ):
     """
     Get amenity suggestions.
 
     Returns common amenities available in properties.
+
+    **Authentication:**
+    - Optional - Works for both authenticated and public users
     """
     # Common amenities
     all_amenities = [

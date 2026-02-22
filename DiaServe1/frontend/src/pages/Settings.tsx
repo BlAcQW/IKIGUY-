@@ -20,7 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Building,
-  User,
+  User as UserIcon,
   Key,
   Bell,
   Users,
@@ -220,7 +220,7 @@ export default function Settings() {
               Organization
             </TabsTrigger>
             <TabsTrigger value="profile" className="gap-2">
-              <User className="h-4 w-4" />
+              <UserIcon className="h-4 w-4" />
               Profile
             </TabsTrigger>
             <TabsTrigger value="api-keys" className="gap-2">

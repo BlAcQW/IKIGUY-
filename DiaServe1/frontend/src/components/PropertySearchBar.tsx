@@ -33,7 +33,7 @@ export function PropertySearchBar({
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { searchWithQuery, results, isLoading, error } = usePropertySearch();
+  const { searchWithQuery, results, isLoading, error, reset } = usePropertySearch();
   const { data: popularSearches } = usePopularSearches(5);
 
   // Notify parent when results change
@@ -78,6 +78,7 @@ export function PropertySearchBar({
 
   const clearSearch = () => {
     setQuery("");
+    reset();
     inputRef.current?.focus();
     onClear?.(); // Notify parent that search was cleared
   };

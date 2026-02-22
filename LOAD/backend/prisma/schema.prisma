@@ -1,0 +1,236 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum Plan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum CallType {
+  WEB
+  INBOUND
+  OUTBOUND
+}
+
+enum CallStatus {
+  QUEUED
+  RINGING
+  IN_PROGRESS
+  ENDED
+  FAILED
+}
+
+enum CampaignStatus {
+  DRAFT
+  RUNNING
+  PAUSED
+  COMPLETED
+}
+
+enum ToolType {
+  FUNCTION
+  TRANSFER_CALL
+  END_CALL
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  plan      Plan     @default(FREE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users        User[]
+  apiKeys      ApiKey[]
+  assistants   Assistant[]
+  calls        Call[]
+  phoneNumbers PhoneNumber[]
+  tools        Tool[]
+  squads       Squad[]
+  campaigns    Campaign[]
+  webhooks     Webhook[]
+}
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  passwordHash   String
+  name           String
+  role           Role     @default(MEMBER)
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  apiKeys      ApiKey[]
+}
+
+model ApiKey {
+  id             String    @id @default(uuid())
+  keyHash        String    @unique
+  prefix         String
+  name           String
+  organizationId String
+  createdById    String
+  lastUsedAt     DateTime?
+  expiresAt      DateTime?
+  createdAt      DateTime  @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdBy    User         @relation(fields: [createdById], references: [id], onDelete: Cascade)
+}
+
+model Assistant {
+  id             String   @id @default(uuid())
+  organizationId String
+  name           String
+  model          Json
+  voice          Json
+  transcriber    Json
+  firstMessage   String?
+  endCallMessage String?
+  endCallPhrases String[] @default([])
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  calls        Call[]
+  phoneNumbers PhoneNumber[]
+  campaigns    Campaign[]
+}
+
+model Call {
+  id              String     @id @default(uuid())
+  organizationId  String
+  assistantId     String
+  type            CallType
+  status          CallStatus @default(QUEUED)
+  phoneNumberId   String?
+  customerNumber  String?
+  externalCallId  String?
+  startedAt       DateTime?
+  endedAt         DateTime?
+  duration        Int?
+  endReason       String?
+  transcript      Json?
+  recordingUrl    String?
+  cost            Decimal?
+  metadata        Json?
+  createdAt       DateTime   @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assistant    Assistant    @relation(fields: [assistantId], references: [id], onDelete: Cascade)
+  phoneNumber  PhoneNumber? @relation(fields: [phoneNumberId], references: [id])
+}
+
+model PhoneNumber {
+  id             String   @id @default(uuid())
+  organizationId String
+  number         String   @unique
+  twilioSid      String?  @unique
+  assistantId    String?
+  name           String?
+  provider       String   @default("TWILIO")
+  sipDomain      String?
+  status         String   @default("ACTIVE")
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assistant    Assistant?   @relation(fields: [assistantId], references: [id])
+  calls        Call[]
+  campaigns    Campaign[]
+
+  @@index([number])
+}
+
+model Tool {
+  id             String   @id @default(uuid())
+  organizationId String
+  type           ToolType @default(FUNCTION)
+  name           String
+  description    String?
+  function       Json?
+  serverUrl      String?
+  serverSecret   String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Squad {
+  id             String   @id @default(uuid())
+  organizationId String
+  name           String
+  members        Json
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Campaign {
+  id             String         @id @default(uuid())
+  organizationId String
+  name           String
+  assistantId    String
+  phoneNumberId  String
+  status         CampaignStatus @default(DRAFT)
+  contacts       Json           @default("[]")
+  schedule       Json?
+  stats          Json?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assistant    Assistant    @relation(fields: [assistantId], references: [id])
+  phoneNumber  PhoneNumber  @relation(fields: [phoneNumberId], references: [id])
+}
+
+model Webhook {
+  id             String   @id @default(uuid())
+  organizationId String
+  url            String
+  events         String[]
+  secret         String
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  deliveries   WebhookDelivery[]
+}
+
+model WebhookDelivery {
+  id            String   @id @default(uuid())
+  webhookId     String
+  event         String
+  status        String   // success, failed, pending
+  requestBody   Json
+  responseCode  Int?
+  responseBody  String?
+  responseTime  Int?
+  error         String?
+  attemptNumber Int      @default(1)
+  createdAt     DateTime @default(now())
+
+  webhook Webhook @relation(fields: [webhookId], references: [id], onDelete: Cascade)
+
+  @@index([webhookId, createdAt])
+}

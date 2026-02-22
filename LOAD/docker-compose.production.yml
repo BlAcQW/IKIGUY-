@@ -1,0 +1,42 @@
+# Production override for deployment to 72.62.179.186
+# Uses external Asterisk at 148.251.0.46 (not local container)
+#
+# Usage: docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+
+version: '3.8'
+
+services:
+  # Disable the local asterisk container in production
+  # (external Asterisk at 148.251.0.46 is used instead)
+  asterisk:
+    profiles:
+      - disabled
+
+  postgres:
+    restart: unless-stopped
+
+  redis:
+    restart: unless-stopped
+
+  backend:
+    restart: unless-stopped
+    environment:
+      ASTERISK_ARI_URL: http://148.251.0.46:8088
+      ASTERISK_ARI_USERNAME: load
+      ASTERISK_ARI_PASSWORD: load_ari_password
+      ASTERISK_ARI_APP: load
+      NODE_ENV: production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3000/health || exit 1']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    restart: unless-stopped

@@ -6,7 +6,7 @@
  */
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getAuthToken } from '../auth';
+import { getAuthTokenSync } from '../auth';
 import { buildApiUrl } from '../api-config';
 
 // ============================================================================
@@ -138,10 +138,10 @@ export interface InvoiceStats {
 // ============================================================================
 
 const getHeaders = () => {
-  const token = getAuthToken();
+  const token = getAuthTokenSync();
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
   };
 };
 

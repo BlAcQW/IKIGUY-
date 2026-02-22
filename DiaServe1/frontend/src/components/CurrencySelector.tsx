@@ -1,10 +1,10 @@
 /**
- * Currency selector component with custom rate support.
+ * Currency selector component.
  *
- * Allows users to select their preferred currency and override exchange rates.
+ * Allows users to toggle between USD and GHS display currencies.
  */
 
-import { Banknote, RefreshCw } from "lucide-react";
+import { Banknote } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -18,11 +18,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCurrencies, useExchangeRates, setCustomExchangeRate, currencyKeys } from "@/hooks/use-currencies";
+import { useCurrencies } from "@/hooks/use-currencies";
 import { useState, useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 
 interface CurrencySelectorProps {
   value?: string;
@@ -30,43 +28,22 @@ interface CurrencySelectorProps {
 }
 
 export function CurrencySelector({ value = "USD", onValueChange }: CurrencySelectorProps) {
-  const { data: currencies, isLoading } = useCurrencies();
-  const { data: exchangeRates } = useExchangeRates();
+  const { data: currencies } = useCurrencies();
   const [selectedCurrency, setSelectedCurrency] = useState(value);
-  const [customRate, setCustomRate] = useState<string>("");
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     setSelectedCurrency(value);
   }, [value]);
-
-  // Update local custom rate state when currency or rates change
-  useEffect(() => {
-    if (exchangeRates && selectedCurrency) {
-      const rate = exchangeRates.rates[selectedCurrency];
-      setCustomRate(rate ? rate.toString() : "");
-    }
-  }, [exchangeRates, selectedCurrency]);
 
   const handleCurrencyChange = (newValue: string) => {
     setSelectedCurrency(newValue);
     onValueChange?.(newValue);
   };
 
-  const handleRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVal = e.target.value;
-    setCustomRate(newVal);
-
-    // Debounce or save
-    const numVal = parseFloat(newVal);
-    if (!isNaN(numVal) && numVal > 0) {
-      setCustomExchangeRate(selectedCurrency, numVal);
-      // Invalidate queries to trigger re-render of prices
-      queryClient.invalidateQueries({ queryKey: currencyKeys.rates() });
-    }
-  };
-
-  const currentCurrencySymbol = currencies?.find(c => c.code === selectedCurrency)?.symbol || "$";
+  // Only show USD and GHS
+  const filteredCurrencies = currencies?.filter(
+    (c) => c.code === "USD" || c.code === "GHS"
+  );
 
   return (
     <Popover>
@@ -89,7 +66,7 @@ export function CurrencySelector({ value = "USD", onValueChange }: CurrencySelec
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {currencies?.map((currency) => (
+                {filteredCurrencies?.map((currency) => (
                   <SelectItem key={currency.code} value={currency.code}>
                     <span className="font-medium mr-2">{currency.symbol}</span>
                     {currency.name}
@@ -98,38 +75,6 @@ export function CurrencySelector({ value = "USD", onValueChange }: CurrencySelec
               </SelectContent>
             </Select>
           </div>
-
-          {selectedCurrency !== "USD" && (
-            <div className="space-y-2">
-              <Label htmlFor="rate">Exchange Rate (1 USD = )</Label>
-              <div className="relative">
-                <Input
-                  id="rate"
-                  type="number"
-                  value={customRate}
-                  onChange={handleRateChange}
-                  className="pl-8"
-                />
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
-                  {currentCurrencySymbol}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
-                  onClick={() => {
-                    // Reset to default mock rate logic or refetch? 
-                    // For now, just clear custom rate and reload context
-                    localStorage.removeItem('estateflow_custom_rates');
-                    queryClient.invalidateQueries({ queryKey: currencyKeys.rates() });
-                  }}
-                  title="Reset Rates"
-                >
-                  <RefreshCw className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
-          )}
         </div>
       </PopoverContent>
     </Popover>

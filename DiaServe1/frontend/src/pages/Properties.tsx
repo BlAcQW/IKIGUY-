@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Plus,
@@ -66,6 +66,26 @@ export default function Properties() {
   // Use search results if searching, otherwise use regular properties
   const properties = isSearching ? searchResults : (propertiesData?.properties || []);
   const total = isSearching ? searchResults.length : (propertiesData?.total || 0);
+
+  // Stable callback to prevent useEffect re-firing in PropertySearchBar on re-render
+  const handleSearchResults = useCallback((results: any) => {
+    try {
+      console.log('Search results received:', results);
+      const properties = results.matches
+        .map((m: any) => m.property_data || m.property)
+        .filter(Boolean);
+
+      setSearchResults(properties);
+      setIsSearching(true);
+      setSearchMetadata({
+        query: results.parsed_query?.original_query || results.query || "Search query",
+        total: properties.length,
+        timing: results.search_timing
+      });
+    } catch (error) {
+      console.error('Error processing search results:', error);
+    }
+  }, []);
 
   // Handlers
   const handleEdit = (property: Property) => {
@@ -152,28 +172,7 @@ export default function Properties() {
         </div>
         {/* AI Search Bar */}
         <PropertySearchBar
-          onSearch={(results) => {
-            try {
-              console.log('Search results received:', results);
-
-              // Update properties list with search results (use property_data, not property)
-              const properties = results.matches
-                .map((m: any) => m.property_data || m.property) // Fallback for backwards compatibility
-                .filter(Boolean); // Remove any undefined values
-
-              setSearchResults(properties);
-
-              // Show search metadata
-              setIsSearching(true);
-              setSearchMetadata({
-                query: results.parsed_query?.original_query || results.query || "Search query",
-                total: properties.length,
-                timing: results.search_timing
-              });
-            } catch (error) {
-              console.error('Error processing search results:', error);
-            }
-          }}
+          onSearch={handleSearchResults}
           onClear={() => {
             // Reset to default property list
             setIsSearching(false);
@@ -340,7 +339,7 @@ export default function Properties() {
                     </div>
 
                     {/* Favorite Button (top-right) */}
-                    <div className="absolute top-4 right-4 flex gap-2" onClick={(e) => e.preventDefault()}>
+                    <div className="absolute top-4 right-4 flex gap-2" onClick={(e) => e.stopPropagation()}>
                       <SavePropertyButton propertyId={property.id} />
                     </div>
 
@@ -394,24 +393,6 @@ export default function Properties() {
                           {property.features.sqft?.toLocaleString() || 'N/A'} sqft
                         </span>
                       </div>
-                    </div>
-
-                    {/* Feature Badges */}
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="soft" className="text-xs">
-                        {property.property_type}
-                      </Badge>
-                      {property.features.pool && (
-                        <Badge variant="soft-success" className="text-xs">Pool</Badge>
-                      )}
-                      {property.features.garden && (
-                        <Badge variant="soft-success" className="text-xs">Garden</Badge>
-                      )}
-                      {property.features.parking_spaces > 0 && (
-                        <Badge variant="soft" className="text-xs">
-                          {property.features.parking_spaces} Parking
-                        </Badge>
-                      )}
                     </div>
 
                     {/* Actions Row */}

@@ -54,7 +54,7 @@ async def create_campaign(
     Returns:
         Created campaign
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -100,7 +100,7 @@ async def list_campaigns(
     Returns:
         List of campaigns with pagination info
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -127,267 +127,9 @@ async def list_campaigns(
         )
 
 
-@router.get("/{campaign_id}", response_model=Campaign)
-async def get_campaign(
-    campaign_id: str,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Get campaign details by ID.
-
-    Args:
-        campaign_id: Campaign ID
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Campaign details
-    """
-    db = get_database()
-    campaign_service = CampaignService(db)
-
-    campaign = await campaign_service.get_campaign(
-        campaign_id=campaign_id,
-        organization_id=org_context["organization_id"]
-    )
-
-    if not campaign:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Campaign {campaign_id} not found"
-        )
-
-    return campaign
-
-
-@router.put("/{campaign_id}", response_model=Campaign)
-async def update_campaign(
-    campaign_id: str,
-    updates: CampaignUpdate,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Update a campaign (DRAFT only).
-
-    Args:
-        campaign_id: Campaign ID
-        updates: Update data
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Updated campaign
-    """
-    db = get_database()
-    campaign_service = CampaignService(db)
-
-    try:
-        campaign = await campaign_service.update_campaign(
-            campaign_id=campaign_id,
-            updates=updates,
-            organization_id=org_context["organization_id"]
-        )
-
-        if not campaign:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Campaign {campaign_id} not found"
-            )
-
-        logger.info(f"Campaign {campaign_id} updated by user {user['sub']}")
-        return campaign
-
-    except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
-    except Exception as e:
-        logger.error(f"Error updating campaign: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to update campaign: {str(e)}"
-        )
-
-
-@router.delete("/{campaign_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_campaign(
-    campaign_id: str,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Delete a campaign (DRAFT only).
-
-    Args:
-        campaign_id: Campaign ID
-        user: Current authenticated user
-        org_context: Organization context
-    """
-    db = get_database()
-    campaign_service = CampaignService(db)
-
-    try:
-        deleted = await campaign_service.delete_campaign(
-            campaign_id=campaign_id,
-            organization_id=org_context["organization_id"]
-        )
-
-        if not deleted:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Campaign {campaign_id} not found"
-            )
-
-        logger.info(f"Campaign {campaign_id} deleted by user {user['sub']}")
-
-    except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
-    except Exception as e:
-        logger.error(f"Error deleting campaign: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to delete campaign: {str(e)}"
-        )
-
-
-# ==================== Campaign Actions ====================
-
-
-@router.post("/{campaign_id}/launch", response_model=Campaign)
-async def launch_campaign(
-    campaign_id: str,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Launch a campaign to start sending messages.
-
-    Args:
-        campaign_id: Campaign ID
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Updated campaign with RUNNING status
-    """
-    db = get_database()
-    campaign_service = CampaignService(db)
-
-    try:
-        campaign = await campaign_service.launch_campaign(
-            campaign_id=campaign_id,
-            organization_id=org_context["organization_id"]
-        )
-
-        logger.info(
-            f"Campaign {campaign_id} launched by user {user['sub']} "
-            f"targeting {campaign.target_count} contacts"
-        )
-        return campaign
-
-    except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
-    except Exception as e:
-        logger.error(f"Error launching campaign: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to launch campaign: {str(e)}"
-        )
-
-
-@router.post("/{campaign_id}/pause", response_model=Campaign)
-async def pause_campaign(
-    campaign_id: str,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Pause a running campaign.
-
-    Args:
-        campaign_id: Campaign ID
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Updated campaign with PAUSED status
-    """
-    db = get_database()
-    campaign_service = CampaignService(db)
-
-    try:
-        campaign = await campaign_service.pause_campaign(
-            campaign_id=campaign_id,
-            organization_id=org_context["organization_id"]
-        )
-
-        logger.info(f"Campaign {campaign_id} paused by user {user['sub']}")
-        return campaign
-
-    except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
-    except Exception as e:
-        logger.error(f"Error pausing campaign: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to pause campaign: {str(e)}"
-        )
-
-
-@router.get("/{campaign_id}/analytics")
-async def get_campaign_analytics(
-    campaign_id: str,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Get campaign analytics and metrics.
-
-    Args:
-        campaign_id: Campaign ID
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Campaign analytics data
-    """
-    db = get_database()
-    campaign_service = CampaignService(db)
-
-    try:
-        analytics = await campaign_service.get_campaign_analytics(
-            campaign_id=campaign_id,
-            organization_id=org_context["organization_id"]
-        )
-
-        return analytics
-
-    except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=str(e)
-        )
-    except Exception as e:
-        logger.error(f"Error getting campaign analytics: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to get campaign analytics: {str(e)}"
-        )
-
-
 # ==================== Contact Endpoints ====================
+# NOTE: Contact routes MUST be defined before /{campaign_id} routes,
+# otherwise FastAPI matches "/contacts" as a campaign_id parameter.
 
 
 @router.post("/contacts", response_model=Contact, status_code=status.HTTP_201_CREATED)
@@ -407,7 +149,7 @@ async def create_contact(
     Returns:
         Created contact
     """
-    db = get_database()
+    db = await get_database()
     contact_service = ContactService(db)
 
     try:
@@ -449,7 +191,7 @@ async def list_contacts(
     Returns:
         List of contacts with pagination info
     """
-    db = get_database()
+    db = await get_database()
     contact_service = ContactService(db)
 
     try:
@@ -492,7 +234,7 @@ async def get_contact(
     Returns:
         Contact details
     """
-    db = get_database()
+    db = await get_database()
     contact_service = ContactService(db)
 
     contact = await contact_service.get_contact(
@@ -528,7 +270,7 @@ async def update_contact(
     Returns:
         Updated contact
     """
-    db = get_database()
+    db = await get_database()
     contact_service = ContactService(db)
 
     try:
@@ -569,7 +311,7 @@ async def delete_contact(
         user: Current authenticated user
         org_context: Organization context
     """
-    db = get_database()
+    db = await get_database()
     contact_service = ContactService(db)
 
     deleted = await contact_service.delete_contact(
@@ -612,7 +354,7 @@ async def bulk_import_contacts(
             detail="File must be a CSV"
         )
 
-    db = get_database()
+    db = await get_database()
     contact_service = ContactService(db)
 
     try:
@@ -685,7 +427,7 @@ async def preview_segment(
     Returns:
         Preview data with contact count, samples, and estimated cost
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -702,4 +444,268 @@ async def preview_segment(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to preview segment: {str(e)}"
+        )
+
+
+# ==================== Campaign by ID Endpoints ====================
+# NOTE: These /{campaign_id} routes must come AFTER /contacts routes.
+
+
+@router.get("/{campaign_id}", response_model=Campaign)
+async def get_campaign(
+    campaign_id: str,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Get campaign details by ID.
+
+    Args:
+        campaign_id: Campaign ID
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Campaign details
+    """
+    db = await get_database()
+    campaign_service = CampaignService(db)
+
+    campaign = await campaign_service.get_campaign(
+        campaign_id=campaign_id,
+        organization_id=org_context["organization_id"]
+    )
+
+    if not campaign:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Campaign {campaign_id} not found"
+        )
+
+    return campaign
+
+
+@router.put("/{campaign_id}", response_model=Campaign)
+async def update_campaign(
+    campaign_id: str,
+    updates: CampaignUpdate,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Update a campaign (DRAFT only).
+
+    Args:
+        campaign_id: Campaign ID
+        updates: Update data
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Updated campaign
+    """
+    db = await get_database()
+    campaign_service = CampaignService(db)
+
+    try:
+        campaign = await campaign_service.update_campaign(
+            campaign_id=campaign_id,
+            updates=updates,
+            organization_id=org_context["organization_id"]
+        )
+
+        if not campaign:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Campaign {campaign_id} not found"
+            )
+
+        logger.info(f"Campaign {campaign_id} updated by user {user['sub']}")
+        return campaign
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        logger.error(f"Error updating campaign: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update campaign: {str(e)}"
+        )
+
+
+@router.delete("/{campaign_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_campaign(
+    campaign_id: str,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Delete a campaign (DRAFT only).
+
+    Args:
+        campaign_id: Campaign ID
+        user: Current authenticated user
+        org_context: Organization context
+    """
+    db = await get_database()
+    campaign_service = CampaignService(db)
+
+    try:
+        deleted = await campaign_service.delete_campaign(
+            campaign_id=campaign_id,
+            organization_id=org_context["organization_id"]
+        )
+
+        if not deleted:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Campaign {campaign_id} not found"
+            )
+
+        logger.info(f"Campaign {campaign_id} deleted by user {user['sub']}")
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        logger.error(f"Error deleting campaign: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete campaign: {str(e)}"
+        )
+
+
+# ==================== Campaign Actions ====================
+
+
+@router.post("/{campaign_id}/launch", response_model=Campaign)
+async def launch_campaign(
+    campaign_id: str,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Launch a campaign to start sending messages.
+
+    Args:
+        campaign_id: Campaign ID
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Updated campaign with RUNNING status
+    """
+    db = await get_database()
+    campaign_service = CampaignService(db)
+
+    try:
+        campaign = await campaign_service.launch_campaign(
+            campaign_id=campaign_id,
+            organization_id=org_context["organization_id"]
+        )
+
+        logger.info(
+            f"Campaign {campaign_id} launched by user {user['sub']} "
+            f"targeting {campaign.target_count} contacts"
+        )
+        return campaign
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        logger.error(f"Error launching campaign: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to launch campaign: {str(e)}"
+        )
+
+
+@router.post("/{campaign_id}/pause", response_model=Campaign)
+async def pause_campaign(
+    campaign_id: str,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Pause a running campaign.
+
+    Args:
+        campaign_id: Campaign ID
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Updated campaign with PAUSED status
+    """
+    db = await get_database()
+    campaign_service = CampaignService(db)
+
+    try:
+        campaign = await campaign_service.pause_campaign(
+            campaign_id=campaign_id,
+            organization_id=org_context["organization_id"]
+        )
+
+        logger.info(f"Campaign {campaign_id} paused by user {user['sub']}")
+        return campaign
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        logger.error(f"Error pausing campaign: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to pause campaign: {str(e)}"
+        )
+
+
+@router.get("/{campaign_id}/analytics")
+async def get_campaign_analytics(
+    campaign_id: str,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Get campaign analytics and metrics.
+
+    Args:
+        campaign_id: Campaign ID
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Campaign analytics data
+    """
+    db = await get_database()
+    campaign_service = CampaignService(db)
+
+    try:
+        analytics = await campaign_service.get_campaign_analytics(
+            campaign_id=campaign_id,
+            organization_id=org_context["organization_id"]
+        )
+
+        return analytics
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
+    except Exception as e:
+        logger.error(f"Error getting campaign analytics: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get campaign analytics: {str(e)}"
         )

@@ -83,6 +83,7 @@ export interface PropertyFeatures {
   newly_built: boolean;
   garage: boolean;
   renovated: boolean;
+  custom_features?: string[];
 }
 
 export interface FinancialInfo {
@@ -205,4 +206,10 @@ export interface ExchangeRates {
   rates: Record<string, number>;
   last_updated: string;
   source: string;
+  admin_rate?: {
+    currency_code: string;
+    rate: number;
+    set_by?: string;
+    set_at?: string;
+  };
 }

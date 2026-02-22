@@ -68,7 +68,7 @@ export function AdminBookingDialog({
   const [scheduledTime, setScheduledTime] = useState("");
   const [duration, setDuration] = useState<number>(30);
   const [bookingType, setBookingType] = useState<BookingType>("in-person");
-  const [agentId, setAgentId] = useState<string>("");
+  const [agentId, setAgentId] = useState<string>("auto");
   const [notes, setNotes] = useState("");
   const [overrideAvailability, setOverrideAvailability] = useState(false);
   const [overrideReason, setOverrideReason] = useState("");
@@ -84,7 +84,7 @@ export function AdminBookingDialog({
       setScheduledTime("");
       setDuration(30);
       setBookingType("in-person");
-      setAgentId("");
+      setAgentId("auto");
       setNotes("");
       setOverrideAvailability(false);
       setOverrideReason("");
@@ -327,7 +327,7 @@ export function AdminBookingDialog({
                 <SelectValue placeholder="Auto-assign agent" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Auto-assign agent</SelectItem>
+                <SelectItem value="auto">Auto-assign agent</SelectItem>
                 {agents.map((agent) => (
                   <SelectItem key={agent.id} value={agent.id}>
                     {agent.first_name} {agent.last_name}

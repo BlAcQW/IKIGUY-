@@ -299,7 +299,7 @@ export default function Saved() {
                       </Badge>
 
                       {/* Save Button */}
-                      <div className="absolute top-3 right-3" onClick={(e) => e.preventDefault()}>
+                      <div className="absolute top-3 right-3" onClick={(e) => e.stopPropagation()}>
                         <SavePropertyButton propertyId={property.id} />
                       </div>
 

@@ -11,17 +11,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { inviteUser, listUsers, listPendingInvitations } from "@/lib/api/user-api";
 import type { UserInvite, User, PendingInvitation } from "@/lib/api/user-api";
+import { updateExchangeRate, getExchangeRates } from "@/lib/api/currency-api";
+import { useExchangeRates, currencyKeys } from "@/hooks/use-currencies";
+import { useQueryClient } from "@tanstack/react-query";
 import {
-  Building2,
   Users,
-  Plus,
   Edit,
   Trash2,
   Mail,
@@ -31,6 +31,9 @@ import {
   Eye,
   Loader2,
   Clock,
+  RefreshCw,
+  DollarSign,
+  Save,
 } from "lucide-react";
 import {
   Dialog,
@@ -48,6 +51,176 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { EmptyState } from "@/components/ui/empty-state";
+
+function ExchangeRateManager() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const { data: exchangeRates, isLoading: isLoadingRates } = useExchangeRates();
+  const [rateInput, setRateInput] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Sync input with current GHS rate when data loads
+  useEffect(() => {
+    if (exchangeRates?.rates?.GHS) {
+      setRateInput(exchangeRates.rates.GHS.toString());
+    }
+  }, [exchangeRates?.rates?.GHS]);
+
+  const isAdminRate = exchangeRates?.source === "admin-override";
+
+  const handleSaveRate = async () => {
+    const numRate = parseFloat(rateInput);
+    if (isNaN(numRate) || numRate <= 0) {
+      toast({
+        title: "Invalid Rate",
+        description: "Please enter a positive number",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      await updateExchangeRate("GHS", numRate);
+      await queryClient.invalidateQueries({ queryKey: currencyKeys.all });
+      toast({
+        title: "Rate Updated",
+        description: `Exchange rate set to 1 USD = ${numRate} GHS`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to update rate",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleRefreshFromApi = async () => {
+    try {
+      setIsRefreshing(true);
+      await getExchangeRates(true);
+      await queryClient.invalidateQueries({ queryKey: currencyKeys.all });
+      toast({
+        title: "Rates Refreshed",
+        description: "Exchange rates fetched from external API",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to refresh rates",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const lastUpdated = exchangeRates?.last_updated
+    ? new Date(exchangeRates.last_updated).toLocaleString()
+    : "N/A";
+
+  const adminSetAt = exchangeRates?.admin_rate?.set_at
+    ? new Date(exchangeRates.admin_rate.set_at).toLocaleString()
+    : null;
+
+  return (
+    <Card variant="elevated">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <DollarSign className="h-5 w-5" />
+              Exchange Rate Management
+            </CardTitle>
+            <CardDescription>
+              Set the USD to GHS exchange rate used across the platform
+            </CardDescription>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleRefreshFromApi}
+            disabled={isRefreshing}
+            className="gap-2"
+          >
+            <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+            Refresh from API
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {/* Current Rate Display */}
+        <div className="rounded-lg border p-4 bg-secondary/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-muted-foreground">Current Rate</p>
+              {isLoadingRates ? (
+                <Loader2 className="h-5 w-5 animate-spin mt-1" />
+              ) : (
+                <p className="text-2xl font-bold">
+                  1 USD = {exchangeRates?.rates?.GHS?.toFixed(2) ?? "—"} GHS
+                </p>
+              )}
+            </div>
+            <Badge variant={isAdminRate ? "premium" : "soft"}>
+              {isAdminRate ? "Admin Set" : "API Rate"}
+            </Badge>
+          </div>
+          <div className="mt-2 text-xs text-muted-foreground space-y-0.5">
+            <p>Last updated: {lastUpdated}</p>
+            {isAdminRate && exchangeRates?.admin_rate?.set_by && (
+              <p>
+                Set by: {exchangeRates.admin_rate.set_by}
+                {adminSetAt ? ` on ${adminSetAt}` : ""}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Rate Input */}
+        <div className="space-y-3">
+          <Label htmlFor="ghs-rate">Set GHS Rate (1 USD = X GHS)</Label>
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+                GH¢
+              </span>
+              <Input
+                id="ghs-rate"
+                type="number"
+                step="0.01"
+                min="0.01"
+                value={rateInput}
+                onChange={(e) => setRateInput(e.target.value)}
+                className="pl-12"
+                placeholder="15.50"
+              />
+            </div>
+            <Button
+              onClick={handleSaveRate}
+              disabled={isSaving || !rateInput}
+              className="gap-2"
+            >
+              {isSaving ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
+              Save Rate
+            </Button>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            This rate will override the external API rate for all users.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function Admin() {
   const { user } = useAuth();
@@ -358,20 +531,8 @@ export default function Admin() {
           </TabsContent>
 
           {/* System Settings Tab */}
-          <TabsContent value="system">
-            <Card variant="elevated">
-              <CardHeader>
-                <CardTitle>System Settings</CardTitle>
-                <CardDescription>Configure global system settings</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <EmptyState
-                  icon={Settings}
-                  title="System Settings"
-                  description="Global system configuration options will appear here"
-                />
-              </CardContent>
-            </Card>
+          <TabsContent value="system" className="space-y-6">
+            <ExchangeRateManager />
           </TabsContent>
         </Tabs>
       </div>

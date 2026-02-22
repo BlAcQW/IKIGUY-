@@ -46,20 +46,10 @@ class ExchangeRate(BaseModel):
     source: str = "exchangerate-api"
 
 
-# Supported currencies with symbols
+# Supported currencies — USD (base) and GHS (Ghanaian Cedi) only
 SUPPORTED_CURRENCIES = [
     Currency(code="USD", name="US Dollar", symbol="$"),
-    Currency(code="EUR", name="Euro", symbol="€"),
-    Currency(code="GBP", name="British Pound", symbol="£"),
     Currency(code="GHS", name="Ghanaian Cedi", symbol="GH¢"),
-    Currency(code="NGN", name="Nigerian Naira", symbol="₦"),
-    Currency(code="ZAR", name="South African Rand", symbol="R"),
-    Currency(code="KES", name="Kenyan Shilling", symbol="KSh"),
-    Currency(code="CAD", name="Canadian Dollar", symbol="C$"),
-    Currency(code="AUD", name="Australian Dollar", symbol="A$"),
-    Currency(code="JPY", name="Japanese Yen", symbol="¥"),
-    Currency(code="CNY", name="Chinese Yuan", symbol="¥"),
-    Currency(code="INR", name="Indian Rupee", symbol="₹"),
 ]
 
 
@@ -105,6 +95,7 @@ class CurrencyService:
         1. Check cache for rates less than 1 hour old
         2. If cache miss or expired, fetch from API
         3. Store new rates in cache
+        4. Overlay any admin-set rates (admin rates take precedence)
 
         Args:
             force_refresh: Force API fetch even if cache is valid
@@ -120,14 +111,25 @@ class CurrencyService:
             cached_rates = await self._get_cached_rates()
             if cached_rates:
                 logger.info(f"Using cached exchange rates from {cached_rates.last_updated}")
-                return cached_rates
+                rates = cached_rates
+            else:
+                logger.info("Fetching fresh exchange rates from API")
+                rates = await self._fetch_rates_from_api()
+                await self._cache_rates(rates)
+        else:
+            logger.info("Fetching fresh exchange rates from API")
+            rates = await self._fetch_rates_from_api()
+            await self._cache_rates(rates)
 
-        # Fetch fresh rates from API
-        logger.info("Fetching fresh exchange rates from API")
-        rates = await self._fetch_rates_from_api()
-
-        # Store in cache
-        await self._cache_rates(rates)
+        # Overlay admin-set rates — admin rates take precedence
+        admin_rate = await self.get_admin_rate("GHS")
+        if admin_rate:
+            rates = ExchangeRate(
+                base_currency=rates.base_currency,
+                rates={**rates.rates, "GHS": admin_rate["rate"]},
+                last_updated=rates.last_updated,
+                source="admin-override",
+            )
 
         return rates
 
@@ -247,6 +249,92 @@ class CurrencyService:
             "exchange_rate": rate,
             "base_price_usd": price_usd
         }
+
+    async def set_admin_rate(
+        self, currency_code: str, rate: float, set_by: str
+    ) -> Dict:
+        """
+        Set an admin-override exchange rate.
+
+        Upserts the rate in the admin_exchange_rates collection.
+
+        Args:
+            currency_code: Currency code (e.g. "GHS")
+            rate: Exchange rate relative to USD
+            set_by: Email of the admin who set the rate
+
+        Returns:
+            dict: The saved admin rate document
+        """
+        currency_code = currency_code.upper()
+        valid_codes = {c.code for c in SUPPORTED_CURRENCIES}
+        if currency_code not in valid_codes:
+            raise ValueError(f"Unsupported currency: {currency_code}")
+        if currency_code == "USD":
+            raise ValueError("Cannot override USD base rate")
+        if rate <= 0:
+            raise ValueError("Rate must be positive")
+
+        collection = self.db["admin_exchange_rates"]
+        doc = {
+            "currency_code": currency_code,
+            "rate": rate,
+            "set_by": set_by,
+            "set_at": datetime.utcnow(),
+        }
+        await collection.update_one(
+            {"currency_code": currency_code},
+            {"$set": doc},
+            upsert=True,
+        )
+        logger.info(f"Admin rate set: 1 USD = {rate} {currency_code} by {set_by}")
+        return doc
+
+    async def get_admin_rate(self, currency_code: str) -> Optional[Dict]:
+        """
+        Get the active admin-override rate for a currency.
+
+        Args:
+            currency_code: Currency code (e.g. "GHS")
+
+        Returns:
+            dict or None: Admin rate document if exists
+        """
+        try:
+            collection = self.db["admin_exchange_rates"]
+            doc = await collection.find_one(
+                {"currency_code": currency_code.upper()}
+            )
+            if doc:
+                return {
+                    "currency_code": doc["currency_code"],
+                    "rate": doc["rate"],
+                    "set_by": doc.get("set_by"),
+                    "set_at": doc.get("set_at"),
+                }
+            return None
+        except Exception as e:
+            logger.error(f"Error reading admin rate: {e}")
+            return None
+
+    async def delete_admin_rate(self, currency_code: str) -> bool:
+        """
+        Remove admin-override rate, reverting to API rate.
+
+        Args:
+            currency_code: Currency code (e.g. "GHS")
+
+        Returns:
+            bool: True if a rate was deleted
+        """
+        collection = self.db["admin_exchange_rates"]
+        result = await collection.delete_one(
+            {"currency_code": currency_code.upper()}
+        )
+        if result.deleted_count > 0:
+            logger.info(f"Admin rate deleted for {currency_code}")
+            return True
+        return False
 
     async def _fetch_rates_from_api(self) -> ExchangeRate:
         """
@@ -380,17 +468,7 @@ class CurrencyService:
         # These are rough estimates and should be updated via API ASAP
         fallback_rates = {
             "USD": 1.0,
-            "EUR": 0.92,
-            "GBP": 0.79,
             "GHS": 15.50,
-            "NGN": 1650.0,
-            "ZAR": 18.50,
-            "KES": 155.0,
-            "CAD": 1.38,
-            "AUD": 1.53,
-            "JPY": 150.0,
-            "CNY": 7.25,
-            "INR": 83.0,
         }
 
         return ExchangeRate(

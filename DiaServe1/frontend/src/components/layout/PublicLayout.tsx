@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { PublicHeader } from "./PublicHeader";
 import { Footer } from "./Footer";
-import { MobileBottomNav } from "../MobileBottomNav";
 
 export function PublicLayout() {
   return (
@@ -11,7 +10,6 @@ export function PublicLayout() {
         <Outlet />
       </main>
       <Footer />
-      <MobileBottomNav />
     </div>
   );
 }

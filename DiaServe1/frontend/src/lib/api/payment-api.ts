@@ -5,6 +5,7 @@
  */
 
 import { API_BASE_URL } from "../api-config";
+import { getAuthTokenSync } from '../auth';
 
 // ==================== Types ====================
 
@@ -177,27 +178,19 @@ export interface PaymentStats {
 
 // ==================== Helper Functions ====================
 
-function getAuthToken(): string | null {
-  // Get token from localStorage (Supabase auth)
-  const session = localStorage.getItem("supabase.auth.token");
-  if (!session) return null;
-
-  try {
-    const parsed = JSON.parse(session);
-    return parsed?.currentSession?.access_token || null;
-  } catch {
-    return null;
-  }
-}
-
-function buildHeaders(token?: string | null): HeadersInit {
+function buildHeaders(): HeadersInit {
   const headers: HeadersInit = {
     "Content-Type": "application/json",
   };
 
-  const authToken = token || getAuthToken();
-  if (authToken) {
-    headers["Authorization"] = `Bearer ${authToken}`;
+  const token = getAuthTokenSync();
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const orgId = localStorage.getItem('selectedOrganizationId');
+  if (orgId) {
+    headers["X-Organization-ID"] = orgId;
   }
 
   return headers;

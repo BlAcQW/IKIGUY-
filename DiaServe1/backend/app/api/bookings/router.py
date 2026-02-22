@@ -386,6 +386,21 @@ async def get_property_availability(
 # ==================== Admin-Only Endpoints ====================
 
 
+@router.post("/admin/backfill-leads")
+async def admin_backfill_leads(
+    database: AsyncIOMotorDatabase = Depends(get_database),
+    current_user: Dict[str, Any] = Depends(get_current_user),
+    org_context: Dict[str, str] = Depends(get_organization_context),
+):
+    """Retroactively create leads from existing bookings."""
+    check_admin_access(current_user)
+    booking_service = BookingService(database)
+    result = await booking_service.backfill_leads_from_bookings(
+        organization_id=org_context["organization_id"],
+    )
+    return result
+
+
 @router.post("/admin/manual-create", response_model=Booking, status_code=201)
 async def admin_create_booking(
     booking_data: BookingCreate,

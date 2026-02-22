@@ -6,9 +6,10 @@ for the property chat feature. Gracefully degrades when
 API key is not configured.
 """
 
-import os
 import logging
 from typing import Optional, Dict, Any
+
+from app.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +22,7 @@ class GeminiService:
     responses about property listings.
     """
 
-    def __init__(self, model: str = "gemini-2.0-flash-exp"):
+    def __init__(self, model: str = "gemini-2.0-flash"):
         """
         Initialize Gemini service.
 
@@ -29,7 +30,7 @@ class GeminiService:
             model: Gemini model ID to use for generation.
         """
         self.model_name = model
-        self._api_key = os.getenv("GOOGLE_API_KEY")
+        self._api_key = settings.GOOGLE_API_KEY
         self._client = None
         self._model = None
 
@@ -118,10 +119,21 @@ class GeminiService:
                 }
 
         except Exception as e:
-            logger.error(f"Gemini generation error: {e}")
+            logger.error(f"Gemini generation error: {e}", exc_info=True)
+            error_str = str(e).lower()
+            error_type = type(e).__name__
+            is_quota = (
+                error_type == "ResourceExhausted"
+                or "429" in str(e)
+                or "quota" in error_str
+                or "resource exhausted" in error_str
+                or "rate limit" in error_str
+            )
             return {
                 "success": False,
                 "content": "",
                 "model": self.model_name,
                 "error": str(e),
+                "error_type": error_type,
+                "is_quota_error": is_quota,
             }

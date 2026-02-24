@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Slider } from '@/components/ui/slider';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -9,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Sparkles } from 'lucide-react';
 import type { AssistantForm } from '../hooks/useAssistantEditor';
 
 interface ModelTabProps {
@@ -34,31 +37,95 @@ const MODEL_OPTIONS: Record<string, { label: string; value: string }[]> = {
   ],
 };
 
+const PROMPT_TEMPLATES: Record<string, string> = {
+  sales: `You are a professional sales assistant. Your goal is to understand the customer's needs, present relevant solutions, handle objections gracefully, and guide the conversation toward a positive outcome. Be consultative, not pushy. Ask discovery questions and listen actively.`,
+  support: `You are a friendly and efficient customer support agent. Help callers resolve their issues quickly and empathetically. Follow troubleshooting steps methodically, escalate when needed, and always confirm the issue is resolved before ending the call.`,
+  scheduling: `You are a scheduling assistant. Help callers book, reschedule, or cancel appointments. Confirm availability, collect necessary details (name, date, time, purpose), and provide confirmation. Be efficient and polite.`,
+  receptionist: `You are a professional receptionist. Greet callers warmly, determine the purpose of their call, and route them to the appropriate department or person. Take messages when needed and provide basic information about the organization.`,
+};
+
 export function ModelTab({ form, updateField }: ModelTabProps) {
   const models = MODEL_OPTIONS[form.modelProvider] ?? MODEL_OPTIONS.openai;
+  const [showTemplates, setShowTemplates] = useState(false);
+
+  function applyTemplate(category: string) {
+    const template = PROMPT_TEMPLATES[category];
+    if (template) {
+      updateField('systemPrompt', template);
+    }
+    setShowTemplates(false);
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* First Message */}
+      {/* First Message Mode */}
       <div className="editor-section">
         <h3>Greeting</h3>
-        <div className="space-y-2">
-          <Label className="text-xs font-medium">First Message</Label>
-          <Input
-            value={form.firstMessage}
-            onChange={(e) => updateField('firstMessage', e.target.value)}
-            placeholder="Hello! How can I help you today?"
-            className="h-10 bg-background"
-          />
-          <p className="text-[11px] text-muted-foreground">
-            The message your assistant says when the call starts.
-          </p>
+        <div className="space-y-3">
+          <div className="space-y-2">
+            <Label className="text-xs font-medium">First Message Mode</Label>
+            <Select
+              value={form.firstMessageMode}
+              onValueChange={(v) => updateField('firstMessageMode', v as AssistantForm['firstMessageMode'])}
+            >
+              <SelectTrigger className="h-10 bg-background">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="assistant-speaks-first">Assistant speaks first</SelectItem>
+                <SelectItem value="wait-for-user">Wait for user</SelectItem>
+                <SelectItem value="off">Off</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-[11px] text-muted-foreground">
+              Controls whether the assistant initiates the conversation.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <Label className="text-xs font-medium">First Message</Label>
+            <Input
+              value={form.firstMessage}
+              onChange={(e) => updateField('firstMessage', e.target.value)}
+              placeholder="Hello! How can I help you today?"
+              className="h-10 bg-background"
+              disabled={form.firstMessageMode === 'off'}
+            />
+            <p className="text-[11px] text-muted-foreground">
+              The message your assistant says when the call starts.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* System Prompt */}
       <div className="editor-section">
-        <h3>System Prompt</h3>
+        <div className="flex items-center justify-between mb-0">
+          <h3>System Prompt</h3>
+          <div className="relative">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 px-2.5 text-xs gap-1.5 text-primary hover:text-primary"
+              onClick={() => setShowTemplates(!showTemplates)}
+            >
+              <Sparkles size={12} />
+              Generate
+            </Button>
+            {showTemplates && (
+              <div className="absolute right-0 top-full mt-1 z-20 bg-popover border border-border rounded-lg shadow-lg py-1 w-44">
+                {Object.keys(PROMPT_TEMPLATES).map((category) => (
+                  <button
+                    key={category}
+                    className="w-full text-left px-3 py-2 text-xs hover:bg-muted transition-colors capitalize"
+                    onClick={() => applyTemplate(category)}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
         <Textarea
           value={form.systemPrompt}
           onChange={(e) => updateField('systemPrompt', e.target.value)}

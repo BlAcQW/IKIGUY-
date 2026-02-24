@@ -164,7 +164,10 @@ export async function updatePhoneNumber(
 
   const updated = await prisma.phoneNumber.update({
     where: { id },
-    data,
+    data: {
+      ...(data.assistantId !== undefined && { assistantId: data.assistantId }),
+      ...(data.name !== undefined && { name: data.name }),
+    },
   });
 
   return updated;
@@ -186,13 +189,25 @@ export async function getPhoneNumber(id: string, organizationId: string) {
 }
 
 /**
- * List all phone numbers for an organization.
+ * List all phone numbers for an organization with pagination.
  */
-export async function listPhoneNumbers(organizationId: string) {
-  return prisma.phoneNumber.findMany({
-    where: { organizationId },
-    orderBy: { createdAt: 'desc' },
-  });
+export async function listPhoneNumbers(
+  organizationId: string,
+  page = 1,
+  limit = 20
+) {
+  const skip = (page - 1) * limit;
+  const [data, total] = await Promise.all([
+    prisma.phoneNumber.findMany({
+      where: { organizationId },
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take: limit,
+    }),
+    prisma.phoneNumber.count({ where: { organizationId } }),
+  ]);
+
+  return { data, meta: { total, page, limit } };
 }
 
 /**

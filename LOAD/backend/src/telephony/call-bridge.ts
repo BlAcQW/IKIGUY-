@@ -27,6 +27,7 @@ import {
   addMessage,
 } from '../voice-pipeline/session.js';
 import { resolveTransfer, executeTransfer } from '../voice-pipeline/squad-transfer.js';
+import { extractAssistantConfig, loadToolsForPipeline } from '../voice-pipeline/pipeline-helpers.js';
 import { downsample } from './audio-resample.js';
 import type {
   AsteriskAriClient,
@@ -545,25 +546,8 @@ export class CallBridge {
 
       const pipeline = buildPipelineFromAssistant(assistant);
 
-      const modelConfig = assistant.model as {
-        model?: string;
-        temperature?: number;
-        maxTokens?: number;
-        toolIds?: string[];
-      };
-      const voiceConfig = assistant.voice as {
-        voiceId?: string;
-        speed?: number;
-      };
-      const transcriberConfig = assistant.transcriber as {
-        model?: string;
-        language?: string;
-      };
-
-      // Load tools
-      const tools = modelConfig.toolIds?.length
-        ? await prisma.tool.findMany({ where: { id: { in: modelConfig.toolIds }, organizationId: session.organizationId } })
-        : [];
+      const { modelConfig, voiceConfig, transcriberConfig } = extractAssistantConfig(assistant);
+      const tools = await loadToolsForPipeline(modelConfig.toolIds, session.organizationId);
 
       const result = await processPipelineTurn(
         sessionId,
@@ -577,16 +561,7 @@ export class CallBridge {
           llmMaxTokens: modelConfig.maxTokens,
           ttsVoiceId: voiceConfig.voiceId,
           ttsSpeed: voiceConfig.speed,
-          tools: tools.length > 0 ? tools.map((t) => ({
-            id: t.id,
-            type: t.type as 'FUNCTION' | 'TRANSFER_CALL' | 'END_CALL',
-            name: t.name,
-            description: t.description,
-            function: t.function as { name: string; description?: string; parameters?: Record<string, unknown> } | null,
-            serverUrl: t.serverUrl,
-            serverSecret: t.serverSecret,
-            metadata: t.metadata as Record<string, unknown> | null,
-          })) : undefined,
+          tools,
         }
       );
 

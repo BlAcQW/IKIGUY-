@@ -23,8 +23,11 @@ export async function phoneNumberRoutes(app: FastifyInstance): Promise<void> {
 
   // GET /api/phone-numbers — List all phone numbers for org
   app.get('/api/phone-numbers', async (request) => {
-    const data = await listPhoneNumbers(request.organizationId!);
-    return { success: true, data };
+    const query = request.query as { page?: string; limit?: string };
+    const page = Math.max(1, parseInt(query.page ?? '1') || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(query.limit ?? '20') || 20));
+    const result = await listPhoneNumbers(request.organizationId!, page, limit);
+    return { success: true, data: result.data, meta: result.meta };
   });
 
   // GET /api/phone-numbers/:id — Get single phone number

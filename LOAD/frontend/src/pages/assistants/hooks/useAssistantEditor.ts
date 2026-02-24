@@ -11,6 +11,7 @@ export interface AssistantForm {
   temperature: number;
   maxTokens: number;
   systemPrompt: string;
+  firstMessageMode: 'assistant-speaks-first' | 'wait-for-user' | 'off';
   // Voice
   voiceProvider: string;
   voiceId: string;
@@ -35,6 +36,14 @@ export interface AssistantForm {
   serverUrl: string;
   idleTimeout: number;
   idleMessage: string;
+  // Analysis (stored in metadata)
+  successEvaluationPrompt: string;
+  summaryPrompt: string;
+  structuredDataSchema: string;
+  // Compliance (stored in metadata)
+  pciDssCompliant: boolean;
+  recordingConsent: 'none' | 'single-party' | 'all-party';
+  dataRetentionDays: number;
 }
 
 export const DEFAULT_FORM: AssistantForm = {
@@ -44,6 +53,7 @@ export const DEFAULT_FORM: AssistantForm = {
   temperature: 0.7,
   maxTokens: 1000,
   systemPrompt: '',
+  firstMessageMode: 'assistant-speaks-first',
   voiceProvider: 'openai',
   voiceId: 'alloy',
   speed: 1.0,
@@ -61,6 +71,12 @@ export const DEFAULT_FORM: AssistantForm = {
   serverUrl: '',
   idleTimeout: 120,
   idleMessage: '',
+  successEvaluationPrompt: '',
+  summaryPrompt: '',
+  structuredDataSchema: '',
+  pciDssCompliant: false,
+  recordingConsent: 'none',
+  dataRetentionDays: 90,
 };
 
 export function formFromAssistant(a: Assistant): AssistantForm {
@@ -72,6 +88,7 @@ export function formFromAssistant(a: Assistant): AssistantForm {
     temperature: a.model.temperature ?? 0.7,
     maxTokens: a.model.maxTokens ?? 1000,
     systemPrompt: a.model.systemPrompt ?? '',
+    firstMessageMode: (meta.firstMessageMode as AssistantForm['firstMessageMode']) ?? 'assistant-speaks-first',
     voiceProvider: a.voice.provider ?? 'openai',
     voiceId: a.voice.voiceId,
     speed: a.voice.speed ?? 1.0,
@@ -89,6 +106,12 @@ export function formFromAssistant(a: Assistant): AssistantForm {
     serverUrl: (meta.serverUrl as string) ?? '',
     idleTimeout: (meta.idleTimeout as number) ?? 120,
     idleMessage: (meta.idleMessage as string) ?? '',
+    successEvaluationPrompt: (meta.successEvaluationPrompt as string) ?? '',
+    summaryPrompt: (meta.summaryPrompt as string) ?? '',
+    structuredDataSchema: (meta.structuredDataSchema as string) ?? '',
+    pciDssCompliant: (meta.pciDssCompliant as boolean) ?? false,
+    recordingConsent: (meta.recordingConsent as AssistantForm['recordingConsent']) ?? 'none',
+    dataRetentionDays: (meta.dataRetentionDays as number) ?? 90,
   };
 }
 
@@ -129,6 +152,13 @@ export function buildPayload(form: AssistantForm) {
       serverUrl: form.serverUrl || undefined,
       idleTimeout: form.idleTimeout,
       idleMessage: form.idleMessage || undefined,
+      firstMessageMode: form.firstMessageMode,
+      successEvaluationPrompt: form.successEvaluationPrompt || undefined,
+      summaryPrompt: form.summaryPrompt || undefined,
+      structuredDataSchema: form.structuredDataSchema || undefined,
+      pciDssCompliant: form.pciDssCompliant,
+      recordingConsent: form.recordingConsent,
+      dataRetentionDays: form.dataRetentionDays,
     },
   };
 }

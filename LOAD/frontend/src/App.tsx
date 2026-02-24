@@ -14,6 +14,8 @@ import { SquadsPage } from './pages/Squads';
 import { CampaignsPage } from './pages/Campaigns';
 import { WebhooksPage } from './pages/Webhooks';
 import { AnalyticsPage } from './pages/Analytics';
+import { VoiceLibraryPage } from './pages/VoiceLibrary';
+import { ApiKeysPage } from './pages/ApiKeys';
 import { useAuth } from './hooks/useAuth';
 
 function LoadingScreen() {
@@ -170,6 +172,22 @@ export function App() {
         element={
           <ProtectedRoute>
             <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/voice-library"
+        element={
+          <ProtectedRoute>
+            <VoiceLibraryPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/api-keys"
+        element={
+          <ProtectedRoute>
+            <ApiKeysPage />
           </ProtectedRoute>
         }
       />

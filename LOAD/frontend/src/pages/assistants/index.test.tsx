@@ -16,6 +16,7 @@ vi.mock('@/lib/api', () => ({
   attachToolToAssistant: vi.fn(),
   detachToolFromAssistant: vi.fn(),
   createToolFromTemplate: vi.fn(),
+  chatWithAssistant: vi.fn(),
 }));
 
 vi.mock('sonner', () => ({
@@ -197,7 +198,7 @@ describe('AssistantsPage', () => {
     // and the Publish button which only exists in the editor
     await waitFor(() => {
       expect(screen.getAllByText('URL Bot').length).toBeGreaterThanOrEqual(2);
-      expect(screen.getByRole('button', { name: /publish/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^save$/i })).toBeInTheDocument();
     });
   });
 
@@ -256,7 +257,7 @@ describe('AssistantsPage', () => {
 
     // Wait for editor to load
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /publish/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^save$/i })).toBeInTheDocument();
     });
 
     // Click the delete icon button in the editor header
@@ -326,7 +327,7 @@ describe('AssistantsPage', () => {
 
     // Wait for editor to load
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /publish/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^save$/i })).toBeInTheDocument();
     });
 
     // Make a change to mark dirty
@@ -377,7 +378,7 @@ describe('AssistantsPage', () => {
     const { user } = renderWithRoute('/assistants/del-current');
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /publish/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^save$/i })).toBeInTheDocument();
     });
 
     // Click the delete icon button in the editor header
@@ -412,7 +413,7 @@ describe('AssistantsPage', () => {
 
     // Wait for editor to load - use exact text match to avoid matching "Pub Bot"
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /^publish$/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^save$/i })).toBeInTheDocument();
     });
 
     // Make a change to enable publish
@@ -420,7 +421,7 @@ describe('AssistantsPage', () => {
     await user.type(systemPrompt, 'update');
 
     // Click publish button
-    await user.click(screen.getByRole('button', { name: /^publish$/i }));
+    await user.click(screen.getByRole('button', { name: /^save$/i }));
 
     await waitFor(() => {
       expect(mockedUpdateAssistant).toHaveBeenCalled();

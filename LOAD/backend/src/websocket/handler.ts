@@ -9,6 +9,7 @@ import { createCall, updateCallStatus, endCall, failCall } from '../modules/call
 import { buildPipelineFromAssistant } from '../providers/registry.js';
 import { fireWebhookEvent } from '../modules/webhooks/delivery.js';
 import { resolveTransfer, executeTransfer } from '../voice-pipeline/squad-transfer.js';
+import { extractAssistantConfig, loadToolsForPipeline } from '../voice-pipeline/pipeline-helpers.js';
 
 interface WebCallState {
   sessionId: string;
@@ -28,42 +29,27 @@ function sendJSON(socket: WebSocket, data: object): void {
   }
 }
 
+/** Track authenticated sockets and their org context. */
+const authenticatedSockets = new Map<WebSocket, { userId: string; organizationId: string }>();
+
 export async function websocketRoutes(app: FastifyInstance): Promise<void> {
-  app.get('/api/calls/web', { websocket: true }, (socket, request) => {
-    let userId: string | undefined;
-    let organizationId: string | undefined;
-
-    // Authenticate via query param (WebSocket can't set custom headers from browser)
-    const url = new URL(request.url, `http://${request.headers.host}`);
-    const token = url.searchParams.get('token');
-
-    if (token) {
-      try {
-        const decoded = app.jwt.verify<{
-          userId: string;
-          organizationId: string;
-          role: string;
-        }>(token);
-        userId = decoded.userId;
-        organizationId = decoded.organizationId;
-      } catch {
+  app.get('/api/calls/web', { websocket: true }, (socket) => {
+    // Set a 10-second auth timeout — client must send an auth message first
+    const authTimeout = setTimeout(() => {
+      if (!authenticatedSockets.has(socket)) {
         sendJSON(socket, {
           type: 'error',
           code: 'UNAUTHORIZED',
-          message: 'Invalid or expired token',
+          message: 'Authentication timeout — send an auth message within 10 seconds',
         });
         socket.close(4001, 'Unauthorized');
-        return;
       }
-    }
-
-    sendJSON(socket, { type: 'status', status: 'ready', message: 'WebSocket connected' });
+    }, 10_000);
 
     socket.on('message', async (message) => {
-      const state = activeConnections.get(socket);
-
       // Binary audio data
       if (message instanceof Buffer || message instanceof ArrayBuffer) {
+        const state = activeConnections.get(socket);
         if (!state) {
           sendJSON(socket, { type: 'error', message: 'Call not started. Send a start message first.' });
           return;
@@ -78,7 +64,7 @@ export async function websocketRoutes(app: FastifyInstance): Promise<void> {
       }
 
       // JSON control messages
-      let parsed: { type: string; assistantId?: string; [key: string]: unknown };
+      let parsed: { type: string; token?: string; assistantId?: string; [key: string]: unknown };
       try {
         parsed = JSON.parse(message.toString());
       } catch {
@@ -86,8 +72,60 @@ export async function websocketRoutes(app: FastifyInstance): Promise<void> {
         return;
       }
 
+      // Handle auth message (must be first message)
+      if (parsed.type === 'auth') {
+        clearTimeout(authTimeout);
+
+        if (authenticatedSockets.has(socket)) {
+          sendJSON(socket, { type: 'error', message: 'Already authenticated' });
+          return;
+        }
+
+        if (!parsed.token) {
+          sendJSON(socket, {
+            type: 'error',
+            code: 'UNAUTHORIZED',
+            message: 'Token is required',
+          });
+          socket.close(4001, 'Unauthorized');
+          return;
+        }
+
+        try {
+          const decoded = app.jwt.verify<{
+            userId: string;
+            organizationId: string;
+            role: string;
+          }>(parsed.token);
+          authenticatedSockets.set(socket, {
+            userId: decoded.userId,
+            organizationId: decoded.organizationId,
+          });
+          sendJSON(socket, { type: 'status', status: 'ready', message: 'WebSocket connected' });
+        } catch {
+          sendJSON(socket, {
+            type: 'error',
+            code: 'UNAUTHORIZED',
+            message: 'Invalid or expired token',
+          });
+          socket.close(4001, 'Unauthorized');
+        }
+        return;
+      }
+
+      // All other messages require authentication
+      const auth = authenticatedSockets.get(socket);
+      if (!auth) {
+        sendJSON(socket, {
+          type: 'error',
+          code: 'UNAUTHORIZED',
+          message: 'Authentication required — send an auth message first',
+        });
+        return;
+      }
+
       if (parsed.type === 'start') {
-        await handleStart(socket, parsed, organizationId);
+        await handleStart(socket, parsed, auth.organizationId);
       } else if (parsed.type === 'end_turn') {
         await handleEndTurn(socket);
       } else if (parsed.type === 'stop') {
@@ -98,10 +136,14 @@ export async function websocketRoutes(app: FastifyInstance): Promise<void> {
     });
 
     socket.on('close', async () => {
+      clearTimeout(authTimeout);
+      authenticatedSockets.delete(socket);
       await handleStop(socket);
     });
 
     socket.on('error', async () => {
+      clearTimeout(authTimeout);
+      authenticatedSockets.delete(socket);
       const state = activeConnections.get(socket);
       if (state) {
         await failCall(state.callId, 'websocket_error').catch(() => {});
@@ -243,14 +285,14 @@ async function handleEndTurn(socket: WebSocket): Promise<void> {
 
   try {
     const assistant = await prisma.assistant.findUnique({ where: { id: state.assistantId } });
-    const modelConfig = (assistant?.model ?? {}) as { model?: string; temperature?: number; maxTokens?: number; toolIds?: string[] };
-    const voiceConfig = (assistant?.voice ?? {}) as { voiceId?: string; speed?: number };
-    const transcriberConfig = (assistant?.transcriber ?? {}) as { model?: string; language?: string };
 
-    // Load tools associated with this assistant
-    const tools = modelConfig.toolIds?.length
-      ? await prisma.tool.findMany({ where: { id: { in: modelConfig.toolIds }, organizationId: state.organizationId } })
-      : [];
+    const { modelConfig, voiceConfig, transcriberConfig } = extractAssistantConfig({
+      model: assistant?.model ?? {},
+      voice: assistant?.voice ?? {},
+      transcriber: assistant?.transcriber ?? {},
+    });
+
+    const tools = await loadToolsForPipeline(modelConfig.toolIds, state.organizationId);
 
     const result = await processPipelineTurn(state.sessionId, audioData, state.pipeline, {
       sttModel: transcriberConfig.model,
@@ -260,16 +302,7 @@ async function handleEndTurn(socket: WebSocket): Promise<void> {
       llmMaxTokens: modelConfig.maxTokens,
       ttsVoiceId: voiceConfig.voiceId,
       ttsSpeed: voiceConfig.speed,
-      tools: tools.length > 0 ? tools.map((t) => ({
-        id: t.id,
-        type: t.type as 'FUNCTION' | 'TRANSFER_CALL' | 'END_CALL',
-        name: t.name,
-        description: t.description,
-        function: t.function as { name: string; description?: string; parameters?: Record<string, unknown> } | null,
-        serverUrl: t.serverUrl,
-        serverSecret: t.serverSecret,
-        metadata: t.metadata as Record<string, unknown> | null,
-      })) : undefined,
+      tools,
     });
 
     sendJSON(socket, { type: 'user_transcript', text: result.userText });

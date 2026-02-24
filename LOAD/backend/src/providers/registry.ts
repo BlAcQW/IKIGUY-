@@ -7,6 +7,8 @@ import { OpenAISTTProvider } from './stt/openai.js';
 import { DeepgramSTTProvider } from './stt/deepgram.js';
 import { OpenAITTSProvider } from './tts/openai.js';
 import { ElevenLabsTTSProvider } from './tts/elevenlabs.js';
+import { DeepgramTTSProvider } from './tts/deepgram.js';
+import { CartesiaTTSProvider } from './tts/cartesia.js';
 import { OpenAILLMProvider } from './llm/openai.js';
 
 export function createSTTProvider(provider: string): STTProvider {
@@ -41,6 +43,18 @@ export function createTTSProvider(provider: string): TTSProvider {
         throw new Error('ELEVENLABS_API_KEY is required for ElevenLabs TTS provider');
       }
       return new ElevenLabsTTSProvider(config.ELEVENLABS_API_KEY);
+    }
+    case 'deepgram': {
+      if (!config.DEEPGRAM_API_KEY) {
+        throw new Error('DEEPGRAM_API_KEY is required for Deepgram TTS provider');
+      }
+      return new DeepgramTTSProvider(config.DEEPGRAM_API_KEY);
+    }
+    case 'cartesia': {
+      if (!config.CARTESIA_API_KEY) {
+        throw new Error('CARTESIA_API_KEY is required for Cartesia TTS provider');
+      }
+      return new CartesiaTTSProvider(config.CARTESIA_API_KEY);
     }
     default:
       throw new Error(`Unknown TTS provider: ${provider}`);

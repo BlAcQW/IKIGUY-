@@ -9,12 +9,20 @@ import {
   attachTool,
   detachTool,
   getAssistantTools,
+  chatWithAssistant,
 } from './service.js';
 import { authMiddleware } from '../../middleware/auth.js';
 import { z } from 'zod';
 
 const attachToolSchema = z.object({
   toolId: z.string().uuid(),
+});
+
+const chatSchema = z.object({
+  messages: z.array(z.object({
+    role: z.string(),
+    content: z.string(),
+  })).min(1),
 });
 
 export async function assistantRoutes(app: FastifyInstance): Promise<void> {
@@ -49,6 +57,25 @@ export async function assistantRoutes(app: FastifyInstance): Promise<void> {
     const { id } = request.params as { id: string };
     await deleteAssistant(id, request.organizationId!);
     return reply.status(204).send();
+  });
+
+  // ─── Chat endpoint ─────────────────────────────────────────────
+
+  app.post('/api/assistants/:id/chat', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const body = chatSchema.parse(request.body);
+    try {
+      const result = await chatWithAssistant(id, request.organizationId!, body.messages);
+      return { success: true, data: result };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Chat failed';
+      const isKeyMissing = message.includes('API_KEY is required') || message.includes('API key');
+      const statusCode = isKeyMissing ? 503 : 500;
+      return reply.status(statusCode).send({
+        success: false,
+        error: { code: isKeyMissing ? 'PROVIDER_NOT_CONFIGURED' : 'CHAT_ERROR', message, statusCode },
+      });
+    }
   });
 
   // ─── Tool attachment endpoints ─────────────────────────────────

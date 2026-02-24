@@ -343,6 +343,71 @@ export function getWebhookDeliveries(webhookId: string, page = 1, limit = 20) {
   return request<WebhookDelivery[]>(`/webhooks/${webhookId}/deliveries?page=${page}&limit=${limit}`);
 }
 
+// Assistant Chat
+export function chatWithAssistant(
+  assistantId: string,
+  messages: Array<{ role: string; content: string }>
+) {
+  return request<{ message: string }>(`/assistants/${assistantId}/chat`, {
+    method: 'POST',
+    body: JSON.stringify({ messages }),
+  });
+}
+
+// Voices
+export function listVoices() {
+  return request<Array<{
+    voiceId: string;
+    name: string;
+    provider: string;
+    category: string;
+    labels: Record<string, string>;
+    previewUrl?: string;
+  }>>('/voices');
+}
+
+export async function cloneVoice(name: string, description: string, audioFile: File) {
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('description', description);
+  formData.append('file', audioFile);
+
+  const token = localStorage.getItem('load_token');
+  const response = await fetch('/api/voices/clone', {
+    method: 'POST',
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: formData,
+  });
+
+  const json = await response.json();
+  if (!response.ok) {
+    throw new Error(json.error?.message ?? 'Voice cloning failed');
+  }
+  return json;
+}
+
+export function deleteVoice(voiceId: string) {
+  return request<void>(`/voices/${voiceId}`, { method: 'DELETE' });
+}
+
+export async function previewVoice(provider: string, voiceId: string, text?: string) {
+  const token = localStorage.getItem('load_token');
+  const response = await fetch('/api/voices/preview', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify({ provider, voiceId, text }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Preview failed');
+  }
+
+  return response.blob();
+}
+
 // Analytics
 export function getCallAnalytics(params: {
   from?: string;

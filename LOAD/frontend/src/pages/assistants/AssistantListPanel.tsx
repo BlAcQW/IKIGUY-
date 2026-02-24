@@ -1,7 +1,6 @@
 import { Bot, Plus, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Assistant } from '@/types';
 
@@ -13,6 +12,23 @@ interface AssistantListPanelProps {
   selectedId: string | undefined;
   onSelect: (id: string) => void;
   onCreate: () => void;
+}
+
+function getProviderTag(assistant: Assistant): string {
+  const transcriber = assistant.transcriber?.provider ?? 'openai';
+  const model = assistant.model?.provider ?? 'openai';
+  const voice = assistant.voice?.provider ?? 'openai';
+  const parts = [transcriber, model, voice].map((p) => {
+    const map: Record<string, string> = {
+      openai: 'openai',
+      anthropic: 'anthropic',
+      google: 'google',
+      elevenlabs: 'elevenlabs',
+      deepgram: 'deepgram',
+    };
+    return map[p] ?? p;
+  });
+  return parts.join(' . ');
 }
 
 export function AssistantListPanel({
@@ -93,21 +109,21 @@ export function AssistantListPanel({
                     <Bot size={14} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p
-                      className={`text-[13px] font-medium truncate ${
-                        selectedId === a.id ? 'text-primary' : 'text-foreground'
-                      }`}
-                    >
-                      {a.name}
-                    </p>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4">
-                        {a.model.model}
-                      </Badge>
-                      <span className="text-[10px] text-muted-foreground">
-                        {a.voice.voiceId}
-                      </span>
+                    <div className="flex items-center gap-2">
+                      <p
+                        className={`text-[13px] font-medium truncate ${
+                          selectedId === a.id ? 'text-primary' : 'text-foreground'
+                        }`}
+                      >
+                        {a.name}
+                      </p>
+                      <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                        true ? 'bg-emerald-500' : 'bg-muted-foreground/30'
+                      }`} title="Published" />
                     </div>
+                    <p className="text-[10px] text-muted-foreground mt-0.5 truncate">
+                      {getProviderTag(a)}
+                    </p>
                   </div>
                 </div>
               </button>

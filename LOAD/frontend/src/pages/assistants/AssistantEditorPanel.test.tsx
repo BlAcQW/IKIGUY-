@@ -11,6 +11,7 @@ vi.mock('@/lib/api', () => ({
   listTools: vi.fn(),
   listToolTemplates: vi.fn(),
   createToolFromTemplate: vi.fn(),
+  chatWithAssistant: vi.fn(),
 }));
 
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
@@ -72,22 +73,22 @@ describe('AssistantEditorPanel', () => {
     expect(screen.getByText('Untitled Assistant')).toBeInTheDocument();
   });
 
-  it('shows "Unsaved changes" badge when dirty=true', () => {
+  it('shows "Unsaved" badge when dirty=true', () => {
     render(
       <AssistantEditorPanel {...defaultProps()} dirty={true} />,
     );
-    expect(screen.getByText('Unsaved changes')).toBeInTheDocument();
+    expect(screen.getByText('Unsaved')).toBeInTheDocument();
   });
 
-  it('renders Publish button disabled when not dirty', () => {
+  it('renders Save button disabled when not dirty', () => {
     render(
       <AssistantEditorPanel {...defaultProps()} dirty={false} />,
     );
-    const publishBtn = screen.getByRole('button', { name: /publish/i });
-    expect(publishBtn).toBeDisabled();
+    const saveBtn = screen.getByRole('button', { name: /^save$/i });
+    expect(saveBtn).toBeDisabled();
   });
 
-  it('renders all 5 tab triggers', () => {
+  it('renders all tab triggers', () => {
     render(
       <AssistantEditorPanel {...defaultProps()} />,
     );
@@ -96,14 +97,18 @@ describe('AssistantEditorPanel', () => {
     expect(screen.getByRole('tab', { name: /voice/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /functions/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /advanced/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /analysis/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /compliance/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /code/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /chat/i })).toBeInTheDocument();
   });
 
-  it('calls onPublish when Publish clicked and dirty', async () => {
+  it('calls onPublish when Save clicked and dirty', async () => {
     const { user } = render(
       <AssistantEditorPanel {...defaultProps()} dirty={true} />,
     );
-    const publishBtn = screen.getByRole('button', { name: /publish/i });
-    await user.click(publishBtn);
+    const saveBtn = screen.getByRole('button', { name: /^save$/i });
+    await user.click(saveBtn);
     expect(onPublish).toHaveBeenCalledTimes(1);
   });
 
@@ -186,11 +191,11 @@ describe('AssistantEditorPanel', () => {
     });
   });
 
-  it('shows "Publishing..." text when saving', () => {
+  it('shows "Saving..." text when saving', () => {
     render(
       <AssistantEditorPanel {...defaultProps()} saving={true} dirty={true} />,
     );
-    expect(screen.getByText('Publishing...')).toBeInTheDocument();
+    expect(screen.getByText('Saving...')).toBeInTheDocument();
   });
 
   it('updates name field when editing', async () => {

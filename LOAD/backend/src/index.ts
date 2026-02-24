@@ -1,9 +1,11 @@
+import 'dotenv/config';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import websocket from '@fastify/websocket';
+import multipart from '@fastify/multipart';
 import { config } from './config/index.js';
 import { connectDatabase, disconnectDatabase } from './database/client.js';
 import { errorHandler } from './middleware/error-handler.js';
@@ -17,11 +19,13 @@ import { squadRoutes } from './modules/squads/routes.js';
 import { campaignRoutes } from './modules/campaigns/routes.js';
 import { webhookRoutes } from './modules/webhooks/routes.js';
 import { websocketRoutes } from './websocket/handler.js';
+import { webrtcRoutes } from './webrtc/routes.js';
 import { createWebhookWorker, closeWebhookQueue } from './modules/webhooks/delivery.js';
 import { AsteriskAriClient } from './telephony/asterisk-ari.js';
 import { CallBridge } from './telephony/call-bridge.js';
 import { createCampaignQueues, setCallBridge, closeCampaignQueues } from './modules/campaigns/engine.js';
 import { analyticsRoutes } from './modules/analytics/routes.js';
+import { voiceRoutes } from './modules/voices/routes.js';
 import { initializeSessionStore } from './voice-pipeline/session.js';
 import type { Worker } from 'bullmq';
 
@@ -43,6 +47,10 @@ async function buildApp() {
   });
 
   await app.register(websocket);
+
+  await app.register(multipart, {
+    limits: { fileSize: 25 * 1024 * 1024 }, // 25 MB max for voice uploads
+  });
 
   await app.register(swagger, {
     openapi: {
@@ -69,9 +77,11 @@ async function buildApp() {
     },
   });
 
-  await app.register(swaggerUi, {
-    routePrefix: '/docs',
-  });
+  if (config.NODE_ENV !== 'production') {
+    await app.register(swaggerUi, {
+      routePrefix: '/docs',
+    });
+  }
 
   await registerRateLimit(app);
 
@@ -94,7 +104,9 @@ async function buildApp() {
   await app.register(campaignRoutes);
   await app.register(webhookRoutes);
   await app.register(analyticsRoutes);
+  await app.register(voiceRoutes);
   await app.register(websocketRoutes);
+  await app.register(webrtcRoutes);
 
   return app;
 }

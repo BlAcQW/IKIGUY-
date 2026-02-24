@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { formFromAssistant, buildPayload, DEFAULT_FORM, useAssistantEditor } from './useAssistantEditor';
 import { buildAssistant } from '@test/helpers/factories';
+import type { Assistant } from '@/types';
 
 vi.mock('@/lib/api', () => ({
   getAssistant: vi.fn(),
@@ -82,6 +83,29 @@ describe('formFromAssistant', () => {
     expect(form.endCallMessage).toBe('');
     expect(form.endCallPhrases).toBe('');
   });
+
+  it('uses defaults when model/voice optional fields are undefined and transcriber is null', () => {
+    const assistant = buildAssistant({
+      model: { provider: 'openai', model: 'gpt-4o' },
+      voice: { provider: 'openai', voiceId: 'alloy' },
+      transcriber: null as unknown as Assistant['transcriber'],
+      endCallPhrases: null as unknown as string[],
+    });
+    const form = formFromAssistant(assistant);
+
+    // model optional fields fall back to defaults
+    expect(form.temperature).toBe(0.7);
+    expect(form.maxTokens).toBe(1000);
+    expect(form.systemPrompt).toBe('');
+    // voice optional field falls back to default
+    expect(form.speed).toBe(1.0);
+    // transcriber null triggers ?. fallback
+    expect(form.transcriberProvider).toBe('openai');
+    expect(form.transcriberModel).toBe('whisper-1');
+    expect(form.transcriberLanguage).toBe('en');
+    // null endCallPhrases falls back to empty array
+    expect(form.endCallPhrases).toBe('');
+  });
 });
 
 describe('buildPayload', () => {
@@ -123,6 +147,20 @@ describe('buildPayload', () => {
     const payload = buildPayload({ ...DEFAULT_FORM, silenceTimeout: 45, recordingEnabled: false });
     expect(payload.metadata.silenceTimeout).toBe(45);
     expect(payload.metadata.recordingEnabled).toBe(false);
+  });
+
+  it('omits empty firstMessage, endCallMessage, serverUrl, and idleMessage', () => {
+    const payload = buildPayload({
+      ...DEFAULT_FORM,
+      firstMessage: '',
+      endCallMessage: '',
+      serverUrl: '',
+      idleMessage: '',
+    });
+    expect(payload.firstMessage).toBeUndefined();
+    expect(payload.endCallMessage).toBeUndefined();
+    expect(payload.metadata.serverUrl).toBeUndefined();
+    expect(payload.metadata.idleMessage).toBeUndefined();
   });
 });
 

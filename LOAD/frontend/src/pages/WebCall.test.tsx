@@ -240,6 +240,13 @@ describe('WebCallPage', () => {
     });
   });
 
+  // --- Helper: switch to Classic mode (since default is now WebRTC) ---
+
+  async function switchToClassic(user: ReturnType<typeof import('@testing-library/user-event').default.setup>) {
+    const classicButton = screen.getByRole('button', { name: /classic/i });
+    await user.click(classicButton);
+  }
+
   // --- New tests for startCall, endCall, WebSocket, state transitions ---
 
   it('starts a call: creates WebSocket and transitions to connecting', async () => {
@@ -251,6 +258,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     // WebSocket should have been created
@@ -273,6 +281,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     // Simulate WebSocket open
@@ -294,6 +303,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     // Simulate WebSocket open
@@ -325,6 +335,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -348,6 +359,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -371,6 +383,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
     const ws = mockWsInstance!;
 
@@ -401,6 +414,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -432,6 +446,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -462,6 +477,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -498,6 +514,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -528,6 +545,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -564,6 +582,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -595,6 +614,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -624,6 +644,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     // Simulate WebSocket error
@@ -645,6 +666,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -672,6 +694,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -713,6 +736,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     await waitFor(() => {
@@ -732,6 +756,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -769,6 +794,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     await waitFor(() => {
@@ -796,6 +822,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -822,6 +849,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -848,6 +876,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -871,6 +900,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -904,6 +934,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -932,6 +963,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     // In connecting state (before WS opens)
@@ -958,6 +990,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -991,6 +1024,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
     const ws = mockWsInstance!;
 
@@ -1027,6 +1061,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {
@@ -1063,6 +1098,7 @@ describe('WebCallPage', () => {
       expect(screen.getByRole('button', { name: /start call/i })).toBeEnabled();
     });
 
+    await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
     act(() => {

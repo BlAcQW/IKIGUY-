@@ -30,7 +30,7 @@ describe('Layout', () => {
     render(<Layout>Content</Layout>, { routerProps: { initialEntries: ['/'] } });
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
     expect(screen.getByText('Assistants')).toBeInTheDocument();
-    expect(screen.getByText('Call History')).toBeInTheDocument();
+    expect(screen.getByText('Call Logs')).toBeInTheDocument();
     expect(screen.getByText('Settings')).toBeInTheDocument();
   });
 

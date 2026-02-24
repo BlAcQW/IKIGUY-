@@ -54,6 +54,8 @@ export async function processPipelineTurn(
     ttsVoiceId?: string;
     ttsSpeed?: number;
     tools?: ToolDefinition[];
+    /** Audio format hint for STT (e.g. 'wav', 'webm'). Defaults to 'webm'. */
+    format?: string;
   }
 ): Promise<PipelineResult> {
   const session = await getSession(sessionId);
@@ -65,6 +67,7 @@ export async function processPipelineTurn(
   const userText = await config.stt.transcribe(audioInput, {
     model: options?.sttModel,
     language: options?.sttLanguage,
+    format: options?.format,
   });
 
   // Add user message to conversation history

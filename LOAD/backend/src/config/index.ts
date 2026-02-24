@@ -18,9 +18,14 @@ const envSchema = z.object({
   ASTERISK_ARI_APP: z.string().default('load'),
   DEEPGRAM_API_KEY: z.string().optional(),
   ELEVENLABS_API_KEY: z.string().optional(),
+  CARTESIA_API_KEY: z.string().optional(),
   FRONTEND_URL: z.string().default('http://localhost:5173'),
   API_URL: z.string().default('http://localhost:3000'),
-  WEBHOOK_SECRET: z.string().default('default-webhook-secret'),
+  WEBHOOK_SECRET: z.string().min(16),
+  STUN_SERVERS: z.string().default('stun:stun.l.google.com:19302'),
+  TURN_URL: z.string().optional(),
+  TURN_USERNAME: z.string().optional(),
+  TURN_CREDENTIAL: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;

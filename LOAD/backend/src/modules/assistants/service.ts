@@ -1,4 +1,6 @@
 import { prisma } from '../../database/client.js';
+import { createLLMProvider } from '../../providers/registry.js';
+import type { Message } from '../../providers/llm/types.js';
 import type { CreateAssistantInput, UpdateAssistantInput, ListAssistantsInput } from './schemas.js';
 
 export async function createAssistant(input: CreateAssistantInput, organizationId: string) {
@@ -120,4 +122,34 @@ export async function getAssistantTools(assistantId: string, organizationId: str
   return prisma.tool.findMany({
     where: { id: { in: toolIds }, organizationId },
   });
+}
+
+export async function chatWithAssistant(
+  assistantId: string,
+  organizationId: string,
+  messages: Array<{ role: string; content: string }>
+) {
+  const assistant = await getAssistant(assistantId, organizationId);
+  const modelConfig = (assistant.model ?? {}) as Record<string, unknown>;
+  const providerName = (modelConfig.provider as string) ?? 'openai';
+  const model = (modelConfig.model as string) ?? 'gpt-4o';
+  const temperature = (modelConfig.temperature as number) ?? 0.7;
+  const maxTokens = (modelConfig.maxTokens as number) ?? 1000;
+  const systemPrompt = (modelConfig.systemPrompt as string) ?? '';
+
+  const llm = createLLMProvider(providerName);
+
+  const llmMessages: Message[] = [];
+  if (systemPrompt) {
+    llmMessages.push({ role: 'system', content: systemPrompt });
+  }
+  for (const msg of messages) {
+    const role = msg.role === 'user' ? 'user' : 'assistant';
+    llmMessages.push({ role, content: msg.content });
+  }
+
+  const result = await llm.chat(llmMessages, { model, temperature, maxTokens });
+  const content = typeof result === 'string' ? result : result.content ?? '';
+
+  return { message: content };
 }

@@ -6,7 +6,7 @@ import {
   getTemplateByFunctionName,
   getTemplatesByNames,
   type ToolTemplate,
-} from './templates.js';
+} from './templates/index.js';
 
 describe('TOOL_TEMPLATES', () => {
   it('contains templates', () => {

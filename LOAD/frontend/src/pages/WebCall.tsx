@@ -1,6 +1,8 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { listAssistants } from '../lib/api';
-import { getToken } from '../lib/auth';
+import { useWebRTC } from '../hooks/useWebRTC';
+import { useWebSocketCall } from '../hooks/useWebSocketCall';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Mic, MicOff, PhoneOff, Loader2, Headphones, Bot, User } from 'lucide-react';
+import { Mic, MicOff, PhoneOff, Loader2, Headphones, Bot, User, Radio, Wifi, AlertTriangle, Settings } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Assistant {
@@ -22,12 +24,7 @@ interface Assistant {
   firstMessage: string | null;
 }
 
-interface TranscriptEntry {
-  role: 'user' | 'assistant';
-  content: string;
-}
-
-type CallStatus = 'idle' | 'connecting' | 'active' | 'processing' | 'ended' | 'error';
+type CallMode = 'webrtc' | 'classic';
 
 function Waveform({ active, className }: { active: boolean; className?: string }) {
   const bars = 16;
@@ -68,31 +65,34 @@ function PulseRings({ active }: { active: boolean }) {
 }
 
 export function WebCallPage() {
+  const [searchParams] = useSearchParams();
   const [assistants, setAssistants] = useState<Assistant[]>([]);
   const [selectedAssistantId, setSelectedAssistantId] = useState('');
-  const [callStatus, setCallStatus] = useState<CallStatus>('idle');
-  const [transcript, setTranscript] = useState<TranscriptEntry[]>([]);
-  const [isRecording, setIsRecording] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [callId, setCallId] = useState('');
   const [loadingAssistants, setLoadingAssistants] = useState(true);
-  const [callDuration, setCallDuration] = useState(0);
+  const [callMode, setCallMode] = useState<CallMode>('webrtc');
 
-  const wsRef = useRef<WebSocket | null>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const mediaStreamRef = useRef<MediaStream | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const audioQueueRef = useRef<ArrayBuffer[]>([]);
-  const isPlayingRef = useRef(false);
   const transcriptEndRef = useRef<HTMLDivElement>(null);
-  const durationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // ── Hooks for each mode ──
+  const webrtc = useWebRTC();
+  const wsCall = useWebSocketCall();
+
+  // Determine which state to use based on mode
+  const isWebRTC = callMode === 'webrtc';
+  const callStatus = isWebRTC ? webrtc.callStatus : wsCall.callStatus;
+  const transcript = isWebRTC ? webrtc.transcript : wsCall.transcript;
+  const callId = isWebRTC ? webrtc.callId : wsCall.callId;
+  const callDuration = isWebRTC ? webrtc.callDuration : wsCall.callDuration;
 
   useEffect(() => {
     async function load() {
       try {
         const result = await listAssistants();
         setAssistants(result.data);
-        if (result.data.length > 0) {
+        const assistantParam = searchParams.get('assistant');
+        if (assistantParam && result.data.some((a: Assistant) => a.id === assistantParam)) {
+          setSelectedAssistantId(assistantParam);
+        } else if (result.data.length > 0) {
           setSelectedAssistantId(result.data[0].id);
         }
       } catch {
@@ -102,235 +102,43 @@ export function WebCallPage() {
       }
     }
     load();
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [transcript]);
 
-  useEffect(() => {
-    return () => {
-      stopCall();
-    };
-  }, []);
+  // ── Unified call actions ──
 
-  useEffect(() => {
-    if (callStatus === 'active' || callStatus === 'processing') {
-      if (!durationIntervalRef.current) {
-        durationIntervalRef.current = setInterval(() => {
-          setCallDuration((d) => d + 1);
-        }, 1000);
-      }
+  function handleStartCall() {
+    if (!selectedAssistantId) return;
+
+    if (isWebRTC) {
+      webrtc.startCall(selectedAssistantId);
     } else {
-      if (durationIntervalRef.current) {
-        clearInterval(durationIntervalRef.current);
-        durationIntervalRef.current = null;
-      }
-    }
-    return () => {
-      if (durationIntervalRef.current) {
-        clearInterval(durationIntervalRef.current);
-      }
-    };
-  }, [callStatus]);
-
-  const playAudioQueue = useCallback(async () => {
-    if (isPlayingRef.current || audioQueueRef.current.length === 0) return;
-    isPlayingRef.current = true;
-
-    while (audioQueueRef.current.length > 0) {
-      const data = audioQueueRef.current.shift();
-      if (!data) break;
-
-      try {
-        if (!audioContextRef.current) {
-          audioContextRef.current = new AudioContext({ sampleRate: 24000 });
-        }
-        const ctx = audioContextRef.current;
-
-        const int16 = new Int16Array(data);
-        const float32 = new Float32Array(int16.length);
-        for (let i = 0; i < int16.length; i++) {
-          float32[i] = int16[i] / 32768;
-        }
-
-        const audioBuffer = ctx.createBuffer(1, float32.length, 24000);
-        audioBuffer.getChannelData(0).set(float32);
-
-        const source = ctx.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(ctx.destination);
-
-        await new Promise<void>((resolve) => {
-          source.onended = () => resolve();
-          source.start();
-        });
-      } catch {
-        // Skip corrupted audio chunks
-      }
-    }
-
-    isPlayingRef.current = false;
-  }, []);
-
-  function startCall() {
-    if (!selectedAssistantId) {
-      setErrorMessage('Select an assistant first');
-      return;
-    }
-
-    const token = getToken();
-    if (!token) {
-      setErrorMessage('Not authenticated');
-      return;
-    }
-
-    setCallStatus('connecting');
-    setTranscript([]);
-    setErrorMessage('');
-    setCallDuration(0);
-    audioQueueRef.current = [];
-
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.host}/api/calls/web?token=${encodeURIComponent(token)}`;
-    const ws = new WebSocket(wsUrl);
-    wsRef.current = ws;
-
-    let receivingAudio = false;
-    let audioChunks: ArrayBuffer[] = [];
-
-    ws.onopen = () => {
-      ws.send(JSON.stringify({ type: 'start', assistantId: selectedAssistantId }));
-    };
-
-    ws.onmessage = (event) => {
-      if (event.data instanceof Blob) {
-        event.data.arrayBuffer().then((buf) => {
-          if (receivingAudio) {
-            audioChunks.push(buf);
-          }
-        });
-        return;
-      }
-
-      try {
-        const msg = JSON.parse(event.data);
-
-        switch (msg.type) {
-          case 'status':
-            break;
-          case 'call_started':
-            setCallStatus('active');
-            setCallId(msg.callId);
-            break;
-          case 'user_transcript':
-            setTranscript((prev) => [...prev, { role: 'user', content: msg.text }]);
-            break;
-          case 'assistant_message':
-            setTranscript((prev) => [...prev, { role: 'assistant', content: msg.text }]);
-            if (msg.hasAudio) {
-              receivingAudio = true;
-              audioChunks = [];
-            }
-            break;
-          case 'audio_end':
-            receivingAudio = false;
-            for (const chunk of audioChunks) {
-              audioQueueRef.current.push(chunk);
-            }
-            audioChunks = [];
-            playAudioQueue();
-            break;
-          case 'processing':
-            if (msg.status === 'started') {
-              setCallStatus('processing');
-            } else {
-              setCallStatus('active');
-            }
-            break;
-          case 'call_ended':
-          case 'call_ending':
-            setCallStatus('ended');
-            stopRecording();
-            break;
-          case 'error':
-            setErrorMessage(msg.message);
-            if (msg.code === 'UNAUTHORIZED') {
-              setCallStatus('error');
-            }
-            break;
-        }
-      } catch {
-        // Non-JSON message
-      }
-    };
-
-    ws.onclose = () => {
-      if (callStatus !== 'ended' && callStatus !== 'idle') {
-        setCallStatus('ended');
-      }
-      stopRecording();
-    };
-
-    ws.onerror = () => {
-      setErrorMessage('WebSocket connection failed');
-      setCallStatus('error');
-    };
-  }
-
-  async function startRecording() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: { sampleRate: 16000, channelCount: 1, echoCancellation: true, noiseSuppression: true },
-      });
-      mediaStreamRef.current = stream;
-
-      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm;codecs=opus' });
-      mediaRecorderRef.current = recorder;
-
-      recorder.ondataavailable = (e) => {
-        if (e.data.size > 0 && wsRef.current?.readyState === WebSocket.OPEN) {
-          e.data.arrayBuffer().then((buf) => {
-            wsRef.current?.send(buf);
-          });
-        }
-      };
-
-      recorder.start(250);
-      setIsRecording(true);
-    } catch {
-      setErrorMessage('Microphone access denied');
+      wsCall.startCall(selectedAssistantId);
     }
   }
 
-  function stopRecording() {
-    if (mediaRecorderRef.current?.state === 'recording') {
-      mediaRecorderRef.current.stop();
+  function handleEndCall() {
+    if (isWebRTC) {
+      webrtc.endCall();
+    } else {
+      wsCall.endCall();
     }
-    mediaStreamRef.current?.getTracks().forEach((t) => t.stop());
-    mediaStreamRef.current = null;
-    mediaRecorderRef.current = null;
-    setIsRecording(false);
   }
 
-  function sendEndTurn() {
-    stopRecording();
-    wsRef.current?.send(JSON.stringify({ type: 'end_turn' }));
-  }
-
-  function stopCall() {
-    wsRef.current?.send(JSON.stringify({ type: 'stop' }));
-    wsRef.current?.close();
-    wsRef.current = null;
-    stopRecording();
-    audioQueueRef.current = [];
-    if (audioContextRef.current) {
-      audioContextRef.current.close().catch(() => {});
-      audioContextRef.current = null;
+  function handleNewCall() {
+    if (isWebRTC) {
+      webrtc.reset();
+    } else {
+      wsCall.reset();
     }
-    setCallStatus('idle');
   }
 
+  // Derive the displayed error
+  const displayedError = isWebRTC ? webrtc.errorMessage : wsCall.errorMessage;
+  const isProviderError = isWebRTC && webrtc.errorCode === 'PROVIDER_NOT_CONFIGURED';
   const isInCall = callStatus === 'active' || callStatus === 'processing' || callStatus === 'connecting';
   const selectedAssistant = assistants.find((a) => a.id === selectedAssistantId);
 
@@ -367,7 +175,7 @@ export function WebCallPage() {
               <p className="text-sm text-muted-foreground relative">Select an assistant and start a voice conversation</p>
             </div>
 
-            {/* Assistant selector */}
+            {/* Assistant selector + mode toggle */}
             <div className="p-6 pt-0 -mt-2">
               <label className="block text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">Assistant</label>
               {loadingAssistants ? (
@@ -393,8 +201,38 @@ export function WebCallPage() {
                   </SelectContent>
                 </Select>
               )}
+
+              {/* Mode toggle */}
+              <div className="flex items-center gap-2 mb-4">
+                <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Mode</label>
+                <div className="flex bg-muted rounded-lg p-0.5 ml-auto">
+                  <button
+                    onClick={() => setCallMode('webrtc')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                      callMode === 'webrtc'
+                        ? 'bg-background text-foreground shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <Radio size={12} />
+                    WebRTC
+                  </button>
+                  <button
+                    onClick={() => setCallMode('classic')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                      callMode === 'classic'
+                        ? 'bg-background text-foreground shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <Wifi size={12} />
+                    Classic
+                  </button>
+                </div>
+              </div>
+
               <Button
-                onClick={startCall}
+                onClick={handleStartCall}
                 disabled={!selectedAssistantId}
                 className="w-full h-12 text-base font-semibold shadow-glow hover:shadow-glow-lg transition-shadow"
                 size="lg"
@@ -407,12 +245,41 @@ export function WebCallPage() {
         </Card>
       )}
 
-      {/* Error */}
-      {errorMessage && (
+      {/* Error banner */}
+      {displayedError && callStatus !== 'error' && (
         <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-lg mb-4 text-sm flex items-start gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-destructive mt-1.5 shrink-0" />
-          {errorMessage}
+          {displayedError}
         </div>
+      )}
+
+      {/* Error State Card */}
+      {callStatus === 'error' && (
+        <Card className="mb-6 overflow-hidden border-destructive/20">
+          <CardContent className="p-8 text-center">
+            <div className="w-14 h-14 rounded-2xl bg-destructive/10 flex items-center justify-center mx-auto mb-4">
+              <AlertTriangle size={24} className="text-destructive" />
+            </div>
+            <h3 className="text-base font-display font-semibold mb-1.5">Call Failed</h3>
+            <p className="text-sm text-muted-foreground mb-4 max-w-md mx-auto">
+              {displayedError || 'An unexpected error occurred while starting the call.'}
+            </p>
+            {isProviderError && (
+              <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg px-4 py-3 mb-4 text-left max-w-md mx-auto">
+                <div className="flex items-center gap-2 mb-1">
+                  <Settings size={14} className="text-yellow-500" />
+                  <span className="text-xs font-semibold text-yellow-500">Provider Not Configured</span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  The voice provider API key is missing. Add it in your environment configuration and restart the server.
+                </p>
+              </div>
+            )}
+            <Button onClick={handleNewCall} className="font-semibold">
+              Try Again
+            </Button>
+          </CardContent>
+        </Card>
       )}
 
       {/* Active Call Interface */}
@@ -425,9 +292,9 @@ export function WebCallPage() {
 
               {/* Pulse rings behind the orb */}
               <div className="relative mb-6">
-                <PulseRings active={callStatus === 'active' && isRecording} />
+                <PulseRings active={callStatus === 'active' && (isWebRTC ? !webrtc.isMuted : wsCall.isRecording)} />
                 <div className={`relative z-10 w-20 h-20 rounded-3xl flex items-center justify-center transition-all duration-500 ${
-                  isRecording
+                  (isWebRTC ? !webrtc.isMuted : wsCall.isRecording) && callStatus === 'active'
                     ? 'bg-primary/20 border-2 border-primary shadow-glow-lg'
                     : callStatus === 'processing'
                     ? 'bg-chart-3/10 border border-chart-3/30'
@@ -437,7 +304,7 @@ export function WebCallPage() {
                     <Loader2 size={28} className="animate-spin text-primary" />
                   ) : callStatus === 'processing' ? (
                     <Loader2 size={28} className="animate-spin text-chart-3" />
-                  ) : isRecording ? (
+                  ) : (isWebRTC ? !webrtc.isMuted : wsCall.isRecording) ? (
                     <Mic size={28} className="text-primary" />
                   ) : (
                     <Headphones size={28} className="text-primary" />
@@ -446,12 +313,16 @@ export function WebCallPage() {
               </div>
 
               {/* Waveform */}
-              <Waveform active={isRecording || callStatus === 'processing'} className="mb-4" />
+              <Waveform active={(isWebRTC ? !webrtc.isMuted && callStatus === 'active' : wsCall.isRecording) || callStatus === 'processing'} className="mb-4" />
 
               {/* Status */}
               <div className="flex items-center gap-3 mb-1 relative">
                 <Badge variant={callStatus === 'active' ? 'default' : 'secondary'} className="text-xs px-2.5">
                   {callStatus === 'connecting' ? 'Connecting' : callStatus === 'active' ? 'Active' : 'Processing'}
+                </Badge>
+                <Badge variant="outline" className="text-[10px] px-2 gap-1">
+                  {isWebRTC ? <Radio size={10} /> : <Wifi size={10} />}
+                  {isWebRTC ? 'WebRTC' : 'Classic'}
                 </Badge>
                 <span className="text-sm font-mono text-muted-foreground">{formatCallDuration(callDuration)}</span>
               </div>
@@ -469,29 +340,55 @@ export function WebCallPage() {
 
             {/* Controls */}
             <div className="p-6 flex gap-3 justify-center border-t border-border/50">
-              {!isRecording ? (
+              {isWebRTC ? (
+                /* WebRTC mode: Mute toggle instead of record buttons */
                 <Button
-                  onClick={startRecording}
+                  onClick={webrtc.toggleMute}
                   disabled={callStatus !== 'active'}
+                  variant={webrtc.isMuted ? 'destructive' : 'default'}
                   size="lg"
-                  className="rounded-2xl px-8 h-12 shadow-glow hover:shadow-glow-lg transition-shadow font-semibold"
+                  className={`rounded-2xl px-8 h-12 font-semibold ${
+                    !webrtc.isMuted ? 'shadow-glow hover:shadow-glow-lg transition-shadow' : ''
+                  }`}
                 >
-                  <Mic size={18} className="mr-2" />
-                  Hold to Talk
+                  {webrtc.isMuted ? (
+                    <>
+                      <MicOff size={18} className="mr-2" />
+                      Unmute
+                    </>
+                  ) : (
+                    <>
+                      <Mic size={18} className="mr-2" />
+                      Mute
+                    </>
+                  )}
                 </Button>
               ) : (
-                <Button
-                  onClick={sendEndTurn}
-                  variant="destructive"
-                  size="lg"
-                  className="rounded-2xl px-8 h-12 animate-pulse-glow font-semibold"
-                >
-                  <MicOff size={18} className="mr-2" />
-                  Send
-                </Button>
+                /* Classic mode: Hold to Talk / Send buttons */
+                !wsCall.isRecording ? (
+                  <Button
+                    onClick={wsCall.startRecording}
+                    disabled={callStatus !== 'active'}
+                    size="lg"
+                    className="rounded-2xl px-8 h-12 shadow-glow hover:shadow-glow-lg transition-shadow font-semibold"
+                  >
+                    <Mic size={18} className="mr-2" />
+                    Hold to Talk
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={wsCall.sendEndTurn}
+                    variant="destructive"
+                    size="lg"
+                    className="rounded-2xl px-8 h-12 animate-pulse-glow font-semibold"
+                  >
+                    <MicOff size={18} className="mr-2" />
+                    Send
+                  </Button>
+                )
               )}
               <Button
-                onClick={stopCall}
+                onClick={handleEndCall}
                 variant="outline"
                 size="lg"
                 className="rounded-2xl px-8 h-12 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30"
@@ -513,7 +410,7 @@ export function WebCallPage() {
             </div>
             <p className="text-sm text-muted-foreground mb-1">Call ended</p>
             <p className="text-xs text-muted-foreground/60 font-mono mb-5">{formatCallDuration(callDuration)}</p>
-            <Button onClick={() => { setCallStatus('idle'); setTranscript([]); setErrorMessage(''); setCallDuration(0); }} className="font-semibold">
+            <Button onClick={handleNewCall} className="font-semibold">
               New Call
             </Button>
           </CardContent>

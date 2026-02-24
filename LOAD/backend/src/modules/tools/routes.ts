@@ -8,7 +8,7 @@ import {
   getTemplatesByCategory,
   getTemplateByFunctionName,
   type ToolTemplate,
-} from './templates.js';
+} from './templates/index.js';
 
 const createToolSchema = z.object({
   name: z.string().min(1),
@@ -192,7 +192,18 @@ export async function toolRoutes(app: FastifyInstance): Promise<void> {
         error: { code: 'NOT_FOUND', message: 'Tool not found', statusCode: 404 },
       });
     }
-    const updated = await prisma.tool.update({ where: { id }, data: body as any });
+    const updated = await prisma.tool.update({
+      where: { id },
+      data: {
+        ...(body.name !== undefined && { name: body.name }),
+        ...(body.type !== undefined && { type: body.type }),
+        ...(body.description !== undefined && { description: body.description }),
+        ...(body.function !== undefined && { function: body.function as object }),
+        ...(body.serverUrl !== undefined && { serverUrl: body.serverUrl }),
+        ...(body.serverSecret !== undefined && { serverSecret: body.serverSecret }),
+        ...(body.metadata !== undefined && { metadata: body.metadata as object }),
+      },
+    });
     return { success: true, data: updated };
   });
 

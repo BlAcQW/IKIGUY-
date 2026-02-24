@@ -30,7 +30,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useBookings } from "@/hooks/use-bookings";
+import { useBookings, useCompleteBooking } from "@/hooks/use-bookings";
 import { BookingStatus, BookingType, Booking } from "@/lib/api/booking-api";
 import { format, isToday, isTomorrow, isThisWeek, isThisMonth, startOfDay, endOfDay } from "date-fns";
 import { useAuth } from "@/contexts/AuthContext";
@@ -59,6 +59,9 @@ export default function Bookings() {
 
   // Admin bulk action mutation
   const bulkActionMutation = useAdminBulkAction();
+
+  // Complete booking mutation
+  const completeBookingMutation = useCompleteBooking();
 
   // Check if user is admin
   useEffect(() => {
@@ -263,6 +266,22 @@ export default function Bookings() {
   const handleViewActionLogs = (booking: Booking) => {
     setSelectedBooking(booking);
     setShowActionLogsDialog(true);
+  };
+
+  const handleCompleteBooking = async (booking: Booking) => {
+    try {
+      await completeBookingMutation.mutateAsync({ bookingId: booking.id });
+      toast({
+        title: "Success",
+        description: `Tour for ${booking.contact_name} marked as complete.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to complete booking",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -580,7 +599,7 @@ export default function Bookings() {
                         </span>
                         <span className="flex items-center gap-1">
                           <Building2 className="h-3.5 w-3.5" />
-                          Property ID: {booking.property_id.slice(0, 8)}...
+                          {booking.property_name || `Property #${booking.property_id.slice(-6)}`}
                         </span>
                         <span className="flex items-center gap-1">
                           <Clock className="h-3.5 w-3.5" />
@@ -629,6 +648,12 @@ export default function Bookings() {
                             >
                               <CheckCircle className="h-4 w-4 mr-2" />
                               Override & Confirm
+                            </DropdownMenuItem>
+                          )}
+                          {booking.status === "confirmed" && (
+                            <DropdownMenuItem onClick={() => handleCompleteBooking(booking)}>
+                              <CheckCircle className="h-4 w-4 mr-2" />
+                              Mark as Complete
                             </DropdownMenuItem>
                           )}
                         </DropdownMenuContent>

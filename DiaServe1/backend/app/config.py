@@ -89,6 +89,12 @@ class Settings(BaseSettings):
     FLUTTERWAVE_ENCRYPTION_KEY: Optional[str] = None
     FLUTTERWAVE_WEBHOOK_SECRET: Optional[str] = None
 
+    # QuickBooks Online (optional)
+    QBO_CLIENT_ID: Optional[str] = None
+    QBO_CLIENT_SECRET: Optional[str] = None
+    QBO_REDIRECT_URI: str = "http://localhost:30039/api/v1/quickbooks/callback"
+    QBO_ENVIRONMENT: str = "sandbox"  # "sandbox" or "production"
+
     # Default Admin User (created on first run)
     DEFAULT_ADMIN_EMAIL: str = os.getenv("DEFAULT_ADMIN_EMAIL", "admin@estateflow.local")
     DEFAULT_ADMIN_PASSWORD: str = os.getenv("DEFAULT_ADMIN_PASSWORD", "Admin@123!")

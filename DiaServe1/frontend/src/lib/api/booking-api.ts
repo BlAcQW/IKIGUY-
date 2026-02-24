@@ -37,6 +37,7 @@ export interface Booking {
   id: string;
   organization_id: string;
   property_id: string;
+  property_name?: string;
   contact_id: string;
   agent_id?: string;
   scheduled_at: string;

@@ -76,6 +76,36 @@ export function buildAssistant(overrides: AssistantOverrides = {}) {
   };
 }
 
+interface ToolOverrides {
+  id?: string;
+  organizationId?: string;
+  type?: string;
+  name?: string;
+  description?: string | null;
+  function?: object | null;
+  serverUrl?: string | null;
+  serverSecret?: string | null;
+  metadata?: object | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export function buildTool(overrides: ToolOverrides = {}) {
+  return {
+    id: overrides.id ?? crypto.randomUUID(),
+    organizationId: overrides.organizationId ?? crypto.randomUUID(),
+    type: overrides.type ?? 'FUNCTION',
+    name: overrides.name ?? 'Test Tool',
+    description: overrides.description ?? 'A test tool',
+    function: overrides.function ?? { name: 'test_function', description: 'Test', parameters: { type: 'object', properties: {} } },
+    serverUrl: overrides.serverUrl ?? 'https://example.com/webhook',
+    serverSecret: overrides.serverSecret ?? null,
+    metadata: overrides.metadata ?? null,
+    createdAt: overrides.createdAt ?? new Date('2024-01-01'),
+    updatedAt: overrides.updatedAt ?? new Date('2024-01-01'),
+  };
+}
+
 interface ApiKeyOverrides {
   id?: string;
   keyHash?: string;

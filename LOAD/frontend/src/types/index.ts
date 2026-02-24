@@ -104,6 +104,7 @@ export interface PhoneNumber {
   provider: string;
   sipDomain: string | null;
   status: string;
+  metadata: Record<string, unknown> | null;
   createdAt: string;
   assistant?: Assistant;
 }
@@ -281,6 +282,14 @@ export interface CreateSipNumberRequest {
   sipDomain?: string;
 }
 
+export interface CreateGoipNumberRequest {
+  number: string;
+  name?: string;
+  provider: 'GOIP';
+  trunkName?: string;
+  country?: string;
+}
+
 export interface UpdatePhoneNumberRequest {
   assistantId?: string | null;
   name?: string;
@@ -312,6 +321,35 @@ export interface WebhookDelivery {
   error: string | null;
   attemptNumber: number;
   createdAt: string;
+}
+
+// Tool Templates
+
+export type ToolTemplateCategory =
+  | 'scheduling'
+  | 'sales'
+  | 'finance'
+  | 'retention'
+  | 'survey'
+  | 'marketing'
+  | 'insurance'
+  | 'healthcare';
+
+export interface ToolTemplate {
+  name: string;
+  description: string;
+  category: ToolTemplateCategory;
+  type: ToolType;
+  function: {
+    name: string;
+    description: string;
+    parameters: Record<string, unknown>;
+  };
+}
+
+export interface ToolTemplatesResponse {
+  categories: Record<ToolTemplateCategory, string>;
+  templates: Record<ToolTemplateCategory, ToolTemplate[]>;
 }
 
 // Analytics

@@ -22,12 +22,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ContactImportDialog } from "@/components/ContactImportDialog";
-import { useContacts, useDeleteContact } from "@/hooks/use-campaigns";
-import type { InterestStatus } from "@/lib/api/campaign-api";
+import { ContactFormDialog } from "@/components/ContactFormDialog";
+import type { ContactFormData } from "@/components/ContactFormDialog";
+import { useContacts, useDeleteContact, useCreateContact } from "@/hooks/use-campaigns";
+import type { InterestStatus, ContactCreate } from "@/lib/api/campaign-api";
 
 export default function Contacts() {
   const [searchQuery, setSearchQuery] = useState("");
   const [importDialogOpen, setImportDialogOpen] = useState(false);
+  const [addContactOpen, setAddContactOpen] = useState(false);
+  const createContactMutation = useCreateContact();
 
   // Fetch contacts with search
   const { data: contactsData, isLoading, error } = useContacts({
@@ -108,7 +112,7 @@ export default function Contacts() {
               <Upload className="h-4 w-4" />
               Import CSV
             </Button>
-            <Button variant="gradient" className="gap-2">
+            <Button variant="gradient" className="gap-2" onClick={() => setAddContactOpen(true)}>
               <Plus className="h-4 w-4" />
               Add Contact
             </Button>
@@ -119,6 +123,27 @@ export default function Contacts() {
       <ContactImportDialog
         open={importDialogOpen}
         onClose={() => setImportDialogOpen(false)}
+      />
+
+      <ContactFormDialog
+        open={addContactOpen}
+        onClose={() => setAddContactOpen(false)}
+        onSubmit={async (formData: ContactFormData) => {
+          const contactCreate: ContactCreate = {
+            name: `${formData.first_name} ${formData.last_name}`.trim(),
+            email: formData.email || undefined,
+            phone: formData.phone || undefined,
+            interest_status: formData.interest_level as ContactCreate["interest_status"],
+            tags: formData.tags,
+            source: formData.source || undefined,
+            notes: formData.notes || undefined,
+            property_type_preferences: formData.property_type_preferences || [],
+            location_preferences: formData.location_preferences || [],
+            budget_min: formData.budget_min,
+            budget_max: formData.budget_max,
+          };
+          await createContactMutation.mutateAsync(contactCreate);
+        }}
       />
 
       <div className="p-6 space-y-6">

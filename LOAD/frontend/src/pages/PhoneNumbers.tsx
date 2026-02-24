@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { listPhoneNumbers, searchPhoneNumbers, purchasePhoneNumber, createSipNumber, updatePhoneNumber, deletePhoneNumber, listAssistants } from '../lib/api';
+import { listPhoneNumbers, searchPhoneNumbers, purchasePhoneNumber, createSipNumber, createGoipNumber, updatePhoneNumber, deletePhoneNumber, listAssistants } from '../lib/api';
 import type { PhoneNumber, Assistant } from '../types';
 import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AlertDialog } from '@/components/ui/alert-dialog';
-import { Phone, Plus, Trash2, Search, Globe } from 'lucide-react';
+import { Phone, Plus, Trash2, Search, Globe, Radio } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface SearchResult { number: string; locality: string; region: string; }
@@ -34,6 +34,10 @@ export function PhoneNumbersPage() {
   const [sipName, setSipName] = useState('');
   const [sipDomain, setSipDomain] = useState('');
   const [creatingSip, setCreatingSip] = useState(false);
+  const [goipNumber, setGoipNumber] = useState('');
+  const [goipName, setGoipName] = useState('');
+  const [goipTrunkName, setGoipTrunkName] = useState('');
+  const [creatingGoip, setCreatingGoip] = useState(false);
   const [releaseTarget, setReleaseTarget] = useState<{ id: string; number: string } | null>(null);
   const [releasing, setReleasing] = useState(false);
 
@@ -73,6 +77,15 @@ export function PhoneNumbersPage() {
     finally { setCreatingSip(false); }
   }
 
+  async function handleCreateGoip(e: React.FormEvent) {
+    e.preventDefault(); setCreatingGoip(true);
+    try {
+      await createGoipNumber({ number: goipNumber, name: goipName || undefined, provider: 'GOIP', trunkName: goipTrunkName || undefined, country: 'GH' });
+      toast.success('GoIP number added'); setDialogOpen(false); setGoipNumber(''); setGoipName(''); setGoipTrunkName(''); await load();
+    } catch (err: unknown) { const msg = err instanceof Error ? err.message : 'Unknown error'; toast.error('Failed to add GoIP number', { description: msg }); }
+    finally { setCreatingGoip(false); }
+  }
+
   async function handleAssignAssistant(numberId: string, assistantId: string) {
     try { await updatePhoneNumber(numberId, { assistantId: assistantId === NONE_VALUE ? null : assistantId }); toast.success('Assistant assignment updated'); await load(); }
     catch (err: unknown) { const msg = err instanceof Error ? err.message : 'Unknown error'; toast.error('Failed to update assignment', { description: msg }); }
@@ -88,7 +101,7 @@ export function PhoneNumbersPage() {
 
   return (
     <div className="animate-slide-up">
-      <PageHeader title="Phone Numbers" subtitle="Manage your Twilio and SIP trunk phone numbers">
+      <PageHeader title="Phone Numbers" subtitle="Manage your Twilio, SIP trunk, and GoIP phone numbers">
         <Button onClick={() => setDialogOpen(true)} className="font-semibold"><Plus size={15} className="mr-2" />Add Number</Button>
       </PageHeader>
 
@@ -96,12 +109,13 @@ export function PhoneNumbersPage() {
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle className="font-display">Add Phone Number</DialogTitle>
-            <DialogDescription>Search for a number to purchase or add a SIP trunk.</DialogDescription>
+            <DialogDescription>Search for a number to purchase, add a SIP trunk, or register a GoIP GSM number.</DialogDescription>
           </DialogHeader>
           <Tabs defaultValue="search">
-            <TabsList className="grid w-full grid-cols-2 h-9">
+            <TabsList className="grid w-full grid-cols-3 h-9">
               <TabsTrigger value="search" className="text-xs gap-1.5"><Search size={12} />Search & Purchase</TabsTrigger>
               <TabsTrigger value="sip" className="text-xs gap-1.5"><Globe size={12} />SIP Trunk</TabsTrigger>
+              <TabsTrigger value="goip" className="text-xs gap-1.5"><Radio size={12} />GoIP</TabsTrigger>
             </TabsList>
             <TabsContent value="search" className="space-y-4 mt-4">
               <div className="grid grid-cols-3 gap-3">
@@ -133,6 +147,17 @@ export function PhoneNumbersPage() {
                 <DialogFooter><Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button><Button type="submit" disabled={creatingSip} className="font-semibold">{creatingSip ? 'Adding...' : 'Add SIP Number'}</Button></DialogFooter>
               </form>
             </TabsContent>
+            <TabsContent value="goip" className="mt-4">
+              <form onSubmit={handleCreateGoip} className="space-y-4">
+                <p className="text-xs text-muted-foreground">Register a Ghanaian mobile number connected via GoIP (Hybertone) GSM gateway.</p>
+                <div className="space-y-2"><Label className="text-xs font-medium">Phone Number (+233...)</Label><Input value={goipNumber} onChange={(e) => setGoipNumber(e.target.value)} required placeholder="+233241234567" className="h-10" /></div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2"><Label className="text-xs font-medium">Name</Label><Input value={goipName} onChange={(e) => setGoipName(e.target.value)} placeholder="Ghana MTN Line 1" className="h-10" /></div>
+                  <div className="space-y-2"><Label className="text-xs font-medium">Trunk Name</Label><Input value={goipTrunkName} onChange={(e) => setGoipTrunkName(e.target.value)} placeholder="goip-trunk" className="h-10" /></div>
+                </div>
+                <DialogFooter><Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button><Button type="submit" disabled={creatingGoip} className="font-semibold">{creatingGoip ? 'Adding...' : 'Add GoIP Number'}</Button></DialogFooter>
+              </form>
+            </TabsContent>
           </Tabs>
         </DialogContent>
       </Dialog>
@@ -160,7 +185,7 @@ export function PhoneNumbersPage() {
                 <TableRow key={num.id} className="group">
                   <TableCell className="font-mono text-sm">{num.number}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">{num.name ?? '--'}</TableCell>
-                  <TableCell><Badge variant={num.provider === 'TWILIO' ? 'default' : 'secondary'} className="text-[10px]">{num.provider}</Badge></TableCell>
+                  <TableCell><Badge variant={num.provider === 'TWILIO' ? 'default' : num.provider === 'GOIP' ? 'outline' : 'secondary'} className={`text-[10px] ${num.provider === 'GOIP' ? 'border-emerald-500/50 text-emerald-600' : ''}`}>{num.provider}</Badge></TableCell>
                   <TableCell><Badge variant={num.status === 'ACTIVE' ? 'outline' : 'secondary'} className="text-[10px]">{num.status}</Badge></TableCell>
                   <TableCell>
                     <Select value={num.assistantId ?? NONE_VALUE} onValueChange={(v) => handleAssignAssistant(num.id, v)}>

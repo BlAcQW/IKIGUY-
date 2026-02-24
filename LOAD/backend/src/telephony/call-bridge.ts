@@ -45,8 +45,28 @@ const TTS_SAMPLE_RATE = 24_000;
 /** Sample rate expected by Asterisk ExternalMedia (slin16). */
 const ASTERISK_SAMPLE_RATE = 16_000;
 
-/** SIP trunk endpoint template for outbound calls. */
-const OUTBOUND_ENDPOINT_TEMPLATE = 'PJSIP/{number}@ant-cellular';
+/** Default SIP trunk endpoint template for outbound calls. */
+const DEFAULT_OUTBOUND_ENDPOINT = 'PJSIP/{number}@ant-cellular';
+
+/** GoIP trunk endpoint template. */
+const GOIP_OUTBOUND_ENDPOINT = 'PJSIP/{number}@{trunk}';
+
+/**
+ * Resolve the PJSIP endpoint for an outbound call based on the phone number's provider.
+ */
+function resolveEndpoint(
+  customerNumber: string,
+  provider: string,
+  metadata?: Record<string, unknown> | null,
+): string {
+  if (provider === 'GOIP') {
+    const trunkName = (metadata?.trunkName as string) ?? 'goip-trunk';
+    return GOIP_OUTBOUND_ENDPOINT
+      .replace('{number}', customerNumber)
+      .replace('{trunk}', trunkName);
+  }
+  return DEFAULT_OUTBOUND_ENDPOINT.replace('{number}', customerNumber);
+}
 
 // ---------------------------------------------------------------------------
 // CallBridge
@@ -172,9 +192,10 @@ export class CallBridge {
 
     const vad = new SimpleVAD();
 
-    const endpoint = OUTBOUND_ENDPOINT_TEMPLATE.replace(
-      '{number}',
-      params.customerNumber
+    const endpoint = resolveEndpoint(
+      params.customerNumber,
+      phoneNumber.provider,
+      phoneNumber.metadata as Record<string, unknown> | null,
     );
     const channelId = await this.ariClient.originateCall({
       endpoint,

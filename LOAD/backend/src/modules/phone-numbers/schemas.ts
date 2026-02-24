@@ -2,9 +2,9 @@ import { z } from 'zod';
 
 export const searchNumbersSchema = z.object({
   country: z.string().length(2).default('US'),
-  areaCode: z.string().regex(/^\d{3}$/, 'Area code must be 3 digits').optional(),
+  areaCode: z.string().regex(/^\d{2,4}$/, 'Area code must be 2-4 digits').optional(),
   contains: z.string().max(20).optional(),
-  type: z.enum(['local', 'tollFree']).default('local'),
+  type: z.enum(['local', 'tollFree', 'mobile']).default('local'),
   limit: z.coerce.number().min(1).max(30).default(10),
 });
 
@@ -20,6 +20,14 @@ export const createSipNumberSchema = z.object({
   sipDomain: z.string().optional(),
 });
 
+export const createGoipNumberSchema = z.object({
+  number: z.string().regex(/^\+\d{10,15}$/, 'Phone number must be E.164 format (e.g. +233241234567)'),
+  name: z.string().max(100).optional(),
+  provider: z.literal('GOIP'),
+  trunkName: z.string().max(100).optional(),
+  country: z.string().length(2).default('GH'),
+});
+
 export const updatePhoneNumberSchema = z.object({
   assistantId: z.string().uuid().nullable().optional(),
   name: z.string().max(100).optional(),
@@ -28,4 +36,5 @@ export const updatePhoneNumberSchema = z.object({
 export type SearchNumbersInput = z.infer<typeof searchNumbersSchema>;
 export type PurchaseNumberInput = z.infer<typeof purchaseNumberSchema>;
 export type CreateSipNumberInput = z.infer<typeof createSipNumberSchema>;
+export type CreateGoipNumberInput = z.infer<typeof createGoipNumberSchema>;
 export type UpdatePhoneNumberInput = z.infer<typeof updatePhoneNumberSchema>;

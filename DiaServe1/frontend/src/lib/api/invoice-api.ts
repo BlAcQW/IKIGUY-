@@ -74,6 +74,12 @@ export interface Invoice {
   created_at: string;
   updated_at: string;
   sent_at?: string;
+
+  // QuickBooks sync tracking
+  qbo_invoice_id?: string;
+  qbo_sync_status?: 'not_synced' | 'synced' | 'error';
+  qbo_last_synced_at?: string;
+  qbo_sync_error?: string;
 }
 
 export interface InvoiceCreate {

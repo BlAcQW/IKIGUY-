@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { listTools, createTool, updateTool, deleteTool } from '../lib/api';
-import type { Tool, ToolType, CreateToolRequest, UpdateToolRequest } from '../types';
+import { listTools, createTool, updateTool, deleteTool, listToolTemplates, createToolFromTemplate } from '../lib/api';
+import type { Tool, ToolType, ToolTemplate, ToolTemplateCategory, ToolTemplatesResponse, CreateToolRequest, UpdateToolRequest } from '../types';
 import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,7 +19,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
 import { AlertDialog } from '@/components/ui/alert-dialog';
-import { Wrench, Plus, Pencil, Trash2 } from 'lucide-react';
+import { Wrench, Plus, Pencil, Trash2, Layers, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 
 const TOOL_TYPE_LABELS: Record<ToolType, string> = { FUNCTION: 'Function', TRANSFER_CALL: 'Transfer Call', END_CALL: 'End Call' };
@@ -56,6 +56,16 @@ export function ToolsPage() {
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
   const [deleting, setDeleting] = useState(false);
 
+  // Template dialog state
+  const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
+  const [templatesData, setTemplatesData] = useState<ToolTemplatesResponse | null>(null);
+  const [loadingTemplates, setLoadingTemplates] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<ToolTemplateCategory | ''>('');
+  const [selectedTemplate, setSelectedTemplate] = useState<ToolTemplate | null>(null);
+  const [templateServerUrl, setTemplateServerUrl] = useState('');
+  const [templateServerSecret, setTemplateServerSecret] = useState('');
+  const [creatingFromTemplate, setCreatingFromTemplate] = useState(false);
+
   const loadTools = useCallback(async () => {
     try { const result = await listTools(); setTools(result.data); }
     catch (err: unknown) { const message = err instanceof Error ? err.message : 'Unknown error'; toast.error('Failed to load tools', { description: message }); }
@@ -66,6 +76,25 @@ export function ToolsPage() {
 
   function openCreate() { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }
   function openEdit(tool: Tool) { setEditingId(tool.id); setForm(toolToForm(tool)); setDialogOpen(true); }
+
+  async function openTemplateDialog() {
+    setTemplateDialogOpen(true);
+    setSelectedCategory('');
+    setSelectedTemplate(null);
+    setTemplateServerUrl('');
+    setTemplateServerSecret('');
+    if (!templatesData) {
+      setLoadingTemplates(true);
+      try {
+        const result = await listToolTemplates();
+        setTemplatesData(result.data);
+      } catch {
+        toast.error('Failed to load templates');
+      } finally {
+        setLoadingTemplates(false);
+      }
+    }
+  }
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault(); setSaving(true);
@@ -86,12 +115,44 @@ export function ToolsPage() {
     finally { setDeleting(false); }
   }
 
+  async function handleCreateFromTemplate() {
+    if (!selectedTemplate || !templateServerUrl) return;
+    setCreatingFromTemplate(true);
+    try {
+      await createToolFromTemplate({
+        templateName: selectedTemplate.function.name,
+        serverUrl: templateServerUrl,
+        serverSecret: templateServerSecret || undefined,
+      });
+      toast.success(`Tool "${selectedTemplate.name}" created`);
+      setTemplateDialogOpen(false);
+      await loadTools();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      toast.error('Failed to create tool from template', { description: message });
+    } finally {
+      setCreatingFromTemplate(false);
+    }
+  }
+
+  const categoryTemplates = selectedCategory && templatesData
+    ? templatesData.templates[selectedCategory] ?? []
+    : [];
+
   return (
     <div className="animate-slide-up">
       <PageHeader title="Tools" subtitle="Define custom functions and actions for your assistants">
-        <Button onClick={openCreate} className="font-semibold"><Plus size={15} className="mr-2" />Create Tool</Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={openTemplateDialog} className="font-semibold">
+            <Layers size={15} className="mr-2" />From Template
+          </Button>
+          <Button onClick={openCreate} className="font-semibold">
+            <Plus size={15} className="mr-2" />Create Tool
+          </Button>
+        </div>
       </PageHeader>
 
+      {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
@@ -121,8 +182,123 @@ export function ToolsPage() {
         </DialogContent>
       </Dialog>
 
+      {/* Template Dialog */}
+      <Dialog open={templateDialogOpen} onOpenChange={setTemplateDialogOpen}>
+        <DialogContent className="max-w-lg max-h-[85vh] flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="font-display">
+              {!selectedTemplate ? 'Create from Template' : selectedTemplate.name}
+            </DialogTitle>
+            <DialogDescription>
+              {!selectedTemplate
+                ? 'Pick a pre-built tool template with ready-made function schemas.'
+                : 'Configure the webhook URL for this tool.'}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex-1 overflow-y-auto min-h-0">
+            {loadingTemplates ? (
+              <div className="space-y-2 py-2">
+                {[1, 2, 3].map((i) => <Skeleton key={i} className="h-14 w-full rounded-lg" />)}
+              </div>
+            ) : !selectedTemplate ? (
+              <div className="py-2 space-y-3">
+                <div className="space-y-2">
+                  <Label className="text-xs font-medium">Category</Label>
+                  <Select value={selectedCategory} onValueChange={(v) => setSelectedCategory(v as ToolTemplateCategory)}>
+                    <SelectTrigger className="h-10">
+                      <SelectValue placeholder="Select a category..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {templatesData && Object.entries(templatesData.categories).map(([key, label]) => (
+                        <SelectItem key={key} value={key}>{label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                {selectedCategory && (
+                  <div className="space-y-1.5">
+                    {categoryTemplates.map((template) => (
+                      <button
+                        key={template.function.name}
+                        onClick={() => setSelectedTemplate(template)}
+                        className="w-full flex items-center gap-3 p-3 rounded-lg border border-panel-border hover:bg-muted/30 transition-colors text-left"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium">{template.name}</p>
+                          <p className="text-[11px] text-muted-foreground truncate">{template.description}</p>
+                          <code className="text-[10px] text-muted-foreground/60 font-mono">{template.function.name}</code>
+                        </div>
+                        <ChevronRight size={14} className="text-muted-foreground flex-shrink-0" />
+                      </button>
+                    ))}
+                    {categoryTemplates.length === 0 && (
+                      <p className="text-center text-sm text-muted-foreground py-4">No templates in this category</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="py-2 space-y-4">
+                <div className="p-3 rounded-lg bg-muted/30 border border-panel-border">
+                  <p className="text-xs font-medium mb-1">{selectedTemplate.function.description}</p>
+                  <code className="text-[10px] text-muted-foreground font-mono">{selectedTemplate.function.name}</code>
+                  <div className="mt-2">
+                    <p className="text-[10px] text-muted-foreground/60">
+                      Parameters: {Object.keys((selectedTemplate.function.parameters as Record<string, unknown>).properties ?? {}).join(', ')}
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs font-medium">Webhook URL</Label>
+                  <Input
+                    value={templateServerUrl}
+                    onChange={(e) => setTemplateServerUrl(e.target.value)}
+                    placeholder="https://your-server.com/webhook"
+                    className="h-10"
+                  />
+                  <p className="text-[11px] text-muted-foreground">
+                    The URL that will receive function call requests during voice calls.
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs font-medium">Server Secret (Optional)</Label>
+                  <Input
+                    value={templateServerSecret}
+                    onChange={(e) => setTemplateServerSecret(e.target.value)}
+                    type="password"
+                    placeholder="HMAC secret for request signing"
+                    className="h-10"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter className="pt-2">
+            {selectedTemplate && (
+              <Button variant="ghost" size="sm" onClick={() => setSelectedTemplate(null)} className="mr-auto text-xs">
+                Back
+              </Button>
+            )}
+            <Button variant="outline" onClick={() => setTemplateDialogOpen(false)}>Cancel</Button>
+            {selectedTemplate && (
+              <Button
+                disabled={!templateServerUrl || creatingFromTemplate}
+                onClick={handleCreateFromTemplate}
+                className="font-semibold"
+              >
+                {creatingFromTemplate ? 'Creating...' : 'Create Tool'}
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation */}
       <AlertDialog open={deleteTarget !== null} onOpenChange={(open) => !open && setDeleteTarget(null)} title="Delete Tool" description={`Are you sure you want to delete "${deleteTarget?.name ?? ''}"? This action cannot be undone.`} confirmLabel="Delete" variant="destructive" loading={deleting} onConfirm={handleDelete} />
 
+      {/* Tools List */}
       {loading ? (
         <Card><CardContent className="p-0"><div className="p-4 space-y-3">{[1, 2, 3].map((i) => <Skeleton key={i} className="h-12 w-full" />)}</div></CardContent></Card>
       ) : tools.length === 0 ? (
@@ -130,7 +306,12 @@ export function ToolsPage() {
           <div className="w-14 h-14 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-4"><Wrench size={24} className="text-muted-foreground/40" /></div>
           <h2 className="text-base font-display font-semibold mb-1">No tools yet</h2>
           <p className="text-sm text-muted-foreground mb-5">Create tools to extend your assistant's capabilities.</p>
-          <Button onClick={openCreate} className="font-semibold">Create Tool</Button>
+          <div className="flex gap-2 justify-center">
+            <Button variant="outline" onClick={openTemplateDialog} className="font-semibold">
+              <Layers size={15} className="mr-2" />From Template
+            </Button>
+            <Button onClick={openCreate} className="font-semibold">Create Tool</Button>
+          </div>
         </CardContent></Card>
       ) : (
         <Card><CardContent className="p-0">

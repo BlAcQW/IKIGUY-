@@ -148,6 +148,7 @@ model PhoneNumber {
   provider       String   @default("TWILIO")
   sipDomain      String?
   status         String   @default("ACTIVE")
+  metadata       Json?
   createdAt      DateTime @default(now())
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)

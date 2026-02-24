@@ -30,6 +30,7 @@ interface AssistantEditorPanelProps {
   onPublish: () => void;
   onDelete: () => void;
   hasAssistant: boolean;
+  assistantId?: string;
 }
 
 export function AssistantEditorPanel({
@@ -41,6 +42,7 @@ export function AssistantEditorPanel({
   onPublish,
   onDelete,
   hasAssistant,
+  assistantId,
 }: AssistantEditorPanelProps) {
   const [editingName, setEditingName] = useState(false);
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -196,7 +198,7 @@ export function AssistantEditorPanel({
               <VoiceTab form={form} updateField={updateField} />
             </TabsContent>
             <TabsContent value="functions" className="mt-0">
-              <FunctionsTab form={form} updateField={updateField} />
+              <FunctionsTab form={form} updateField={updateField} assistantId={assistantId} />
             </TabsContent>
             <TabsContent value="advanced" className="mt-0">
               <AdvancedTab form={form} updateField={updateField} />

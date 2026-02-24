@@ -6,3 +6,4 @@ dist/
 coverage/
 .prisma/
 .claude/screenshots/
+.claude/settings.local.json

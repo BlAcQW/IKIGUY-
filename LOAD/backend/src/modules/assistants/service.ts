@@ -71,3 +71,53 @@ export async function deleteAssistant(id: string, organizationId: string) {
   await getAssistant(id, organizationId);
   await prisma.assistant.delete({ where: { id } });
 }
+
+export async function attachTool(assistantId: string, toolId: string, organizationId: string) {
+  const assistant = await getAssistant(assistantId, organizationId);
+
+  // Verify the tool exists and belongs to the same org
+  const tool = await prisma.tool.findFirst({ where: { id: toolId, organizationId } });
+  if (!tool) {
+    throw Object.assign(new Error('Tool not found'), { statusCode: 404 });
+  }
+
+  const modelConfig = (assistant.model ?? {}) as Record<string, unknown>;
+  const existingToolIds = (modelConfig.toolIds as string[]) ?? [];
+
+  if (existingToolIds.includes(toolId)) {
+    return assistant;
+  }
+
+  return prisma.assistant.update({
+    where: { id: assistantId },
+    data: {
+      model: { ...modelConfig, toolIds: [...existingToolIds, toolId] },
+    },
+  });
+}
+
+export async function detachTool(assistantId: string, toolId: string, organizationId: string) {
+  const assistant = await getAssistant(assistantId, organizationId);
+
+  const modelConfig = (assistant.model ?? {}) as Record<string, unknown>;
+  const existingToolIds = (modelConfig.toolIds as string[]) ?? [];
+
+  return prisma.assistant.update({
+    where: { id: assistantId },
+    data: {
+      model: { ...modelConfig, toolIds: existingToolIds.filter((id) => id !== toolId) },
+    },
+  });
+}
+
+export async function getAssistantTools(assistantId: string, organizationId: string) {
+  const assistant = await getAssistant(assistantId, organizationId);
+  const modelConfig = (assistant.model ?? {}) as Record<string, unknown>;
+  const toolIds = (modelConfig.toolIds as string[]) ?? [];
+
+  if (toolIds.length === 0) return [];
+
+  return prisma.tool.findMany({
+    where: { id: { in: toolIds }, organizationId },
+  });
+}

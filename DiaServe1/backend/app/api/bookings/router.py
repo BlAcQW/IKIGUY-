@@ -4,14 +4,18 @@ Booking API Router
 REST API endpoints for property tour booking management.
 """
 
+import logging
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
+from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from app.core.database import get_database
 from app.core.auth import get_current_user, get_organization_context, get_optional_user
 from app.services.booking_service import BookingService
+
+logger = logging.getLogger(__name__)
 from app.models.booking import (
     Booking,
     BookingCreate,
@@ -136,6 +140,25 @@ async def list_bookings(
         limit=limit,
         offset=offset
     )
+
+    # Resolve property names in bulk
+    unique_property_ids = list({b.property_id for b in bookings if b.property_id})
+    property_name_map: Dict[str, str] = {}
+    if unique_property_ids:
+        try:
+            object_ids = [ObjectId(pid) for pid in unique_property_ids if ObjectId.is_valid(pid)]
+            if object_ids:
+                cursor = database["properties"].find(
+                    {"_id": {"$in": object_ids}},
+                    {"_id": 1, "name": 1}
+                )
+                async for doc in cursor:
+                    property_name_map[str(doc["_id"])] = doc.get("name", "")
+        except Exception as e:
+            logger.warning(f"Failed to resolve property names: {e}")
+
+    for booking in bookings:
+        booking.property_name = property_name_map.get(booking.property_id)
 
     return BookingListResponse(
         bookings=bookings,

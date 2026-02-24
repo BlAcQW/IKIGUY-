@@ -6,7 +6,7 @@ Provides RESTful endpoints for property management with multi-currency support.
 
 import logging
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, Field
 
 from app.core.auth import get_current_user, get_optional_user, get_organization_context
@@ -130,6 +130,7 @@ async def create_property(
     summary="Get property by ID"
 )
 async def get_property(
+    request: Request,
     property_id: str,
     currency: Optional[str] = Query(None, description="Convert price to this currency (USD, EUR, GHS, etc.)"),
     current_user: Optional[dict] = Depends(get_optional_user),
@@ -158,6 +159,12 @@ async def get_property(
     try:
         # Get organization_id if user is authenticated
         organization_id = current_user.get("organization_id") if current_user else None
+
+        # Allow admin users to override organization via header (consistent with booking endpoints)
+        if current_user and current_user.get("role") == "admin":
+            override_org_id = request.headers.get("x-organization-id")
+            if override_org_id:
+                organization_id = override_org_id
 
         property_obj = await service.get_property(property_id, organization_id)
 
@@ -207,6 +214,7 @@ async def get_property(
     summary="List properties with filtering"
 )
 async def list_properties(
+    request: Request,
     # Filtering parameters
     property_type: Optional[List[PropertyType]] = Query(None, description="Filter by property type"),
     status: Optional[List[PropertyStatus]] = Query(None, description="Filter by status"),
@@ -274,6 +282,12 @@ async def list_properties(
     try:
         # Get organization_id if user is authenticated (for scoped access)
         organization_id = current_user.get("organization_id") if current_user else None
+
+        # Allow admin users to override organization via header (consistent with booking endpoints)
+        if current_user and current_user.get("role") == "admin":
+            override_org_id = request.headers.get("x-organization-id")
+            if override_org_id:
+                organization_id = override_org_id
 
         # Build filter object
         filters = PropertyFilter(

@@ -62,6 +62,12 @@ try:
 except ImportError:
     HAS_LEADS = False
 
+try:
+    from app.api.quickbooks.router import router as quickbooks_router
+    HAS_QUICKBOOKS = True
+except ImportError:
+    HAS_QUICKBOOKS = False
+
 
 api_router = APIRouter()
 
@@ -92,6 +98,8 @@ if HAS_AI_TOOLS:
     api_router.include_router(ai_tools_router, tags=["ai-tools"])
 if HAS_LEADS:
     api_router.include_router(leads_router, tags=["leads"])
+if HAS_QUICKBOOKS:
+    api_router.include_router(quickbooks_router, tags=["quickbooks"])
 
 
 @api_router.get("/")

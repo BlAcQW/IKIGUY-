@@ -4,12 +4,14 @@ import {
   searchNumbersSchema,
   purchaseNumberSchema,
   createSipNumberSchema,
+  createGoipNumberSchema,
   updatePhoneNumberSchema,
 } from './schemas.js';
 import {
   searchNumbers,
   purchaseNumber,
   createSipTrunkNumber,
+  createGoipNumber,
   releaseNumber,
   updatePhoneNumber,
   getPhoneNumber,
@@ -46,6 +48,12 @@ export async function phoneNumberRoutes(app: FastifyInstance): Promise<void> {
     if (body.provider === 'SIP_TRUNK') {
       const input = createSipNumberSchema.parse(body);
       const data = await createSipTrunkNumber(request.organizationId!, input);
+      return reply.status(201).send({ success: true, data });
+    }
+
+    if (body.provider === 'GOIP') {
+      const input = createGoipNumberSchema.parse(body);
+      const data = await createGoipNumber(request.organizationId!, input);
       return reply.status(201).send({ success: true, data });
     }
 

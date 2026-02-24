@@ -34,34 +34,34 @@ export async function getCallTimeSeries(
   const { fromDate, toDate } = buildDateRange(query.from, query.to);
   const groupBy = query.groupBy ?? 'day';
 
-  const conditions: string[] = [
-    `c."organizationId" = '${organizationId}'`,
-    `c."createdAt" >= '${fromDate.toISOString()}'`,
-    `c."createdAt" <= '${toDate.toISOString()}'`,
-  ];
+  // groupBy is validated by Zod to be 'hour' | 'day' | 'week', safe for raw SQL
+  const truncFn = Prisma.raw(`date_trunc('${groupBy}', c."createdAt")`);
 
-  if (query.assistantId) {
-    conditions.push(`c."assistantId" = '${query.assistantId}'`);
-  }
-  if (query.type) {
-    conditions.push(`c."type" = '${query.type}'::"CallType"`);
-  }
+  const baseWhere = Prisma.sql`c."organizationId" = ${organizationId}
+      AND c."createdAt" >= ${fromDate}
+      AND c."createdAt" <= ${toDate}`;
 
-  const whereClause = conditions.join(' AND ');
+  const assistantFilter = query.assistantId
+    ? Prisma.sql`AND c."assistantId" = ${query.assistantId}`
+    : Prisma.empty;
+
+  const typeFilter = query.type
+    ? Prisma.sql`AND c."type" = ${query.type}::"CallType"`
+    : Prisma.empty;
 
   const result = await prisma.$queryRaw<
     { period: Date; total: bigint; completed: bigint; failed: bigint; avg_duration: number | null }[]
   >(
     Prisma.sql`
       SELECT
-        date_trunc(${groupBy}, c."createdAt") AS period,
+        ${truncFn} AS period,
         COUNT(*)::bigint AS total,
         COUNT(*) FILTER (WHERE c."status" = 'ENDED')::bigint AS completed,
         COUNT(*) FILTER (WHERE c."status" = 'FAILED')::bigint AS failed,
         COALESCE(AVG(c."duration") FILTER (WHERE c."duration" IS NOT NULL), 0) AS avg_duration
       FROM "Call" c
-      WHERE ${Prisma.raw(whereClause)}
-      GROUP BY date_trunc(${groupBy}, c."createdAt")
+      WHERE ${baseWhere} ${assistantFilter} ${typeFilter}
+      GROUP BY ${truncFn}
       ORDER BY period ASC
     `,
   );

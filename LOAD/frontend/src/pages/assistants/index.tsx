@@ -105,6 +105,7 @@ export function AssistantsPage() {
         onPublish={handlePublish}
         onDelete={handleEditorDelete}
         hasAssistant={!!id && !!editor.assistant}
+        assistantId={editor.assistant?.id}
       />
 
       {/* Create Dialog */}

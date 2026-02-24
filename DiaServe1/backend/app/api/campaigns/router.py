@@ -378,8 +378,13 @@ async def bulk_import_contacts(
                 ],
                 "budget_min": float(row["budget_min"]) if row.get("budget_min") else None,
                 "budget_max": float(row["budget_max"]) if row.get("budget_max") else None,
+                "bedrooms_min": int(row["bedrooms_min"]) if row.get("bedrooms_min", "").strip() else None,
+                "bedrooms_max": int(row["bedrooms_max"]) if row.get("bedrooms_max", "").strip() else None,
+                "interest_status": row.get("interest_status", "").strip() or "warm",
+                "lead_status": row.get("lead_status", "").strip() or "new",
                 "tags": [t.strip() for t in row.get("tags", "").split(",") if t.strip()],
-                "source": row.get("source", "").strip() or None
+                "source": row.get("source", "").strip() or None,
+                "notes": row.get("notes", "").strip() or None,
             }
 
             # Skip if no name

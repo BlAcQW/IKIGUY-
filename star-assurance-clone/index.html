@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Assurance - Providing Ghanaians with Solid Insurance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+      background: #fff;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== BRAND COLORS ===== */
+    :root {
+      --navy: #1a2340;
+      --navy-dark: #111a2e;
+      --gold: #c8a951;
+      --gold-light: #d4ba6a;
+      --blue-accent: #2a5caa;
+      --red-accent: #d94444;
+      --green-accent: #2ecc71;
+      --light-bg: #f7f8fa;
+      --text-dark: #222;
+      --text-gray: #666;
+      --text-light: #999;
+      --white: #fff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background: var(--navy-dark);
+      color: var(--white);
+      font-size: 0.8rem;
+      padding: 8px 0;
+    }
+
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar-left {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .top-bar-left span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #ccc;
+    }
+
+    .top-bar-left span i {
+      color: var(--gold);
+      font-size: 0.75rem;
+    }
+
+    .top-bar-right {
+      display: flex;
+      gap: 12px;
+    }
+
+    .top-bar-right a {
+      color: #ccc;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+
+    .top-bar-right a:hover {
+      color: var(--gold);
+    }
+
+    /* ===== NAVIGATION ===== */
+    .navbar {
+      background: var(--navy);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 0;
+    }
+
+    .logo-icon {
+      width: 45px;
+      height: 45px;
+      position: relative;
+    }
+
+    .logo-star {
+      font-size: 2.2rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .logo-text {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
+    .logo-text span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      padding: 22px 18px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 18px;
+      right: 18px;
+      height: 3px;
+      background: var(--gold);
+    }
+
+    .nav-cta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-red {
+      background: var(--red-accent);
+      color: var(--white);
+    }
+
+    .btn-red:hover {
+      background: #c03939;
+    }
+
+    .btn-blue {
+      background: var(--blue-accent);
+      color: var(--white);
+    }
+
+    .btn-blue:hover {
+      background: #1e4a8f;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* ===== HERO CAROUSEL ===== */
+    .hero {
+      position: relative;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+    }
+
+    .hero-slide-1 {
+      background: linear-gradient(135deg, #1a2340 0%, #2a3f6f 40%, #1a5276 70%, #1a2340 100%);
+    }
+
+    .hero-slide-2 {
+      background: linear-gradient(135deg, #0d3b66 0%, #1a5276 40%, #2980b9 70%, #0d3b66 100%);
+    }
+
+    .hero-slide-3 {
+      background: linear-gradient(135deg, #1a2340 0%, #34495e 40%, #2c3e50 70%, #1a2340 100%);
+    }
+
+    .hero-slide-4 {
+      background: linear-gradient(135deg, #1a3a5c 0%, #2a5caa 40%, #1a2340 70%, #1a3a5c 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: var(--white);
+      max-width: 650px;
+      padding-left: 80px;
+    }
+
+    .hero-content .subtitle {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(26,35,64,0.85) 0%, rgba(26,35,64,0.4) 60%, rgba(26,35,64,0.1) 100%);
+      z-index: 1;
+    }
+
+    .hero-decoration {
+      position: absolute;
+      right: 100px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      opacity: 0.15;
+    }
+
+    .hero-decoration .star-big {
+      font-size: 15rem;
+      color: var(--gold);
+    }
+
+    /* Carousel controls */
+    .hero-nav {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 12px;
+    }
+
+    .hero-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .hero-dot.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      transform: scale(1.2);
+    }
+
+    .hero-arrows {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      pointer-events: none;
+    }
+
+    .hero-arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: all;
+      transition: all 0.3s;
+      font-size: 1.2rem;
+    }
+
+    .hero-arrow:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+
+    /* ===== AWARDS SECTION ===== */
+    .awards-section {
+      background: var(--white);
+      padding: 40px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .awards-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+
+    .award-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+
+    .award-badge:hover {
+      opacity: 1;
+    }
+
+    .award-badge .badge-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), #e0c870);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: var(--navy);
+    }
+
+    .award-badge .badge-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-gray);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    /* ===== SECTION STYLES ===== */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-header .overline {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 15px;
+    }
+
+    .section-header p {
+      font-size: 1rem;
+      color: var(--text-gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .section-divider {
+      width: 60px;
+      height: 4px;
+      background: var(--gold);
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+
+    /* ===== VALUE ADDED SERVICES ===== */
+    .services-section {
+      background: var(--light-bg);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .service-card-image {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card-image.storebanbo {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    .service-card-image.stock-assure {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+
+    .service-card-image.personal-guard {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .service-card-image.star-total {
+      background: linear-gradient(135deg, #e67e22, #d35400);
+    }
+
+    .service-card-image .service-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3.5rem;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .service-card-body {
+      padding: 20px;
+    }
+
+    .service-card-body h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .service-card-body p {
+      font-size: 0.85rem;
+      color: var(--text-gray);
+      line-height: 1.5;
+    }
+
+    .service-card-body .learn-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--blue-accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      transition: gap 0.3s;
+    }
+
+    .service-card-body .learn-more:hover {
+      gap: 10px;
+    }
+
+    /* ===== MYSTAR APP SECTION ===== */
+    .app-section {
+      background: var(--navy);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-section .container {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .app-content {
+      flex: 1;
+    }
+
+    .app-content .overline {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .app-content h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .app-content p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #ccc;
+      margin-bottom: 25px;
+    }
+
+    .app-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .app-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    .app-features li i {
+      color: var(--gold);
+      font-size: 0.8rem;
+    }
+
+    .app-downloads {
+      display: flex;
+      gap: 15px;
+    }
+
+    .app-download-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 12px 20px;
+      color: var(--white);
+      transition: all 0.3s;
+    }
+
+    .app-download-btn:hover {
+      background: rgba(255,255,255,0.2);
+      border-color: var(--gold);
+    }
+
+    .app-download-btn i {
+      font-size: 1.8rem;
+    }
+
+    .app-download-btn .dl-text {
+      font-size: 0.65rem;
+      color: #aaa;
+    }
+
+    .app-download-btn .dl-store {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .app-mockup {
+      flex: 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone-mockup {
+      width: 260px;
+      height: 500px;
+      background: linear-gradient(180deg, #2a3f6f, #1a2340);
+      border-radius: 35px;
+      border: 3px solid #444;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .phone-mockup::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+    }
+
+    .phone-mockup .screen-content {
+      text-align: center;
+      color: var(--white);
+    }
+
+    .phone-mockup .screen-content .star-logo {
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+
+    .phone-mockup .screen-content h4 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .phone-mockup .screen-content p {
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-section {
+      background: var(--light-bg);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .testimonial-card .quote-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.4;
+      margin-bottom: 15px;
+    }
+
+    .testimonial-card p {
+      font-size: 0.9rem;
+      color: var(--text-gray);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testimonial-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 1.1rem;
+    }
+
+    .testimonial-avatar.ta1 { background: linear-gradient(135deg, var(--blue-accent), #1e4a8f); }
+    .testimonial-avatar.ta2 { background: linear-gradient(135deg, var(--gold), #b09440); }
+    .testimonial-avatar.ta3 { background: linear-gradient(135deg, var(--green-accent), #27ae60); }
+
+    .testimonial-info h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .testimonial-info span {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .testimonial-stars {
+      color: var(--gold);
+      font-size: 0.75rem;
+      margin-top: 5px;
+    }
+
+    /* ===== CLAIMS SECTION ===== */
+    .claims-section {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a3f6f 100%);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .claims-stat {
+      margin-bottom: 15px;
+    }
+
+    .claims-stat .big-number {
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .claims-stat .big-number span {
+      font-size: 3rem;
+    }
+
+    .claims-section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .claims-section p {
+      font-size: 1rem;
+      color: #ccc;
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .claims-hotline {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50px;
+      padding: 15px 30px;
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .claims-hotline:hover {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+    }
+
+    .claims-hotline i {
+      font-size: 1.3rem;
+    }
+
+    /* ===== NEWS SECTION ===== */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .news-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .news-card-image {
+      height: 180px;
+      position: relative;
+    }
+
+    .news-card-image.news1 { background: linear-gradient(135deg, #1a5276, #2980b9); }
+    .news-card-image.news2 { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+    .news-card-image.news3 { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+    .news-card-image.news4 { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+
+    .news-card-image .news-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .news-card-image .news-date {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .news-card-body {
+      padding: 18px;
+    }
+
+    .news-card-body .news-category {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--blue-accent);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .news-card-body h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .news-card-body p {
+      font-size: 0.82rem;
+      color: var(--text-gray);
+      line-height: 1.5;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--navy-dark);
+      color: #ccc;
+      padding: 60px 0 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-col h4 {
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 30px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .footer-about p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .footer-about .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .footer-about .footer-logo .star-icon {
+      color: var(--gold);
+      font-size: 1.8rem;
+    }
+
+    .footer-about .footer-logo span {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+    }
+
+    .footer-social a {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      transition: all 0.3s;
+    }
+
+    .footer-social a:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul a {
+      font-size: 0.85rem;
+      color: #aaa;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-col ul a i {
+      font-size: 0.6rem;
+      color: var(--gold);
+    }
+
+    .footer-col ul a:hover {
+      color: var(--gold);
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    .footer-bottom a {
+      color: var(--gold);
+      transition: color 0.3s;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--gold-light);
+    }
+
+    /* ===== PRODUCTS OVERVIEW SECTION ===== */
+    .products-section {
+      background: var(--white);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .product-card {
+      background: var(--light-bg);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .product-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-card .product-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), #2a3f6f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 1.6rem;
+      color: var(--gold);
+    }
+
+    .product-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .product-card p {
+      font-size: 0.82rem;
+      color: var(--text-gray);
+      line-height: 1.5;
+    }
+
+    /* ===== VAPI FLOATING BUTTON ===== */
+    .vapi-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9999;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), #b09440);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(200, 169, 81, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      animation: pulse-ring 2s infinite;
+    }
+
+    .vapi-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(200, 169, 81, 0.7);
+    }
+
+    .vapi-btn i {
+      font-size: 1.6rem;
+      color: var(--navy);
+    }
+
+    .vapi-btn.active {
+      background: linear-gradient(135deg, var(--red-accent), #c03939);
+      animation: none;
+    }
+
+    .vapi-btn.active i {
+      color: var(--white);
+    }
+
+    .vapi-label {
+      position: fixed;
+      bottom: 40px;
+      right: 110px;
+      z-index: 9998;
+      background: var(--navy);
+      color: var(--white);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateX(10px);
+      transition: all 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .vapi-label::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 6px solid var(--navy);
+    }
+
+    .vapi-btn:hover + .vapi-label,
+    .vapi-label.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(200, 169, 81, 0.5); }
+      70% { box-shadow: 0 0 0 15px rgba(200, 169, 81, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(200, 169, 81, 0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .services-grid,
+      .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-content h1 {
+        font-size: 2.4rem;
+      }
+
+      .hero-content {
+        padding-left: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        display: none;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--navy);
+        flex-direction: column;
+        padding: 10px 0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 12px 25px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .hero {
+        height: 500px;
+      }
+
+      .hero-content {
+        padding: 0 25px;
+      }
+
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero-content p {
+        font-size: 0.9rem;
+      }
+
+      .hero-decoration {
+        display: none;
+      }
+
+      .services-grid,
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .app-section .container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .app-downloads {
+        justify-content: center;
+      }
+
+      .app-features li {
+        justify-content: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .claims-stat .big-number {
+        font-size: 3.5rem;
+      }
+
+      .awards-row {
+        gap: 25px;
+      }
+
+      .award-badge .badge-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.2rem;
+      }
+
+      .section {
+        padding: 50px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        height: 450px;
+      }
+
+      .hero-content h1 {
+        font-size: 1.5rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.6rem;
+      }
+
+      .app-downloads {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .phone-mockup {
+        width: 200px;
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <span><i class="fas fa-phone-alt"></i> +233 302 742 200</span>
+        <span><i class="fas fa-envelope"></i> info@starassurance.com</span>
+        <span><i class="fas fa-clock"></i> Mon - Fri: 8:00am - 5:00pm</span>
+      </div>
+      <div class="top-bar-right">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <div class="logo-star"><i class="fas fa-star"></i></div>
+        </div>
+        <div class="logo-text">STAR <span>Assurance</span></div>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#" class="active">Home</a>
+        <a href="#products">Products</a>
+        <a href="#claims">Claims</a>
+        <a href="#about">About Us</a>
+        <a href="#news">Resources</a>
+        <a href="#contact">Contact Us</a>
+      </div>
+
+      <div class="nav-cta">
+        <a href="#" class="btn btn-gold">Buy Insurance</a>
+        <a href="#" class="btn btn-outline">Salvage Cars</a>
+      </div>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO CAROUSEL ===== -->
+  <section class="hero">
+    <div class="hero-slide hero-slide-1 active">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="subtitle">Welcome to Star Assurance</div>
+        <h1>Providing Ghanaians with Solid Insurance</h1>
+        <p>Ghana's leading insurance company offering comprehensive insurance solutions for individuals and businesses. Get protected today with Pokuaa.</p>
+        <a href="#" class="btn btn-gold"><i class="fas fa-shield-halved"></i> Get Pokuaa Now</a>
+      </div>
+      <div class="hero-decoration"><span class="star-big"><i class="fas fa-star"></i></span></div>
+    </div>
+
+    <div class="hero-slide hero-slide-2">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="subtitle">Star Travel Insurance</div>
+        <h1>Travel Safely with Star Travel Insurance</h1>
+        <p>Comprehensive travel insurance covering medical emergencies, trip cancellations, lost luggage, and more. Travel with peace of mind.</p>
+        <a href="#" class="btn btn-gold"><i class="fas fa-plane"></i> Get Travel Cover</a>
+      </div>
+      <div class="hero-decoration"><span class="star-big"><i class="fas fa-star"></i></span></div>
+    </div>
+
+    <div class="hero-slide hero-slide-3">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="subtitle">Marine Insurance</div>
+        <h1>Cargo, Hull &amp; More - Our Marine Policies Cover You</h1>
+        <p>Protect your maritime investments with our comprehensive marine insurance policies covering cargo, hull, and liability.</p>
+        <a href="#" class="btn btn-gold"><i class="fas fa-ship"></i> Marine Insurance</a>
+      </div>
+      <div class="hero-decoration"><span class="star-big"><i class="fas fa-star"></i></span></div>
+    </div>
+
+    <div class="hero-slide hero-slide-4">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="subtitle">Individual Insurance</div>
+        <h1>Insurance Policies for the Entire Family</h1>
+        <p>From motor insurance to home insurance, we have policies designed to protect what matters most to you and your family.</p>
+        <a href="#" class="btn btn-gold"><i class="fas fa-users"></i> Family Insurance</a>
+      </div>
+      <div class="hero-decoration"><span class="star-big"><i class="fas fa-star"></i></span></div>
+    </div>
+
+    <div class="hero-arrows">
+      <button class="hero-arrow" id="heroPrev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+      <button class="hero-arrow" id="heroNext" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="hero-nav" id="heroNav">
+      <button class="hero-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+      <button class="hero-dot" data-slide="1" aria-label="Go to slide 2"></button>
+      <button class="hero-dot" data-slide="2" aria-label="Go to slide 3"></button>
+      <button class="hero-dot" data-slide="3" aria-label="Go to slide 4"></button>
+    </div>
+  </section>
+
+  <!-- ===== AWARDS ===== -->
+  <section class="awards-section">
+    <div class="container">
+      <div class="awards-row">
+        <div class="award-badge">
+          <div class="badge-icon"><i class="fas fa-trophy"></i></div>
+          <div class="badge-label">Best Insurer<br>2023</div>
+        </div>
+        <div class="award-badge">
+          <div class="badge-icon"><i class="fas fa-medal"></i></div>
+          <div class="badge-label">Claims Excellence<br>Award</div>
+        </div>
+        <div class="award-badge">
+          <div class="badge-icon"><i class="fas fa-award"></i></div>
+          <div class="badge-label">Customer Service<br>Award</div>
+        </div>
+        <div class="award-badge">
+          <div class="badge-icon"><i class="fas fa-certificate"></i></div>
+          <div class="badge-label">ISO 9001<br>Certified</div>
+        </div>
+        <div class="award-badge">
+          <div class="badge-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="badge-label">A- Rating<br>GCR</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCTS OVERVIEW ===== -->
+  <section class="section products-section" id="products">
+    <div class="container">
+      <div class="section-header">
+        <div class="overline">Our Products</div>
+        <h2>Insurance Solutions for Everyone</h2>
+        <p>We offer a wide range of insurance products tailored to protect individuals, families, and businesses across Ghana.</p>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-icon"><i class="fas fa-car"></i></div>
+          <h3>Motor Insurance</h3>
+          <p>Comprehensive and third-party motor insurance for all vehicle types.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon"><i class="fas fa-home"></i></div>
+          <h3>Home Insurance</h3>
+          <p>Protect your home and belongings against fire, theft, and natural disasters.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon"><i class="fas fa-plane"></i></div>
+          <h3>Travel Insurance</h3>
+          <p>Travel with peace of mind with our comprehensive travel protection plans.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon"><i class="fas fa-ship"></i></div>
+          <h3>Marine Insurance</h3>
+          <p>Coverage for cargo, hull, and freight for maritime operations.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon"><i class="fas fa-fire"></i></div>
+          <h3>Fire Insurance</h3>
+          <p>Comprehensive fire and allied perils coverage for your property.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon"><i class="fas fa-building"></i></div>
+          <h3>Business Insurance</h3>
+          <p>Tailored insurance solutions to protect your business assets and operations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VALUE ADDED SERVICES ===== -->
+  <section class="section services-section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <div class="overline">Value Added</div>
+        <h2>Our Value-Added Services</h2>
+        <p>Enjoy additional services and benefits that go beyond traditional insurance coverage.</p>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-card-image storebanbo">
+            <span class="service-icon"><i class="fas fa-store"></i></span>
+          </div>
+          <div class="service-card-body">
+            <h3>StoreBanbo</h3>
+            <p>An innovative insurance product designed specifically for market women and small business owners in Ghana.</p>
+            <a href="#" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-image stock-assure">
+            <span class="service-icon"><i class="fas fa-chart-line"></i></span>
+          </div>
+          <div class="service-card-body">
+            <h3>Stock Assure</h3>
+            <p>Comprehensive stock insurance coverage to protect your inventory and business stock against unforeseen losses.</p>
+            <a href="#" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-image personal-guard">
+            <span class="service-icon"><i class="fas fa-user-shield"></i></span>
+          </div>
+          <div class="service-card-body">
+            <h3>Personal Guard</h3>
+            <p>Personal accident insurance providing financial protection for you and your loved ones against accidental injuries.</p>
+            <a href="#" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-image star-total">
+            <span class="service-icon"><i class="fas fa-gas-pump"></i></span>
+          </div>
+          <div class="service-card-body">
+            <h3>Star-TotalEnergies</h3>
+            <p>A special partnership offering motor insurance and fuel benefits at TotalEnergies service stations nationwide.</p>
+            <a href="#" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MYSTAR APP ===== -->
+  <section class="section app-section">
+    <div class="container">
+      <div class="app-content">
+        <div class="overline">MyStar Mobile App</div>
+        <h2>Insurance at Your Fingertips</h2>
+        <p>Download the MyStar app to manage your insurance policies, file claims, make payments, and access exclusive features anytime, anywhere.</p>
+        <ul class="app-features">
+          <li><i class="fas fa-check-circle"></i> Buy and renew policies instantly</li>
+          <li><i class="fas fa-check-circle"></i> File and track claims in real-time</li>
+          <li><i class="fas fa-check-circle"></i> Make secure payments via Mobile Money</li>
+          <li><i class="fas fa-check-circle"></i> Access your digital insurance certificates</li>
+          <li><i class="fas fa-check-circle"></i> Get 24/7 roadside assistance</li>
+        </ul>
+        <div class="app-downloads">
+          <a href="#" class="app-download-btn">
+            <i class="fab fa-apple"></i>
+            <div>
+              <div class="dl-text">Download on the</div>
+              <div class="dl-store">App Store</div>
+            </div>
+          </a>
+          <a href="#" class="app-download-btn">
+            <i class="fab fa-google-play"></i>
+            <div>
+              <div class="dl-text">Get it on</div>
+              <div class="dl-store">Google Play</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="app-mockup">
+        <div class="phone-mockup">
+          <div class="screen-content">
+            <div class="star-logo"><i class="fas fa-star"></i></div>
+            <h4>MyStar</h4>
+            <p>Insurance App</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="section testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="overline">What Our Clients Say</div>
+        <h2>Trusted by Thousands</h2>
+        <p>Hear from our valued clients about their experience with Star Assurance.</p>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+          <p>"Star Assurance settled my motor claim within 48 hours. I was amazed by how efficient and supportive the team was throughout the entire process. Highly recommended!"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar ta1">KA</div>
+            <div class="testimonial-info">
+              <h4>Kwame Asante</h4>
+              <span>Business Owner, Accra</span>
+              <div class="testimonial-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+          <p>"The MyStar app makes managing my policies so convenient. I renewed my home insurance in just minutes from my phone. Star Assurance truly puts customers first."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar ta2">AM</div>
+            <div class="testimonial-info">
+              <h4>Abena Mensah</h4>
+              <span>Teacher, Kumasi</span>
+              <div class="testimonial-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+          <p>"As a fleet operator, I need reliable coverage. Star Assurance has been our trusted partner for over 10 years, providing excellent commercial motor insurance."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar ta3">YB</div>
+            <div class="testimonial-info">
+              <h4>Yaw Boateng</h4>
+              <span>Fleet Manager, Tema</span>
+              <div class="testimonial-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLAIMS SECTION ===== -->
+  <section class="section claims-section" id="claims">
+    <div class="container">
+      <div class="claims-stat">
+        <div class="big-number">93.4<span>%</span></div>
+      </div>
+      <h2>Claims Settlement Ratio</h2>
+      <p>We are proud of our industry-leading claims settlement ratio. Our dedicated team works around the clock to ensure your claims are processed swiftly and fairly.</p>
+      <a href="#" class="claims-hotline">
+        <i class="fas fa-headset"></i>
+        24hr Claims Hotline: +233 302 742 200
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== NEWS SECTION ===== -->
+  <section class="section" id="news">
+    <div class="container">
+      <div class="section-header">
+        <div class="overline">Latest News</div>
+        <h2>News &amp; Updates</h2>
+        <p>Stay informed with the latest news, events, and updates from Star Assurance.</p>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-card-image news1">
+            <span class="news-icon"><i class="fas fa-newspaper"></i></span>
+            <span class="news-date">Jan 15, 2026</span>
+          </div>
+          <div class="news-card-body">
+            <div class="news-category">Company News</div>
+            <h3>Star Assurance Launches New Digital Claims Platform</h3>
+            <p>Our new streamlined digital platform makes filing and tracking claims easier than ever before.</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-image news2">
+            <span class="news-icon"><i class="fas fa-handshake"></i></span>
+            <span class="news-date">Dec 20, 2025</span>
+          </div>
+          <div class="news-card-body">
+            <div class="news-category">Partnerships</div>
+            <h3>Star Assurance Partners with Leading Healthcare Providers</h3>
+            <p>Expanding our health insurance network to provide better coverage across all regions.</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-image news3">
+            <span class="news-icon"><i class="fas fa-seedling"></i></span>
+            <span class="news-date">Nov 18, 2025</span>
+          </div>
+          <div class="news-card-body">
+            <div class="news-category">CSR</div>
+            <h3>Annual Community Outreach Programme in Northern Region</h3>
+            <p>Star Assurance supports education and healthcare initiatives in underserved communities.</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-image news4">
+            <span class="news-icon"><i class="fas fa-chart-bar"></i></span>
+            <span class="news-date">Oct 05, 2025</span>
+          </div>
+          <div class="news-card-body">
+            <div class="news-category">Financial Results</div>
+            <h3>Record Growth in Premium Income for 2025</h3>
+            <p>Star Assurance reports strong financial performance with significant growth across all product lines.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <div class="footer-logo">
+            <span class="star-icon"><i class="fas fa-star"></i></span>
+            <span>STAR Assurance</span>
+          </div>
+          <p>Star Assurance Company Limited is a leading general insurance company in Ghana, providing innovative and reliable insurance solutions since 1984.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Motor Insurance</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Home Insurance</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Travel Insurance</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Marine Insurance</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Fire Insurance</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Business Insurance</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>About Us</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Our Story</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Leadership</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Careers</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> CSR Initiatives</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Annual Reports</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-map-marker-alt"></i> No. 1 Volta Street, Airport Residential Area, Accra</a></li>
+            <li><a href="tel:+233302742200"><i class="fas fa-phone-alt"></i> +233 302 742 200</a></li>
+            <li><a href="mailto:info@starassurance.com"><i class="fas fa-envelope"></i> info@starassurance.com</a></li>
+            <li><a href="#"><i class="fas fa-globe"></i> www.starassurance.com</a></li>
+          </ul>
+          <div style="margin-top: 20px;">
+            <a href="#" class="app-download-btn" style="display: inline-flex; padding: 8px 14px; font-size: 0.75rem;">
+              <i class="fab fa-apple" style="font-size: 1.2rem;"></i>
+              <div>
+                <div class="dl-text" style="font-size: 0.55rem;">Download</div>
+                <div class="dl-store" style="font-size: 0.75rem;">App Store</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Star Assurance Company Limited. All Rights Reserved.</span>
+        <span>
+          <a href="#">Privacy Policy</a> |
+          <a href="#">Terms of Service</a> |
+          <a href="#">Sitemap</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== VAPI VOICE AGENT BUTTON ===== -->
+  <button class="vapi-btn" id="vapiBtn" aria-label="Start voice call with Star Assurance AI assistant">
+    <i class="fas fa-phone" id="vapiBtnIcon"></i>
+  </button>
+  <div class="vapi-label" id="vapiLabel">Speak with our AI Assistant</div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // ===== Mobile Navigation Toggle =====
+    (function() {
+      var toggle = document.getElementById('mobileToggle');
+      var navLinks = document.getElementById('navLinks');
+
+      toggle.addEventListener('click', function() {
+        navLinks.classList.toggle('open');
+        var icon = toggle.querySelector('i');
+        if (navLinks.classList.contains('open')) {
+          icon.className = 'fas fa-times';
+        } else {
+          icon.className = 'fas fa-bars';
+        }
+      });
+    })();
+
+    // ===== Hero Carousel =====
+    (function() {
+      var slides = document.querySelectorAll('.hero-slide');
+      var dots = document.querySelectorAll('.hero-dot');
+      var prevBtn = document.getElementById('heroPrev');
+      var nextBtn = document.getElementById('heroNext');
+      var currentSlide = 0;
+      var totalSlides = slides.length;
+      var autoplayInterval;
+
+      function goToSlide(index) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        currentSlide = (index + totalSlides) % totalSlides;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+      }
+
+      function nextSlide() {
+        goToSlide(currentSlide + 1);
+      }
+
+      function prevSlide() {
+        goToSlide(currentSlide - 1);
+      }
+
+      function startAutoplay() {
+        autoplayInterval = setInterval(nextSlide, 5000);
+      }
+
+      function resetAutoplay() {
+        clearInterval(autoplayInterval);
+        startAutoplay();
+      }
+
+      nextBtn.addEventListener('click', function() {
+        nextSlide();
+        resetAutoplay();
+      });
+
+      prevBtn.addEventListener('click', function() {
+        prevSlide();
+        resetAutoplay();
+      });
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goToSlide(parseInt(dot.dataset.slide));
+          resetAutoplay();
+        });
+      });
+
+      startAutoplay();
+    })();
+
+    // ===== Navbar scroll shadow =====
+    (function() {
+      var navbar = document.querySelector('.navbar');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 10) {
+          navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.4)';
+        } else {
+          navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.3)';
+        }
+      });
+    })();
+
+    // ===== Smooth scroll for anchor links =====
+    (function() {
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          var target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Close mobile menu
+            var navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('open');
+            document.querySelector('#mobileToggle i').className = 'fas fa-bars';
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- ===== VAPI WEB SDK ===== -->
+  <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js"></script>
+  <script>
+    (function() {
+      var vapiBtn = document.getElementById('vapiBtn');
+      var vapiBtnIcon = document.getElementById('vapiBtnIcon');
+      var vapiLabel = document.getElementById('vapiLabel');
+      var vapiInstance = null;
+      var isCallActive = false;
+
+      // Show label briefly on page load
+      setTimeout(function() {
+        vapiLabel.classList.add('show');
+        setTimeout(function() {
+          vapiLabel.classList.remove('show');
+        }, 4000);
+      }, 2000);
+
+      vapiBtn.addEventListener('click', function() {
+        if (isCallActive) {
+          // End the call
+          if (vapiInstance) {
+            vapiInstance.stop();
+          }
+          endCall();
+        } else {
+          // Start the call
+          startCall();
+        }
+      });
+
+      function startCall() {
+        isCallActive = true;
+        vapiBtn.classList.add('active');
+        vapiBtnIcon.className = 'fas fa-phone-slash';
+        vapiLabel.textContent = 'End call';
+        vapiLabel.classList.add('show');
+
+        try {
+          vapiInstance = new Vapi('62dcde11-141f-4e3c-8e48-912f5dbe2062');
+
+          vapiInstance.on('call-start', function() {
+            console.log('VAPI call started');
+          });
+
+          vapiInstance.on('call-end', function() {
+            console.log('VAPI call ended');
+            endCall();
+          });
+
+          vapiInstance.on('error', function(err) {
+            console.error('VAPI error:', err);
+            endCall();
+          });
+
+          vapiInstance.start();
+        } catch (err) {
+          console.error('Failed to start VAPI call:', err);
+          endCall();
+        }
+      }
+
+      function endCall() {
+        isCallActive = false;
+        vapiBtn.classList.remove('active');
+        vapiBtnIcon.className = 'fas fa-phone';
+        vapiLabel.textContent = 'Speak with our AI Assistant';
+        setTimeout(function() {
+          vapiLabel.classList.remove('show');
+        }, 2000);
+      }
+    })();
+  </script>
+
+</body>
+</html>

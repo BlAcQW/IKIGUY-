@@ -153,6 +153,15 @@ export const API_ENDPOINTS = {
     create: "/api/v1/invoices",
     get: (id: string) => `/api/v1/invoices/${id}`,
   },
+
+  // QuickBooks
+  quickbooks: {
+    authUrl: "/api/v1/quickbooks/auth-url",
+    status: "/api/v1/quickbooks/status",
+    disconnect: "/api/v1/quickbooks/disconnect",
+    sync: "/api/v1/quickbooks/sync",
+    syncInvoice: (id: string) => `/api/v1/quickbooks/sync/${id}`,
+  },
 };
 
 /**

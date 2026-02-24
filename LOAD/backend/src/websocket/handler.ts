@@ -148,6 +148,7 @@ async function handleStart(
     pipeline = buildPipelineFromAssistant(assistant);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to initialize voice providers';
+    console.error(`[WebSocket] Failed to build pipeline for assistant ${assistant.id}:`, err);
     sendJSON(socket, { type: 'error', message });
     return;
   }
@@ -317,6 +318,7 @@ async function handleEndTurn(socket: WebSocket): Promise<void> {
     }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Pipeline processing failed';
+    console.error(`[WebSocket] Pipeline error for session ${state.sessionId}:`, err);
     sendJSON(socket, { type: 'error', message });
   } finally {
     state.processing = false;

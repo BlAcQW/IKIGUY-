@@ -28,8 +28,18 @@ import {
   Eye,
   EyeOff,
   Loader2,
+  Plug,
+  CheckCircle,
+  XCircle,
+  DollarSign,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import {
+  useQBOStatus,
+  useQBODisconnect,
+  getQBOAuthUrl,
+} from "@/lib/api/quickbooks-api";
+import { useSearchParams } from "react-router-dom";
 
 export default function Settings() {
   const { user } = useAuth();
@@ -99,6 +109,25 @@ export default function Settings() {
     iredmail_password: "",
     whatsapp_business_token: "",
   });
+
+  // QuickBooks integration
+  const { data: qboStatus, isLoading: loadingQBO } = useQBOStatus();
+  const qboDisconnect = useQBODisconnect();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Handle QBO OAuth redirect query params
+  useEffect(() => {
+    const qboParam = searchParams.get("qbo");
+    if (qboParam === "connected") {
+      toast.success("QuickBooks connected successfully!");
+      searchParams.delete("qbo");
+      setSearchParams(searchParams, { replace: true });
+    } else if (qboParam === "error") {
+      toast.error("Failed to connect QuickBooks. Please try again.");
+      searchParams.delete("qbo");
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   // Notification Settings
   const [notifications, setNotifications] = useState({
@@ -234,6 +263,10 @@ export default function Settings() {
             <TabsTrigger value="team" className="gap-2">
               <Users className="h-4 w-4" />
               Team
+            </TabsTrigger>
+            <TabsTrigger value="integrations" className="gap-2">
+              <Plug className="h-4 w-4" />
+              Integrations
             </TabsTrigger>
           </TabsList>
 
@@ -708,6 +741,98 @@ export default function Settings() {
                     <Save className="mr-2 h-4 w-4" />
                     Save Preferences
                   </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Integrations */}
+          <TabsContent value="integrations">
+            <Card>
+              <CardHeader>
+                <CardTitle>Integrations</CardTitle>
+                <CardDescription>
+                  Connect third-party services to sync your data
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* QuickBooks Online */}
+                <div className="flex items-start justify-between p-4 rounded-lg border border-border">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
+                      <DollarSign className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold">QuickBooks Online</h3>
+                        {loadingQBO ? (
+                          <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                        ) : qboStatus?.is_connected ? (
+                          <Badge variant="success" className="gap-1">
+                            <CheckCircle className="h-3 w-3" />
+                            Connected
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="gap-1 text-muted-foreground">
+                            <XCircle className="h-3 w-3" />
+                            Disconnected
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Sync invoices to QuickBooks Online for accounting
+                      </p>
+                      {qboStatus?.is_connected && qboStatus.company_name && (
+                        <p className="text-sm text-foreground mt-1">
+                          Connected to: <span className="font-medium">{qboStatus.company_name}</span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    {qboStatus?.is_connected ? (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-destructive border-destructive hover:bg-destructive/10"
+                        disabled={qboDisconnect.isPending}
+                        onClick={() => {
+                          if (!window.confirm("Disconnect QuickBooks? You can reconnect later.")) {
+                            return;
+                          }
+                          qboDisconnect.mutate(undefined, {
+                            onSuccess: () => {
+                              toast.success("QuickBooks disconnected");
+                            },
+                            onError: (error) => {
+                              toast.error(`Failed to disconnect: ${error.message}`);
+                            },
+                          });
+                        }}
+                      >
+                        {qboDisconnect.isPending ? (
+                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                        ) : null}
+                        Disconnect
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-emerald-600 text-emerald-600 hover:bg-emerald-50"
+                        onClick={async () => {
+                          try {
+                            const { auth_url } = await getQBOAuthUrl();
+                            window.location.href = auth_url;
+                          } catch (error: any) {
+                            toast.error(error.message || "Failed to connect QuickBooks");
+                          }
+                        }}
+                      >
+                        Connect QuickBooks
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>

@@ -6,8 +6,16 @@ import {
   getAssistant,
   updateAssistant,
   deleteAssistant,
+  attachTool,
+  detachTool,
+  getAssistantTools,
 } from './service.js';
 import { authMiddleware } from '../../middleware/auth.js';
+import { z } from 'zod';
+
+const attachToolSchema = z.object({
+  toolId: z.string().uuid(),
+});
 
 export async function assistantRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', authMiddleware);
@@ -41,5 +49,26 @@ export async function assistantRoutes(app: FastifyInstance): Promise<void> {
     const { id } = request.params as { id: string };
     await deleteAssistant(id, request.organizationId!);
     return reply.status(204).send();
+  });
+
+  // ─── Tool attachment endpoints ─────────────────────────────────
+
+  app.get('/api/assistants/:id/tools', async (request) => {
+    const { id } = request.params as { id: string };
+    const tools = await getAssistantTools(id, request.organizationId!);
+    return { success: true, data: tools };
+  });
+
+  app.post('/api/assistants/:id/tools', async (request) => {
+    const { id } = request.params as { id: string };
+    const body = attachToolSchema.parse(request.body);
+    const assistant = await attachTool(id, body.toolId, request.organizationId!);
+    return { success: true, data: assistant };
+  });
+
+  app.delete('/api/assistants/:id/tools/:toolId', async (request) => {
+    const { id, toolId } = request.params as { id: string; toolId: string };
+    const assistant = await detachTool(id, toolId, request.organizationId!);
+    return { success: true, data: assistant };
   });
 }

@@ -30,6 +30,9 @@ export function createPrismaMock() {
     $connect: vi.fn(),
     $disconnect: vi.fn(),
     $queryRaw: vi.fn(),
+    $transaction: vi.fn().mockImplementation((args: unknown) =>
+      Array.isArray(args) ? Promise.all(args) : (args as (tx: unknown) => Promise<unknown>)(this),
+    ),
   };
 }
 

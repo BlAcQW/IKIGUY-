@@ -19,6 +19,7 @@ import type {
   SearchPhoneNumbersRequest,
   PurchasePhoneNumberRequest,
   CreateSipNumberRequest,
+  CreateGoipNumberRequest,
   UpdatePhoneNumberRequest,
   CreateWebhookRequest,
   UpdateWebhookRequest,
@@ -26,6 +27,7 @@ import type {
   UpdateAssistantRequest,
   TimeSeriesPoint,
   AnalyticsSummary,
+  ToolTemplatesResponse,
 } from '../types';
 
 const API_BASE = '/api';
@@ -169,6 +171,13 @@ export function createSipNumber(data: CreateSipNumberRequest) {
   });
 }
 
+export function createGoipNumber(data: CreateGoipNumberRequest) {
+  return request<PhoneNumber>('/phone-numbers', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
 export function updatePhoneNumber(id: string, data: UpdatePhoneNumberRequest) {
   return request<PhoneNumber>(`/phone-numbers/${id}`, {
     method: 'PATCH',
@@ -201,6 +210,52 @@ export function updateTool(id: string, data: UpdateToolRequest) {
 
 export function deleteTool(id: string) {
   return request<void>(`/tools/${id}`, { method: 'DELETE' });
+}
+
+// Tool Templates
+export function listToolTemplates() {
+  return request<ToolTemplatesResponse>('/tools/templates');
+}
+
+export function createToolFromTemplate(data: {
+  templateName: string;
+  serverUrl: string;
+  serverSecret?: string;
+}) {
+  return request<Tool>('/tools/from-template', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export function bulkCreateToolsFromTemplates(data: {
+  category: string;
+  serverUrl: string;
+  serverSecret?: string;
+  assistantId?: string;
+}) {
+  return request<Tool[]>('/tools/from-templates/bulk', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+// Assistant Tools
+export function getAssistantTools(assistantId: string) {
+  return request<Tool[]>(`/assistants/${assistantId}/tools`);
+}
+
+export function attachToolToAssistant(assistantId: string, toolId: string) {
+  return request<Assistant>(`/assistants/${assistantId}/tools`, {
+    method: 'POST',
+    body: JSON.stringify({ toolId }),
+  });
+}
+
+export function detachToolFromAssistant(assistantId: string, toolId: string) {
+  return request<Assistant>(`/assistants/${assistantId}/tools/${toolId}`, {
+    method: 'DELETE',
+  });
 }
 
 // Squads

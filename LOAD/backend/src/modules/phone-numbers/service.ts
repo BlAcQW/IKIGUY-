@@ -6,13 +6,15 @@ import {
   releaseNumber as twilioRelease,
   configureNumberWebhooks,
 } from '../../telephony/twilio.js';
-import type { SearchNumbersInput, PurchaseNumberInput, CreateSipNumberInput } from './schemas.js';
+import type { SearchNumbersInput, PurchaseNumberInput, CreateSipNumberInput, CreateGoipNumberInput } from './schemas.js';
 
 /**
  * Search for available phone numbers via Twilio.
  */
 export async function searchNumbers(params: SearchNumbersInput) {
-  return searchAvailableNumbers(params);
+  const { type, ...rest } = params;
+  const twilioType = type === 'mobile' ? 'local' : type;
+  return searchAvailableNumbers({ ...rest, type: twilioType });
 }
 
 /**
@@ -57,6 +59,31 @@ export async function createSipTrunkNumber(
       provider: 'SIP_TRUNK',
       sipDomain: input.sipDomain ?? null,
       status: 'ACTIVE',
+    },
+  });
+
+  return phoneNumber;
+}
+
+/**
+ * Register a GoIP GSM gateway phone number.
+ */
+export async function createGoipNumber(
+  organizationId: string,
+  input: CreateGoipNumberInput
+) {
+  const phoneNumber = await prisma.phoneNumber.create({
+    data: {
+      organizationId,
+      number: input.number,
+      name: input.name ?? input.number,
+      provider: 'GOIP',
+      status: 'ACTIVE',
+      metadata: {
+        trunkName: input.trunkName ?? 'goip-trunk',
+        country: input.country ?? 'GH',
+        gateway: 'GoIP/Hybertone',
+      },
     },
   });
 

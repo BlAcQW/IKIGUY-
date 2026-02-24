@@ -48,6 +48,7 @@ class Booking(BaseModel):
     id: str = Field(..., description="Unique booking ID")
     organization_id: str = Field(..., description="Organization ID")
     property_id: str = Field(..., description="Property being viewed")
+    property_name: Optional[str] = Field(None, description="Resolved property name (populated at read time)")
     contact_id: str = Field(..., description="Contact/lead who booked")
     agent_id: Optional[str] = Field(None, description="Assigned agent ID")
 

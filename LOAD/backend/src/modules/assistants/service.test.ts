@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createPrismaMock, type PrismaMock } from '../../../tests/helpers/prisma-mock.js';
-import { buildAssistant } from '../../../tests/helpers/factories.js';
+import { buildAssistant, buildTool } from '../../../tests/helpers/factories.js';
 
 let prismaMock: PrismaMock;
 
@@ -16,6 +16,9 @@ import {
   getAssistant,
   updateAssistant,
   deleteAssistant,
+  attachTool,
+  detachTool,
+  getAssistantTools,
 } from './service.js';
 
 beforeEach(() => {
@@ -210,5 +213,143 @@ describe('deleteAssistant', () => {
     await expect(deleteAssistant('bad-id', 'org-1')).rejects.toMatchObject({
       statusCode: 404,
     });
+  });
+});
+
+describe('attachTool', () => {
+  it('adds toolId to model.toolIds', async () => {
+    const assistant = buildAssistant({
+      id: 'ast-1',
+      organizationId: 'org-1',
+      model: { provider: 'openai', model: 'gpt-4', toolIds: [] },
+    });
+    const tool = buildTool({ id: 'tool-1', organizationId: 'org-1' });
+    prismaMock.assistant.findFirst.mockResolvedValue(assistant);
+    prismaMock.tool.findFirst.mockResolvedValue(tool);
+    prismaMock.assistant.update.mockResolvedValue({
+      ...assistant,
+      model: { ...assistant.model as object, toolIds: ['tool-1'] },
+    });
+
+    const result = await attachTool('ast-1', 'tool-1', 'org-1');
+
+    expect(prismaMock.assistant.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 'ast-1' },
+        data: expect.objectContaining({
+          model: expect.objectContaining({ toolIds: ['tool-1'] }),
+        }),
+      }),
+    );
+  });
+
+  it('does not duplicate existing toolId', async () => {
+    const assistant = buildAssistant({
+      id: 'ast-1',
+      organizationId: 'org-1',
+      model: { provider: 'openai', model: 'gpt-4', toolIds: ['tool-1'] },
+    });
+    const tool = buildTool({ id: 'tool-1', organizationId: 'org-1' });
+    prismaMock.assistant.findFirst.mockResolvedValue(assistant);
+    prismaMock.tool.findFirst.mockResolvedValue(tool);
+
+    await attachTool('ast-1', 'tool-1', 'org-1');
+
+    expect(prismaMock.assistant.update).not.toHaveBeenCalled();
+  });
+
+  it('throws 404 when tool not found', async () => {
+    const assistant = buildAssistant({ id: 'ast-1', organizationId: 'org-1' });
+    prismaMock.assistant.findFirst.mockResolvedValue(assistant);
+    prismaMock.tool.findFirst.mockResolvedValue(null);
+
+    await expect(attachTool('ast-1', 'bad-tool', 'org-1')).rejects.toThrow('Tool not found');
+  });
+
+  it('throws 404 when assistant not found', async () => {
+    prismaMock.assistant.findFirst.mockResolvedValue(null);
+
+    await expect(attachTool('bad-ast', 'tool-1', 'org-1')).rejects.toThrow('Assistant not found');
+  });
+});
+
+describe('detachTool', () => {
+  it('removes toolId from model.toolIds', async () => {
+    const assistant = buildAssistant({
+      id: 'ast-1',
+      organizationId: 'org-1',
+      model: { provider: 'openai', model: 'gpt-4', toolIds: ['tool-1', 'tool-2'] },
+    });
+    prismaMock.assistant.findFirst.mockResolvedValue(assistant);
+    prismaMock.assistant.update.mockResolvedValue({
+      ...assistant,
+      model: { ...assistant.model as object, toolIds: ['tool-2'] },
+    });
+
+    await detachTool('ast-1', 'tool-1', 'org-1');
+
+    expect(prismaMock.assistant.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          model: expect.objectContaining({ toolIds: ['tool-2'] }),
+        }),
+      }),
+    );
+  });
+
+  it('handles detaching a non-existent toolId gracefully', async () => {
+    const assistant = buildAssistant({
+      id: 'ast-1',
+      organizationId: 'org-1',
+      model: { provider: 'openai', model: 'gpt-4', toolIds: ['tool-2'] },
+    });
+    prismaMock.assistant.findFirst.mockResolvedValue(assistant);
+    prismaMock.assistant.update.mockResolvedValue(assistant);
+
+    await detachTool('ast-1', 'tool-999', 'org-1');
+
+    expect(prismaMock.assistant.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          model: expect.objectContaining({ toolIds: ['tool-2'] }),
+        }),
+      }),
+    );
+  });
+});
+
+describe('getAssistantTools', () => {
+  it('returns tools for the assistant', async () => {
+    const assistant = buildAssistant({
+      id: 'ast-1',
+      organizationId: 'org-1',
+      model: { provider: 'openai', model: 'gpt-4', toolIds: ['tool-1', 'tool-2'] },
+    });
+    const tools = [buildTool({ id: 'tool-1' }), buildTool({ id: 'tool-2' })];
+    prismaMock.assistant.findFirst.mockResolvedValue(assistant);
+    prismaMock.tool.findMany.mockResolvedValue(tools);
+
+    const result = await getAssistantTools('ast-1', 'org-1');
+
+    expect(result).toHaveLength(2);
+    expect(prismaMock.tool.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: { in: ['tool-1', 'tool-2'] }, organizationId: 'org-1' },
+      }),
+    );
+  });
+
+  it('returns empty array when no toolIds', async () => {
+    const assistant = buildAssistant({
+      id: 'ast-1',
+      organizationId: 'org-1',
+      model: { provider: 'openai', model: 'gpt-4' },
+    });
+    prismaMock.assistant.findFirst.mockResolvedValue(assistant);
+
+    const result = await getAssistantTools('ast-1', 'org-1');
+
+    expect(result).toEqual([]);
+    expect(prismaMock.tool.findMany).not.toHaveBeenCalled();
   });
 });

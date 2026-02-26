@@ -1,5 +1,4 @@
 const VAPI_API_URL = '/api/vapi/chat';
-const VAPI_API_KEY = import.meta.env.VITE_VAPI_PRIVATE_KEY;
 const ASSISTANT_ID = 'dabccfdc-f6d5-45dc-9699-c8aed7a15058';
 const TIMEOUT_MS = 30_000;
 
@@ -34,7 +33,6 @@ export async function sendMessage(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${VAPI_API_KEY}`,
       },
       body: JSON.stringify(body),
       signal: controller.signal,

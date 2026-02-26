@@ -71,7 +71,8 @@ async function validateServerUrl(serverUrl: string): Promise<void> {
     throw new Error(`Unsupported protocol: ${parsed.protocol}`);
   }
 
-  const hostname = parsed.hostname;
+  // Strip brackets from IPv6 hostnames (URL parser keeps them)
+  const hostname = parsed.hostname.replace(/^\[|\]$/g, '');
 
   // If the hostname is already an IP, check directly
   if (net.isIP(hostname)) {

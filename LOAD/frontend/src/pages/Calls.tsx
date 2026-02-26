@@ -21,7 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { PhoneCall, ChevronDown, ChevronUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { PhoneCall, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown, Search } from 'lucide-react';
 import { toast } from 'sonner';
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
@@ -32,6 +33,9 @@ const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'o
   RINGING: 'outline',
 };
 
+type SortKey = 'type' | 'status' | 'duration' | 'createdAt';
+type SortDir = 'asc' | 'desc';
+
 export function CallsPage() {
   const [calls, setCalls] = useState<Call[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,6 +43,9 @@ export function CallsPage() {
   const [expandedData, setExpandedData] = useState<Call | null>(null);
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [sortKey, setSortKey] = useState<SortKey>('createdAt');
+  const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const limit = 20;
@@ -76,11 +83,35 @@ export function CallsPage() {
     }
   }
 
-  const filtered = calls.filter((c) => {
-    if (statusFilter !== 'all' && c.status !== statusFilter) return false;
-    if (typeFilter !== 'all' && c.type !== typeFilter) return false;
-    return true;
-  });
+  function toggleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortKey(key);
+      setSortDir(key === 'createdAt' ? 'desc' : 'asc');
+    }
+  }
+
+  const filtered = calls
+    .filter((c) => {
+      if (statusFilter !== 'all' && c.status !== statusFilter) return false;
+      if (typeFilter !== 'all' && c.type !== typeFilter) return false;
+      if (search) {
+        const q = search.toLowerCase();
+        return c.id.toLowerCase().includes(q) || (c.phoneNumberId ?? '').toLowerCase().includes(q);
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      const dir = sortDir === 'asc' ? 1 : -1;
+      switch (sortKey) {
+        case 'type': return dir * a.type.localeCompare(b.type);
+        case 'status': return dir * a.status.localeCompare(b.status);
+        case 'duration': return dir * ((a.duration ?? 0) - (b.duration ?? 0));
+        case 'createdAt': return dir * (new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        default: return 0;
+      }
+    });
 
   const totalPages = Math.ceil(total / limit);
 
@@ -115,7 +146,16 @@ export function CallsPage() {
         </Card>
       ) : (
         <>
-          <div className="flex gap-3 mb-4">
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="relative">
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by ID or phone..."
+                className="h-9 w-[220px] pl-9 text-xs"
+              />
+            </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-[150px] h-9 text-xs">
                 <SelectValue placeholder="Status" />
@@ -147,10 +187,18 @@ export function CallsPage() {
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
                   <TableHead className="text-xs">ID</TableHead>
-                  <TableHead className="text-xs">Type</TableHead>
-                  <TableHead className="text-xs">Status</TableHead>
-                  <TableHead className="text-xs">Duration</TableHead>
-                  <TableHead className="text-xs">Created</TableHead>
+                  <TableHead className="text-xs cursor-pointer select-none" onClick={() => toggleSort('type')}>
+                    <span className="inline-flex items-center gap-1">Type {sortKey === 'type' ? (sortDir === 'asc' ? <ArrowUp size={11} /> : <ArrowDown size={11} />) : <ArrowUpDown size={11} className="text-muted-foreground/40" />}</span>
+                  </TableHead>
+                  <TableHead className="text-xs cursor-pointer select-none" onClick={() => toggleSort('status')}>
+                    <span className="inline-flex items-center gap-1">Status {sortKey === 'status' ? (sortDir === 'asc' ? <ArrowUp size={11} /> : <ArrowDown size={11} />) : <ArrowUpDown size={11} className="text-muted-foreground/40" />}</span>
+                  </TableHead>
+                  <TableHead className="text-xs cursor-pointer select-none" onClick={() => toggleSort('duration')}>
+                    <span className="inline-flex items-center gap-1">Duration {sortKey === 'duration' ? (sortDir === 'asc' ? <ArrowUp size={11} /> : <ArrowDown size={11} />) : <ArrowUpDown size={11} className="text-muted-foreground/40" />}</span>
+                  </TableHead>
+                  <TableHead className="text-xs cursor-pointer select-none" onClick={() => toggleSort('createdAt')}>
+                    <span className="inline-flex items-center gap-1">Created {sortKey === 'createdAt' ? (sortDir === 'asc' ? <ArrowUp size={11} /> : <ArrowDown size={11} />) : <ArrowUpDown size={11} className="text-muted-foreground/40" />}</span>
+                  </TableHead>
                   <TableHead className="w-10"></TableHead>
                 </TableRow>
               </TableHeader>

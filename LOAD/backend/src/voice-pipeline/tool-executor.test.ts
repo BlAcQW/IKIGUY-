@@ -1,5 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import dns from 'node:dns/promises';
 import { executeTool } from './tool-executor.js';
+
+vi.mock('node:dns/promises', () => ({
+  default: {
+    resolve4: vi.fn(),
+    resolve6: vi.fn(),
+  },
+}));
 
 describe('executeTool', () => {
   let fetchSpy: ReturnType<typeof vi.fn>;
@@ -21,6 +29,12 @@ describe('executeTool', () => {
       serverUrl: 'https://example.com/webhook',
       serverSecret: 'my-secret',
     };
+
+    beforeEach(() => {
+      // DNS mocks so validateServerUrl passes for example.com
+      vi.mocked(dns.resolve4).mockResolvedValue(['93.184.216.34']);
+      vi.mocked(dns.resolve6).mockRejectedValue(new Error('no AAAA'));
+    });
 
     it('should call serverUrl with HMAC-signed body', async () => {
       fetchSpy.mockResolvedValue({
@@ -121,6 +135,108 @@ describe('executeTool', () => {
       expect(result.success).toBe(true);
       expect(result.signal).toBe('end_call');
       expect(result.output).toContain('customer satisfied');
+    });
+  });
+
+  describe('SSRF protection', () => {
+    const makeTool = (serverUrl: string) => ({
+      id: 'tool-ssrf',
+      type: 'FUNCTION' as const,
+      name: 'ssrf_test',
+      serverUrl,
+      serverSecret: null,
+    });
+
+    beforeEach(() => {
+      vi.mocked(dns.resolve4).mockReset();
+      vi.mocked(dns.resolve6).mockReset();
+    });
+
+    it('should block loopback address (127.0.0.1)', async () => {
+      const result = await executeTool(makeTool('http://127.0.0.1/hook'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('blocked');
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should block 10.x private range', async () => {
+      const result = await executeTool(makeTool('http://10.0.0.1/hook'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('blocked');
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should block 172.16.x private range', async () => {
+      const result = await executeTool(makeTool('http://172.16.0.1/hook'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('blocked');
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should block 192.168.x private range', async () => {
+      const result = await executeTool(makeTool('http://192.168.1.1/hook'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('blocked');
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should block link-local / AWS metadata (169.254.169.254)', async () => {
+      const result = await executeTool(makeTool('http://169.254.169.254/metadata'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('blocked');
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should block IPv6 loopback (::1)', async () => {
+      const result = await executeTool(makeTool('http://[::1]/hook'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('blocked');
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should allow public IP address', async () => {
+      fetchSpy.mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve(JSON.stringify({ result: 'ok' })),
+      });
+
+      const result = await executeTool(makeTool('https://93.184.216.34/hook'), '{}', 'session-1');
+
+      expect(result.success).toBe(true);
+      expect(fetchSpy).toHaveBeenCalledOnce();
+    });
+
+    it('should block when DNS resolves to private IP', async () => {
+      vi.mocked(dns.resolve4).mockResolvedValue(['127.0.0.1']);
+      vi.mocked(dns.resolve6).mockRejectedValue(new Error('no AAAA'));
+
+      const result = await executeTool(makeTool('https://evil.example.com/hook'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('blocked');
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should reject invalid URL', async () => {
+      const result = await executeTool(makeTool('not-a-url'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('Invalid');
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should reject non-http protocol', async () => {
+      const result = await executeTool(makeTool('ftp://example.com/hook'), '{}', 'session-1');
+
+      expect(result.success).toBe(false);
+      expect(result.output).toContain('Unsupported protocol');
+      expect(fetchSpy).not.toHaveBeenCalled();
     });
   });
 });

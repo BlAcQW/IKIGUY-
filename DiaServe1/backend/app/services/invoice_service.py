@@ -55,27 +55,31 @@ class InvoiceService:
         # Get organization to fetch invoice settings
         org = await self.db.organizations.find_one({"id": organization_id})
 
-        if not org:
-            raise ValueError(f"Organization {organization_id} not found")
-
-        # Get invoice settings
-        invoice_settings = org.get("invoice_settings", {})
-        prefix = invoice_settings.get("invoice_prefix", "INV")
-        next_number = invoice_settings.get("next_invoice_number", 1000)
+        # Use defaults if org not found (e.g. user has no org assignment)
+        if org:
+            invoice_settings = org.get("invoice_settings", {})
+            prefix = invoice_settings.get("invoice_prefix", "INV")
+            next_number = invoice_settings.get("next_invoice_number", 1000)
+        else:
+            prefix = "INV"
+            # Fall back to counting existing invoices for this organization_id
+            count = await self.collection.count_documents({"organization_id": organization_id})
+            next_number = 1000 + count
 
         # Generate invoice number
         invoice_number = f"{prefix}-{next_number}"
 
-        # Increment next_invoice_number in organization
-        await self.db.organizations.update_one(
-            {"id": organization_id},
-            {
-                "$set": {
-                    "invoice_settings.next_invoice_number": next_number + 1,
-                    "updated_at": datetime.utcnow()
+        # Only update org settings if org exists
+        if org:
+            await self.db.organizations.update_one(
+                {"id": organization_id},
+                {
+                    "$set": {
+                        "invoice_settings.next_invoice_number": next_number + 1,
+                        "updated_at": datetime.utcnow()
+                    }
                 }
-            }
-        )
+            )
 
         return invoice_number
 
@@ -349,9 +353,17 @@ class InvoiceService:
         if not invoice:
             return None
 
-        # Only allow updates for draft or sent invoices
-        if invoice.status not in [InvoiceStatus.DRAFT, InvoiceStatus.SENT]:
-            raise ValueError("Cannot update paid or cancelled invoices")
+        # Only allow full edits for draft or sent invoices
+        # But always allow status-only changes (admin override)
+        is_status_only_update = (
+            updates.status is not None
+            and updates.due_date is None
+            and updates.notes is None
+            and updates.terms is None
+            and updates.line_items is None
+        )
+        if not is_status_only_update and invoice.status not in [InvoiceStatus.DRAFT, InvoiceStatus.SENT]:
+            raise ValueError("Cannot update paid or cancelled invoices (only status changes are allowed)")
 
         # Build update dict
         update_dict = {"updated_at": datetime.utcnow()}
@@ -542,29 +554,27 @@ class InvoiceService:
             PDF file as bytes
 
         Raises:
-            ValueError: If invoice or organization not found
+            ValueError: If invoice not found
         """
         # Get invoice
         invoice = await self.get_invoice(invoice_id, organization_id)
         if not invoice:
             raise ValueError(f"Invoice {invoice_id} not found")
 
-        # Get organization
+        # Get organization (use empty defaults if not found)
         org = await self.db.organizations.find_one({"id": organization_id})
-        if not org:
-            raise ValueError(f"Organization {organization_id} not found")
 
-        # Prepare template data
+        # Prepare template data with defaults for missing org
         template_data = {
             "invoice": invoice.dict(),
             "organization": {
-                "name": org.get("name", ""),
-                "address": org.get("address", ""),
-                "phone": org.get("phone", ""),
-                "email": org.get("email", ""),
-                "website": org.get("website", ""),
-                "tax_id": org.get("tax_id", ""),
-                "payment_info": org.get("payment_info", "")
+                "name": org.get("name", "") if org else "",
+                "address": org.get("address", "") if org else "",
+                "phone": org.get("phone", "") if org else "",
+                "email": org.get("email", "") if org else "",
+                "website": org.get("website", "") if org else "",
+                "tax_id": org.get("tax_id", "") if org else "",
+                "payment_info": org.get("payment_info", "") if org else ""
             }
         }
 
@@ -603,7 +613,7 @@ class InvoiceService:
             Send result dictionary with success status
 
         Raises:
-            ValueError: If invoice or organization not found, or if contact has no email
+            ValueError: If invoice not found, or if contact has no email
         """
         # Get invoice
         invoice = await self.get_invoice(invoice_id, organization_id)
@@ -614,10 +624,8 @@ class InvoiceService:
         if not invoice.contact_email:
             raise ValueError(f"Contact {invoice.contact_name} has no email address")
 
-        # Get organization
-        org = await self.db.organizations.find_one({"id": organization_id})
-        if not org:
-            raise ValueError(f"Organization {organization_id} not found")
+        # Get organization (use empty dict if not found so .get() calls work)
+        org = await self.db.organizations.find_one({"id": organization_id}) or {}
 
         # Generate PDF
         pdf_bytes = await self.generate_pdf(invoice_id, organization_id)
@@ -626,7 +634,7 @@ class InvoiceService:
         email_service = get_email_service()
 
         # Prepare email content
-        org_name = org.get("name", "Estate Management")
+        org_name = org.get("name") or "Estate Management"
 
         # Build email subject
         subject = f"Invoice {invoice.invoice_number} from {org_name}"

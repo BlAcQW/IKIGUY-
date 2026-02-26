@@ -73,10 +73,21 @@ export async function searchAvailableNumbers(
   if (params.contains) searchParams.contains = params.contains;
 
   let numbers;
-  if (params.type === 'tollFree') {
-    numbers = await client.availablePhoneNumbers(country).tollFree.list(searchParams);
-  } else {
-    numbers = await client.availablePhoneNumbers(country).local.list(searchParams);
+  try {
+    if (params.type === 'tollFree') {
+      numbers = await client.availablePhoneNumbers(country).tollFree.list(searchParams);
+    } else {
+      numbers = await client.availablePhoneNumbers(country).local.list(searchParams);
+    }
+  } catch (err: unknown) {
+    const twilioErr = err as { status?: number; code?: number };
+    if (twilioErr.status === 404 || twilioErr.code === 20404) {
+      throw Object.assign(
+        new Error(`No ${params.type ?? 'local'} numbers available for country "${country}"`),
+        { statusCode: 404 }
+      );
+    }
+    throw err;
   }
 
   return numbers.map((n) => ({

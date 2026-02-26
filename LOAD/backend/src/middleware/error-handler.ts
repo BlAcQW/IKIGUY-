@@ -53,8 +53,10 @@ export function errorHandler(
     };
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    console.error('Error:', error);
+  if (response.error.statusCode >= 500) {
+    _request.log.error({ err: error }, 'Server error');
+  } else if (process.env.NODE_ENV === 'development') {
+    _request.log.debug({ err: error }, 'Request error');
   }
 
   reply.status(response.error.statusCode).send(response);

@@ -185,13 +185,12 @@ export function VoiceLibraryPage() {
       <PageHeader
         title="Voice Library"
         subtitle="Browse voices, preview them, and clone your own"
-        action={
-          <Button onClick={() => setShowCloneDialog(true)} size="sm">
-            <Plus size={14} className="mr-1.5" />
-            Clone My Voice
-          </Button>
-        }
-      />
+      >
+        <Button onClick={() => setShowCloneDialog(true)} size="sm">
+          <Plus size={14} className="mr-1.5" />
+          Clone My Voice
+        </Button>
+      </PageHeader>
 
       {/* Clone Dialog */}
       {showCloneDialog && (

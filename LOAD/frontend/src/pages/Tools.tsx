@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { listTools, createTool, updateTool, deleteTool, listToolTemplates, createToolFromTemplate } from '../lib/api';
+import { listTools, createTool, updateTool, deleteTool, testTool, listToolTemplates, createToolFromTemplate } from '../lib/api';
 import type { Tool, ToolType, ToolTemplate, ToolTemplateCategory, ToolTemplatesResponse, CreateToolRequest, UpdateToolRequest } from '../types';
 import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
 import { AlertDialog } from '@/components/ui/alert-dialog';
-import { Wrench, Plus, Pencil, Trash2, Layers, ChevronRight } from 'lucide-react';
+import { Wrench, Plus, Pencil, Trash2, Layers, ChevronRight, Play, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const TOOL_TYPE_LABELS: Record<ToolType, string> = { FUNCTION: 'Function', TRANSFER_CALL: 'Transfer Call', END_CALL: 'End Call' };
@@ -55,6 +55,7 @@ export function ToolsPage() {
   const [form, setForm] = useState<ToolForm>(emptyForm);
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [testingId, setTestingId] = useState<string | null>(null);
 
   // Template dialog state
   const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
@@ -105,6 +106,21 @@ export function ToolsPage() {
       setDialogOpen(false); await loadTools();
     } catch (err: unknown) { const message = err instanceof Error ? err.message : 'Unknown error'; toast.error(editingId ? 'Failed to update tool' : 'Failed to create tool', { description: message }); }
     finally { setSaving(false); }
+  }
+
+  async function handleTest(id: string) {
+    setTestingId(id);
+    try {
+      const result = await testTool(id);
+      const { status, latencyMs, body } = result.data;
+      const preview = typeof body === 'string' ? body.slice(0, 100) : JSON.stringify(body).slice(0, 100);
+      toast.success(`Tool responded: ${status} (${latencyMs}ms)`, { description: preview });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Test failed';
+      toast.error('Tool test failed', { description: message });
+    } finally {
+      setTestingId(null);
+    }
   }
 
   async function handleDelete() {
@@ -326,6 +342,11 @@ export function ToolsPage() {
                   <TableCell className="text-muted-foreground text-xs truncate max-w-[200px] font-mono">{tool.serverUrl ?? '--'}</TableCell>
                   <TableCell>
                     <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      {tool.serverUrl && (
+                        <Button variant="ghost" size="icon" onClick={() => handleTest(tool.id)} disabled={testingId === tool.id} className="h-8 w-8 text-muted-foreground hover:text-primary" title="Test tool">
+                          {testingId === tool.id ? <Loader2 size={13} className="animate-spin" /> : <Play size={13} />}
+                        </Button>
+                      )}
                       <Button variant="ghost" size="icon" onClick={() => openEdit(tool)} className="h-8 w-8"><Pencil size={13} /></Button>
                       <Button variant="ghost" size="icon" onClick={() => setDeleteTarget({ id: tool.id, name: tool.name })} className="h-8 w-8 text-muted-foreground hover:text-destructive"><Trash2 size={13} /></Button>
                     </div>

@@ -60,6 +60,7 @@ describe('POST /api/auth/register', () => {
     prismaMock.user.findUnique.mockResolvedValue(null);
     prismaMock.organization.create.mockResolvedValue(org);
     prismaMock.user.create.mockResolvedValue(user);
+    prismaMock.refreshToken.create.mockResolvedValue({ id: 'rt-1', tokenHash: 'hashed', userId: user.id, organizationId: org.id, expiresAt: new Date(), revokedAt: null, createdAt: new Date() });
 
     const res = await app.inject({
       method: 'POST',
@@ -71,6 +72,7 @@ describe('POST /api/auth/register', () => {
     const body = res.json();
     expect(body.success).toBe(true);
     expect(body.data.token).toBeDefined();
+    expect(body.data.refreshToken).toBeDefined();
     expect(body.data.user.email).toBe('new@example.com');
   });
 
@@ -125,6 +127,7 @@ describe('POST /api/auth/login', () => {
 
     prismaMock.user.findUnique.mockResolvedValue(user);
     vi.mocked(bcrypt.compare).mockResolvedValue(true as never);
+    prismaMock.refreshToken.create.mockResolvedValue({ id: 'rt-1', tokenHash: 'hashed', userId: user.id, organizationId: org.id, expiresAt: new Date(), revokedAt: null, createdAt: new Date() });
 
     const res = await app.inject({
       method: 'POST',
@@ -136,6 +139,7 @@ describe('POST /api/auth/login', () => {
     const body = res.json();
     expect(body.success).toBe(true);
     expect(body.data.token).toBeDefined();
+    expect(body.data.refreshToken).toBeDefined();
   });
 
   it('returns 400 for missing email', async () => {

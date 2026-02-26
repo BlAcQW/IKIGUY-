@@ -18,6 +18,7 @@ import { toolRoutes } from './modules/tools/routes.js';
 import { squadRoutes } from './modules/squads/routes.js';
 import { campaignRoutes } from './modules/campaigns/routes.js';
 import { webhookRoutes } from './modules/webhooks/routes.js';
+import { incomingWebhookRoutes } from './modules/webhooks/incoming.js';
 import { websocketRoutes } from './websocket/handler.js';
 import { webrtcRoutes } from './webrtc/routes.js';
 import { createWebhookWorker, closeWebhookQueue } from './modules/webhooks/delivery.js';
@@ -26,6 +27,9 @@ import { CallBridge } from './telephony/call-bridge.js';
 import { createCampaignQueues, setCallBridge, closeCampaignQueues } from './modules/campaigns/engine.js';
 import { analyticsRoutes } from './modules/analytics/routes.js';
 import { voiceRoutes } from './modules/voices/routes.js';
+import { settingsRoutes } from './modules/settings/routes.js';
+import { telephonyRoutes } from './modules/telephony/routes.js';
+import { pipelineTestRoutes } from './modules/pipeline-test/routes.js';
 import { initializeSessionStore } from './voice-pipeline/session.js';
 import type { Worker } from 'bullmq';
 
@@ -103,8 +107,12 @@ async function buildApp() {
   await app.register(squadRoutes);
   await app.register(campaignRoutes);
   await app.register(webhookRoutes);
+  await app.register(incomingWebhookRoutes);
   await app.register(analyticsRoutes);
   await app.register(voiceRoutes);
+  await app.register(settingsRoutes);
+  await app.register(telephonyRoutes);
+  await app.register(pipelineTestRoutes);
   await app.register(websocketRoutes);
   await app.register(webrtcRoutes);
 
@@ -143,7 +151,11 @@ async function start() {
           appName: config.ASTERISK_ARI_APP,
         });
 
-        callBridge = new CallBridge(ariClient);
+        callBridge = new CallBridge(ariClient, {
+          host: config.EXTERNAL_MEDIA_HOST,
+          portStart: config.EXTERNAL_MEDIA_PORT_START,
+          portEnd: config.EXTERNAL_MEDIA_PORT_END,
+        }, config.ASTERISK_ARI_APP);
         await callBridge.initialize();
 
         // Decorate Fastify app with bridge reference for route handlers

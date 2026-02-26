@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -14,10 +13,9 @@ import {
   Wrench,
   Settings2,
   Code2,
-  MessageSquare,
   BarChart3,
   ShieldCheck,
-  Phone,
+  Play,
   Copy,
   Check,
 } from 'lucide-react';
@@ -31,7 +29,7 @@ import { AdvancedTab } from './tabs/AdvancedTab';
 import { AnalysisTab } from './tabs/AnalysisTab';
 import { ComplianceTab } from './tabs/ComplianceTab';
 import { CodeTab } from './tabs/CodeTab';
-import { ChatTab } from './tabs/ChatTab';
+import { TestTab } from './tabs/TestTab';
 import { MetricBar } from './components/MetricBar';
 
 interface AssistantEditorPanelProps {
@@ -86,7 +84,6 @@ export function AssistantEditorPanel({
   hasAssistant,
   assistantId,
 }: AssistantEditorPanelProps) {
-  const navigate = useNavigate();
   const [editingName, setEditingName] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
   const [published, setPublished] = useState(true);
@@ -207,18 +204,7 @@ export function AssistantEditorPanel({
 
           {/* Right: Action buttons */}
           <div className="flex items-center gap-2 shrink-0">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 px-3 text-xs gap-1.5"
-              onClick={() => assistantId && navigate(`/web-call?assistant=${assistantId}`)}
-              disabled={!assistantId}
-            >
-              <Phone size={13} />
-              Talk
-            </Button>
-
-            <div className="flex items-center gap-2 border-l border-panel-border pl-2">
+            <div className="flex items-center gap-2">
               <span className="text-[10px] text-muted-foreground">Published</span>
               <ToggleSwitch
                 checked={published}
@@ -292,9 +278,9 @@ export function AssistantEditorPanel({
                 <Code2 size={13} />
                 Code
               </TabsTrigger>
-              <TabsTrigger value="chat" className="flex-1 text-xs gap-1.5">
-                <MessageSquare size={13} />
-                Chat
+              <TabsTrigger value="test" className="flex-1 text-xs gap-1.5">
+                <Play size={13} />
+                Test
               </TabsTrigger>
             </TabsList>
           </div>
@@ -324,8 +310,8 @@ export function AssistantEditorPanel({
             <TabsContent value="code" className="mt-0">
               <CodeTab form={form} />
             </TabsContent>
-            <TabsContent value="chat" className="mt-0">
-              <ChatTab assistantId={assistantId} />
+            <TabsContent value="test" className="mt-0">
+              <TestTab form={form} assistantId={assistantId} />
             </TabsContent>
           </div>
         </Tabs>

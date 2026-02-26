@@ -1,7 +1,9 @@
 import { FastifyInstance } from 'fastify';
 import { authMiddleware } from '../../middleware/auth.js';
+import { prisma } from '../../database/client.js';
 import { listCallsSchema, createOutboundCallSchema } from './schemas.js';
 import { listCalls, getCall, endCall } from './service.js';
+import { makeOutboundCallTwilio } from '../telephony/service.js';
 
 export async function callRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', authMiddleware);
@@ -19,10 +21,40 @@ export async function callRoutes(app: FastifyInstance): Promise<void> {
   });
 
   // POST /api/calls — Initiate outbound call via telephony
+  // Routes to Twilio Direct or Asterisk based on phone number provider.
   app.post('/api/calls', async (request, reply) => {
     const body = createOutboundCallSchema.parse(request.body);
-    const callBridge = (app as any).callBridge;
 
+    // Look up the phone number to determine the provider
+    const phoneNumber = await prisma.phoneNumber.findFirst({
+      where: { id: body.phoneNumberId, organizationId: request.organizationId! },
+    });
+
+    if (!phoneNumber) {
+      return reply.status(404).send({
+        success: false,
+        error: {
+          code: 'NOT_FOUND',
+          message: 'Phone number not found',
+          statusCode: 404,
+        },
+      });
+    }
+
+    // Twilio Direct path — use Twilio REST API + Media Streams
+    if (phoneNumber.provider === 'TWILIO') {
+      const result = await makeOutboundCallTwilio({
+        organizationId: request.organizationId!,
+        assistantId: body.assistantId,
+        customerNumber: body.customerNumber,
+        phoneNumberId: body.phoneNumberId,
+        metadata: body.metadata,
+      });
+      return reply.status(201).send({ success: true, data: result });
+    }
+
+    // Asterisk path — GoIP / SIP_TRUNK providers
+    const callBridge = (app as any).callBridge;
     if (!callBridge) {
       return reply.status(503).send({
         success: false,

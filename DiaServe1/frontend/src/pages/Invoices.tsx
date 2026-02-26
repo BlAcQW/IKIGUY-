@@ -3,16 +3,17 @@ import {
   Plus,
   Search,
   Download,
-  Send,
   MoreHorizontal,
   CheckCircle,
   Clock,
   AlertCircle,
-  DollarSign,
+  Send,
   Loader2,
   RefreshCw,
   Trash2,
   CreditCard,
+  XCircle,
+  RotateCcw,
 } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -44,8 +45,8 @@ import {
   useInvoices,
   useInvoiceStats,
   useDownloadInvoicePDF,
-  useSendInvoice,
   useDeleteInvoice,
+  useUpdateInvoice,
   InvoiceStatus,
   type Invoice,
   type InvoiceFilters,
@@ -108,8 +109,8 @@ export default function Invoices() {
 
   // Mutation hooks
   const downloadPDF = useDownloadInvoicePDF();
-  const sendInvoice = useSendInvoice();
   const deleteInvoice = useDeleteInvoice();
+  const updateInvoice = useUpdateInvoice();
 
   // QuickBooks hooks
   const { data: qboStatus } = useQBOStatus();
@@ -128,17 +129,6 @@ export default function Invoices() {
   const handleStatusChange = (value: string) => {
     setStatusFilter(value);
     setPage(1);
-  };
-
-  const handleSendInvoice = (invoice: Invoice) => {
-    sendInvoice.mutate(invoice.id, {
-      onSuccess: () => {
-        toast.success(`Invoice ${invoice.invoice_number} sent successfully`);
-      },
-      onError: (error) => {
-        toast.error(`Failed to send invoice: ${error.message}`);
-      },
-    });
   };
 
   const handleDeleteInvoice = (invoice: Invoice) => {
@@ -160,11 +150,25 @@ export default function Invoices() {
     setMarkPaidDialogOpen(true);
   };
 
+  const handleInvoiceStatusChange = (invoice: Invoice, newStatus: InvoiceStatus, label: string) => {
+    updateInvoice.mutate(
+      { invoiceId: invoice.id, updates: { status: newStatus } },
+      {
+        onSuccess: () => {
+          toast.success(`Invoice ${invoice.invoice_number} marked as ${label}`);
+        },
+        onError: (error) => {
+          toast.error(`Failed to update invoice: ${error.message}`);
+        },
+      }
+    );
+  };
+
   return (
     <div className="min-h-screen">
       <Header
         title="Invoices"
-        subtitle="Track payments and billing"
+        subtitle="Manage and track invoices"
         actions={
           <div className="flex gap-2">
             {qboStatus?.is_connected ? (
@@ -236,54 +240,44 @@ export default function Invoices() {
             <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
           </div>
         ) : stats ? (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <DollarSign className="h-8 w-8 text-success" />
-                </div>
-                <p className="text-2xl font-bold text-foreground mt-4">
-                  {stats.currency} {stats.total_revenue.toLocaleString()}
-                </p>
-                <p className="text-sm text-muted-foreground">Total Revenue</p>
-                <p className="text-xs text-muted-foreground mt-1">{stats.paid_count} paid</p>
+                <Clock className="h-8 w-8 text-muted-foreground" />
+                <p className="text-2xl font-bold text-foreground mt-4">{stats.draft_count}</p>
+                <p className="text-sm text-muted-foreground">Draft</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <DollarSign className="h-8 w-8 text-accent" />
-                </div>
-                <p className="text-2xl font-bold text-foreground mt-4">
-                  {stats.currency} {stats.pending_amount.toLocaleString()}
-                </p>
-                <p className="text-sm text-muted-foreground">Pending</p>
-                <p className="text-xs text-muted-foreground mt-1">{stats.sent_count} invoices</p>
+                <Send className="h-8 w-8 text-blue-500" />
+                <p className="text-2xl font-bold text-foreground mt-4">{stats.sent_count}</p>
+                <p className="text-sm text-muted-foreground">Sent</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <DollarSign className="h-8 w-8 text-destructive" />
-                </div>
-                <p className="text-2xl font-bold text-foreground mt-4">
-                  {stats.currency} {stats.overdue_amount.toLocaleString()}
-                </p>
+                <CheckCircle className="h-8 w-8 text-success" />
+                <p className="text-2xl font-bold text-foreground mt-4">{stats.paid_count}</p>
+                <p className="text-sm text-muted-foreground">Paid</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <AlertCircle className="h-8 w-8 text-destructive" />
+                <p className="text-2xl font-bold text-foreground mt-4">{stats.overdue_count}</p>
                 <p className="text-sm text-muted-foreground">Overdue</p>
-                <p className="text-xs text-muted-foreground mt-1">{stats.overdue_count} invoices</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <DollarSign className="h-8 w-8 text-muted-foreground" />
-                </div>
+                <CreditCard className="h-8 w-8 text-primary" />
                 <p className="text-2xl font-bold text-foreground mt-4">{stats.total_invoices}</p>
-                <p className="text-sm text-muted-foreground">Total Invoices</p>
-                <p className="text-xs text-muted-foreground mt-1">{stats.draft_count} drafts</p>
+                <p className="text-sm text-muted-foreground">Total</p>
               </CardContent>
             </Card>
           </div>
@@ -365,14 +359,22 @@ export default function Invoices() {
                     {invoices.map((invoice) => {
                       const statusInfo = getStatusInfo(invoice.status);
                       const dueDate = new Date(invoice.due_date).toLocaleDateString();
-                      const canSend =
-                        invoice.status === InvoiceStatus.DRAFT ||
-                        invoice.status === InvoiceStatus.SENT ||
-                        invoice.status === InvoiceStatus.OVERDUE;
                       const canMarkPaid =
                         invoice.status === InvoiceStatus.SENT ||
                         invoice.status === InvoiceStatus.OVERDUE;
                       const canDelete = invoice.status === InvoiceStatus.DRAFT;
+                      const canMarkSent =
+                        invoice.status === InvoiceStatus.DRAFT ||
+                        invoice.status === InvoiceStatus.CANCELLED;
+                      const canMarkOverdue =
+                        invoice.status === InvoiceStatus.SENT;
+                      const canCancel =
+                        invoice.status === InvoiceStatus.DRAFT ||
+                        invoice.status === InvoiceStatus.SENT ||
+                        invoice.status === InvoiceStatus.OVERDUE;
+                      const canReopen =
+                        invoice.status === InvoiceStatus.CANCELLED ||
+                        invoice.status === InvoiceStatus.PAID;
 
                       return (
                         <TableRow key={invoice.id}>
@@ -451,13 +453,12 @@ export default function Invoices() {
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                  {canSend && (
+                                  {canMarkSent && (
                                     <DropdownMenuItem
-                                      onClick={() => handleSendInvoice(invoice)}
-                                      disabled={sendInvoice.isPending}
+                                      onClick={() => handleInvoiceStatusChange(invoice, InvoiceStatus.SENT, "sent")}
                                     >
-                                      <Send className="h-4 w-4 mr-2" />
-                                      Send Invoice
+                                      <Send className="h-4 w-4 mr-2 text-blue-500" />
+                                      Mark as Sent
                                     </DropdownMenuItem>
                                   )}
                                   {canMarkPaid && (
@@ -466,6 +467,14 @@ export default function Invoices() {
                                     >
                                       <CheckCircle className="h-4 w-4 mr-2" />
                                       Mark as Paid
+                                    </DropdownMenuItem>
+                                  )}
+                                  {canMarkOverdue && (
+                                    <DropdownMenuItem
+                                      onClick={() => handleInvoiceStatusChange(invoice, InvoiceStatus.OVERDUE, "overdue")}
+                                    >
+                                      <AlertCircle className="h-4 w-4 mr-2 text-orange-500" />
+                                      Mark as Overdue
                                     </DropdownMenuItem>
                                   )}
                                   {qboStatus?.is_connected &&
@@ -490,6 +499,23 @@ export default function Invoices() {
                                     >
                                       <RefreshCw className="h-4 w-4 mr-2" />
                                       Sync to QuickBooks
+                                    </DropdownMenuItem>
+                                  )}
+                                  {canCancel && (
+                                    <DropdownMenuItem
+                                      onClick={() => handleInvoiceStatusChange(invoice, InvoiceStatus.CANCELLED, "cancelled")}
+                                      className="text-destructive focus:text-destructive"
+                                    >
+                                      <XCircle className="h-4 w-4 mr-2" />
+                                      Cancel Invoice
+                                    </DropdownMenuItem>
+                                  )}
+                                  {canReopen && (
+                                    <DropdownMenuItem
+                                      onClick={() => handleInvoiceStatusChange(invoice, InvoiceStatus.DRAFT, "draft")}
+                                    >
+                                      <RotateCcw className="h-4 w-4 mr-2 text-blue-500" />
+                                      Reopen as Draft
                                     </DropdownMenuItem>
                                   )}
                                   {canDelete && (

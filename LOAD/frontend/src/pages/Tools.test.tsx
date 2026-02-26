@@ -264,7 +264,7 @@ describe('ToolsPage', () => {
     // Find the edit (pencil) button - h-8 w-8 button without hover:text-destructive
     const allButtons = screen.getAllByRole('button');
     const editBtn = allButtons.find(btn => {
-      return btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive');
+      return btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive') && !btn.className.includes('hover:text-primary');
     });
     expect(editBtn).toBeTruthy();
     await userEvent.click(editBtn!);
@@ -293,7 +293,7 @@ describe('ToolsPage', () => {
     // Click edit button - h-8 w-8 button without hover:text-destructive
     const allButtons = screen.getAllByRole('button');
     const editBtn = allButtons.find(btn => {
-      return btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive');
+      return btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive') && !btn.className.includes('hover:text-primary');
     });
     await userEvent.click(editBtn!);
 
@@ -527,7 +527,7 @@ describe('ToolsPage', () => {
 
     const allButtons = screen.getAllByRole('button');
     const editBtn = allButtons.find(btn =>
-      btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive')
+      btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive') && !btn.className.includes('hover:text-primary')
     );
     await userEvent.click(editBtn!);
 
@@ -614,7 +614,7 @@ describe('ToolsPage', () => {
     // Open edit dialog
     const allButtons = screen.getAllByRole('button');
     const editBtn = allButtons.find(btn =>
-      btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive')
+      btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive') && !btn.className.includes('hover:text-primary')
     );
     await userEvent.click(editBtn!);
 
@@ -896,7 +896,7 @@ describe('ToolsPage', () => {
 
     const allButtons = screen.getAllByRole('button');
     const editBtn = allButtons.find(btn =>
-      btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive')
+      btn.className.includes('h-8') && btn.className.includes('w-8') && !btn.className.includes('hover:text-destructive') && !btn.className.includes('hover:text-primary')
     );
     await userEvent.click(editBtn!);
 

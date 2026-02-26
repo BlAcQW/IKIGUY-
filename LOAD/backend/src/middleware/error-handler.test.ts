@@ -13,7 +13,16 @@ function createMockReply() {
 }
 
 function createMockRequest() {
-  return {} as FastifyRequest;
+  return {
+    log: {
+      error: vi.fn(),
+      warn: vi.fn(),
+      info: vi.fn(),
+      debug: vi.fn(),
+      trace: vi.fn(),
+      fatal: vi.fn(),
+    },
+  } as unknown as FastifyRequest;
 }
 
 describe('errorHandler', () => {

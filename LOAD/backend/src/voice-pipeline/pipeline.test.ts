@@ -2,6 +2,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createSession, getSession } from './session.js';
 import { processPipelineTurn, type PipelineConfig } from './pipeline.js';
 import type { CallSession } from './session.js';
+import type { LLMChatResult } from '../providers/llm/types.js';
+import type { ToolExecutionResult } from './tool-executor.js';
+
+vi.mock('./tool-executor.js', () => ({
+  executeTool: vi.fn(),
+}));
+
+import { executeTool } from './tool-executor.js';
+const mockExecuteTool = vi.mocked(executeTool);
 
 function createMockPipeline(): PipelineConfig {
   return {
@@ -33,6 +42,7 @@ describe('processPipelineTurn', () => {
       systemPrompt: 'You are helpful',
     });
     pipeline = createMockPipeline();
+    mockExecuteTool.mockReset();
   });
 
   it('processes audio through STT -> LLM -> TTS', async () => {
@@ -137,5 +147,252 @@ describe('processPipelineTurn', () => {
     expect(result.toolCallsExecuted).toEqual([]);
     expect(result.endCallRequested).toBe(false);
     expect(result.transferRequest).toBeUndefined();
+  });
+
+  describe('tool execution', () => {
+    const functionTool = {
+      id: 'tool-1',
+      type: 'FUNCTION' as const,
+      name: 'check_availability',
+      function: { name: 'check_availability', description: 'Check availability', parameters: {} },
+      serverUrl: 'https://example.com/hook',
+      serverSecret: null,
+    };
+
+    const transferTool = {
+      id: 'tool-2',
+      type: 'TRANSFER_CALL' as const,
+      name: 'transfer_to_sales',
+      description: 'Transfer to sales',
+      metadata: { targetAssistantId: 'ast-sales' },
+      serverUrl: null,
+      serverSecret: null,
+    };
+
+    const endCallTool = {
+      id: 'tool-3',
+      type: 'END_CALL' as const,
+      name: 'end_call',
+      description: 'End the call',
+      serverUrl: null,
+      serverSecret: null,
+    };
+
+    it('executes a single tool call and returns final text', async () => {
+      const llmChat = vi.mocked(pipeline.llm.chat);
+      // First call: LLM returns tool call
+      llmChat.mockResolvedValueOnce({
+        content: null,
+        toolCalls: [{ id: 'tc-1', name: 'check_availability', arguments: '{"date":"2026-01-01"}' }],
+      } satisfies LLMChatResult);
+      // Second call: LLM returns text after tool result
+      llmChat.mockResolvedValueOnce({
+        content: 'The date is available!',
+        toolCalls: [],
+      } satisfies LLMChatResult);
+
+      mockExecuteTool.mockResolvedValueOnce({ success: true, output: 'available' });
+
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline, {
+        tools: [functionTool],
+      });
+
+      expect(result.assistantText).toBe('The date is available!');
+      expect(result.toolCallsExecuted).toHaveLength(1);
+      expect(result.toolCallsExecuted[0].name).toBe('check_availability');
+      expect(result.toolCallsExecuted[0].result.success).toBe(true);
+      expect(mockExecuteTool).toHaveBeenCalledOnce();
+    });
+
+    it('executes multiple tool calls in one turn', async () => {
+      const llmChat = vi.mocked(pipeline.llm.chat);
+      llmChat.mockResolvedValueOnce({
+        content: null,
+        toolCalls: [
+          { id: 'tc-1', name: 'check_availability', arguments: '{"date":"2026-01-01"}' },
+          { id: 'tc-2', name: 'check_availability', arguments: '{"date":"2026-01-02"}' },
+        ],
+      } satisfies LLMChatResult);
+      llmChat.mockResolvedValueOnce({
+        content: 'Both dates are available.',
+        toolCalls: [],
+      } satisfies LLMChatResult);
+
+      mockExecuteTool
+        .mockResolvedValueOnce({ success: true, output: 'available' })
+        .mockResolvedValueOnce({ success: true, output: 'available' });
+
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline, {
+        tools: [functionTool],
+      });
+
+      expect(result.assistantText).toBe('Both dates are available.');
+      expect(result.toolCallsExecuted).toHaveLength(2);
+      expect(mockExecuteTool).toHaveBeenCalledTimes(2);
+    });
+
+    it('handles tool chaining across 2 iterations', async () => {
+      const llmChat = vi.mocked(pipeline.llm.chat);
+      // Iteration 1: LLM returns tool call
+      llmChat.mockResolvedValueOnce({
+        content: null,
+        toolCalls: [{ id: 'tc-1', name: 'check_availability', arguments: '{"date":"2026-01-01"}' }],
+      } satisfies LLMChatResult);
+      // Iteration 2: LLM returns another tool call based on first result
+      llmChat.mockResolvedValueOnce({
+        content: null,
+        toolCalls: [{ id: 'tc-2', name: 'check_availability', arguments: '{"date":"2026-01-02"}' }],
+      } satisfies LLMChatResult);
+      // Iteration 3: LLM returns final text
+      llmChat.mockResolvedValueOnce({
+        content: 'I found availability on Jan 2.',
+        toolCalls: [],
+      } satisfies LLMChatResult);
+
+      mockExecuteTool
+        .mockResolvedValueOnce({ success: true, output: 'not available' })
+        .mockResolvedValueOnce({ success: true, output: 'available' });
+
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline, {
+        tools: [functionTool],
+      });
+
+      expect(result.assistantText).toBe('I found availability on Jan 2.');
+      expect(result.toolCallsExecuted).toHaveLength(2);
+      expect(llmChat).toHaveBeenCalledTimes(3);
+    });
+
+    it('stops at MAX_TOOL_ITERATIONS (5) when LLM keeps returning tool calls', async () => {
+      const llmChat = vi.mocked(pipeline.llm.chat);
+      // All 5 iterations return tool calls — never returns text
+      for (let i = 0; i < 5; i++) {
+        llmChat.mockResolvedValueOnce({
+          content: null,
+          toolCalls: [{ id: `tc-${i}`, name: 'check_availability', arguments: '{}' }],
+        } satisfies LLMChatResult);
+      }
+
+      mockExecuteTool.mockResolvedValue({ success: true, output: 'looping' });
+
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline, {
+        tools: [functionTool],
+      });
+
+      expect(result.toolCallsExecuted).toHaveLength(5);
+      expect(result.assistantText).toBe('');
+      expect(llmChat).toHaveBeenCalledTimes(5);
+    });
+
+    it('handles transfer_call signal — stops loop and sets transferRequest', async () => {
+      const llmChat = vi.mocked(pipeline.llm.chat);
+      llmChat.mockResolvedValueOnce({
+        content: null,
+        toolCalls: [{ id: 'tc-1', name: 'transfer_to_sales', arguments: '{"reason":"needs sales"}' }],
+      } satisfies LLMChatResult);
+      // Final LLM call for farewell message
+      llmChat.mockResolvedValueOnce({
+        content: 'Let me transfer you to our sales team.',
+        toolCalls: [],
+      } satisfies LLMChatResult);
+
+      mockExecuteTool.mockResolvedValueOnce({
+        success: true,
+        output: 'Transferring call to assistant. Reason: needs sales',
+        signal: 'transfer_call',
+        targetAssistantId: 'ast-sales',
+      });
+
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline, {
+        tools: [transferTool],
+      });
+
+      expect(result.transferRequest).toEqual({ targetAssistantId: 'ast-sales' });
+      expect(result.assistantText).toBe('Let me transfer you to our sales team.');
+      expect(result.endCallRequested).toBe(false);
+    });
+
+    it('handles end_call signal — stops loop and sets endCallRequested', async () => {
+      const llmChat = vi.mocked(pipeline.llm.chat);
+      llmChat.mockResolvedValueOnce({
+        content: null,
+        toolCalls: [{ id: 'tc-1', name: 'end_call', arguments: '{"reason":"resolved"}' }],
+      } satisfies LLMChatResult);
+      // Final LLM call for goodbye
+      llmChat.mockResolvedValueOnce({
+        content: 'Goodbye! Have a great day.',
+        toolCalls: [],
+      } satisfies LLMChatResult);
+
+      mockExecuteTool.mockResolvedValueOnce({
+        success: true,
+        output: 'Ending call. Reason: resolved',
+        signal: 'end_call',
+      });
+
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline, {
+        tools: [endCallTool],
+      });
+
+      expect(result.endCallRequested).toBe(true);
+      expect(result.assistantText).toBe('Goodbye! Have a great day.');
+      expect(result.transferRequest).toBeUndefined();
+    });
+
+    it('handles tool not found — records failure and continues', async () => {
+      const llmChat = vi.mocked(pipeline.llm.chat);
+      llmChat.mockResolvedValueOnce({
+        content: null,
+        toolCalls: [{ id: 'tc-1', name: 'nonexistent_tool', arguments: '{}' }],
+      } satisfies LLMChatResult);
+      llmChat.mockResolvedValueOnce({
+        content: 'Sorry, I could not complete that action.',
+        toolCalls: [],
+      } satisfies LLMChatResult);
+
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline, {
+        tools: [functionTool],
+      });
+
+      expect(result.toolCallsExecuted).toHaveLength(1);
+      expect(result.toolCallsExecuted[0].result.success).toBe(false);
+      expect(result.toolCallsExecuted[0].result.output).toContain('not found');
+      // executeTool should NOT be called for unknown tool
+      expect(mockExecuteTool).not.toHaveBeenCalled();
+      expect(result.assistantText).toBe('Sorry, I could not complete that action.');
+    });
+
+    it('handles tool execution failure — records error and continues', async () => {
+      const llmChat = vi.mocked(pipeline.llm.chat);
+      llmChat.mockResolvedValueOnce({
+        content: null,
+        toolCalls: [{ id: 'tc-1', name: 'check_availability', arguments: '{}' }],
+      } satisfies LLMChatResult);
+      llmChat.mockResolvedValueOnce({
+        content: 'The service is currently unavailable.',
+        toolCalls: [],
+      } satisfies LLMChatResult);
+
+      mockExecuteTool.mockResolvedValueOnce({
+        success: false,
+        output: 'Tool execution failed: Connection refused',
+      });
+
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline, {
+        tools: [functionTool],
+      });
+
+      expect(result.toolCallsExecuted).toHaveLength(1);
+      expect(result.toolCallsExecuted[0].result.success).toBe(false);
+      expect(result.toolCallsExecuted[0].result.output).toContain('Connection refused');
+      expect(result.assistantText).toBe('The service is currently unavailable.');
+    });
+
+    it('skips tool loop when no tools are provided', async () => {
+      const result = await processPipelineTurn(session.id, Buffer.from('audio'), pipeline);
+
+      expect(result.assistantText).toBe('Hello from assistant');
+      expect(result.toolCallsExecuted).toEqual([]);
+      expect(mockExecuteTool).not.toHaveBeenCalled();
+    });
   });
 });

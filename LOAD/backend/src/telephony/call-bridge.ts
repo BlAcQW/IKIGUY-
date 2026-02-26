@@ -5,9 +5,9 @@
  * outbound call origination, voice activity detection, pipeline
  * invocation, and session/channel cleanup.
  *
- * Audio processing via ExternalMedia UDP is not yet fully implemented.
- * The core flow (channel management, session lifecycle, webhook events)
- * is the priority for this phase.
+ * Audio flows through ExternalMedia UDP sockets (see udp-audio-bridge.ts).
+ * Each call gets a dedicated UDP port. Asterisk sends/receives slin16 audio
+ * via the ExternalMedia channel, bridged to the phone channel.
  */
 
 import { prisma } from '../database/client.js';
@@ -35,6 +35,8 @@ import type {
   StasisEndEvent,
 } from './asterisk-ari.js';
 import { SimpleVAD } from './vad.js';
+import { UdpAudioBridge } from './udp-audio-bridge.js';
+import type { UdpBridgeOptions } from './udp-audio-bridge.js';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -49,8 +51,8 @@ const ASTERISK_SAMPLE_RATE = 16_000;
 /** Default SIP trunk endpoint template for outbound calls. */
 const DEFAULT_OUTBOUND_ENDPOINT = 'PJSIP/{number}@ant-cellular';
 
-/** GoIP trunk endpoint template. */
-const GOIP_OUTBOUND_ENDPOINT = 'PJSIP/{number}@{trunk}';
+/** Trunk-based endpoint template (GoIP and SIP trunks). */
+const TRUNK_OUTBOUND_ENDPOINT = 'PJSIP/{number}@{trunk}';
 
 /**
  * Resolve the PJSIP endpoint for an outbound call based on the phone number's provider.
@@ -62,7 +64,13 @@ function resolveEndpoint(
 ): string {
   if (provider === 'GOIP') {
     const trunkName = (metadata?.trunkName as string) ?? 'goip-trunk';
-    return GOIP_OUTBOUND_ENDPOINT
+    return TRUNK_OUTBOUND_ENDPOINT
+      .replace('{number}', customerNumber)
+      .replace('{trunk}', trunkName);
+  }
+  if (provider === 'SIP_TRUNK') {
+    const trunkName = (metadata?.trunkName as string) ?? 'sip-trunk';
+    return TRUNK_OUTBOUND_ENDPOINT
       .replace('{number}', customerNumber)
       .replace('{trunk}', trunkName);
   }
@@ -75,6 +83,8 @@ function resolveEndpoint(
 
 export class CallBridge {
   private readonly ariClient: AsteriskAriClient;
+  private readonly udpBridge: UdpAudioBridge;
+  private readonly appName: string;
 
   /** channelId -> sessionId */
   private readonly channelToSession: Map<string, string>;
@@ -94,14 +104,37 @@ export class CallBridge {
   /** sessionId -> current assistantId (for transfers) */
   private readonly sessionAssistant: Map<string, string>;
 
-  constructor(ariClient: AsteriskAriClient) {
+  /** sessionId -> ExternalMedia channel ID */
+  private readonly sessionExternalMedia: Map<string, string>;
+
+  /** sessionId -> true if pipeline turn is currently running */
+  private readonly sessionProcessing: Map<string, boolean>;
+
+  constructor(ariClient: AsteriskAriClient, udpOptions?: UdpBridgeOptions, appName?: string) {
     this.ariClient = ariClient;
+    this.appName = appName ?? 'load';
     this.channelToSession = new Map();
     this.sessionToChannel = new Map();
     this.sessionVAD = new Map();
     this.sessionAudio = new Map();
     this.sessionBridge = new Map();
     this.sessionAssistant = new Map();
+    this.sessionExternalMedia = new Map();
+    this.sessionProcessing = new Map();
+
+    this.udpBridge = new UdpAudioBridge(
+      udpOptions ?? { host: '127.0.0.1', portStart: 20000, portEnd: 20100 }
+    );
+
+    // Wire incoming UDP audio to the processAudioChunk handler
+    this.udpBridge.setAudioCallback((sessionId, chunk) => {
+      this.processAudioChunk(sessionId, chunk).catch((error) => {
+        console.error(
+          `[CallBridge] Error processing UDP audio for session ${sessionId}:`,
+          error
+        );
+      });
+    });
   }
 
   // -----------------------------------------------------------------------
@@ -137,6 +170,48 @@ export class CallBridge {
     });
 
     console.log('[CallBridge] Initialized and listening for calls');
+  }
+
+  // -----------------------------------------------------------------------
+  // ExternalMedia setup
+  // -----------------------------------------------------------------------
+
+  /**
+   * Set up ExternalMedia audio bridge for a call session.
+   *
+   * 1. Allocates a UDP port and creates a socket
+   * 2. Creates an ExternalMedia channel in Asterisk pointing at the UDP port
+   * 3. Creates a mixing bridge
+   * 4. Adds both the phone channel and the ExternalMedia channel to the bridge
+   */
+  private async setupExternalMedia(
+    sessionId: string,
+    phoneChannelId: string,
+  ): Promise<void> {
+    // 1. Create UDP audio session (get a local port)
+    const localPort = await this.udpBridge.createSession(sessionId);
+
+    // 2. Create ExternalMedia channel pointing at our UDP port
+    const extMedia = await this.ariClient.createExternalMedia({
+      app: this.appName,
+      host: this.udpBridge.host,
+      port: localPort,
+    });
+
+    this.sessionExternalMedia.set(sessionId, extMedia.channelId);
+
+    // 3. Create a mixing bridge
+    const bridgeId = await this.ariClient.createBridge('mixing');
+    this.sessionBridge.set(sessionId, bridgeId);
+
+    // 4. Add both channels to the bridge
+    await this.ariClient.addChannelToBridge(bridgeId, phoneChannelId);
+    await this.ariClient.addChannelToBridge(bridgeId, extMedia.channelId);
+
+    console.log(
+      `[CallBridge] ExternalMedia set up for session ${sessionId}: ` +
+        `bridge=${bridgeId} extMedia=${extMedia.channelId} udpPort=${localPort}`
+    );
   }
 
   // -----------------------------------------------------------------------
@@ -320,6 +395,20 @@ export class CallBridge {
       console.warn('[CallBridge] Failed to fire call.started webhook:', error);
     });
 
+    // Set up ExternalMedia audio bridge (UDP ↔ Asterisk)
+    try {
+      await this.setupExternalMedia(session.id, event.channelId);
+    } catch (error) {
+      console.error(
+        `[CallBridge] ExternalMedia setup failed for inbound call ${call.id}, hanging up:`,
+        error
+      );
+      await failCall(call.id, 'ExternalMedia setup failed').catch(() => {});
+      await this.ariClient.hangupChannel(event.channelId).catch(() => {});
+      await this.cleanup(session.id);
+      return;
+    }
+
     if (assistant.firstMessage) {
       try {
         await addMessage(session.id, {
@@ -347,9 +436,11 @@ export class CallBridge {
           ASTERISK_SAMPLE_RATE
         );
 
+        await this.udpBridge.sendAudio(session.id, asteriskAudio);
+
         console.log(
-          `[CallBridge] First message audio ready (${asteriskAudio.length} bytes) ` +
-            'but ExternalMedia UDP send is not yet implemented'
+          `[CallBridge] First message sent (${asteriskAudio.length} bytes) ` +
+            `for session ${session.id}`
         );
       } catch (error) {
         console.error(
@@ -399,6 +490,20 @@ export class CallBridge {
         `[CallBridge] Failed to update call status to IN_PROGRESS for call ${session.callId}:`,
         error
       );
+    }
+
+    // Set up ExternalMedia audio bridge (UDP ↔ Asterisk)
+    try {
+      await this.setupExternalMedia(sessionId, event.channelId);
+    } catch (error) {
+      console.error(
+        `[CallBridge] ExternalMedia setup failed for outbound call ${session.callId}, hanging up:`,
+        error
+      );
+      await failCall(session.callId, 'ExternalMedia setup failed').catch(() => {});
+      await this.ariClient.hangupChannel(event.channelId).catch(() => {});
+      await this.cleanup(sessionId);
+      return;
     }
 
     console.log(
@@ -492,6 +597,13 @@ export class CallBridge {
     }
 
     if (speechComplete) {
+      // Guard against concurrent pipeline turns — drop if one is already running
+      if (this.sessionProcessing.get(sessionId)) {
+        console.log(
+          `[CallBridge] Pipeline turn already in progress for session ${sessionId}, skipping`
+        );
+        return;
+      }
       await this.runPipelineTurn(sessionId);
     }
   }
@@ -501,6 +613,16 @@ export class CallBridge {
   // -----------------------------------------------------------------------
 
   private async runPipelineTurn(sessionId: string): Promise<void> {
+    this.sessionProcessing.set(sessionId, true);
+
+    try {
+      await this.executePipelineTurn(sessionId);
+    } finally {
+      this.sessionProcessing.delete(sessionId);
+    }
+  }
+
+  private async executePipelineTurn(sessionId: string): Promise<void> {
     const session = await getSession(sessionId);
     if (!session) {
       console.error(
@@ -571,11 +693,12 @@ export class CallBridge {
         ASTERISK_SAMPLE_RATE
       );
 
+      await this.udpBridge.sendAudio(sessionId, asteriskAudio);
+
       console.log(
         `[CallBridge] Pipeline turn complete for session ${sessionId}: ` +
           `user="${result.userText}" assistant="${result.assistantText}" ` +
-          `audioOut=${asteriskAudio.length} bytes ` +
-          '(ExternalMedia UDP send not yet implemented)'
+          `audioOut=${asteriskAudio.length} bytes`
       );
 
       // Handle transfer
@@ -690,6 +813,9 @@ export class CallBridge {
 
     await endSession(sessionId);
 
+    // Close UDP audio session and return port to pool
+    this.udpBridge.closeSession(sessionId);
+
     const channelId = this.sessionToChannel.get(sessionId);
     if (channelId) {
       this.channelToSession.delete(channelId);
@@ -699,6 +825,21 @@ export class CallBridge {
     this.sessionVAD.delete(sessionId);
     this.sessionAudio.delete(sessionId);
     this.sessionAssistant.delete(sessionId);
+    this.sessionProcessing.delete(sessionId);
+
+    // Hang up ExternalMedia channel if it exists
+    const extMediaChannelId = this.sessionExternalMedia.get(sessionId);
+    if (extMediaChannelId) {
+      this.sessionExternalMedia.delete(sessionId);
+      try {
+        await this.ariClient.hangupChannel(extMediaChannelId);
+      } catch (error) {
+        console.warn(
+          `[CallBridge] Failed to hangup ExternalMedia channel ${extMediaChannelId}:`,
+          error
+        );
+      }
+    }
 
     const bridgeId = this.sessionBridge.get(sessionId);
     if (bridgeId) {

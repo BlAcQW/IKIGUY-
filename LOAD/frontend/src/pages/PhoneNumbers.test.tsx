@@ -134,8 +134,7 @@ describe('PhoneNumbersPage', () => {
       expect(screen.getByText('SIP Trunk')).toBeInTheDocument();
     });
 
-    // Verify search form fields exist
-    expect(screen.getByPlaceholderText('US')).toBeInTheDocument();
+    // Verify search form fields exist (country is a Select, area code is an Input)
     expect(screen.getByPlaceholderText('415')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /search available numbers/i })).toBeInTheDocument();
   });

@@ -112,8 +112,8 @@ export async function getAnalyticsSummary(
       }),
     ]);
 
-  // Resolve assistant names
-  const assistantIds = byAssistantResult.map((r) => r.assistantId);
+  // Resolve assistant names (filter out null assistantIds from inline test calls)
+  const assistantIds = byAssistantResult.map((r) => r.assistantId).filter((id): id is string => id !== null);
   const assistants = assistantIds.length > 0
     ? await prisma.assistant.findMany({
         where: { id: { in: assistantIds } },
@@ -135,8 +135,8 @@ export async function getAnalyticsSummary(
     totalMinutes,
     byType: byTypeResult.map((r) => ({ type: r.type, count: r._count })),
     byAssistant: byAssistantResult.map((r) => ({
-      assistantId: r.assistantId,
-      assistantName: assistantNameMap.get(r.assistantId) ?? 'Unknown',
+      assistantId: r.assistantId ?? 'inline-test',
+      assistantName: r.assistantId ? (assistantNameMap.get(r.assistantId) ?? 'Unknown') : 'Test Call',
       count: r._count,
     })),
   };

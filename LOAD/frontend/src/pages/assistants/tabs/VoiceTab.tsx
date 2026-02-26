@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -7,7 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import type { AssistantForm } from '../hooks/useAssistantEditor';
+import type { AssistantForm, FallbackVoice } from '../hooks/useAssistantEditor';
+import { Plus, X } from 'lucide-react';
 
 interface VoiceTabProps {
   form: AssistantForm;
@@ -66,8 +68,37 @@ const VOICE_OPTIONS: Record<string, { label: string; value: string }[]> = {
   ],
 };
 
+const PROVIDER_LABELS: Record<string, string> = {
+  openai: 'OpenAI',
+  elevenlabs: 'ElevenLabs',
+  deepgram: 'Deepgram',
+  cartesia: 'Cartesia',
+};
+
 export function VoiceTab({ form, updateField }: VoiceTabProps) {
   const voices = VOICE_OPTIONS[form.voiceProvider] ?? VOICE_OPTIONS.openai;
+
+  function addFallbackVoice() {
+    if (form.fallbackVoices.length >= 3) return;
+    const newVoice: FallbackVoice = { provider: 'openai', voiceId: 'alloy' };
+    updateField('fallbackVoices', [...form.fallbackVoices, newVoice]);
+  }
+
+  function removeFallbackVoice(index: number) {
+    updateField('fallbackVoices', form.fallbackVoices.filter((_, i) => i !== index));
+  }
+
+  function updateFallbackVoice(index: number, field: keyof FallbackVoice, value: string) {
+    const updated = form.fallbackVoices.map((v, i) => {
+      if (i !== index) return v;
+      if (field === 'provider') {
+        const firstVoice = VOICE_OPTIONS[value]?.[0]?.value ?? 'alloy';
+        return { ...v, provider: value, voiceId: firstVoice };
+      }
+      return { ...v, [field]: value };
+    });
+    updateField('fallbackVoices', updated);
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -124,6 +155,76 @@ export function VoiceTab({ form, updateField }: VoiceTabProps) {
           label="Speech Speed"
           formatValue={(v) => `${v.toFixed(2)}x`}
         />
+      </div>
+
+      {/* Fallback Voices */}
+      <div className="editor-section">
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="!mb-0">Fallback Voices</h3>
+          {form.fallbackVoices.length < 3 && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={addFallbackVoice}
+              className="text-xs h-7"
+            >
+              <Plus size={13} className="mr-1" />
+              Add Fallback
+            </Button>
+          )}
+        </div>
+        <p className="text-[11px] text-muted-foreground mb-3">
+          If the primary voice provider fails, these voices will be tried in order.
+        </p>
+        {form.fallbackVoices.length === 0 ? (
+          <p className="text-xs text-muted-foreground/60 italic">No fallback voices configured.</p>
+        ) : (
+          <div className="space-y-2">
+            {form.fallbackVoices.map((fb, i) => {
+              const fbVoices = VOICE_OPTIONS[fb.provider] ?? VOICE_OPTIONS.openai;
+              return (
+                <div key={i} className="flex gap-2 items-center">
+                  <Select
+                    value={fb.provider}
+                    onValueChange={(v) => updateFallbackVoice(i, 'provider', v)}
+                  >
+                    <SelectTrigger className="h-9 bg-background flex-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(PROVIDER_LABELS).map(([val, label]) => (
+                        <SelectItem key={val} value={val}>{label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    value={fb.voiceId}
+                    onValueChange={(v) => updateFallbackVoice(i, 'voiceId', v)}
+                  >
+                    <SelectTrigger className="h-9 bg-background flex-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fbVoices.map((v) => (
+                        <SelectItem key={v.value} value={v.value}>{v.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => removeFallbackVoice(i)}
+                    className="shrink-0 h-8 w-8 text-muted-foreground hover:text-destructive"
+                  >
+                    <X size={14} />
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

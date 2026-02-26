@@ -23,6 +23,8 @@ const createCampaignSchema = z.object({
       endTime: z.string().optional(),
       timezone: z.string().optional(),
       maxConcurrent: z.number().optional(),
+      delayBetweenCalls: z.number().min(0).max(300).optional(),
+      maxRetries: z.number().int().min(0).max(5).optional(),
     })
     .optional(),
 });

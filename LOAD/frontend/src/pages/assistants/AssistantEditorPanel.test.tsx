@@ -100,7 +100,7 @@ describe('AssistantEditorPanel', () => {
     expect(screen.getByRole('tab', { name: /analysis/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /compliance/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /code/i })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: /chat/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /test/i })).toBeInTheDocument();
   });
 
   it('calls onPublish when Save clicked and dirty', async () => {

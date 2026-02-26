@@ -32,6 +32,8 @@ interface CampaignSchedule {
   startTime?: string;
   endTime?: string;
   timezone?: string;
+  delayBetweenCalls?: number;
+  maxRetries?: number;
 }
 
 interface CampaignStats {
@@ -39,6 +41,7 @@ interface CampaignStats {
   completed: number;
   failed: number;
   inProgress: number;
+  retried?: number;
 }
 
 interface CampaignExecuteJobData {
@@ -53,6 +56,7 @@ interface CampaignCallJobData {
   phoneNumberId: string;
   contact: CampaignContact;
   contactIndex: number;
+  attemptNumber?: number;
 }
 
 interface CallBridgeLike {
@@ -215,13 +219,14 @@ async function processExecuteJob(
 
   // Enqueue individual call jobs with staggered delays so we never exceed
   // maxConcurrent calls at any point. Each "batch" of maxConcurrent jobs
-  // starts at the same time; the next batch gets an additional 2s delay.
+  // starts at the same time; the next batch gets the configured delay
+  // (or a 2s default).
   const q = getCallsQueue();
-  const INTER_BATCH_DELAY_MS = 2000;
+  const delayBetweenCallsMs = (schedule.delayBetweenCalls ?? 2) * 1000;
 
   const jobPromises = contacts.map((contact, index) => {
     const batchIndex = Math.floor(index / maxConcurrent);
-    const delay = batchIndex * INTER_BATCH_DELAY_MS;
+    const delay = batchIndex * (delayBetweenCallsMs > 0 ? delayBetweenCallsMs : 2000);
 
     return q.add(
       CALLS_QUEUE_NAME,
@@ -232,6 +237,7 @@ async function processExecuteJob(
         phoneNumberId: campaign.phoneNumberId,
         contact,
         contactIndex: index,
+        attemptNumber: 1,
       },
       { delay },
     );
@@ -258,6 +264,7 @@ async function processCallJob(
     phoneNumberId,
     contact,
     contactIndex,
+    attemptNumber = 1,
   } = job.data;
 
   // Check campaign status before executing — if PAUSED, skip gracefully
@@ -314,6 +321,48 @@ async function processCallJob(
     console.error(
       `[campaign-engine] Campaign ${campaignId}: call to contact #${contactIndex} (${contact.number}) failed: ${message}`,
     );
+  }
+
+  // On failure, check if we should retry before counting as failed
+  if (!succeeded) {
+    const campaign = await prisma.campaign.findUnique({
+      where: { id: campaignId },
+      select: { schedule: true },
+    });
+    const campaignSchedule = (campaign?.schedule ?? {}) as CampaignSchedule;
+    const maxRetries = campaignSchedule.maxRetries ?? 0;
+
+    if (attemptNumber <= maxRetries) {
+      // Re-enqueue for retry with incremented attempt number
+      const retryDelay = (campaignSchedule.delayBetweenCalls ?? 5) * 1000;
+      const q = getCallsQueue();
+      await q.add(
+        CALLS_QUEUE_NAME,
+        {
+          campaignId,
+          organizationId,
+          assistantId,
+          phoneNumberId,
+          contact,
+          contactIndex,
+          attemptNumber: attemptNumber + 1,
+        },
+        { delay: retryDelay },
+      );
+
+      // Update stats: decrement inProgress, increment retried counter
+      const retryStats = await readCampaignStats(campaignId);
+      await updateCampaignStats(campaignId, {
+        ...retryStats,
+        inProgress: Math.max(retryStats.inProgress - 1, 0),
+        retried: (retryStats.retried ?? 0) + 1,
+      });
+
+      console.log(
+        `[campaign-engine] Campaign ${campaignId}: retrying contact #${contactIndex} (${contact.number}), attempt ${attemptNumber + 1}/${maxRetries + 1}`,
+      );
+      return;
+    }
   }
 
   // Read fresh stats and apply the outcome atomically
@@ -549,12 +598,12 @@ export async function resumeCampaign(
 
   // Enqueue remaining contacts
   const q = getCallsQueue();
-  const INTER_BATCH_DELAY_MS = 2000;
+  const delayBetweenCallsMs = (schedule.delayBetweenCalls ?? 2) * 1000;
 
   const jobPromises = remaining.map((contact, idx) => {
     const absoluteIndex = processedCount + idx;
     const batchIndex = Math.floor(idx / maxConcurrent);
-    const delay = batchIndex * INTER_BATCH_DELAY_MS;
+    const delay = batchIndex * (delayBetweenCallsMs > 0 ? delayBetweenCallsMs : 2000);
 
     return q.add(
       CALLS_QUEUE_NAME,
@@ -565,6 +614,7 @@ export async function resumeCampaign(
         phoneNumberId: campaign.phoneNumberId,
         contact,
         contactIndex: absoluteIndex,
+        attemptNumber: 1,
       },
       { delay },
     );

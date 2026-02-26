@@ -52,6 +52,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
+      - '20000-20100:20000-20100/udp'
     environment:
       DATABASE_URL: postgresql://load:load_password@postgres:5432/load_db
       REDIS_URL: redis://redis:6379
@@ -65,6 +66,10 @@ services:
       ASTERISK_ARI_USERNAME: load
       ASTERISK_ARI_PASSWORD: load_ari_password
       ASTERISK_ARI_APP: load
+      WEBHOOK_SECRET: dev-webhook-signing-secret
+      EXTERNAL_MEDIA_HOST: backend
+      EXTERNAL_MEDIA_PORT_START: 20000
+      EXTERNAL_MEDIA_PORT_END: 20100
     depends_on:
       postgres:
         condition: service_healthy
@@ -72,6 +77,12 @@ services:
         condition: service_healthy
       asterisk:
         condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3000/api/health || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
   frontend:
     build:

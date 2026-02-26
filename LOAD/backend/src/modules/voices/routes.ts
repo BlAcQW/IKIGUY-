@@ -35,6 +35,7 @@ export async function voiceRoutes(app: FastifyInstance): Promise<void> {
    */
   app.post('/api/voices/clone', {
     preHandler: [authMiddleware],
+    bodyLimit: 26 * 1024 * 1024, // 26 MB — enough for 25 MB file + multipart overhead
   }, async (request, reply) => {
     try {
       const parts = request.parts();

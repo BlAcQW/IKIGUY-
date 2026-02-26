@@ -148,6 +148,6 @@ describe('App', () => {
       refresh: vi.fn(),
     });
     renderApp('/settings');
-    expect(screen.getByText('Settings Page')).toBeInTheDocument();
+    expect(screen.getByText('Account settings and configuration')).toBeInTheDocument();
   });
 });

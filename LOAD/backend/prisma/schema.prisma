@@ -51,18 +51,20 @@ model Organization {
   name      String
   slug      String   @unique
   plan      Plan     @default(FREE)
+  settings  Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  users        User[]
-  apiKeys      ApiKey[]
-  assistants   Assistant[]
-  calls        Call[]
-  phoneNumbers PhoneNumber[]
-  tools        Tool[]
-  squads       Squad[]
-  campaigns    Campaign[]
-  webhooks     Webhook[]
+  users         User[]
+  apiKeys       ApiKey[]
+  refreshTokens RefreshToken[]
+  assistants    Assistant[]
+  calls         Call[]
+  phoneNumbers  PhoneNumber[]
+  tools         Tool[]
+  squads        Squad[]
+  campaigns     Campaign[]
+  webhooks      Webhook[]
 }
 
 model User {
@@ -75,8 +77,9 @@ model User {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  apiKeys      ApiKey[]
+  organization  Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  apiKeys       ApiKey[]
+  refreshTokens RefreshToken[]
 }
 
 model ApiKey {
@@ -92,6 +95,21 @@ model ApiKey {
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   createdBy    User         @relation(fields: [createdById], references: [id], onDelete: Cascade)
+}
+
+model RefreshToken {
+  id             String    @id @default(uuid())
+  tokenHash      String    @unique
+  userId         String
+  organizationId String
+  expiresAt      DateTime
+  revokedAt      DateTime?
+  createdAt      DateTime  @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Assistant {
@@ -117,7 +135,7 @@ model Assistant {
 model Call {
   id              String     @id @default(uuid())
   organizationId  String
-  assistantId     String
+  assistantId     String?
   type            CallType
   status          CallStatus @default(QUEUED)
   phoneNumberId   String?
@@ -134,7 +152,7 @@ model Call {
   createdAt       DateTime   @default(now())
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  assistant    Assistant    @relation(fields: [assistantId], references: [id], onDelete: Cascade)
+  assistant    Assistant?   @relation(fields: [assistantId], references: [id], onDelete: Cascade)
   phoneNumber  PhoneNumber? @relation(fields: [phoneNumberId], references: [id])
 }
 

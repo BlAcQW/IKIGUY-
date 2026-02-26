@@ -3,7 +3,7 @@ import type { CallStatus, CallType } from '@prisma/client';
 
 export interface CreateCallInput {
   organizationId: string;
-  assistantId: string;
+  assistantId?: string;
   type: CallType;
   customerNumber?: string;
   phoneNumberId?: string;
@@ -13,7 +13,7 @@ export async function createCall(input: CreateCallInput) {
   return prisma.call.create({
     data: {
       organizationId: input.organizationId,
-      assistantId: input.assistantId,
+      assistantId: input.assistantId ?? null,
       type: input.type,
       status: 'QUEUED',
       customerNumber: input.customerNumber ?? null,

@@ -221,7 +221,7 @@ async def get_current_user(
         "first_name": user.get("first_name", ""),
         "last_name": user.get("last_name", ""),
         "role": user.get("role", "user"),
-        "organization_id": user.get("organization_id") or str(user["_id"]),
+        "organization_id": user.get("organization_id"),
     }
 
 

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const webrtcOfferSchema = z.object({
   assistantId: z.string().uuid(),
-  sdpOffer: z.string().min(1),
+  sdpOffer: z.string().min(1).max(65536),
 });
 
 export const webrtcIceCandidateSchema = z.object({

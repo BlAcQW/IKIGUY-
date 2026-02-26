@@ -129,9 +129,14 @@ export interface Tool {
   updatedAt: string;
 }
 
+export interface TransferCondition {
+  type: 'keyword' | 'intent' | 'tool_result' | 'manual';
+  value: string;
+}
+
 export interface SquadMember {
   assistantId: string;
-  transferConditions?: Record<string, unknown>;
+  transferConditions?: TransferCondition[];
 }
 
 export interface Squad {
@@ -155,6 +160,8 @@ export interface CampaignSchedule {
   endTime?: string;
   timezone?: string;
   maxConcurrent?: number;
+  delayBetweenCalls?: number;
+  maxRetries?: number;
 }
 
 export interface CampaignStats {
@@ -350,6 +357,42 @@ export interface ToolTemplate {
 export interface ToolTemplatesResponse {
   categories: Record<ToolTemplateCategory, string>;
   templates: Record<ToolTemplateCategory, ToolTemplate[]>;
+}
+
+// Organization Settings
+
+export interface ProviderCredentials {
+  openaiApiKey?: string;
+  deepgramApiKey?: string;
+  elevenLabsApiKey?: string;
+  cartesiaApiKey?: string;
+  googleAiApiKey?: string;
+  anthropicApiKey?: string;
+  twilioAccountSid?: string;
+  twilioAuthToken?: string;
+}
+
+export interface PipelineDefaults {
+  silenceTimeout: number;
+  responseDelay: number;
+  interruptionThreshold: number;
+  transcriber: { provider: string; model: string; language: string };
+  voice: { provider: string; voiceId: string; speed: number };
+  llm: { provider: string; model: string; temperature: number; maxTokens: number };
+}
+
+export interface CallBehavior {
+  maxCallDuration: number;
+  sessionIdleTimeout: number;
+  recordingEnabled: boolean;
+  hipaaCompliant: boolean;
+  retrySettings: { maxRetries: number; retryDelay: number };
+}
+
+export interface OrgSettings {
+  providerCredentials: ProviderCredentials;
+  pipelineDefaults: PipelineDefaults;
+  callBehavior: CallBehavior;
 }
 
 // Analytics

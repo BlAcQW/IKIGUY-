@@ -10,6 +10,7 @@ import type {
   WebhookDelivery,
   User,
   Organization,
+  OrgSettings,
   CreateToolRequest,
   UpdateToolRequest,
   CreateSquadRequest,
@@ -45,9 +46,33 @@ function getAuthHeaders(): Record<string, string> {
   return { Authorization: `Bearer ${token}` };
 }
 
+let isRefreshing = false;
+let refreshPromise: Promise<boolean> | null = null;
+
+async function attemptTokenRefresh(): Promise<boolean> {
+  const refreshToken = localStorage.getItem('load_refresh_token');
+  if (!refreshToken) return false;
+
+  try {
+    const response = await fetch(`${API_BASE}/auth/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken }),
+    });
+    if (!response.ok) return false;
+    const json = await response.json();
+    localStorage.setItem('load_token', json.data.token);
+    localStorage.setItem('load_refresh_token', json.data.refreshToken);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function request<T>(
   path: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  skipRetry = false
 ): Promise<ApiResponse<T>> {
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
@@ -64,6 +89,28 @@ async function request<T>(
 
   const json = await response.json();
   if (!response.ok) {
+    // Auto-retry on 401 with refresh token (skip for auth endpoints)
+    if (response.status === 401 && !skipRetry && !path.startsWith('/auth/')) {
+      if (!isRefreshing) {
+        isRefreshing = true;
+        refreshPromise = attemptTokenRefresh().finally(() => {
+          isRefreshing = false;
+          refreshPromise = null;
+        });
+      }
+
+      const refreshed = await (refreshPromise ?? attemptTokenRefresh());
+      if (refreshed) {
+        return request<T>(path, options, true);
+      }
+
+      // Refresh failed — redirect to login
+      localStorage.removeItem('load_token');
+      localStorage.removeItem('load_refresh_token');
+      localStorage.removeItem('load_user');
+      window.location.href = '/login';
+    }
+
     throw new Error(json.error?.message ?? 'Request failed');
   }
   return json;
@@ -76,21 +123,68 @@ export function register(data: {
   name: string;
   organizationName: string;
 }) {
-  return request<{ user: User; organization: Organization; token: string }>('/auth/register', {
+  return request<{ user: User; organization: Organization; token: string; refreshToken: string }>('/auth/register', {
     method: 'POST',
     body: JSON.stringify(data),
   });
 }
 
 export function login(data: { email: string; password: string }) {
-  return request<{ user: User; organization: Organization; token: string }>('/auth/login', {
+  return request<{ user: User; organization: Organization; token: string; refreshToken: string }>('/auth/login', {
     method: 'POST',
     body: JSON.stringify(data),
   });
 }
 
+export function refreshAccessToken(refreshToken: string) {
+  return request<{ user: User; organization: Organization; token: string; refreshToken: string }>(
+    '/auth/refresh',
+    { method: 'POST', body: JSON.stringify({ refreshToken }) },
+    true
+  );
+}
+
+export function logoutApi() {
+  return request<null>('/auth/logout', { method: 'POST' });
+}
+
 export function getMe() {
   return request<{ userId: string; organizationId: string; role: string }>('/auth/me');
+}
+
+export function updateProfile(data: { name?: string; email?: string; currentPassword?: string; newPassword?: string }) {
+  return request<User>('/auth/me', {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+}
+
+// Organization Management
+export function getOrganization() {
+  return request<Organization>('/organizations/me');
+}
+
+export function updateOrganization(data: { name: string }) {
+  return request<Organization>('/organizations/me', {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+}
+
+export interface OrgMember {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+  createdAt: string;
+}
+
+export function listOrgMembers() {
+  return request<OrgMember[]>('/organizations/me/members');
+}
+
+export function removeOrgMember(userId: string) {
+  return request<void>(`/organizations/me/members/${userId}`, { method: 'DELETE' });
 }
 
 // API Keys
@@ -210,6 +304,10 @@ export function updateTool(id: string, data: UpdateToolRequest) {
 
 export function deleteTool(id: string) {
   return request<void>(`/tools/${id}`, { method: 'DELETE' });
+}
+
+export function testTool(id: string) {
+  return request<{ status: number; statusText: string; body: unknown; latencyMs: number }>(`/tools/${id}/test`, { method: 'POST' });
 }
 
 // Tool Templates
@@ -406,6 +504,70 @@ export async function previewVoice(provider: string, voiceId: string, text?: str
   }
 
   return response.blob();
+}
+
+// Pipeline Test — TTS & STT
+export async function synthesizeTts(params: {
+  text: string;
+  provider?: string;
+  voiceId?: string;
+  speed?: number;
+}): Promise<Blob> {
+  const token = localStorage.getItem('load_token');
+  const response = await fetch(`${API_BASE}/tts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(params),
+  });
+
+  if (!response.ok) {
+    const json = await response.json().catch(() => ({ error: { message: `TTS failed: ${response.status}` } }));
+    throw new Error(json.error?.message ?? `TTS failed: ${response.status}`);
+  }
+
+  return response.blob();
+}
+
+export async function transcribeStt(
+  audioBlob: Blob,
+  filename: string,
+  provider?: string,
+): Promise<string> {
+  const token = localStorage.getItem('load_token');
+  const formData = new FormData();
+  formData.append('file', audioBlob, filename);
+  if (provider) formData.append('provider', provider);
+
+  const response = await fetch(`${API_BASE}/stt`, {
+    method: 'POST',
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const json = await response.json().catch(() => ({ error: { message: `STT failed: ${response.status}` } }));
+    throw new Error(json.error?.message ?? `STT failed: ${response.status}`);
+  }
+
+  const json = await response.json();
+  return json.data?.text ?? '';
+}
+
+// Organization Settings
+export function getOrgSettings() {
+  return request<OrgSettings>('/settings');
+}
+
+export function updateOrgSettings(data: Partial<OrgSettings>) {
+  return request<OrgSettings>('/settings', {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
 }
 
 // Analytics

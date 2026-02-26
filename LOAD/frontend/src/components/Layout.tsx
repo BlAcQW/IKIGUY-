@@ -1,7 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { logout } from '../lib/auth';
 import { useAuth } from '../hooks/useAuth';
+import { navSections } from '../lib/navigation';
+import { CommandPalette } from './CommandPalette';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTitle } from './ui/sheet';
@@ -12,59 +14,10 @@ import {
   TooltipTrigger,
 } from './ui/tooltip';
 import {
-  LayoutDashboard,
-  Bot,
-  Phone,
-  PhoneCall,
-  Headphones,
-  Settings,
   LogOut,
-  Wrench,
-  Users,
-  Megaphone,
-  Bell,
-  BarChart3,
   Menu,
   ChevronRight,
-  AudioLines,
-  Key,
 } from 'lucide-react';
-
-const navSections = [
-  {
-    label: 'Build',
-    items: [
-      { path: '/assistants', label: 'Assistants', icon: Bot },
-      { path: '/squads', label: 'Squads', icon: Users },
-      { path: '/tools', label: 'Tools', icon: Wrench },
-      { path: '/phone-numbers', label: 'Phone Numbers', icon: Phone },
-      { path: '/voice-library', label: 'Voice Library', icon: AudioLines },
-      { path: '/api-keys', label: 'API Keys', icon: Key },
-    ],
-  },
-  {
-    label: 'Test',
-    items: [
-      { path: '/web-call', label: 'Web Call', icon: Headphones, accent: true },
-    ],
-  },
-  {
-    label: 'Observe',
-    items: [
-      { path: '/', label: 'Dashboard', icon: LayoutDashboard },
-      { path: '/calls', label: 'Call Logs', icon: PhoneCall },
-      { path: '/analytics', label: 'Analytics', icon: BarChart3 },
-    ],
-  },
-  {
-    label: 'Manage',
-    items: [
-      { path: '/campaigns', label: 'Campaigns', icon: Megaphone },
-      { path: '/webhooks', label: 'Webhooks', icon: Bell },
-      { path: '/settings', label: 'Settings', icon: Settings },
-    ],
-  },
-];
 
 function BrandLogo() {
   return (
@@ -150,6 +103,21 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
         ))}
       </nav>
 
+      {/* Cmd+K hint */}
+      <div className="px-5 pb-2 relative z-10">
+        <button
+          onClick={() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
+          }}
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] text-muted-foreground hover:text-sidebar-foreground hover:bg-white/[0.03] transition-colors"
+        >
+          <span className="flex-1 text-left">Search...</span>
+          <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-sidebar-border/50 text-[10px] font-mono border border-sidebar-border">
+            <span className="text-[9px]">&#8984;</span>K
+          </kbd>
+        </button>
+      </div>
+
       {/* User section */}
       <div className="border-t border-sidebar-border p-3 relative z-10">
         {user && (
@@ -195,10 +163,24 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
 
 export function Layout({ children, noPadding = false }: { children: React.ReactNode; noPadding?: boolean }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [cmdkOpen, setCmdkOpen] = useState(false);
   const handleNavigate = useCallback(() => setMobileOpen(false), []);
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setCmdkOpen((prev) => !prev);
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <div className="flex h-screen overflow-hidden">
+      <CommandPalette open={cmdkOpen} onOpenChange={setCmdkOpen} />
+
       {/* Mobile hamburger */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-xl border-b px-4 py-3 flex items-center gap-3">
         <Button variant="ghost" size="icon" onClick={() => setMobileOpen(true)} className="h-8 w-8">

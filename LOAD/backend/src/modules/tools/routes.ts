@@ -207,6 +207,71 @@ export async function toolRoutes(app: FastifyInstance): Promise<void> {
     return { success: true, data: updated };
   });
 
+  app.post('/api/tools/:id/test', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const tool = await prisma.tool.findFirst({
+      where: { id, organizationId: request.organizationId! },
+    });
+    if (!tool) {
+      return reply.status(404).send({
+        success: false,
+        error: { code: 'NOT_FOUND', message: 'Tool not found', statusCode: 404 },
+      });
+    }
+    if (!tool.serverUrl) {
+      return reply.status(400).send({
+        success: false,
+        error: { code: 'NO_SERVER_URL', message: 'Tool has no server URL configured', statusCode: 400 },
+      });
+    }
+
+    const testPayload = {
+      type: 'tool_call',
+      toolCallId: `test-${Date.now()}`,
+      function: tool.function ?? { name: tool.name, parameters: {} },
+      test: true,
+    };
+
+    try {
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (tool.serverSecret) {
+        const crypto = await import('crypto');
+        const sig = crypto.createHmac('sha256', tool.serverSecret).update(JSON.stringify(testPayload)).digest('hex');
+        headers['x-load-signature'] = sig;
+      }
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      const res = await fetch(tool.serverUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(testPayload),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+
+      const responseText = await res.text();
+      let responseBody: unknown;
+      try { responseBody = JSON.parse(responseText); } catch { responseBody = responseText; }
+
+      return {
+        success: true,
+        data: {
+          status: res.status,
+          statusText: res.statusText,
+          body: responseBody,
+          latencyMs: Date.now() - parseInt(testPayload.toolCallId.split('-')[1]),
+        },
+      };
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      return reply.status(502).send({
+        success: false,
+        error: { code: 'TOOL_TEST_FAILED', message: `Failed to reach server: ${message}`, statusCode: 502 },
+      });
+    }
+  });
+
   app.delete('/api/tools/:id', async (request, reply) => {
     const { id } = request.params as { id: string };
     const existing = await prisma.tool.findFirst({

@@ -19,6 +19,29 @@ import { toast } from 'sonner';
 interface SearchResult { number: string; locality: string; region: string; }
 const NONE_VALUE = '__none__';
 
+const COUNTRIES = [
+  { code: 'US', name: 'United States' },
+  { code: 'GB', name: 'United Kingdom' },
+  { code: 'CA', name: 'Canada' },
+  { code: 'AU', name: 'Australia' },
+  { code: 'DE', name: 'Germany' },
+  { code: 'FR', name: 'France' },
+  { code: 'GH', name: 'Ghana' },
+  { code: 'NG', name: 'Nigeria' },
+  { code: 'ZA', name: 'South Africa' },
+  { code: 'KE', name: 'Kenya' },
+  { code: 'IN', name: 'India' },
+  { code: 'BR', name: 'Brazil' },
+  { code: 'MX', name: 'Mexico' },
+  { code: 'JP', name: 'Japan' },
+  { code: 'IL', name: 'Israel' },
+  { code: 'SE', name: 'Sweden' },
+  { code: 'NL', name: 'Netherlands' },
+  { code: 'ES', name: 'Spain' },
+  { code: 'IT', name: 'Italy' },
+  { code: 'PH', name: 'Philippines' },
+] as const;
+
 export function PhoneNumbersPage() {
   const [numbers, setNumbers] = useState<PhoneNumber[]>([]);
   const [assistants, setAssistants] = useState<Assistant[]>([]);
@@ -37,6 +60,7 @@ export function PhoneNumbersPage() {
   const [goipNumber, setGoipNumber] = useState('');
   const [goipName, setGoipName] = useState('');
   const [goipTrunkName, setGoipTrunkName] = useState('');
+  const [goipCountry, setGoipCountry] = useState('GH');
   const [creatingGoip, setCreatingGoip] = useState(false);
   const [releaseTarget, setReleaseTarget] = useState<{ id: string; number: string } | null>(null);
   const [releasing, setReleasing] = useState(false);
@@ -80,8 +104,8 @@ export function PhoneNumbersPage() {
   async function handleCreateGoip(e: React.FormEvent) {
     e.preventDefault(); setCreatingGoip(true);
     try {
-      await createGoipNumber({ number: goipNumber, name: goipName || undefined, provider: 'GOIP', trunkName: goipTrunkName || undefined, country: 'GH' });
-      toast.success('GoIP number added'); setDialogOpen(false); setGoipNumber(''); setGoipName(''); setGoipTrunkName(''); await load();
+      await createGoipNumber({ number: goipNumber, name: goipName || undefined, provider: 'GOIP', trunkName: goipTrunkName || undefined, country: goipCountry });
+      toast.success('GoIP number added'); setDialogOpen(false); setGoipNumber(''); setGoipName(''); setGoipTrunkName(''); setGoipCountry('GH'); await load();
     } catch (err: unknown) { const msg = err instanceof Error ? err.message : 'Unknown error'; toast.error('Failed to add GoIP number', { description: msg }); }
     finally { setCreatingGoip(false); }
   }
@@ -119,7 +143,9 @@ export function PhoneNumbersPage() {
             </TabsList>
             <TabsContent value="search" className="space-y-4 mt-4">
               <div className="grid grid-cols-3 gap-3">
-                <div className="space-y-1"><Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Country</Label><Input value={searchCountry} onChange={(e) => setSearchCountry(e.target.value)} placeholder="US" className="h-9" /></div>
+                <div className="space-y-1"><Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Country</Label>
+                  <Select value={searchCountry} onValueChange={setSearchCountry}><SelectTrigger className="h-9"><SelectValue /></SelectTrigger><SelectContent>{COUNTRIES.map((c) => (<SelectItem key={c.code} value={c.code}>{c.code} — {c.name}</SelectItem>))}</SelectContent></Select>
+                </div>
                 <div className="space-y-1"><Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Area Code</Label><Input value={searchAreaCode} onChange={(e) => setSearchAreaCode(e.target.value)} placeholder="415" className="h-9" /></div>
                 <div className="space-y-1"><Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Type</Label>
                   <Select value={searchType} onValueChange={(v) => setSearchType(v as 'local' | 'tollFree')}><SelectTrigger className="h-9"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="local">Local</SelectItem><SelectItem value="tollFree">Toll-Free</SelectItem></SelectContent></Select>
@@ -149,8 +175,13 @@ export function PhoneNumbersPage() {
             </TabsContent>
             <TabsContent value="goip" className="mt-4">
               <form onSubmit={handleCreateGoip} className="space-y-4">
-                <p className="text-xs text-muted-foreground">Register a Ghanaian mobile number connected via GoIP (Hybertone) GSM gateway.</p>
-                <div className="space-y-2"><Label className="text-xs font-medium">Phone Number (+233...)</Label><Input value={goipNumber} onChange={(e) => setGoipNumber(e.target.value)} required placeholder="+233241234567" className="h-10" /></div>
+                <p className="text-xs text-muted-foreground">Register a mobile number connected via GoIP (Hybertone) GSM gateway.</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2"><Label className="text-xs font-medium">Country</Label>
+                    <Select value={goipCountry} onValueChange={setGoipCountry}><SelectTrigger className="h-10"><SelectValue /></SelectTrigger><SelectContent>{COUNTRIES.map((c) => (<SelectItem key={c.code} value={c.code}>{c.code} — {c.name}</SelectItem>))}</SelectContent></Select>
+                  </div>
+                  <div className="space-y-2"><Label className="text-xs font-medium">Phone Number (E.164)</Label><Input value={goipNumber} onChange={(e) => setGoipNumber(e.target.value)} required placeholder="+233241234567" className="h-10" /></div>
+                </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-2"><Label className="text-xs font-medium">Name</Label><Input value={goipName} onChange={(e) => setGoipName(e.target.value)} placeholder="Ghana MTN Line 1" className="h-10" /></div>
                   <div className="space-y-2"><Label className="text-xs font-medium">Trunk Name</Label><Input value={goipTrunkName} onChange={(e) => setGoipTrunkName(e.target.value)} placeholder="goip-trunk" className="h-10" /></div>

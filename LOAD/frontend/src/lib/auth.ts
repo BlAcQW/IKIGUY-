@@ -1,4 +1,4 @@
-import { login as apiLogin, register as apiRegister, getMe } from './api';
+import { login as apiLogin, register as apiRegister, getMe, refreshAccessToken, logoutApi } from './api';
 
 export interface AuthUser {
   userId: string;
@@ -21,6 +21,18 @@ export function clearToken(): void {
   localStorage.removeItem('load_token');
 }
 
+export function getRefreshToken(): string | null {
+  return localStorage.getItem('load_refresh_token');
+}
+
+export function setRefreshToken(token: string): void {
+  localStorage.setItem('load_refresh_token', token);
+}
+
+export function clearRefreshToken(): void {
+  localStorage.removeItem('load_refresh_token');
+}
+
 export function isAuthenticated(): boolean {
   return getToken() !== null;
 }
@@ -28,6 +40,9 @@ export function isAuthenticated(): boolean {
 export async function login(email: string, password: string): Promise<AuthUser> {
   const result = await apiLogin({ email, password });
   setToken(result.data.token);
+  if (result.data.refreshToken) {
+    setRefreshToken(result.data.refreshToken);
+  }
   const authUser: AuthUser = {
     userId: result.data.user.id,
     organizationId: result.data.organization.id,
@@ -48,6 +63,9 @@ export async function register(
 ): Promise<AuthUser> {
   const result = await apiRegister({ email, password, name, organizationName });
   setToken(result.data.token);
+  if (result.data.refreshToken) {
+    setRefreshToken(result.data.refreshToken);
+  }
   const authUser: AuthUser = {
     userId: result.data.user.id,
     organizationId: result.data.organization.id,
@@ -60,10 +78,33 @@ export async function register(
   return authUser;
 }
 
-export function logout(): void {
+export async function logout(): Promise<void> {
+  try {
+    await logoutApi();
+  } catch {
+    // Best-effort server-side logout
+  }
   clearToken();
+  clearRefreshToken();
   localStorage.removeItem('load_user');
   window.location.href = '/login';
+}
+
+export async function tryRefreshToken(): Promise<boolean> {
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) return false;
+
+  try {
+    const result = await refreshAccessToken(refreshToken);
+    setToken(result.data.token);
+    setRefreshToken(result.data.refreshToken);
+    return true;
+  } catch {
+    clearToken();
+    clearRefreshToken();
+    localStorage.removeItem('load_user');
+    return false;
+  }
 }
 
 export async function getCurrentUser(): Promise<AuthUser | null> {
@@ -84,7 +125,30 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
       organizationName: storedUser.organizationName,
     };
   } catch {
+    // Try refreshing the token before giving up
+    const refreshed = await tryRefreshToken();
+    if (refreshed) {
+      try {
+        const result = await getMe();
+        let storedUser: Partial<AuthUser> = {};
+        try {
+          const stored = localStorage.getItem('load_user');
+          if (stored) storedUser = JSON.parse(stored);
+        } catch {
+          localStorage.removeItem('load_user');
+        }
+        return {
+          ...result.data,
+          name: storedUser.name,
+          email: storedUser.email,
+          organizationName: storedUser.organizationName,
+        };
+      } catch {
+        // Fall through to return null
+      }
+    }
     clearToken();
+    clearRefreshToken();
     localStorage.removeItem('load_user');
     return null;
   }

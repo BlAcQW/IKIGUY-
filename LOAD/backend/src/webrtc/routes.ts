@@ -5,6 +5,7 @@ import { buildPipelineFromAssistant } from '../providers/registry.js';
 import { createCall, updateCallStatus } from '../modules/calls/service.js';
 import { createSession } from '../voice-pipeline/session.js';
 import { fireWebhookEvent } from '../modules/webhooks/delivery.js';
+import { getSettingsRaw } from '../modules/settings/service.js';
 import { WebRTCCallHandler } from './handler.js';
 import { webrtcOfferSchema, webrtcIceCandidateSchema } from './schemas.js';
 
@@ -23,13 +24,13 @@ let sweepTimer: ReturnType<typeof setInterval> | null = null;
  * Start a periodic sweep that removes stale handlers.
  * Handlers track their creation time; if they exceed the TTL, they are closed and removed.
  */
-function startHandlerSweep(): void {
+function startHandlerSweep(app: FastifyInstance): void {
   if (sweepTimer) return;
   sweepTimer = setInterval(() => {
     const now = Date.now();
     for (const [callId, handler] of activeHandlers) {
       if (now - handler.createdAt > HANDLER_TTL_MS) {
-        console.warn(`[WebRTC] Evicting stale handler for call ${callId} (TTL exceeded)`);
+        app.log.warn(`Evicting stale WebRTC handler for call ${callId} (TTL exceeded)`);
         handler.close().catch(() => {});
         activeHandlers.delete(callId);
       }
@@ -42,13 +43,14 @@ function startHandlerSweep(): void {
 }
 
 export async function webrtcRoutes(app: FastifyInstance): Promise<void> {
-  startHandlerSweep();
+  startHandlerSweep(app);
   /**
    * POST /api/calls/webrtc/offer
    * Exchange SDP offer/answer to establish a WebRTC peer connection.
    */
   app.post('/api/calls/webrtc/offer', {
     preHandler: [authMiddleware],
+    config: { rateLimit: { max: 10, timeWindow: '1 minute' } },
   }, async (request, reply) => {
     const parsed = webrtcOfferSchema.safeParse(request.body);
     if (!parsed.success) {
@@ -72,10 +74,19 @@ export async function webrtcRoutes(app: FastifyInstance): Promise<void> {
       });
     }
 
-    // Build voice pipeline
+    // Fetch org-level credentials (provider API keys from org settings)
+    let orgCredentials: { openaiApiKey?: string; deepgramApiKey?: string; elevenLabsApiKey?: string; cartesiaApiKey?: string } | undefined;
+    try {
+      const orgSettings = await getSettingsRaw(organizationId);
+      orgCredentials = orgSettings.providerCredentials;
+    } catch {
+      // Non-fatal — fall back to server env vars
+    }
+
+    // Build voice pipeline using org credentials when available
     let pipeline;
     try {
-      pipeline = buildPipelineFromAssistant(assistant);
+      pipeline = buildPipelineFromAssistant(assistant, orgCredentials);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to initialize voice providers';
       const isKeyMissing = message.includes('API_KEY is required') || message.includes('API key');
@@ -157,6 +168,7 @@ export async function webrtcRoutes(app: FastifyInstance): Promise<void> {
    */
   app.post('/api/calls/webrtc/ice', {
     preHandler: [authMiddleware],
+    config: { rateLimit: { max: 60, timeWindow: '1 minute' } },
   }, async (request, reply) => {
     const parsed = webrtcIceCandidateSchema.safeParse(request.body);
     if (!parsed.success) {
@@ -193,6 +205,7 @@ export async function webrtcRoutes(app: FastifyInstance): Promise<void> {
    */
   app.post<{ Params: { callId: string } }>('/api/calls/webrtc/:callId/end', {
     preHandler: [authMiddleware],
+    config: { rateLimit: { max: 10, timeWindow: '1 minute' } },
   }, async (request, reply) => {
     const { callId } = request.params;
     const handler = activeHandlers.get(callId);

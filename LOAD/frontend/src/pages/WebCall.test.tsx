@@ -264,7 +264,6 @@ describe('WebCallPage', () => {
     // WebSocket should have been created
     expect(mockWsInstance).not.toBeNull();
     expect(mockWsInstance!.url).toContain('/api/calls/web');
-    expect(mockWsInstance!.url).toContain('token=test-token');
 
     // UI should transition to connecting state
     await waitFor(() => {
@@ -272,7 +271,7 @@ describe('WebCallPage', () => {
     });
   });
 
-  it('sends start message when WebSocket opens', async () => {
+  it('sends auth message when WebSocket opens, then start on ready', async () => {
     const assistant = buildAssistant({ name: 'Sales Bot' });
     mockedListAssistants.mockResolvedValue({ success: true, data: [assistant] });
     const { user } = render(<WebCallPage />);
@@ -284,9 +283,20 @@ describe('WebCallPage', () => {
     await switchToClassic(user);
     await user.click(screen.getByRole('button', { name: /start call/i }));
 
-    // Simulate WebSocket open
+    // Simulate WebSocket open — should send auth message
     act(() => {
       mockWsInstance!.onopen!(new Event('open'));
+    });
+
+    expect(mockWsInstance!.send).toHaveBeenCalledWith(
+      JSON.stringify({ type: 'auth', token: 'test-token' })
+    );
+
+    // Simulate server responding with ready status — should send start message
+    act(() => {
+      mockWsInstance!.onmessage!(new MessageEvent('message', {
+        data: JSON.stringify({ type: 'status', status: 'ready' }),
+      }));
     });
 
     expect(mockWsInstance!.send).toHaveBeenCalledWith(

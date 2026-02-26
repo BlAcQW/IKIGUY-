@@ -21,6 +21,17 @@ export class DeepgramSTTProvider implements STTProvider {
   async transcribe(audioBuffer: Buffer, options?: STTOptions): Promise<string> {
     const model = options?.model ?? 'nova-2';
     const language = options?.language ?? 'en';
+    const format = options?.format ?? 'wav';
+
+    // Map audio format to MIME type — Deepgram auto-detects but correct
+    // Content-Type avoids transcription failures for non-WAV formats.
+    const mimeMap: Record<string, string> = {
+      wav: 'audio/wav',
+      webm: 'audio/webm',
+      mp3: 'audio/mpeg',
+      ogg: 'audio/ogg',
+    };
+    const contentType = mimeMap[format] ?? 'audio/wav';
 
     const params = new URLSearchParams({ model, language });
     const url = `https://api.deepgram.com/v1/listen?${params.toString()}`;
@@ -29,7 +40,7 @@ export class DeepgramSTTProvider implements STTProvider {
       method: 'POST',
       headers: {
         'Authorization': `Token ${this.apiKey}`,
-        'Content-Type': 'audio/wav',
+        'Content-Type': contentType,
       },
       body: audioBuffer.buffer.slice(
         audioBuffer.byteOffset,

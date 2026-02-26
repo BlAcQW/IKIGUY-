@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance, FastifyBaseLogger } from 'fastify';
 import { WebSocket } from 'ws';
 import { prisma } from '../database/client.js';
 import { config } from '../config/index.js';
@@ -10,6 +10,19 @@ import { buildPipelineFromAssistant } from '../providers/registry.js';
 import { fireWebhookEvent } from '../modules/webhooks/delivery.js';
 import { resolveTransfer, executeTransfer } from '../voice-pipeline/squad-transfer.js';
 import { extractAssistantConfig, loadToolsForPipeline } from '../voice-pipeline/pipeline-helpers.js';
+import { getSettingsRaw } from '../modules/settings/service.js';
+
+let logger: FastifyBaseLogger;
+
+/** Inline assistant config for editor test calls (no DB lookup needed). */
+interface InlineAssistantConfig {
+  name?: string;
+  model: { provider?: string; model?: string; temperature?: number; maxTokens?: number; systemPrompt?: string; toolIds?: string[] };
+  voice: { provider?: string; voiceId?: string; speed?: number };
+  transcriber: { provider?: string; model?: string; language?: string };
+  firstMessage?: string;
+  endCallPhrases?: string[];
+}
 
 interface WebCallState {
   sessionId: string;
@@ -19,6 +32,8 @@ interface WebCallState {
   audioBuffer: AudioBuffer;
   pipeline: PipelineConfig;
   processing: boolean;
+  /** Present when the call was started with inline config (editor testing). */
+  inlineConfig?: InlineAssistantConfig;
 }
 
 const activeConnections = new Map<WebSocket, WebCallState>();
@@ -33,6 +48,7 @@ function sendJSON(socket: WebSocket, data: object): void {
 const authenticatedSockets = new Map<WebSocket, { userId: string; organizationId: string }>();
 
 export async function websocketRoutes(app: FastifyInstance): Promise<void> {
+  logger = app.log;
   app.get('/api/calls/web', { websocket: true }, (socket) => {
     // Set a 10-second auth timeout — client must send an auth message first
     const authTimeout = setTimeout(() => {
@@ -64,7 +80,7 @@ export async function websocketRoutes(app: FastifyInstance): Promise<void> {
       }
 
       // JSON control messages
-      let parsed: { type: string; token?: string; assistantId?: string; [key: string]: unknown };
+      let parsed: { type: string; token?: string; assistantId?: string; assistantConfig?: InlineAssistantConfig; [key: string]: unknown };
       try {
         parsed = JSON.parse(message.toString());
       } catch {
@@ -156,16 +172,11 @@ export async function websocketRoutes(app: FastifyInstance): Promise<void> {
 
 async function handleStart(
   socket: WebSocket,
-  parsed: { assistantId?: string; [key: string]: unknown },
+  parsed: { assistantId?: string; assistantConfig?: InlineAssistantConfig; [key: string]: unknown },
   organizationId?: string
 ): Promise<void> {
   if (activeConnections.has(socket)) {
     sendJSON(socket, { type: 'error', message: 'Call already in progress' });
-    return;
-  }
-
-  if (!parsed.assistantId) {
-    sendJSON(socket, { type: 'error', message: 'assistantId is required' });
     return;
   }
 
@@ -175,22 +186,70 @@ async function handleStart(
     return;
   }
 
-  // Verify assistant belongs to this org
-  const assistant = await prisma.assistant.findFirst({
-    where: { id: parsed.assistantId, organizationId },
-  });
-  if (!assistant) {
-    sendJSON(socket, { type: 'error', message: 'Assistant not found' });
+  const isInlineTest = !!parsed.assistantConfig;
+
+  if (!parsed.assistantId && !isInlineTest) {
+    sendJSON(socket, { type: 'error', message: 'assistantId or assistantConfig is required' });
     return;
   }
 
-  // Build pipeline from assistant config (supports multiple providers)
+  // Resolve assistant config — either from DB or from inline config
+  let assistantId: string;
+  let modelConfig: { provider?: string; model?: string; temperature?: number; maxTokens?: number; systemPrompt?: string; toolIds?: string[] };
+  let voiceConfig: { provider?: string; voiceId?: string; speed?: number };
+  let transcriberConfig: { provider?: string; model?: string; language?: string };
+  let firstMessage: string | undefined;
+  let endCallPhrases: string[] | undefined;
+  let inlineConfig: InlineAssistantConfig | undefined;
+
+  if (isInlineTest) {
+    // Editor testing mode — use inline config, skip DB lookup
+    const cfg = parsed.assistantConfig!;
+    assistantId = 'inline-test';
+    modelConfig = cfg.model;
+    voiceConfig = cfg.voice;
+    transcriberConfig = cfg.transcriber;
+    firstMessage = cfg.firstMessage;
+    endCallPhrases = cfg.endCallPhrases;
+    inlineConfig = cfg;
+  } else {
+    // Production mode — fetch from DB
+    const assistant = await prisma.assistant.findFirst({
+      where: { id: parsed.assistantId!, organizationId },
+    });
+    if (!assistant) {
+      sendJSON(socket, { type: 'error', message: 'Assistant not found' });
+      return;
+    }
+    assistantId = assistant.id;
+    modelConfig = (assistant.model ?? {}) as typeof modelConfig;
+    voiceConfig = (assistant.voice ?? {}) as typeof voiceConfig;
+    transcriberConfig = (assistant.transcriber ?? {}) as typeof transcriberConfig;
+    firstMessage = assistant.firstMessage ?? undefined;
+    endCallPhrases = assistant.endCallPhrases ?? undefined;
+  }
+
+  // Fetch org-level settings (provider credentials, pipeline defaults)
+  // so the pipeline can use org-specific API keys instead of env vars.
+  let orgCredentials: { openaiApiKey?: string; deepgramApiKey?: string; elevenLabsApiKey?: string; cartesiaApiKey?: string } | undefined;
+  try {
+    const orgSettings = await getSettingsRaw(organizationId);
+    orgCredentials = orgSettings.providerCredentials;
+  } catch {
+    // Non-fatal — fall back to server env vars if org settings fail to load
+  }
+
+  // Build pipeline — works with both DB assistant and inline config
+  // (buildPipelineFromAssistant only reads .model.provider, .voice.provider, .transcriber.provider)
   let pipeline: PipelineConfig;
   try {
-    pipeline = buildPipelineFromAssistant(assistant);
+    pipeline = buildPipelineFromAssistant(
+      { model: modelConfig, voice: voiceConfig, transcriber: transcriberConfig },
+      orgCredentials,
+    );
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to initialize voice providers';
-    console.error(`[WebSocket] Failed to build pipeline for assistant ${assistant.id}:`, err);
+    logger.error({ err, assistantId }, 'Failed to build pipeline for assistant');
     sendJSON(socket, { type: 'error', message });
     return;
   }
@@ -198,20 +257,15 @@ async function handleStart(
   // Create call record in DB
   const call = await createCall({
     organizationId,
-    assistantId: assistant.id,
+    assistantId: isInlineTest ? undefined : assistantId,
     type: 'WEB',
   });
   await updateCallStatus(call.id, 'IN_PROGRESS');
 
-  // Extract assistant config
-  const modelConfig = assistant.model as { systemPrompt?: string; model?: string; temperature?: number; maxTokens?: number };
-  const voiceConfig = assistant.voice as { voiceId?: string; speed?: number };
-  const transcriberConfig = assistant.transcriber as { model?: string; language?: string };
-
   // Create session (now async)
   const session = await createSession({
     callId: call.id,
-    assistantId: assistant.id,
+    assistantId,
     organizationId,
     systemPrompt: modelConfig.systemPrompt,
   });
@@ -220,10 +274,11 @@ async function handleStart(
     sessionId: session.id,
     callId: call.id,
     organizationId,
-    assistantId: assistant.id,
+    assistantId,
     audioBuffer: new AudioBuffer(),
     pipeline,
     processing: false,
+    inlineConfig,
   };
   activeConnections.set(socket, state);
 
@@ -231,7 +286,7 @@ async function handleStart(
     type: 'call_started',
     callId: call.id,
     sessionId: session.id,
-    assistant: { id: assistant.id, name: assistant.name },
+    assistant: { id: assistantId, name: inlineConfig?.name ?? 'Assistant' },
     config: {
       model: modelConfig.model ?? 'gpt-4',
       voice: voiceConfig.voiceId ?? 'alloy',
@@ -239,26 +294,28 @@ async function handleStart(
     },
   });
 
-  // Fire webhook
-  fireWebhookEvent(organizationId, 'call.started', {
-    callId: call.id,
-    type: 'WEB',
-    assistantId: assistant.id,
-  }).catch(() => {});
+  // Fire webhook (skip for inline test calls — no real assistant)
+  if (!isInlineTest) {
+    fireWebhookEvent(organizationId, 'call.started', {
+      callId: call.id,
+      type: 'WEB',
+      assistantId,
+    }).catch(() => {});
+  }
 
   // Synthesize and send first message if configured
-  if (assistant.firstMessage) {
-    await addMessage(session.id, { role: 'assistant', content: assistant.firstMessage });
+  if (firstMessage) {
+    await addMessage(session.id, { role: 'assistant', content: firstMessage });
     try {
-      const audio = await pipeline.tts.synthesize(assistant.firstMessage, {
+      const audio = await pipeline.tts.synthesize(firstMessage, {
         voiceId: voiceConfig.voiceId,
         speed: voiceConfig.speed,
       });
-      sendJSON(socket, { type: 'assistant_message', text: assistant.firstMessage, hasAudio: true });
+      sendJSON(socket, { type: 'assistant_message', text: firstMessage, hasAudio: true });
       socket.send(audio);
       sendJSON(socket, { type: 'audio_end' });
     } catch {
-      sendJSON(socket, { type: 'assistant_message', text: assistant.firstMessage, hasAudio: false });
+      sendJSON(socket, { type: 'assistant_message', text: firstMessage, hasAudio: false });
     }
   }
 }
@@ -284,13 +341,32 @@ async function handleEndTurn(socket: WebSocket): Promise<void> {
   sendJSON(socket, { type: 'processing', status: 'started' });
 
   try {
-    const assistant = await prisma.assistant.findUnique({ where: { id: state.assistantId } });
+    // Resolve config from inline config (editor test) or DB (production)
+    let modelConfig: { model?: string; temperature?: number; maxTokens?: number; toolIds?: string[] };
+    let voiceConfig: { voiceId?: string; speed?: number };
+    let transcriberConfig: { model?: string; language?: string };
+    let resolvedEndCallPhrases: string[] | undefined;
 
-    const { modelConfig, voiceConfig, transcriberConfig } = extractAssistantConfig({
-      model: assistant?.model ?? {},
-      voice: assistant?.voice ?? {},
-      transcriber: assistant?.transcriber ?? {},
-    });
+    if (state.inlineConfig) {
+      // Editor test — use stored inline config
+      const cfg = state.inlineConfig;
+      modelConfig = cfg.model;
+      voiceConfig = cfg.voice;
+      transcriberConfig = cfg.transcriber;
+      resolvedEndCallPhrases = cfg.endCallPhrases;
+    } else {
+      // Production — fetch from DB
+      const assistant = await prisma.assistant.findUnique({ where: { id: state.assistantId } });
+      const extracted = extractAssistantConfig({
+        model: assistant?.model ?? {},
+        voice: assistant?.voice ?? {},
+        transcriber: assistant?.transcriber ?? {},
+      });
+      modelConfig = extracted.modelConfig;
+      voiceConfig = extracted.voiceConfig;
+      transcriberConfig = extracted.transcriberConfig;
+      resolvedEndCallPhrases = assistant?.endCallPhrases ?? undefined;
+    }
 
     const tools = await loadToolsForPipeline(modelConfig.toolIds, state.organizationId);
 
@@ -308,13 +384,15 @@ async function handleEndTurn(socket: WebSocket): Promise<void> {
     sendJSON(socket, { type: 'user_transcript', text: result.userText });
     sendJSON(socket, { type: 'assistant_message', text: result.assistantText, hasAudio: true });
 
-    // Fire transcript webhook
-    fireWebhookEvent(state.organizationId, 'transcript.update', {
-      callId: state.callId,
-      userText: result.userText,
-      assistantText: result.assistantText,
-      toolCalls: result.toolCallsExecuted.map((tc) => ({ name: tc.name, success: tc.result.success })),
-    }).catch(() => {});
+    // Fire transcript webhook (skip for inline test calls)
+    if (!state.inlineConfig) {
+      fireWebhookEvent(state.organizationId, 'transcript.update', {
+        callId: state.callId,
+        userText: result.userText,
+        assistantText: result.assistantText,
+        toolCalls: result.toolCallsExecuted.map((tc) => ({ name: tc.name, success: tc.result.success })),
+      }).catch(() => {});
+    }
 
     // Send audio in chunks
     const CHUNK_SIZE = 16384;
@@ -324,8 +402,8 @@ async function handleEndTurn(socket: WebSocket): Promise<void> {
     }
     sendJSON(socket, { type: 'audio_end' });
 
-    // Handle transfer request
-    if (result.transferRequest) {
+    // Handle transfer request (not supported for inline test calls)
+    if (result.transferRequest && !state.inlineConfig) {
       await handleTransfer(socket, state, result.transferRequest.targetAssistantId);
       return;
     }
@@ -337,10 +415,10 @@ async function handleEndTurn(socket: WebSocket): Promise<void> {
       return;
     }
 
-    // Check for end-call phrases (legacy behavior)
-    if (assistant?.endCallPhrases && assistant.endCallPhrases.length > 0) {
+    // Check for end-call phrases
+    if (resolvedEndCallPhrases && resolvedEndCallPhrases.length > 0) {
       const lower = result.assistantText.toLowerCase();
-      const shouldEnd = assistant.endCallPhrases.some((phrase: string) =>
+      const shouldEnd = resolvedEndCallPhrases.some((phrase: string) =>
         lower.includes(phrase.toLowerCase())
       );
       if (shouldEnd) {
@@ -351,7 +429,7 @@ async function handleEndTurn(socket: WebSocket): Promise<void> {
     }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Pipeline processing failed';
-    console.error(`[WebSocket] Pipeline error for session ${state.sessionId}:`, err);
+    logger.error({ err, sessionId: state.sessionId }, 'Pipeline error during WebSocket processing');
     sendJSON(socket, { type: 'error', message });
   } finally {
     state.processing = false;
@@ -386,8 +464,15 @@ async function handleTransfer(
     }
 
     // Execute the transfer: update session and rebuild pipeline
+    // Re-fetch org credentials so the new assistant's providers use org keys
+    let transferCreds: { openaiApiKey?: string; deepgramApiKey?: string; elevenLabsApiKey?: string; cartesiaApiKey?: string } | undefined;
+    try {
+      const orgSettings = await getSettingsRaw(state.organizationId);
+      transferCreds = orgSettings.providerCredentials;
+    } catch { /* fall back to env vars */ }
+
     await executeTransfer(state.sessionId, targetAssistant);
-    const newPipeline = buildPipelineFromAssistant(targetAssistant);
+    const newPipeline = buildPipelineFromAssistant(targetAssistant, transferCreds);
 
     // Update state
     state.assistantId = targetAssistant.id;
@@ -440,12 +525,14 @@ async function handleStop(socket: WebSocket): Promise<void> {
     // Call may already be ended
   }
 
-  // Fire webhook
-  fireWebhookEvent(state.organizationId, 'call.ended', {
-    callId: state.callId,
-    endReason: 'completed',
-    transcript,
-  }).catch(() => {});
+  // Fire webhook (skip for inline test calls)
+  if (!state.inlineConfig) {
+    fireWebhookEvent(state.organizationId, 'call.ended', {
+      callId: state.callId,
+      endReason: 'completed',
+      transcript,
+    }).catch(() => {});
+  }
 
   sendJSON(socket, { type: 'call_ended', callId: state.callId });
 }

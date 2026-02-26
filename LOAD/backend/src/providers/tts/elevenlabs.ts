@@ -12,7 +12,7 @@ export class ElevenLabsTTSProvider implements TTSProvider {
 
   async synthesize(text: string, options?: TTSOptions): Promise<Buffer> {
     const voiceId = options?.voiceId ?? DEFAULT_VOICE_ID;
-    const model = options?.model ?? 'eleven_monolingual_v1';
+    const model = options?.model ?? 'eleven_turbo_v2_5';
 
     const params = new URLSearchParams({ output_format: 'pcm_16000' });
     const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?${params.toString()}`;

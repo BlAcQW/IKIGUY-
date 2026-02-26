@@ -7,7 +7,7 @@ import { DashboardPage } from './pages/Dashboard';
 import { AssistantsPage } from './pages/assistants';
 import { CallsPage } from './pages/Calls';
 import { PhoneNumbersPage } from './pages/PhoneNumbers';
-import { SettingsPage } from './pages/Settings';
+import { SettingsPage } from './pages/settings';
 import { WebCallPage } from './pages/WebCall';
 import { ToolsPage } from './pages/Tools';
 import { SquadsPage } from './pages/Squads';

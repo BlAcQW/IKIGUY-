@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { PageHeader } from '@/components/PageHeader';
 import {
   listCampaigns,
@@ -36,7 +36,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
 import { AlertDialog } from '@/components/ui/alert-dialog';
-import { Megaphone, Plus, Pencil, Trash2, Play, Pause, RotateCcw, X, Users } from 'lucide-react';
+import { Megaphone, Plus, Pencil, Trash2, Play, Pause, RotateCcw, X, Users, Clock, DollarSign } from 'lucide-react';
 import { toast } from 'sonner';
 
 const STATUS_COLORS: Record<CampaignStatus, 'default' | 'secondary' | 'outline' | 'destructive'> = {
@@ -59,8 +59,32 @@ const emptyForm: CampaignForm = {
   assistantId: '',
   phoneNumberId: '',
   contacts: [{ name: '', number: '' }],
-  schedule: { maxConcurrent: 1, timezone: 'UTC' },
+  schedule: { maxConcurrent: 1, timezone: 'UTC', delayBetweenCalls: 0, maxRetries: 0 },
 };
+
+function estimateDuration(
+  contactCount: number,
+  maxConcurrent: number,
+  delayBetweenCalls: number,
+  maxRetries: number,
+): string {
+  if (contactCount === 0) return '0m';
+  const avgCallDuration = 60; // seconds
+  const totalCalls = contactCount * (1 + maxRetries);
+  const batches = Math.ceil(totalCalls / Math.max(maxConcurrent, 1));
+  const totalSeconds = batches * (avgCallDuration + delayBetweenCalls);
+  const minutes = Math.ceil(totalSeconds / 60);
+  if (minutes < 60) return `~${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  return `~${hours}h ${remainingMinutes}m`;
+}
+
+function estimateCost(completedCalls: number): string {
+  const avgCostPerCall = 0.12; // $0.12 per call
+  const total = completedCalls * avgCostPerCall;
+  return `$${total.toFixed(2)}`;
+}
 
 export function CampaignsPage() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -103,7 +127,14 @@ export function CampaignsPage() {
       assistantId: campaign.assistantId,
       phoneNumberId: campaign.phoneNumberId,
       contacts: campaign.contacts.length > 0 ? campaign.contacts : [{ name: '', number: '' }],
-      schedule: campaign.schedule ?? { maxConcurrent: 1, timezone: 'UTC' },
+      schedule: {
+        maxConcurrent: campaign.schedule?.maxConcurrent ?? 1,
+        timezone: campaign.schedule?.timezone ?? 'UTC',
+        startTime: campaign.schedule?.startTime,
+        endTime: campaign.schedule?.endTime,
+        delayBetweenCalls: campaign.schedule?.delayBetweenCalls ?? 0,
+        maxRetries: campaign.schedule?.maxRetries ?? 0,
+      },
     });
     setDialogOpen(true);
   }
@@ -115,10 +146,24 @@ export function CampaignsPage() {
   function getAssistantName(id: string): string { return assistants.find((a) => a.id === id)?.name ?? '—'; }
   function getPhoneNumberDisplay(id: string): string { return phoneNumbers.find((p) => p.id === id)?.number ?? '—'; }
 
+  const validContacts = useMemo(
+    () => form.contacts.filter((c) => c.name && c.number),
+    [form.contacts],
+  );
+
+  const estDuration = useMemo(
+    () => estimateDuration(
+      validContacts.length,
+      form.schedule.maxConcurrent ?? 1,
+      form.schedule.delayBetweenCalls ?? 0,
+      form.schedule.maxRetries ?? 0,
+    ),
+    [validContacts.length, form.schedule.maxConcurrent, form.schedule.delayBetweenCalls, form.schedule.maxRetries],
+  );
+
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     if (!form.assistantId || !form.phoneNumberId) { toast.error('Select an assistant and phone number'); return; }
-    const validContacts = form.contacts.filter((c) => c.name && c.number);
     setSaving(true);
     try {
       const data: CreateCampaignRequest = { name: form.name, assistantId: form.assistantId, phoneNumberId: form.phoneNumberId, contacts: validContacts, schedule: form.schedule };
@@ -214,8 +259,30 @@ export function CampaignsPage() {
                   <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">End Time</Label>
                   <Input type="time" value={form.schedule.endTime ?? ''} onChange={(e) => updateSchedule('endTime', e.target.value)} className="h-10" />
                 </div>
+                <div className="space-y-1">
+                  <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Delay Between Calls (sec)</Label>
+                  <Input type="number" min={0} max={300} value={form.schedule.delayBetweenCalls ?? 0} onChange={(e) => updateSchedule('delayBetweenCalls', parseInt(e.target.value) || 0)} className="h-10" />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Maximum Retries</Label>
+                  <Input type="number" min={0} max={5} value={form.schedule.maxRetries ?? 0} onChange={(e) => updateSchedule('maxRetries', parseInt(e.target.value) || 0)} className="h-10" />
+                </div>
               </div>
             </div>
+
+            {/* Estimated Duration */}
+            {validContacts.length > 0 && (
+              <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-muted/50 border border-border">
+                <Clock size={14} className="text-muted-foreground shrink-0" />
+                <div className="flex-1">
+                  <p className="text-xs font-medium">Estimated Duration</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    {validContacts.length} contacts, {form.schedule.maxConcurrent ?? 1} concurrent, {form.schedule.delayBetweenCalls ?? 0}s delay, {form.schedule.maxRetries ?? 0} retries
+                  </p>
+                </div>
+                <span className="text-sm font-semibold text-primary">{estDuration}</span>
+              </div>
+            )}
 
             <DialogFooter className="pt-2">
               <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
@@ -246,57 +313,86 @@ export function CampaignsPage() {
               <TableHead className="text-xs">Phone</TableHead>
               <TableHead className="text-xs">Contacts</TableHead>
               <TableHead className="text-xs">Progress</TableHead>
+              <TableHead className="text-xs">Est. Cost</TableHead>
               <TableHead className="w-[140px] text-xs">Actions</TableHead>
             </TableRow></TableHeader>
             <TableBody>
-              {campaigns.map((c) => (
-                <TableRow key={c.id} className="group">
-                  <TableCell className="font-medium text-sm">{c.name}</TableCell>
-                  <TableCell><Badge variant={STATUS_COLORS[c.status]} className="text-[10px]">{c.status}</Badge></TableCell>
-                  <TableCell className="text-xs text-muted-foreground">{getAssistantName(c.assistantId)}</TableCell>
-                  <TableCell className="text-xs text-muted-foreground font-mono">{getPhoneNumberDisplay(c.phoneNumberId)}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Users size={11} />
-                      {c.contacts.length}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {c.stats ? (
-                      <div className="flex items-center gap-2">
-                        <div className="flex-1 h-1.5 bg-secondary rounded-full overflow-hidden max-w-[80px]">
-                          <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${c.stats.total > 0 ? (c.stats.completed / c.stats.total) * 100 : 0}%` }} />
-                        </div>
-                        <span className="text-[10px] text-muted-foreground whitespace-nowrap">
-                          {c.stats.completed}/{c.stats.total}
-                          {c.stats.failed > 0 && <span className="text-destructive ml-1">({c.stats.failed} failed)</span>}
-                        </span>
+              {campaigns.map((c) => {
+                const successRate = c.stats && c.stats.completed > 0
+                  ? Math.round((c.stats.completed / (c.stats.completed + c.stats.failed)) * 100)
+                  : 0;
+
+                return (
+                  <TableRow key={c.id} className="group">
+                    <TableCell className="font-medium text-sm">{c.name}</TableCell>
+                    <TableCell><Badge variant={STATUS_COLORS[c.status]} className="text-[10px]">{c.status}</Badge></TableCell>
+                    <TableCell className="text-xs text-muted-foreground">{getAssistantName(c.assistantId)}</TableCell>
+                    <TableCell className="text-xs text-muted-foreground font-mono">{getPhoneNumberDisplay(c.phoneNumberId)}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <Users size={11} />
+                        {c.contacts.length}
                       </div>
-                    ) : (
-                      <span className="text-xs text-muted-foreground">—</span>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      {c.status === 'DRAFT' && (
-                        <Button variant="ghost" size="icon" onClick={() => handleAction(c.id, 'start')} className="h-8 w-8 text-primary" title="Start"><Play size={13} /></Button>
+                    </TableCell>
+                    <TableCell>
+                      {c.stats ? (
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 h-1.5 bg-secondary rounded-full overflow-hidden max-w-[80px]">
+                              <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${c.stats.total > 0 ? (c.stats.completed / c.stats.total) * 100 : 0}%` }} />
+                            </div>
+                            <span className="text-[10px] text-muted-foreground whitespace-nowrap">
+                              {c.stats.completed}/{c.stats.total}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[10px]">
+                            {successRate > 0 && (
+                              <span className="text-green-500">{successRate}% success</span>
+                            )}
+                            {c.stats.failed > 0 && (
+                              <span className="text-destructive">{c.stats.failed} failed</span>
+                            )}
+                            {c.stats.inProgress > 0 && (
+                              <span className="text-primary">{c.stats.inProgress} active</span>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">—</span>
                       )}
-                      {c.status === 'RUNNING' && (
-                        <Button variant="ghost" size="icon" onClick={() => handleAction(c.id, 'pause')} className="h-8 w-8" title="Pause"><Pause size={13} /></Button>
+                    </TableCell>
+                    <TableCell>
+                      {c.stats && c.stats.completed > 0 ? (
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <DollarSign size={11} />
+                          <span>{estimateCost(c.stats.completed)}</span>
+                        </div>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">—</span>
                       )}
-                      {c.status === 'PAUSED' && (
-                        <Button variant="ghost" size="icon" onClick={() => handleAction(c.id, 'resume')} className="h-8 w-8 text-primary" title="Resume"><RotateCcw size={13} /></Button>
-                      )}
-                      {(c.status === 'DRAFT' || c.status === 'PAUSED') && (
-                        <Button variant="ghost" size="icon" onClick={() => openEdit(c)} className="h-8 w-8"><Pencil size={13} /></Button>
-                      )}
-                      {(c.status === 'DRAFT' || c.status === 'COMPLETED') && (
-                        <Button variant="ghost" size="icon" onClick={() => setDeleteTarget({ id: c.id, name: c.name })} className="h-8 w-8 text-muted-foreground hover:text-destructive"><Trash2 size={13} /></Button>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {c.status === 'DRAFT' && (
+                          <Button variant="ghost" size="icon" onClick={() => handleAction(c.id, 'start')} className="h-8 w-8 text-primary" title="Start"><Play size={13} /></Button>
+                        )}
+                        {c.status === 'RUNNING' && (
+                          <Button variant="ghost" size="icon" onClick={() => handleAction(c.id, 'pause')} className="h-8 w-8" title="Pause"><Pause size={13} /></Button>
+                        )}
+                        {c.status === 'PAUSED' && (
+                          <Button variant="ghost" size="icon" onClick={() => handleAction(c.id, 'resume')} className="h-8 w-8 text-primary" title="Resume"><RotateCcw size={13} /></Button>
+                        )}
+                        {(c.status === 'DRAFT' || c.status === 'PAUSED') && (
+                          <Button variant="ghost" size="icon" onClick={() => openEdit(c)} className="h-8 w-8"><Pencil size={13} /></Button>
+                        )}
+                        {(c.status === 'DRAFT' || c.status === 'COMPLETED') && (
+                          <Button variant="ghost" size="icon" onClick={() => setDeleteTarget({ id: c.id, name: c.name })} className="h-8 w-8 text-muted-foreground hover:text-destructive"><Trash2 size={13} /></Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </CardContent></Card>

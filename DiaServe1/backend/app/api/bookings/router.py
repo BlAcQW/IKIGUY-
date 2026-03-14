@@ -4,14 +4,18 @@ Booking API Router
 REST API endpoints for property tour booking management.
 """
 
+import logging
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
+from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from app.core.database import get_database
 from app.core.auth import get_current_user, get_organization_context, get_optional_user
 from app.services.booking_service import BookingService
+
+logger = logging.getLogger(__name__)
 from app.models.booking import (
     Booking,
     BookingCreate,
@@ -136,6 +140,25 @@ async def list_bookings(
         limit=limit,
         offset=offset
     )
+
+    # Resolve property names in bulk
+    unique_property_ids = list({b.property_id for b in bookings if b.property_id})
+    property_name_map: Dict[str, str] = {}
+    if unique_property_ids:
+        try:
+            object_ids = [ObjectId(pid) for pid in unique_property_ids if ObjectId.is_valid(pid)]
+            if object_ids:
+                cursor = database["properties"].find(
+                    {"_id": {"$in": object_ids}},
+                    {"_id": 1, "name": 1}
+                )
+                async for doc in cursor:
+                    property_name_map[str(doc["_id"])] = doc.get("name", "")
+        except Exception as e:
+            logger.warning(f"Failed to resolve property names: {e}")
+
+    for booking in bookings:
+        booking.property_name = property_name_map.get(booking.property_id)
 
     return BookingListResponse(
         bookings=bookings,
@@ -384,6 +407,21 @@ async def get_property_availability(
 
 
 # ==================== Admin-Only Endpoints ====================
+
+
+@router.post("/admin/backfill-leads")
+async def admin_backfill_leads(
+    database: AsyncIOMotorDatabase = Depends(get_database),
+    current_user: Dict[str, Any] = Depends(get_current_user),
+    org_context: Dict[str, str] = Depends(get_organization_context),
+):
+    """Retroactively create leads from existing bookings."""
+    check_admin_access(current_user)
+    booking_service = BookingService(database)
+    result = await booking_service.backfill_leads_from_bookings(
+        organization_id=org_context["organization_id"],
+    )
+    return result
 
 
 @router.post("/admin/manual-create", response_model=Booking, status_code=201)

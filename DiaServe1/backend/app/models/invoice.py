@@ -92,6 +92,12 @@ class Invoice(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     sent_at: Optional[datetime] = Field(default=None, description="Date sent to customer")
 
+    # QuickBooks sync tracking
+    qbo_invoice_id: Optional[str] = Field(default=None, description="QBO invoice ID")
+    qbo_sync_status: str = Field(default="not_synced", description="not_synced|synced|error")
+    qbo_last_synced_at: Optional[datetime] = Field(default=None)
+    qbo_sync_error: Optional[str] = Field(default=None)
+
     # Soft delete
     is_deleted: bool = Field(default=False, description="Soft delete flag")
     deleted_at: Optional[datetime] = Field(default=None, description="Deletion timestamp")

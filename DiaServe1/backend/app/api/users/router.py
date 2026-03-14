@@ -15,6 +15,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from pydantic import BaseModel, Field, EmailStr
 
+from bson import ObjectId
 from app.core.database import get_database
 from app.core.auth import get_current_user
 from app.integration.email_service import get_email_service
@@ -885,7 +886,7 @@ async def save_property(
 
         # Check if property exists
         properties_collection = database["properties"]
-        property_doc = await properties_collection.find_one({"id": property_id})
+        property_doc = await properties_collection.find_one({"_id": ObjectId(property_id)})
 
         if not property_doc:
             raise HTTPException(
@@ -927,6 +928,26 @@ async def save_property(
 
         # Insert saved property
         await saved_properties_collection.insert_one(saved_doc)
+
+        # Auto-create warm lead (non-blocking)
+        try:
+            from app.services.lead_service import LeadService
+            org_id = property_doc.get("organization_id")
+            if org_id:
+                lead_service = LeadService(database)
+                user_name = current_user.get("name") or user_email.split("@")[0]
+                await lead_service.upsert_lead(
+                    organization_id=org_id,
+                    name=user_name,
+                    email=user_email,
+                    phone=current_user.get("phone"),
+                    interest_status="warm",
+                    source="property_save",
+                    property_id=property_id,
+                    property_name=property_doc.get("title") or property_doc.get("name"),
+                )
+        except Exception as lead_err:
+            logger.warning(f"Failed to create lead from property save: {lead_err}")
 
         logger.info(f"Property {property_id} saved by user {user_id}")
 
@@ -1046,7 +1067,7 @@ async def get_saved_properties(
 
             if include_property_details:
                 # Fetch property details
-                property_doc = await properties_collection.find_one({"id": saved_item["property_id"]})
+                property_doc = await properties_collection.find_one({"_id": ObjectId(saved_item["property_id"])})
                 if property_doc:
                     # Convert MongoDB document to dict, remove _id
                     property_details = dict(property_doc)
@@ -1055,6 +1076,7 @@ async def get_saved_properties(
             saved_properties.append(SavedPropertyResponse(
                 id=saved_item["id"],
                 user_id=saved_item["user_id"],
+                user_email=saved_item.get("user_email", ""),
                 property_id=saved_item["property_id"],
                 saved_at=saved_item["saved_at"],
                 property=property_details

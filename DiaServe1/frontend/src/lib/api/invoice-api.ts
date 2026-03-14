@@ -6,8 +6,7 @@
  */
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getAuthToken } from '../auth';
-import { buildApiUrl } from '../api-config';
+import { buildApiUrl, getDefaultHeaders, getSelectedOrganizationId } from '../api-config';
 
 // ============================================================================
 // Types
@@ -74,6 +73,12 @@ export interface Invoice {
   created_at: string;
   updated_at: string;
   sent_at?: string;
+
+  // QuickBooks sync tracking
+  qbo_invoice_id?: string;
+  qbo_sync_status?: 'not_synced' | 'synced' | 'error';
+  qbo_last_synced_at?: string;
+  qbo_sync_error?: string;
 }
 
 export interface InvoiceCreate {
@@ -137,14 +142,6 @@ export interface InvoiceStats {
 // API Functions
 // ============================================================================
 
-const getHeaders = () => {
-  const token = getAuthToken();
-  return {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
-  };
-};
-
 /**
  * List invoices with optional filters
  */
@@ -165,7 +162,7 @@ export const listInvoices = async (filters?: InvoiceFilters): Promise<InvoiceLis
   const response = await fetch(
     buildApiUrl(`/api/v1/invoices?${params.toString()}`),
     {
-      headers: getHeaders(),
+      headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
     }
   );
 
@@ -181,7 +178,7 @@ export const listInvoices = async (filters?: InvoiceFilters): Promise<InvoiceLis
  */
 export const getInvoice = async (invoiceId: string): Promise<Invoice> => {
   const response = await fetch(buildApiUrl(`/api/v1/invoices/${invoiceId}`), {
-    headers: getHeaders(),
+    headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
   });
 
   if (!response.ok) {
@@ -197,7 +194,7 @@ export const getInvoice = async (invoiceId: string): Promise<Invoice> => {
 export const createInvoice = async (data: InvoiceCreate): Promise<Invoice> => {
   const response = await fetch(buildApiUrl('/api/v1/invoices'), {
     method: 'POST',
-    headers: getHeaders(),
+    headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
     body: JSON.stringify(data),
   });
 
@@ -218,7 +215,7 @@ export const updateInvoice = async (
 ): Promise<Invoice> => {
   const response = await fetch(buildApiUrl(`/api/v1/invoices/${invoiceId}`), {
     method: 'PUT',
-    headers: getHeaders(),
+    headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
     body: JSON.stringify(updates),
   });
 
@@ -236,7 +233,7 @@ export const updateInvoice = async (
 export const deleteInvoice = async (invoiceId: string): Promise<void> => {
   const response = await fetch(buildApiUrl(`/api/v1/invoices/${invoiceId}`), {
     method: 'DELETE',
-    headers: getHeaders(),
+    headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
   });
 
   if (!response.ok) {
@@ -256,7 +253,7 @@ export const markInvoicePaid = async (
     buildApiUrl(`/api/v1/invoices/${invoiceId}/mark-paid`),
     {
       method: 'POST',
-      headers: getHeaders(),
+      headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
       body: JSON.stringify(paymentData),
     }
   );
@@ -275,7 +272,7 @@ export const markInvoicePaid = async (
 export const sendInvoice = async (invoiceId: string): Promise<{message: string}> => {
   const response = await fetch(buildApiUrl(`/api/v1/invoices/${invoiceId}/send`), {
     method: 'POST',
-    headers: getHeaders(),
+    headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
   });
 
   if (!response.ok) {
@@ -293,7 +290,7 @@ export const getInvoiceStats = async (currency = 'GHS'): Promise<InvoiceStats> =
   const response = await fetch(
     buildApiUrl(`/api/v1/invoices/stats?currency=${currency}`),
     {
-      headers: getHeaders(),
+      headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
     }
   );
 
@@ -311,7 +308,7 @@ export const downloadInvoicePDF = async (invoiceId: string): Promise<Blob> => {
   const response = await fetch(
     buildApiUrl(`/api/v1/invoices/${invoiceId}/download/pdf`),
     {
-      headers: getHeaders(),
+      headers: getDefaultHeaders(undefined, getSelectedOrganizationId() || undefined),
     }
   );
 

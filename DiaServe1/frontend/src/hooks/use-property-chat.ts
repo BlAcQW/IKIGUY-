@@ -24,6 +24,7 @@ export interface UsePropertyChatReturn {
   error: Error | null;
   lastResponse: ChatResponse | null;
   clearMessages: () => void;
+  retry: () => void;
 }
 
 /**
@@ -38,6 +39,7 @@ export function usePropertyChat({
 }: UsePropertyChatOptions): UsePropertyChatReturn {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [lastResponse, setLastResponse] = useState<ChatResponse | null>(null);
+  const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
 
   // Mutation for sending messages
   const mutation = useMutation({
@@ -74,6 +76,17 @@ export function usePropertyChat({
 
       setMessages((prev) => [...prev, userMessage, assistantMessage]);
       setLastResponse(response);
+      setLastFailedMessage(null);
+    },
+    onError: (_error, message) => {
+      // Preserve the user's message so it appears in the chat
+      const userMessage: ChatMessage = {
+        role: "user",
+        content: message,
+        timestamp: new Date().toISOString(),
+      };
+      setMessages((prev) => [...prev, userMessage]);
+      setLastFailedMessage(message);
     },
   });
 
@@ -88,7 +101,21 @@ export function usePropertyChat({
   const clearMessages = useCallback(() => {
     setMessages([]);
     setLastResponse(null);
+    setLastFailedMessage(null);
   }, []);
+
+  const retry = useCallback(() => {
+    if (!lastFailedMessage) return;
+    // Remove the failed user message before retrying
+    setMessages((prev) => {
+      const last = prev[prev.length - 1];
+      if (last && last.role === "user" && last.content === lastFailedMessage) {
+        return prev.slice(0, -1);
+      }
+      return prev;
+    });
+    mutation.mutate(lastFailedMessage);
+  }, [lastFailedMessage, mutation]);
 
   return {
     messages,
@@ -97,5 +124,6 @@ export function usePropertyChat({
     error: mutation.error,
     lastResponse,
     clearMessages,
+    retry,
   };
 }

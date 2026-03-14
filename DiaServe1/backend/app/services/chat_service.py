@@ -23,6 +23,7 @@ from app.services.property_context_service import PropertyContextService
 
 # Import local Gemini service (replaces missing shared library)
 from app.integration.gemini_client import GeminiService
+from app.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,7 @@ class PropertyChatService:
 
     def __init__(self):
         """Initialize chat service with Gemini provider."""
-        self.gemini_service = GeminiService(model="gemini-2.0-flash-exp")
+        self.gemini_service = GeminiService(model=settings.GEMINI_MODEL)
         self.context_service = PropertyContextService()
         self._db = None
 
@@ -341,10 +342,14 @@ Soyez conversationnel mais professionnel. Concentrez-vous sur aider l'utilisateu
         start_time = time.time()
 
         # 2. Build property context
-        property_context = self.context_service.build_property_context(
-            property_data=property_data,
-            language=request.language
-        )
+        try:
+            property_context = self.context_service.build_property_context(
+                property_data=property_data,
+                language=request.language
+            )
+        except Exception as e:
+            logger.warning(f"Failed to build property context, using fallback: {e}")
+            property_context = f"Property: {property_data.name}"
 
         # 3. Categorize question
         category = self._categorize_question(request.message)
@@ -403,22 +408,32 @@ Soyez conversationnel mais professionnel. Concentrez-vous sur aider l'utilisateu
 
             if gemini_response.get("success"):
                 reply = gemini_response.get("content", "")
-                model_used = gemini_response.get("model", "gemini-2.0-flash-exp")
+                model_used = gemini_response.get("model", "gemini-2.0-flash")
             else:
-                raise Exception("Gemini response not successful")
+                error_detail = gemini_response.get("error", "Unknown error")
+                if gemini_response.get("is_quota_error"):
+                    raise Exception(f"Quota exceeded: {error_detail}")
+                raise Exception(f"Gemini response failed: {error_detail}")
 
         except Exception as e:
             logger.error(f"Gemini service error: {e}")
-            # Fallback response
-            reply = "I apologize, but I'm having trouble processing your question right now. Please contact the agent for assistance."
+            error_str = str(e).lower()
+            if "quota" in error_str or "rate limit" in error_str or "resource exhausted" in error_str:
+                reply = "The AI assistant is temporarily at capacity. Please try again in a few minutes."
+            else:
+                reply = "I apologize, but I'm having trouble processing your question right now. Please contact the agent for assistance."
             model_used = "fallback"
 
         # 7. Extract sources
-        sources = self._extract_sources(
-            property_data=property_data,
-            question=request.message,
-            answer=reply
-        )
+        try:
+            sources = self._extract_sources(
+                property_data=property_data,
+                question=request.message,
+                answer=reply
+            )
+        except Exception as e:
+            logger.warning(f"Failed to extract sources, using default: {e}")
+            sources = [Source(type="property_data", field="general", value="Property information")]
 
         # 8. Generate suggested questions
         suggested_questions = self._get_suggested_questions(
@@ -445,15 +460,18 @@ Soyez conversationnel mais professionnel. Concentrez-vous sur aider l'utilisateu
             model_used=model_used
         )
 
-        # Persist conversation
-        await self._persist_message(
-            property_id=request.property_id,
-            property_name=property_data.name,
-            user_message=request.message,
-            assistant_reply=reply,
-            organization_id=organization_id,
-            user_id=user_id
-        )
+        # Persist conversation (non-blocking — don't crash the response on DB failure)
+        try:
+            await self._persist_message(
+                property_id=request.property_id,
+                property_name=property_data.name,
+                user_message=request.message,
+                assistant_reply=reply,
+                organization_id=organization_id,
+                user_id=user_id
+            )
+        except Exception as e:
+            logger.error(f"Failed to persist chat message: {e}", exc_info=True)
 
         return response
 

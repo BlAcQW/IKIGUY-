@@ -15,6 +15,7 @@ import {
   Loader2
 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -36,6 +37,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCallStats } from "@/lib/api/voice-api";
 import { useAIStats } from "@/lib/api/ai-tools-api";
 import { useBookings } from "@/hooks/use-bookings";
+import { AddPropertyDialog } from "@/components/AddPropertyDialog";
+import { ContactFormDialog, type ContactFormData } from "@/components/ContactFormDialog";
+import { CampaignWizard } from "@/components/CampaignWizard";
+import { AdminBookingDialog } from "@/components/admin/AdminBookingDialog";
+import { useCreateContact } from "@/hooks/use-campaigns";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -43,6 +49,7 @@ export default function Dashboard() {
   // Fetch real data
   const { data: statsData, isLoading: statsLoading } = usePropertyStats();
   const { data: propertiesData, isLoading: propertiesLoading } = useProperties({ limit: 3, sort_by: 'created_at', sort_order: 'desc' });
+  const { data: allPropertiesData } = useProperties({ limit: 100 });
   const { data: callStatsData } = useCallStats();
   const { data: aiStatsData } = useAIStats();
   const { data: bookingsData } = useBookings({ limit: 5 });
@@ -132,6 +139,13 @@ export default function Dashboard() {
   const [newRate, setNewRate] = useState("12.5"); // Default
   const [isUpdatingRate, setIsUpdatingRate] = useState(false);
 
+  const navigate = useNavigate();
+  const [showAddPropertyDialog, setShowAddPropertyDialog] = useState(false);
+  const [showContactDialog, setShowContactDialog] = useState(false);
+  const [showCampaignWizard, setShowCampaignWizard] = useState(false);
+  const [showBookingDialog, setShowBookingDialog] = useState(false);
+  const createContactMutation = useCreateContact();
+
   const handleUpdateRate = async () => {
     try {
       setIsUpdatingRate(true);
@@ -150,6 +164,22 @@ export default function Dashboard() {
     } finally {
       setIsUpdatingRate(false);
     }
+  };
+
+  const handleCreateContact = async (data: ContactFormData) => {
+    await createContactMutation.mutateAsync({
+      name: `${data.first_name} ${data.last_name}`.trim(),
+      email: data.email,
+      phone: data.phone,
+      tags: data.tags,
+      source: data.source,
+      notes: data.notes,
+      interest_status: data.interest_level as "hot" | "warm" | "cold",
+      property_type_preferences: data.property_type_preferences,
+      location_preferences: data.location_preferences,
+      budget_min: data.budget_min,
+      budget_max: data.budget_max,
+    });
   };
 
   return (
@@ -176,7 +206,7 @@ export default function Dashboard() {
                 <DollarSign className="h-5 w-5" />
                 Set Dollar Rate
               </Button>
-              <Button variant="glass" size="lg" className="gap-2 text-white">
+              <Button variant="glass" size="lg" className="gap-2 text-white" onClick={() => setShowAddPropertyDialog(true)}>
                 <Plus className="h-5 w-5" />
                 Add Property
               </Button>
@@ -244,7 +274,7 @@ export default function Dashboard() {
                   <CardTitle>Recent Properties</CardTitle>
                   <CardDescription>Your latest property listings</CardDescription>
                 </div>
-                <Button variant="outline" size="sm">View All</Button>
+                <Button variant="outline" size="sm" onClick={() => navigate("/my-properties")}>View All</Button>
               </CardHeader>
               <CardContent className="space-y-4">
                 {propertiesLoading ? (
@@ -373,19 +403,19 @@ export default function Dashboard() {
                 <CardDescription className="text-white/80">Common tasks at your fingertips</CardDescription>
               </CardHeader>
               <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <Button variant="glass" className="h-auto flex-col gap-3 py-6 text-white hover:bg-white/30 group">
+                <Button variant="glass" className="h-auto flex-col gap-3 py-6 text-white hover:bg-white/30 group" onClick={() => setShowAddPropertyDialog(true)}>
                   <Building2 className="h-7 w-7 group-hover:scale-110 transition-transform" />
                   <span className="font-semibold">Add Property</span>
                 </Button>
-                <Button variant="glass" className="h-auto flex-col gap-3 py-6 text-white hover:bg-white/30 group">
+                <Button variant="glass" className="h-auto flex-col gap-3 py-6 text-white hover:bg-white/30 group" onClick={() => setShowContactDialog(true)}>
                   <Users className="h-7 w-7 group-hover:scale-110 transition-transform" />
                   <span className="font-semibold">New Contact</span>
                 </Button>
-                <Button variant="glass" className="h-auto flex-col gap-3 py-6 text-white hover:bg-white/30 group">
+                <Button variant="glass" className="h-auto flex-col gap-3 py-6 text-white hover:bg-white/30 group" onClick={() => setShowCampaignWizard(true)}>
                   <Mail className="h-7 w-7 group-hover:scale-110 transition-transform" />
                   <span className="font-semibold">Send Campaign</span>
                 </Button>
-                <Button variant="glass" className="h-auto flex-col gap-3 py-6 text-white hover:bg-white/30 group">
+                <Button variant="glass" className="h-auto flex-col gap-3 py-6 text-white hover:bg-white/30 group" onClick={() => setShowBookingDialog(true)}>
                   <Calendar className="h-7 w-7 group-hover:scale-110 transition-transform" />
                   <span className="font-semibold">Schedule Tour</span>
                 </Button>
@@ -432,6 +462,28 @@ export default function Dashboard() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        <AddPropertyDialog
+          open={showAddPropertyDialog}
+          onOpenChange={setShowAddPropertyDialog}
+        />
+
+        <ContactFormDialog
+          open={showContactDialog}
+          onClose={() => setShowContactDialog(false)}
+          onSubmit={handleCreateContact}
+        />
+
+        <CampaignWizard
+          open={showCampaignWizard}
+          onClose={() => setShowCampaignWizard(false)}
+        />
+
+        <AdminBookingDialog
+          open={showBookingDialog}
+          onOpenChange={setShowBookingDialog}
+          properties={(allPropertiesData?.properties || []).map(p => ({ id: p.id, name: p.name }))}
+        />
       </div>
     </div>
   );

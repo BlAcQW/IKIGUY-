@@ -6,7 +6,7 @@ Provides RESTful endpoints for property management with multi-currency support.
 
 import logging
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, Field
 
 from app.core.auth import get_current_user, get_optional_user, get_organization_context
@@ -61,6 +61,12 @@ class PropertyWithConvertedPrice(Property):
     converted_price: Optional[float] = Field(None, description="Price in requested currency")
     conversion_currency: Optional[str] = Field(None, description="Currency code for conversion")
     exchange_rate: Optional[float] = Field(None, description="Exchange rate used")
+
+
+class SetExchangeRateRequest(BaseModel):
+    """Request model for setting an admin exchange rate."""
+    currency_code: str = Field(..., description="Currency code (e.g. GHS)")
+    rate: float = Field(..., gt=0, description="Exchange rate relative to USD")
 
 
 # ==================== Property CRUD Endpoints ====================
@@ -124,6 +130,7 @@ async def create_property(
     summary="Get property by ID"
 )
 async def get_property(
+    request: Request,
     property_id: str,
     currency: Optional[str] = Query(None, description="Convert price to this currency (USD, EUR, GHS, etc.)"),
     current_user: Optional[dict] = Depends(get_optional_user),
@@ -152,6 +159,12 @@ async def get_property(
     try:
         # Get organization_id if user is authenticated
         organization_id = current_user.get("organization_id") if current_user else None
+
+        # Allow admin users to override organization via header (consistent with booking endpoints)
+        if current_user and current_user.get("role") == "admin":
+            override_org_id = request.headers.get("x-organization-id")
+            if override_org_id:
+                organization_id = override_org_id
 
         property_obj = await service.get_property(property_id, organization_id)
 
@@ -201,6 +214,7 @@ async def get_property(
     summary="List properties with filtering"
 )
 async def list_properties(
+    request: Request,
     # Filtering parameters
     property_type: Optional[List[PropertyType]] = Query(None, description="Filter by property type"),
     status: Optional[List[PropertyStatus]] = Query(None, description="Filter by status"),
@@ -268,6 +282,12 @@ async def list_properties(
     try:
         # Get organization_id if user is authenticated (for scoped access)
         organization_id = current_user.get("organization_id") if current_user else None
+
+        # Allow admin users to override organization via header (consistent with booking endpoints)
+        if current_user and current_user.get("role") == "admin":
+            override_org_id = request.headers.get("x-organization-id")
+            if override_org_id:
+                organization_id = override_org_id
 
         # Build filter object
         filters = PropertyFilter(
@@ -561,22 +581,98 @@ async def get_exchange_rates(
     Get current exchange rates (base USD).
 
     Results are cached for 1 hour to minimize API calls.
+    Includes admin_rate metadata when an admin override is active.
 
     Args:
         force_refresh: Force fetch from API even if cache is valid
         currency_service: Currency service dependency
 
     Returns:
-        dict: Exchange rate data with base currency, rates, and timestamp
+        dict: Exchange rate data with base currency, rates, timestamp, and admin_rate
     """
     try:
         rates = await currency_service.get_exchange_rates(force_refresh)
-        return rates.model_dump()
+        result = rates.model_dump()
+
+        # Include admin rate metadata if an override exists
+        admin_rate = await currency_service.get_admin_rate("GHS")
+        if admin_rate:
+            # Serialize datetime for JSON
+            admin_rate_out = {**admin_rate}
+            if admin_rate_out.get("set_at"):
+                admin_rate_out["set_at"] = admin_rate_out["set_at"].isoformat()
+            result["admin_rate"] = admin_rate_out
+
+        return result
     except Exception as e:
         logger.error(f"Error getting exchange rates: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to fetch exchange rates"
+        )
+
+
+@router.post(
+    "/currencies/rates",
+    summary="Set admin exchange rate (admin only)"
+)
+async def set_exchange_rate(
+    body: SetExchangeRateRequest,
+    current_user: dict = Depends(get_current_user),
+    currency_service: CurrencyService = Depends(get_currency_service)
+):
+    """
+    Set an admin-override exchange rate.
+
+    Only accessible to admin users. The admin rate takes precedence
+    over API-fetched rates.
+
+    Args:
+        body: Currency code and rate
+        current_user: Current authenticated user (must be admin)
+        currency_service: Currency service dependency
+
+    Returns:
+        dict: Updated exchange rates with admin rate metadata
+    """
+    is_admin = (
+        current_user.get("email") == "admin@ailabsafrica.com"
+        or current_user.get("role") == "admin"
+    )
+    if not is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only admins can set exchange rates"
+        )
+
+    try:
+        await currency_service.set_admin_rate(
+            body.currency_code,
+            body.rate,
+            current_user.get("email", "unknown"),
+        )
+
+        # Return updated rates with admin metadata
+        rates = await currency_service.get_exchange_rates()
+        result = rates.model_dump()
+        admin_rate = await currency_service.get_admin_rate(body.currency_code)
+        if admin_rate:
+            admin_rate_out = {**admin_rate}
+            if admin_rate_out.get("set_at"):
+                admin_rate_out["set_at"] = admin_rate_out["set_at"].isoformat()
+            result["admin_rate"] = admin_rate_out
+        return result
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        logger.error(f"Error setting exchange rate: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to set exchange rate"
         )
 
 

@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: load
+      POSTGRES_PASSWORD: load_password
+      POSTGRES_DB: load_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U load -d load_db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  asterisk:
+    image: andrius/asterisk:20-alpine
+    ports:
+      - '5060:5060/udp'
+      - '5060:5060/tcp'
+      - '8088:8088/tcp'
+      - '10000-10100:10000-10100/udp'
+    volumes:
+      - ./asterisk/config:/etc/asterisk
+    networks:
+      - default
+    healthcheck:
+      test: ['CMD-SHELL', 'asterisk -rx "core show uptime"']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+      - '20000-20100:20000-20100/udp'
+    environment:
+      DATABASE_URL: postgresql://load:load_password@postgres:5432/load_db
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev-jwt-secret-change-in-production
+      JWT_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      NODE_ENV: development
+      PORT: 3000
+      FRONTEND_URL: http://localhost:5173
+      ASTERISK_ARI_URL: http://asterisk:8088
+      ASTERISK_ARI_USERNAME: load
+      ASTERISK_ARI_PASSWORD: load_ari_password
+      ASTERISK_ARI_APP: load
+      WEBHOOK_SECRET: dev-webhook-signing-secret
+      EXTERNAL_MEDIA_HOST: backend
+      EXTERNAL_MEDIA_PORT_START: 20000
+      EXTERNAL_MEDIA_PORT_END: 20100
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      asterisk:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3000/api/health || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '5173:5173'
+    environment:
+      VITE_API_URL: http://localhost:3000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:

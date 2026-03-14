@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 152 76% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 152 76% 36%;
+    --radius: 0.625rem;
+    --chart-1: 152 76% 36%;
+    --chart-2: 199 89% 48%;
+    --chart-3: 47 96% 53%;
+    --chart-4: 271 76% 53%;
+    --chart-5: 340 75% 55%;
+    --sidebar: 240 6% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-border: 240 6% 15%;
+    --sidebar-accent: 152 76% 36%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --panel-bg: 0 0% 98%;
+    --editor-bg: 0 0% 100%;
+    --panel-border: 240 5.9% 90%;
+  }
+
+  .dark {
+    --background: 240 6% 4.5%;
+    --foreground: 0 0% 95%;
+    --card: 240 5% 7%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 5% 8.5%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 152 76% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 13%;
+    --secondary-foreground: 0 0% 88%;
+    --muted: 240 5% 13%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 240 5% 15%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 152 76% 36%;
+    --radius: 0.625rem;
+    --chart-1: 152 76% 42%;
+    --chart-2: 199 89% 52%;
+    --chart-3: 47 96% 53%;
+    --chart-4: 271 76% 58%;
+    --chart-5: 340 75% 60%;
+    --sidebar: 240 6% 5%;
+    --sidebar-foreground: 0 0% 92%;
+    --sidebar-border: 240 5% 13%;
+    --sidebar-accent: 152 76% 36%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --panel-bg: 240 6% 6%;
+    --editor-bg: 240 5% 8%;
+    --panel-border: 240 5% 13%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+/* Scrollbar styling */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+  }
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 256px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gradient mesh for auth pages */
+.gradient-mesh {
+  background:
+    radial-gradient(ellipse at 20% 50%, hsl(152 76% 36% / 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, hsl(199 89% 48% / 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, hsl(271 76% 53% / 0.04) 0%, transparent 50%);
+}
+
+/* Dot grid pattern */
+.dot-grid {
+  background-image: radial-gradient(hsl(var(--border)) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Glass effect */
+.glass {
+  background: hsl(var(--card) / 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Stagger animation children */
+.stagger-children > * {
+  animation: slide-up 0.4s ease-out both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+
+/* Shimmer gradient for loading */
+.shimmer-bg {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--muted) / 0.5) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Waveform visualization */
+.waveform-bar {
+  animation: waveform-bar 0.8s ease-in-out infinite;
+}
+.waveform-bar:nth-child(2) { animation-delay: 0.1s; }
+.waveform-bar:nth-child(3) { animation-delay: 0.2s; }
+.waveform-bar:nth-child(4) { animation-delay: 0.3s; }
+.waveform-bar:nth-child(5) { animation-delay: 0.4s; }
+.waveform-bar:nth-child(6) { animation-delay: 0.15s; }
+.waveform-bar:nth-child(7) { animation-delay: 0.25s; }
+.waveform-bar:nth-child(8) { animation-delay: 0.35s; }
+.waveform-bar:nth-child(9) { animation-delay: 0.05s; }
+.waveform-bar:nth-child(10) { animation-delay: 0.45s; }
+.waveform-bar:nth-child(11) { animation-delay: 0.12s; }
+.waveform-bar:nth-child(12) { animation-delay: 0.22s; }
+
+/* Glow border effect for cards */
+.glow-border {
+  position: relative;
+}
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary) / 0.2),
+    transparent 40%,
+    transparent 60%,
+    hsl(var(--primary) / 0.1)
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.glow-border:hover::after {
+  opacity: 1;
+}
+
+/* Editor panel utilities */
+.config-row {
+  @apply flex items-center justify-between py-3 border-b border-[hsl(var(--panel-border)/0.5)] last:border-0;
+}
+.config-row > label {
+  @apply text-sm text-muted-foreground shrink-0;
+}
+.config-row > :last-child {
+  @apply max-w-[240px] w-full;
+}
+
+.editor-section {
+  @apply space-y-1 mb-6;
+}
+.editor-section > h3 {
+  @apply text-xs font-semibold uppercase tracking-wider text-muted-foreground/60 mb-3 px-1;
+}

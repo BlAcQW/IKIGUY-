@@ -5,7 +5,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { MessageSquare, Send, Loader2, X, Sparkles, Info } from "lucide-react";
+import { MessageSquare, Send, Loader2, X, Sparkles, Info, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -47,6 +47,7 @@ export function PropertyChatWidget({
     error,
     lastResponse,
     clearMessages,
+    retry,
   } = usePropertyChat({ propertyId });
 
   // Auto-scroll to bottom when new messages arrive
@@ -153,8 +154,18 @@ export function PropertyChatWidget({
 
         {error && (
           <div className="flex justify-center">
-            <div className="rounded-lg px-4 py-2 bg-destructive/10 text-destructive text-sm">
-              Error: {error.message}
+            <div className="rounded-lg px-4 py-3 bg-destructive/10 text-destructive text-sm flex items-center gap-2">
+              <span>AI assistant is temporarily unavailable. Please try again later.</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={retry}
+                disabled={isLoading}
+                className="h-7 px-2 text-destructive hover:text-destructive"
+              >
+                <RotateCcw className="h-3 w-3 mr-1" />
+                Retry
+              </Button>
             </div>
           </div>
         )}

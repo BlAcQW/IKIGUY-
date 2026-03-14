@@ -175,6 +175,11 @@ class PropertyFeatures(BaseModel):
     security_system: bool = Field(False, description="Has security system")
     gym: bool = Field(False, description="Has gym/fitness center")
     storage: bool = Field(False, description="Has storage unit")
+    custom_features: Optional[List[str]] = Field(
+        default_factory=list,
+        description="Custom features not covered by standard checkboxes",
+        max_length=20,
+    )
 
     @field_validator('pet_deposit')
     @classmethod

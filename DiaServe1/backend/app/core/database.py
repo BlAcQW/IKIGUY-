@@ -66,6 +66,9 @@ class MongoDB:
             # Create indexes for property_images collection
             await cls._create_image_indexes()
 
+            # Create indexes for QuickBooks integration
+            await cls._create_qbo_indexes()
+
         except Exception as e:
             logger.error(f"Failed to connect to MongoDB: {str(e)}")
             raise
@@ -90,6 +93,34 @@ class MongoDB:
         # Index for organization filtering
         await images_collection.create_index([("organization_id", 1)])
         logger.info("Created index on property_images.organization_id")
+
+    @classmethod
+    async def _create_qbo_indexes(cls):
+        """Create indexes for QuickBooks integration collections."""
+        try:
+            # QBO credentials: one per organization
+            qbo_creds = cls.db["qbo_credentials"]
+            await qbo_creds.create_index(
+                [("organization_id", 1)], unique=True
+            )
+            logger.info("Created unique index on qbo_credentials.organization_id")
+
+            # QBO customer mappings: one mapping per org+contact pair
+            qbo_mappings = cls.db["qbo_customer_mappings"]
+            await qbo_mappings.create_index(
+                [("organization_id", 1), ("diaserve_contact_id", 1)],
+                unique=True,
+            )
+            logger.info("Created compound unique index on qbo_customer_mappings")
+
+            # Invoices: index for querying unsynced invoices
+            invoices = cls.db["invoices"]
+            await invoices.create_index(
+                [("organization_id", 1), ("qbo_sync_status", 1)]
+            )
+            logger.info("Created index on invoices.organization_id + qbo_sync_status")
+        except Exception as e:
+            logger.warning("QBO index creation skipped: %s", e)
 
     @classmethod
     async def disconnect(cls):

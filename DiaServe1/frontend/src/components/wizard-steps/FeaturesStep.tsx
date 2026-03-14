@@ -1,7 +1,11 @@
+import { useState } from "react";
+import { X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import type { PropertyCreate } from "@/lib/types/property";
 
 interface FeaturesStepProps {
@@ -10,6 +14,8 @@ interface FeaturesStepProps {
 }
 
 export function FeaturesStep({ formData, updateFormData }: FeaturesStepProps) {
+  const [customFeatureInput, setCustomFeatureInput] = useState("");
+
   const updateFeatures = (field: string, value: any) => {
     updateFormData({
       features: {
@@ -210,6 +216,73 @@ export function FeaturesStep({ formData, updateFormData }: FeaturesStepProps) {
               <Label htmlFor="renovated" className="cursor-pointer">Newly Renovated</Label>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card variant="elevated">
+        <CardContent className="p-6">
+          <Label className="text-base font-semibold mb-4 block">Custom Features</Label>
+          <p className="text-sm text-muted-foreground mb-3">
+            Add unique features not covered above (e.g., "Rooftop terrace", "Wine cellar")
+          </p>
+          <div className="flex gap-2 mb-3">
+            <Input
+              placeholder="Type a custom feature..."
+              value={customFeatureInput}
+              onChange={(e) => setCustomFeatureInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  const value = customFeatureInput.trim();
+                  const existing = formData.features?.custom_features ?? [];
+                  if (value && value.length <= 50 && existing.length < 20 && !existing.includes(value)) {
+                    updateFeatures("custom_features", [...existing, value]);
+                    setCustomFeatureInput("");
+                  }
+                }
+              }}
+              maxLength={50}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                const value = customFeatureInput.trim();
+                const existing = formData.features?.custom_features ?? [];
+                if (value && value.length <= 50 && existing.length < 20 && !existing.includes(value)) {
+                  updateFeatures("custom_features", [...existing, value]);
+                  setCustomFeatureInput("");
+                }
+              }}
+              disabled={!customFeatureInput.trim() || (formData.features?.custom_features?.length ?? 0) >= 20}
+            >
+              Add
+            </Button>
+          </div>
+          {(formData.features?.custom_features?.length ?? 0) > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {formData.features?.custom_features?.map((feature) => (
+                <Badge key={feature} variant="muted" className="gap-1 pr-1">
+                  {feature}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      updateFeatures(
+                        "custom_features",
+                        (formData.features?.custom_features ?? []).filter((f) => f !== feature)
+                      )
+                    }
+                    className="ml-1 rounded-full p-0.5 hover:bg-destructive/20 hover:text-destructive"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
+            </div>
+          )}
+          <p className="text-xs text-muted-foreground mt-2">
+            {formData.features?.custom_features?.length ?? 0}/20 custom features
+          </p>
         </CardContent>
       </Card>
     </div>

@@ -5,7 +5,7 @@
  */
 
 // Get API base URL from environment variable, fallback to localhost
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://72.62.179.186:30039";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 // Enable mock data for frontend development (can be set via env var)
 export const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === "true" || false;
@@ -135,6 +135,11 @@ export const API_ENDPOINTS = {
     },
   },
 
+  // Leads (public)
+  leads: {
+    submit: "/api/v1/leads",
+  },
+
   // Payments
   payments: {
     list: "/api/v1/payments",
@@ -147,6 +152,15 @@ export const API_ENDPOINTS = {
     list: "/api/v1/invoices",
     create: "/api/v1/invoices",
     get: (id: string) => `/api/v1/invoices/${id}`,
+  },
+
+  // QuickBooks
+  quickbooks: {
+    authUrl: "/api/v1/quickbooks/auth-url",
+    status: "/api/v1/quickbooks/status",
+    disconnect: "/api/v1/quickbooks/disconnect",
+    sync: "/api/v1/quickbooks/sync",
+    syncInvoice: (id: string) => `/api/v1/quickbooks/sync/${id}`,
   },
 };
 

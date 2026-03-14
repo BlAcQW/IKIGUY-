@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { X, Plus } from "lucide-react";
+import { X, Plus, Upload, Link as LinkIcon, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -24,7 +24,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CountryPicker } from "@/components/ui/country-picker";
+import { FileUpload } from "@/components/FileUpload";
 import { useUpdateProperty } from "@/hooks/use-properties";
+import { useToast } from "@/hooks/use-toast";
 import { PropertyType, PropertyStatus } from "@/lib/types/property";
 import type { Property, PropertyUpdate } from "@/lib/types/property";
 
@@ -35,6 +40,7 @@ interface EditPropertyDialogProps {
 }
 
 export function EditPropertyDialog({ open, onOpenChange, property }: EditPropertyDialogProps) {
+  const { toast } = useToast();
   const updateMutation = useUpdateProperty({
     onSuccess: () => {
       onOpenChange(false);
@@ -75,6 +81,10 @@ export function EditPropertyDialog({ open, onOpenChange, property }: EditPropert
   const [securitySystem, setSecuritySystem] = useState(false);
   const [gym, setGym] = useState(false);
   const [storage, setStorage] = useState(false);
+
+  // Custom features
+  const [customFeatures, setCustomFeatures] = useState<string[]>([]);
+  const [customFeatureInput, setCustomFeatureInput] = useState("");
 
   // Financial
   const [priceUSD, setPriceUSD] = useState("");
@@ -130,6 +140,7 @@ export function EditPropertyDialog({ open, onOpenChange, property }: EditPropert
       setSecuritySystem(property.features.security_system);
       setGym(property.features.gym);
       setStorage(property.features.storage);
+      setCustomFeatures(property.features.custom_features ?? []);
 
       setPriceUSD(property.financial.price_usd.toString());
       setBaseCurrency(property.financial.base_currency);
@@ -145,6 +156,9 @@ export function EditPropertyDialog({ open, onOpenChange, property }: EditPropert
       setSafetyRating(property.neighborhood_data?.safety_rating?.toString() || "");
       setWalkabilityScore(property.neighborhood_data?.walkability_score?.toString() || "");
       setTransitScore(property.neighborhood_data?.transit_score?.toString() || "");
+
+      setImageUrlInput("");
+      setIsValidatingUrl(false);
     }
   }, [property]);
 
@@ -195,6 +209,7 @@ export function EditPropertyDialog({ open, onOpenChange, property }: EditPropert
         security_system: securitySystem,
         gym,
         storage,
+        custom_features: customFeatures,
       },
       financial: {
         price_usd: parseFloat(priceUSD),
@@ -212,10 +227,30 @@ export function EditPropertyDialog({ open, onOpenChange, property }: EditPropert
     updateMutation.mutate({ id: property.id, updates: propertyData });
   };
 
-  const addImage = () => {
-    const url = prompt("Enter image URL:");
-    if (url) {
-      setImages([...images, url]);
+  const [imageUrlInput, setImageUrlInput] = useState("");
+  const [isValidatingUrl, setIsValidatingUrl] = useState(false);
+
+  const handleImageUpload = (newUrls: string[]) => {
+    setImages(prev => [...prev, ...newUrls]);
+  };
+
+  const handleAddImageUrl = async () => {
+    const url = imageUrlInput.trim();
+    if (!url) return;
+    if (images.includes(url)) {
+      toast({ title: "Duplicate", description: "This image is already added", variant: "destructive" });
+      return;
+    }
+    setIsValidatingUrl(true);
+    try {
+      new URL(url);
+      setImages(prev => [...prev, url]);
+      setImageUrlInput("");
+      toast({ title: "Image Added", description: "Image URL added successfully" });
+    } catch {
+      toast({ title: "Invalid URL", description: "Please enter a valid URL", variant: "destructive" });
+    } finally {
+      setIsValidatingUrl(false);
     }
   };
 
@@ -299,15 +334,19 @@ export function EditPropertyDialog({ open, onOpenChange, property }: EditPropert
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2">
                 <Label htmlFor="address">Address *</Label>
-                <Input id="address" value={address} onChange={(e) => setAddress(e.target.value)} required />
+                <Input id="address" placeholder="e.g., 123 Main Street" value={address} onChange={(e) => setAddress(e.target.value)} required />
               </div>
               <div>
                 <Label htmlFor="city">City *</Label>
-                <Input id="city" value={city} onChange={(e) => setCity(e.target.value)} required />
+                <Input id="city" placeholder="e.g., Accra" value={city} onChange={(e) => setCity(e.target.value)} required />
               </div>
               <div>
                 <Label htmlFor="state">State/Region *</Label>
-                <Input id="state" value={state} onChange={(e) => setState(e.target.value)} required />
+                <Input id="state" placeholder="e.g., Greater Accra" value={state} onChange={(e) => setState(e.target.value)} required />
+              </div>
+              <div>
+                <Label htmlFor="country">Country *</Label>
+                <CountryPicker value={country} onValueChange={setCountry} />
               </div>
             </div>
           </div>
@@ -329,6 +368,66 @@ export function EditPropertyDialog({ open, onOpenChange, property }: EditPropert
                 <Input id="sqft" type="number" value={sqft} onChange={(e) => setSqft(e.target.value)} required min="0" />
               </div>
             </div>
+          </div>
+
+          {/* Custom Features */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Custom Features</h3>
+            <p className="text-sm text-muted-foreground">
+              Add unique features not covered by standard options (e.g., "Rooftop terrace", "Wine cellar")
+            </p>
+            <div className="flex gap-2">
+              <Input
+                placeholder="Type a custom feature..."
+                value={customFeatureInput}
+                onChange={(e) => setCustomFeatureInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    const value = customFeatureInput.trim();
+                    if (value && value.length <= 50 && customFeatures.length < 20 && !customFeatures.includes(value)) {
+                      setCustomFeatures([...customFeatures, value]);
+                      setCustomFeatureInput("");
+                    }
+                  }
+                }}
+                maxLength={50}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  const value = customFeatureInput.trim();
+                  if (value && value.length <= 50 && customFeatures.length < 20 && !customFeatures.includes(value)) {
+                    setCustomFeatures([...customFeatures, value]);
+                    setCustomFeatureInput("");
+                  }
+                }}
+                disabled={!customFeatureInput.trim() || customFeatures.length >= 20}
+              >
+                <Plus className="h-4 w-4 mr-1" />
+                Add
+              </Button>
+            </div>
+            {customFeatures.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {customFeatures.map((feature) => (
+                  <Badge key={feature} variant="muted" className="gap-1 pr-1">
+                    {feature}
+                    <button
+                      type="button"
+                      onClick={() => setCustomFeatures(customFeatures.filter((f) => f !== feature))}
+                      className="ml-1 rounded-full p-0.5 hover:bg-destructive/20 hover:text-destructive"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+            )}
+            <p className="text-xs text-muted-foreground">
+              {customFeatures.length}/20 custom features
+            </p>
           </div>
 
           {/* Financial */}
@@ -359,30 +458,70 @@ export function EditPropertyDialog({ open, onOpenChange, property }: EditPropert
           {/* Media */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Media</h3>
-            <div className="space-y-4">
+
+            {/* Image Add Controls — Tabbed: Upload / URL */}
+            <Tabs defaultValue="upload">
+              <TabsList className="grid w-full grid-cols-2 mb-4">
+                <TabsTrigger value="upload">
+                  <Upload className="h-4 w-4 mr-2" /> Upload from Device
+                </TabsTrigger>
+                <TabsTrigger value="url">
+                  <LinkIcon className="h-4 w-4 mr-2" /> Add from URL
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="upload">
+                <FileUpload accept="images" multiple maxFiles={20} onUploadComplete={handleImageUpload} />
+              </TabsContent>
+
+              <TabsContent value="url" className="space-y-2">
+                <div className="relative">
+                  <Input
+                    placeholder="https://example.com/image.jpg"
+                    value={imageUrlInput}
+                    onChange={(e) => setImageUrlInput(e.target.value)}
+                    disabled={isValidatingUrl}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") { e.preventDefault(); await handleAddImageUrl(); }
+                    }}
+                  />
+                  {isValidatingUrl && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
+                </div>
+                <p className="text-xs text-muted-foreground">Press Enter to add image URL</p>
+              </TabsContent>
+            </Tabs>
+
+            {/* Thumbnail Gallery */}
+            {images.length > 0 && (
               <div>
-                <Label>Images</Label>
-                <div className="space-y-2">
-                  {images.map((img, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <Input value={img} readOnly className="flex-1" />
+                <Label className="text-sm font-medium mb-3 block">Images ({images.length})</Label>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {images.map((url, index) => (
+                    <div key={index} className="relative group">
+                      <img
+                        src={url}
+                        alt={`Property ${index + 1}`}
+                        className="w-full h-32 object-cover rounded-lg border"
+                        loading="lazy"
+                        onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder-image.png"; }}
+                      />
                       <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon-sm"
-                        onClick={() => removeImage(idx)}
+                        type="button" size="icon" variant="destructive"
+                        className="absolute top-2 right-2 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => removeImage(index)}
                       >
                         <X className="h-4 w-4" />
                       </Button>
+                      {index === 0 && (
+                        <div className="absolute bottom-2 left-2">
+                          <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded">Cover Image</span>
+                        </div>
+                      )}
                     </div>
                   ))}
-                  <Button type="button" variant="outline" onClick={addImage} className="gap-2">
-                    <Plus className="h-4 w-4" />
-                    Add Image URL
-                  </Button>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Actions */}

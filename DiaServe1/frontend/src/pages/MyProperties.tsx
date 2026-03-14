@@ -200,7 +200,7 @@ export default function MyProperties() {
                         )}
 
                         {/* Favorite Button */}
-                        <div className="absolute top-4 right-4" onClick={(e) => e.preventDefault()}>
+                        <div className="absolute top-4 right-4" onClick={(e) => e.stopPropagation()}>
                           <SavePropertyButton propertyId={saved.property_id} />
                         </div>
 

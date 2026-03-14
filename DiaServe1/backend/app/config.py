@@ -70,21 +70,30 @@ class Settings(BaseSettings):
     MAX_UPLOAD_SIZE: int = 100 * 1024 * 1024  # 100MB
 
     # External APIs (optional - for AI features)
-    OPENAI_API_KEY: Optional[str] = os.getenv("OPENAI_API_KEY", None)
-    ANTHROPIC_API_KEY: Optional[str] = os.getenv("ANTHROPIC_API_KEY", None)
-    GOOGLE_API_KEY: Optional[str] = os.getenv("GOOGLE_API_KEY", None)
+    OPENAI_API_KEY: Optional[str] = None
+    ANTHROPIC_API_KEY: Optional[str] = None
+    GOOGLE_API_KEY: Optional[str] = None
+
+    # Gemini AI Model
+    GEMINI_MODEL: str = "gemini-2.0-flash"
 
     # Google Maps (optional - for geocoding)
-    GOOGLE_MAPS_API_KEY: Optional[str] = os.getenv("GOOGLE_MAPS_API_KEY", None)
+    GOOGLE_MAPS_API_KEY: Optional[str] = None
 
     # Payment Gateways (optional - deferred)
-    STRIPE_SECRET_KEY: Optional[str] = os.getenv("STRIPE_SECRET_KEY", None)
-    STRIPE_PUBLISHABLE_KEY: Optional[str] = os.getenv("STRIPE_PUBLISHABLE_KEY", None)
-    STRIPE_WEBHOOK_SECRET: Optional[str] = os.getenv("STRIPE_WEBHOOK_SECRET", None)
-    FLUTTERWAVE_SECRET_KEY: Optional[str] = os.getenv("FLUTTERWAVE_SECRET_KEY", None)
-    FLUTTERWAVE_PUBLIC_KEY: Optional[str] = os.getenv("FLUTTERWAVE_PUBLIC_KEY", None)
-    FLUTTERWAVE_ENCRYPTION_KEY: Optional[str] = os.getenv("FLUTTERWAVE_ENCRYPTION_KEY", None)
-    FLUTTERWAVE_WEBHOOK_SECRET: Optional[str] = os.getenv("FLUTTERWAVE_WEBHOOK_SECRET", None)
+    STRIPE_SECRET_KEY: Optional[str] = None
+    STRIPE_PUBLISHABLE_KEY: Optional[str] = None
+    STRIPE_WEBHOOK_SECRET: Optional[str] = None
+    FLUTTERWAVE_SECRET_KEY: Optional[str] = None
+    FLUTTERWAVE_PUBLIC_KEY: Optional[str] = None
+    FLUTTERWAVE_ENCRYPTION_KEY: Optional[str] = None
+    FLUTTERWAVE_WEBHOOK_SECRET: Optional[str] = None
+
+    # QuickBooks Online (optional)
+    QBO_CLIENT_ID: Optional[str] = None
+    QBO_CLIENT_SECRET: Optional[str] = None
+    QBO_REDIRECT_URI: str = "http://localhost:30039/api/v1/quickbooks/callback"
+    QBO_ENVIRONMENT: str = "sandbox"  # "sandbox" or "production"
 
     # Default Admin User (created on first run)
     DEFAULT_ADMIN_EMAIL: str = os.getenv("DEFAULT_ADMIN_EMAIL", "admin@estateflow.local")

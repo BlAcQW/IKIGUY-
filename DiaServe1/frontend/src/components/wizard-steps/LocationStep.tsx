@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CountryPicker } from "@/components/ui/country-picker";
 import type { PropertyCreate } from "@/lib/types/property";
 
 interface LocationStepProps {
@@ -23,7 +24,7 @@ export function LocationStep({ formData, updateFormData }: LocationStepProps) {
         <Label htmlFor="address">Street Address *</Label>
         <Input
           id="address"
-          placeholder="123 Main Street"
+          placeholder="e.g., 123 Main Street"
           value={formData.location?.address || ""}
           onChange={(e) => updateLocation("address", e.target.value)}
         />
@@ -34,7 +35,7 @@ export function LocationStep({ formData, updateFormData }: LocationStepProps) {
           <Label htmlFor="city">City *</Label>
           <Input
             id="city"
-            placeholder="Accra"
+            placeholder="e.g., Accra"
             value={formData.location?.city || ""}
             onChange={(e) => updateLocation("city", e.target.value)}
           />
@@ -44,7 +45,7 @@ export function LocationStep({ formData, updateFormData }: LocationStepProps) {
           <Label htmlFor="state">State/Region *</Label>
           <Input
             id="state"
-            placeholder="Greater Accra"
+            placeholder="e.g., Greater Accra"
             value={formData.location?.state || ""}
             onChange={(e) => updateLocation("state", e.target.value)}
           />
@@ -56,7 +57,7 @@ export function LocationStep({ formData, updateFormData }: LocationStepProps) {
           <Label htmlFor="zip_code">Zip Code</Label>
           <Input
             id="zip_code"
-            placeholder="00233"
+            placeholder="e.g., 00233"
             value={formData.location?.zip_code || ""}
             onChange={(e) => updateLocation("zip_code", e.target.value)}
           />
@@ -64,11 +65,9 @@ export function LocationStep({ formData, updateFormData }: LocationStepProps) {
 
         <div className="space-y-2">
           <Label htmlFor="country">Country *</Label>
-          <Input
-            id="country"
-            placeholder="Ghana"
+          <CountryPicker
             value={formData.location?.country || "Ghana"}
-            onChange={(e) => updateLocation("country", e.target.value)}
+            onValueChange={(value) => updateLocation("country", value)}
           />
         </div>
       </div>
@@ -102,7 +101,7 @@ export function LocationStep({ formData, updateFormData }: LocationStepProps) {
             id="latitude"
             type="number"
             step="0.000001"
-            placeholder="5.6037"
+            placeholder="e.g., 5.6037"
             value={formData.location?.latitude || ""}
             onChange={(e) => updateLocation("latitude", e.target.value)}
           />
@@ -114,7 +113,7 @@ export function LocationStep({ formData, updateFormData }: LocationStepProps) {
             id="longitude"
             type="number"
             step="0.000001"
-            placeholder="-0.1870"
+            placeholder="e.g., -0.1870"
             value={formData.location?.longitude || ""}
             onChange={(e) => updateLocation("longitude", e.target.value)}
           />

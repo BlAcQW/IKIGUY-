@@ -5,6 +5,7 @@ Business logic for property tour bookings, availability checking,
 and reminder management.
 """
 
+import logging
 import uuid
 from datetime import datetime, timedelta
 from typing import List, Optional, Dict, Any
@@ -23,7 +24,10 @@ from app.models.booking import (
     WaitlistEntry
 )
 from app.services.agent_service import AgentService
+from app.services.lead_service import LeadService
 from app.services.notification_service import BookingNotificationService
+
+logger = logging.getLogger(__name__)
 
 
 class BookingService:
@@ -101,6 +105,31 @@ class BookingService:
 
         # Save to database
         await self.bookings_collection.insert_one(booking.dict())
+
+        # Auto-create hot lead (non-blocking - booking succeeds even if lead fails)
+        try:
+            lead_service = LeadService(self.db)
+            lead_result = await lead_service.upsert_lead(
+                organization_id=organization_id,
+                name=booking_data.contact_name,
+                email=booking_data.contact_email,
+                phone=booking_data.contact_phone,
+                interest_status="hot",
+                source="tour_booking",
+                property_id=booking_data.property_id,
+            )
+            logger.info(
+                f"Auto-created lead from booking {booking.id}: "
+                f"contact_id={lead_result['contact_id']}, "
+                f"created={lead_result['created']}, "
+                f"escalated={lead_result['escalated']}"
+            )
+        except Exception:
+            logger.error(
+                f"Failed to auto-create lead from booking {booking.id} "
+                f"(org={organization_id}, email={booking_data.contact_email})",
+                exc_info=True,
+            )
 
         # Send notifications (non-blocking - don't fail booking if email fails)
         try:
@@ -600,6 +629,31 @@ class BookingService:
         booking.reminders = self._create_reminders(booking)
         await self.bookings_collection.insert_one(booking.dict())
 
+        # Auto-create hot lead (non-blocking - booking succeeds even if lead fails)
+        try:
+            lead_service = LeadService(self.db)
+            lead_result = await lead_service.upsert_lead(
+                organization_id=organization_id,
+                name=booking_data.contact_name,
+                email=booking_data.contact_email,
+                phone=booking_data.contact_phone,
+                interest_status="hot",
+                source="tour_booking",
+                property_id=booking_data.property_id,
+            )
+            logger.info(
+                f"Auto-created lead from admin booking {booking.id}: "
+                f"contact_id={lead_result['contact_id']}, "
+                f"created={lead_result['created']}, "
+                f"escalated={lead_result['escalated']}"
+            )
+        except Exception:
+            logger.error(
+                f"Failed to auto-create lead from admin booking {booking.id} "
+                f"(org={organization_id}, email={booking_data.contact_email})",
+                exc_info=True,
+            )
+
         # Log admin action
         await self._log_admin_action(
             booking_id=booking.id,
@@ -743,6 +797,49 @@ class BookingService:
             "failed_count": failed_count,
             "failed_bookings": failed_bookings,
             "message": f"Successfully updated {success_count} booking(s), {failed_count} failed"
+        }
+
+    async def backfill_leads_from_bookings(self, organization_id: str) -> dict:
+        """Create leads from existing bookings that were missed."""
+        lead_service = LeadService(self.db)
+        query = {
+            "organization_id": organization_id,
+            "$or": [
+                {"contact_email": {"$ne": None, "$exists": True}},
+                {"contact_phone": {"$ne": None, "$exists": True}},
+            ],
+        }
+        cursor = self.bookings_collection.find(query).sort("created_at", 1)
+        bookings = await cursor.to_list(length=10000)
+
+        created = skipped = failed = 0
+        for doc in bookings:
+            try:
+                result = await lead_service.upsert_lead(
+                    organization_id=organization_id,
+                    name=doc.get("contact_name", "Unknown"),
+                    email=doc.get("contact_email"),
+                    phone=doc.get("contact_phone"),
+                    interest_status="hot",
+                    source="tour_booking",
+                    property_id=doc.get("property_id"),
+                )
+                if result["created"]:
+                    created += 1
+                else:
+                    skipped += 1
+            except Exception:
+                failed += 1
+                logger.error(
+                    f"Backfill failed for booking {doc.get('id')}",
+                    exc_info=True,
+                )
+
+        return {
+            "created_count": created,
+            "skipped_count": skipped,
+            "failed_count": failed,
+            "total_bookings_scanned": len(bookings),
         }
 
     async def _log_admin_action(

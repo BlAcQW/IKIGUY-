@@ -54,7 +54,7 @@ async def create_campaign(
     Returns:
         Created campaign
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -100,7 +100,7 @@ async def list_campaigns(
     Returns:
         List of campaigns with pagination info
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -127,6 +127,335 @@ async def list_campaigns(
         )
 
 
+# ==================== Contact Endpoints ====================
+# NOTE: Contact routes MUST be defined before /{campaign_id} routes,
+# otherwise FastAPI matches "/contacts" as a campaign_id parameter.
+
+
+@router.post("/contacts", response_model=Contact, status_code=status.HTTP_201_CREATED)
+async def create_contact(
+    contact_data: ContactCreate,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Create a new contact/lead.
+
+    Args:
+        contact_data: Contact creation data
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Created contact
+    """
+    db = await get_database()
+    contact_service = ContactService(db)
+
+    try:
+        contact = await contact_service.create_contact(
+            contact_data=contact_data,
+            organization_id=org_context["organization_id"],
+            user_id=user["sub"]
+        )
+
+        logger.info(f"Contact {contact.id} created by user {user['sub']}")
+        return contact
+
+    except Exception as e:
+        logger.error(f"Error creating contact: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to create contact: {str(e)}"
+        )
+
+
+@router.get("/contacts", response_model=ContactListResponse)
+async def list_contacts(
+    limit: int = Query(50, ge=1, le=100, description="Number of contacts to return"),
+    offset: int = Query(0, ge=0, description="Number of contacts to skip"),
+    search: Optional[str] = Query(None, description="Search by name, email, or phone"),
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    List contacts for the organization.
+
+    Args:
+        limit: Maximum number of contacts to return
+        offset: Number of contacts to skip
+        search: Optional search query
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        List of contacts with pagination info
+    """
+    db = await get_database()
+    contact_service = ContactService(db)
+
+    try:
+        contacts, total = await contact_service.list_contacts(
+            organization_id=org_context["organization_id"],
+            limit=limit,
+            offset=offset,
+            search=search
+        )
+
+        return ContactListResponse(
+            contacts=contacts,
+            total=total,
+            limit=limit,
+            offset=offset
+        )
+
+    except Exception as e:
+        logger.error(f"Error listing contacts: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to list contacts: {str(e)}"
+        )
+
+
+@router.get("/contacts/{contact_id}", response_model=Contact)
+async def get_contact(
+    contact_id: str,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Get contact details by ID.
+
+    Args:
+        contact_id: Contact ID
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Contact details
+    """
+    db = await get_database()
+    contact_service = ContactService(db)
+
+    contact = await contact_service.get_contact(
+        contact_id=contact_id,
+        organization_id=org_context["organization_id"]
+    )
+
+    if not contact:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Contact {contact_id} not found"
+        )
+
+    return contact
+
+
+@router.put("/contacts/{contact_id}", response_model=Contact)
+async def update_contact(
+    contact_id: str,
+    updates: ContactUpdate,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Update a contact.
+
+    Args:
+        contact_id: Contact ID
+        updates: Update data
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Updated contact
+    """
+    db = await get_database()
+    contact_service = ContactService(db)
+
+    try:
+        contact = await contact_service.update_contact(
+            contact_id=contact_id,
+            updates=updates,
+            organization_id=org_context["organization_id"]
+        )
+
+        if not contact:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Contact {contact_id} not found"
+            )
+
+        logger.info(f"Contact {contact_id} updated by user {user['sub']}")
+        return contact
+
+    except Exception as e:
+        logger.error(f"Error updating contact: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update contact: {str(e)}"
+        )
+
+
+@router.delete("/contacts/{contact_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_contact(
+    contact_id: str,
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Delete a contact.
+
+    Args:
+        contact_id: Contact ID
+        user: Current authenticated user
+        org_context: Organization context
+    """
+    db = await get_database()
+    contact_service = ContactService(db)
+
+    deleted = await contact_service.delete_contact(
+        contact_id=contact_id,
+        organization_id=org_context["organization_id"]
+    )
+
+    if not deleted:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Contact {contact_id} not found"
+        )
+
+    logger.info(f"Contact {contact_id} deleted by user {user['sub']}")
+
+
+@router.post("/contacts/import")
+async def bulk_import_contacts(
+    file: UploadFile = File(..., description="CSV file with contact data"),
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Bulk import contacts from CSV file.
+
+    CSV format:
+    name,email,phone,property_type_preferences,location_preferences,budget_min,budget_max,tags,source
+
+    Args:
+        file: CSV file upload
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Import summary with count of imported contacts
+    """
+    if not file.filename.endswith('.csv'):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="File must be a CSV"
+        )
+
+    db = await get_database()
+    contact_service = ContactService(db)
+
+    try:
+        # Read CSV content
+        content = await file.read()
+        decoded_content = content.decode('utf-8')
+        csv_reader = csv.DictReader(io.StringIO(decoded_content))
+
+        # Parse contacts
+        contacts_data = []
+        for row in csv_reader:
+            contact_dict = {
+                "name": row.get("name", "").strip(),
+                "email": row.get("email", "").strip() or None,
+                "phone": row.get("phone", "").strip() or None,
+                "property_type_preferences": [
+                    p.strip() for p in row.get("property_type_preferences", "").split(",") if p.strip()
+                ],
+                "location_preferences": [
+                    l.strip() for l in row.get("location_preferences", "").split(",") if l.strip()
+                ],
+                "budget_min": float(row["budget_min"]) if row.get("budget_min") else None,
+                "budget_max": float(row["budget_max"]) if row.get("budget_max") else None,
+                "bedrooms_min": int(row["bedrooms_min"]) if row.get("bedrooms_min", "").strip() else None,
+                "bedrooms_max": int(row["bedrooms_max"]) if row.get("bedrooms_max", "").strip() else None,
+                "interest_status": row.get("interest_status", "").strip() or "warm",
+                "lead_status": row.get("lead_status", "").strip() or "new",
+                "tags": [t.strip() for t in row.get("tags", "").split(",") if t.strip()],
+                "source": row.get("source", "").strip() or None,
+                "notes": row.get("notes", "").strip() or None,
+            }
+
+            # Skip if no name
+            if contact_dict["name"]:
+                contacts_data.append(contact_dict)
+
+        # Bulk import
+        imported_count = await contact_service.bulk_import_contacts(
+            contacts_data=contacts_data,
+            organization_id=org_context["organization_id"],
+            user_id=user["sub"]
+        )
+
+        logger.info(f"Imported {imported_count} contacts for organization {org_context['organization_id']}")
+
+        return {
+            "imported": imported_count,
+            "total_rows": len(contacts_data)
+        }
+
+    except Exception as e:
+        logger.error(f"Error importing contacts: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to import contacts: {str(e)}"
+        )
+
+
+@router.post("/contacts/segment/preview", response_model=SegmentPreviewResponse)
+async def preview_segment(
+    segment_filter: SegmentFilter,
+    campaign_type: CampaignType = Query(..., description="Campaign type for opt-out filtering"),
+    user=Depends(get_current_user),
+    org_context=Depends(get_organization_context)
+):
+    """
+    Preview contacts that would be targeted by a segment filter.
+
+    Args:
+        segment_filter: Filter criteria
+        campaign_type: Campaign type for opt-out filtering
+        user: Current authenticated user
+        org_context: Organization context
+
+    Returns:
+        Preview data with contact count, samples, and estimated cost
+    """
+    db = await get_database()
+    campaign_service = CampaignService(db)
+
+    try:
+        preview = await campaign_service.preview_segment(
+            segment_filter=segment_filter,
+            organization_id=org_context["organization_id"],
+            campaign_type=campaign_type
+        )
+
+        return preview
+
+    except Exception as e:
+        logger.error(f"Error previewing segment: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to preview segment: {str(e)}"
+        )
+
+
+# ==================== Campaign by ID Endpoints ====================
+# NOTE: These /{campaign_id} routes must come AFTER /contacts routes.
+
+
 @router.get("/{campaign_id}", response_model=Campaign)
 async def get_campaign(
     campaign_id: str,
@@ -144,7 +473,7 @@ async def get_campaign(
     Returns:
         Campaign details
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     campaign = await campaign_service.get_campaign(
@@ -180,7 +509,7 @@ async def update_campaign(
     Returns:
         Updated campaign
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -226,7 +555,7 @@ async def delete_campaign(
         user: Current authenticated user
         org_context: Organization context
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -276,7 +605,7 @@ async def launch_campaign(
     Returns:
         Updated campaign with RUNNING status
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -321,7 +650,7 @@ async def pause_campaign(
     Returns:
         Updated campaign with PAUSED status
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -363,7 +692,7 @@ async def get_campaign_analytics(
     Returns:
         Campaign analytics data
     """
-    db = get_database()
+    db = await get_database()
     campaign_service = CampaignService(db)
 
     try:
@@ -384,322 +713,4 @@ async def get_campaign_analytics(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to get campaign analytics: {str(e)}"
-        )
-
-
-# ==================== Contact Endpoints ====================
-
-
-@router.post("/contacts", response_model=Contact, status_code=status.HTTP_201_CREATED)
-async def create_contact(
-    contact_data: ContactCreate,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Create a new contact/lead.
-
-    Args:
-        contact_data: Contact creation data
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Created contact
-    """
-    db = get_database()
-    contact_service = ContactService(db)
-
-    try:
-        contact = await contact_service.create_contact(
-            contact_data=contact_data,
-            organization_id=org_context["organization_id"],
-            user_id=user["sub"]
-        )
-
-        logger.info(f"Contact {contact.id} created by user {user['sub']}")
-        return contact
-
-    except Exception as e:
-        logger.error(f"Error creating contact: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to create contact: {str(e)}"
-        )
-
-
-@router.get("/contacts", response_model=ContactListResponse)
-async def list_contacts(
-    limit: int = Query(50, ge=1, le=100, description="Number of contacts to return"),
-    offset: int = Query(0, ge=0, description="Number of contacts to skip"),
-    search: Optional[str] = Query(None, description="Search by name, email, or phone"),
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    List contacts for the organization.
-
-    Args:
-        limit: Maximum number of contacts to return
-        offset: Number of contacts to skip
-        search: Optional search query
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        List of contacts with pagination info
-    """
-    db = get_database()
-    contact_service = ContactService(db)
-
-    try:
-        contacts, total = await contact_service.list_contacts(
-            organization_id=org_context["organization_id"],
-            limit=limit,
-            offset=offset,
-            search=search
-        )
-
-        return ContactListResponse(
-            contacts=contacts,
-            total=total,
-            limit=limit,
-            offset=offset
-        )
-
-    except Exception as e:
-        logger.error(f"Error listing contacts: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to list contacts: {str(e)}"
-        )
-
-
-@router.get("/contacts/{contact_id}", response_model=Contact)
-async def get_contact(
-    contact_id: str,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Get contact details by ID.
-
-    Args:
-        contact_id: Contact ID
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Contact details
-    """
-    db = get_database()
-    contact_service = ContactService(db)
-
-    contact = await contact_service.get_contact(
-        contact_id=contact_id,
-        organization_id=org_context["organization_id"]
-    )
-
-    if not contact:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Contact {contact_id} not found"
-        )
-
-    return contact
-
-
-@router.put("/contacts/{contact_id}", response_model=Contact)
-async def update_contact(
-    contact_id: str,
-    updates: ContactUpdate,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Update a contact.
-
-    Args:
-        contact_id: Contact ID
-        updates: Update data
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Updated contact
-    """
-    db = get_database()
-    contact_service = ContactService(db)
-
-    try:
-        contact = await contact_service.update_contact(
-            contact_id=contact_id,
-            updates=updates,
-            organization_id=org_context["organization_id"]
-        )
-
-        if not contact:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Contact {contact_id} not found"
-            )
-
-        logger.info(f"Contact {contact_id} updated by user {user['sub']}")
-        return contact
-
-    except Exception as e:
-        logger.error(f"Error updating contact: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to update contact: {str(e)}"
-        )
-
-
-@router.delete("/contacts/{contact_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_contact(
-    contact_id: str,
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Delete a contact.
-
-    Args:
-        contact_id: Contact ID
-        user: Current authenticated user
-        org_context: Organization context
-    """
-    db = get_database()
-    contact_service = ContactService(db)
-
-    deleted = await contact_service.delete_contact(
-        contact_id=contact_id,
-        organization_id=org_context["organization_id"]
-    )
-
-    if not deleted:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Contact {contact_id} not found"
-        )
-
-    logger.info(f"Contact {contact_id} deleted by user {user['sub']}")
-
-
-@router.post("/contacts/import")
-async def bulk_import_contacts(
-    file: UploadFile = File(..., description="CSV file with contact data"),
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Bulk import contacts from CSV file.
-
-    CSV format:
-    name,email,phone,property_type_preferences,location_preferences,budget_min,budget_max,tags,source
-
-    Args:
-        file: CSV file upload
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Import summary with count of imported contacts
-    """
-    if not file.filename.endswith('.csv'):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="File must be a CSV"
-        )
-
-    db = get_database()
-    contact_service = ContactService(db)
-
-    try:
-        # Read CSV content
-        content = await file.read()
-        decoded_content = content.decode('utf-8')
-        csv_reader = csv.DictReader(io.StringIO(decoded_content))
-
-        # Parse contacts
-        contacts_data = []
-        for row in csv_reader:
-            contact_dict = {
-                "name": row.get("name", "").strip(),
-                "email": row.get("email", "").strip() or None,
-                "phone": row.get("phone", "").strip() or None,
-                "property_type_preferences": [
-                    p.strip() for p in row.get("property_type_preferences", "").split(",") if p.strip()
-                ],
-                "location_preferences": [
-                    l.strip() for l in row.get("location_preferences", "").split(",") if l.strip()
-                ],
-                "budget_min": float(row["budget_min"]) if row.get("budget_min") else None,
-                "budget_max": float(row["budget_max"]) if row.get("budget_max") else None,
-                "tags": [t.strip() for t in row.get("tags", "").split(",") if t.strip()],
-                "source": row.get("source", "").strip() or None
-            }
-
-            # Skip if no name
-            if contact_dict["name"]:
-                contacts_data.append(contact_dict)
-
-        # Bulk import
-        imported_count = await contact_service.bulk_import_contacts(
-            contacts_data=contacts_data,
-            organization_id=org_context["organization_id"],
-            user_id=user["sub"]
-        )
-
-        logger.info(f"Imported {imported_count} contacts for organization {org_context['organization_id']}")
-
-        return {
-            "imported": imported_count,
-            "total_rows": len(contacts_data)
-        }
-
-    except Exception as e:
-        logger.error(f"Error importing contacts: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to import contacts: {str(e)}"
-        )
-
-
-@router.post("/contacts/segment/preview", response_model=SegmentPreviewResponse)
-async def preview_segment(
-    segment_filter: SegmentFilter,
-    campaign_type: CampaignType = Query(..., description="Campaign type for opt-out filtering"),
-    user=Depends(get_current_user),
-    org_context=Depends(get_organization_context)
-):
-    """
-    Preview contacts that would be targeted by a segment filter.
-
-    Args:
-        segment_filter: Filter criteria
-        campaign_type: Campaign type for opt-out filtering
-        user: Current authenticated user
-        org_context: Organization context
-
-    Returns:
-        Preview data with contact count, samples, and estimated cost
-    """
-    db = get_database()
-    campaign_service = CampaignService(db)
-
-    try:
-        preview = await campaign_service.preview_segment(
-            segment_filter=segment_filter,
-            organization_id=org_context["organization_id"],
-            campaign_type=campaign_type
-        )
-
-        return preview
-
-    except Exception as e:
-        logger.error(f"Error previewing segment: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to preview segment: {str(e)}"
         )

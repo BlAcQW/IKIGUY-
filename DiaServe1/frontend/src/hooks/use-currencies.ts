@@ -35,6 +35,8 @@ export function useCurrencies(
 /**
  * Hook to get current exchange rates.
  *
+ * Exchange rates include admin overrides when set server-side.
+ *
  * @param forceRefresh - Force API refresh
  * @param options - React Query options
  * @returns Query result
@@ -47,24 +49,6 @@ export function useExchangeRates(
     queryKey: currencyKeys.rates(forceRefresh),
     queryFn: () => getExchangeRates(forceRefresh),
     staleTime: 1000 * 60 * 60, // 1 hour
-    select: (data) => {
-      // Merge with custom rates from localStorage
-      const customRates = JSON.parse(localStorage.getItem('estateflow_custom_rates') || '{}');
-      return {
-        ...data,
-        rates: {
-          ...data.rates,
-          ...customRates
-        }
-      };
-    },
     ...options,
   });
-}
-
-// Helper to set custom rate
-export function setCustomExchangeRate(currency: string, rate: number) {
-  const customRates = JSON.parse(localStorage.getItem('estateflow_custom_rates') || '{}');
-  customRates[currency] = rate;
-  localStorage.setItem('estateflow_custom_rates', JSON.stringify(customRates));
 }

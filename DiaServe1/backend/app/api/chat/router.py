@@ -140,9 +140,18 @@ async def chat_about_property(
         )
     except Exception as e:
         logger.error(f"Chat service error: {e}", exc_info=True)
+        error_msg = str(e)
+
+        # Return specific status codes based on failure type
+        if "not configured" in error_msg.lower() or "api key" in error_msg.lower():
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="AI chat service is not configured. Please contact the administrator."
+            )
+
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to process chat request. Please try again."
+            detail=f"Failed to process chat request: {error_msg}"
         )
 
 

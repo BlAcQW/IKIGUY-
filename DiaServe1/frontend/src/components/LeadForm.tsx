@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { User, Phone, CheckCircle2, Mail } from "lucide-react";
+import { submitLead } from "@/lib/api/lead-api";
 
 interface LeadFormProps {
     propertyId?: string;
@@ -21,20 +22,38 @@ export function LeadForm({ propertyId, propertyName }: LeadFormProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!propertyId) {
+            toast({
+                title: "Error",
+                description: "Property information is missing. Please refresh the page.",
+                variant: "destructive",
+            });
+            return;
+        }
         setIsLoading(true);
 
-        // Mock API call delay
-        await new Promise(resolve => setTimeout(resolve, 800));
+        try {
+            await submitLead({
+                name,
+                email,
+                phone: phone || undefined,
+                property_id: propertyId,
+            });
 
-        setIsLoading(false);
-        setIsSubmitted(true);
-
-        toast({
-            title: "Thank you!",
-            description: "We've received your details and will contact you shortly.",
-        });
-
-        console.log("Lead collected:", { name, phone, email, propertyId, propertyName });
+            setIsSubmitted(true);
+            toast({
+                title: "Thank you!",
+                description: "We've received your details and will contact you shortly.",
+            });
+        } catch (err) {
+            toast({
+                title: "Submission failed",
+                description: err instanceof Error ? err.message : "Please try again later.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     if (isSubmitted) {
